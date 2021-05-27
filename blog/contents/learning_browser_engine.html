@@ -50,20 +50,43 @@ Chromeは、Chromiumを元に開発されています。
 <h1 id="ブラウザの仕組み資料を読む"><a class="anchor" aria-label="Anchor" data-anchor-icon="#" href="#ブラウザの仕組み資料を読む"></a>ブラウザの仕組み資料を読む</h1>
 <p>ちょっと趣向を変えて、次のような資料を読むことにしました。</p>
 <ul>
-<li><a href="https://www.html5rocks.com/ja/tutorials/internals/howbrowserswork/">ブラウザの仕組み: 最新ウェブブラウザの内部構造</a></li>
+<li><a href="https://www.html5rocks.com/ja/tutorials/internals/howbrowserswork/">ブラウザの仕組み: 最新ウェブブラウザの内部構造</a>
+<ul>
+<li>記事の公開日が2011年8月5日なので、色々古いかもしれません。</li>
 </ul>
+</li>
+</ul>
+<p>では、さっそく見ていきます。
+最初に目につくのが、ブラウザの主な構成要素です。</p>
 <figure title="ブラウザの主な構成要素">
 <amp-img src="https://www.html5rocks.com/ja/tutorials/internals/howbrowserswork/layers.png" alt="ブラウザの主な構成要素" width="500" height="339" layout="intrinsic" class="i-amphtml-layout-intrinsic i-amphtml-layout-size-defined" i-amphtml-layout="intrinsic"><i-amphtml-sizer class="i-amphtml-sizer"><img alt aria-hidden="true" class="i-amphtml-intrinsic-sizer" role="presentation" src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjMzOSIgd2lkdGg9IjUwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4="></i-amphtml-sizer></amp-img>
-<figcaption><span><a href="https://www.html5rocks.com/ja/tutorials/internals/howbrowserswork/">ブラウザの主な構成要素 - www.html5rocks.com</a></span></figcaption><a href="https://www.html5rocks.com/ja/tutorials/internals/howbrowserswork/">
-</a></figure><a href="https://www.html5rocks.com/ja/tutorials/internals/howbrowserswork/">
-<p>まず、ブラウザエンジンは、UIとレンダリングエンジンの間の処理を整理します。
-レンダリングエンジンは、要求されたコンテンツの表示を担当します。</p>
-<p>Chromiumのレンダリングエンジンには、webkitを使っていましたが、blinkに変わりました。</p>
-</a><ul><a href="https://www.html5rocks.com/ja/tutorials/internals/howbrowserswork/">
-</a><li><a href="https://www.html5rocks.com/ja/tutorials/internals/howbrowserswork/"></a><a href="https://webkit.org/">webkit</a></li>
+<figcaption><span><a href="https://www.html5rocks.com/ja/tutorials/internals/howbrowserswork/">ブラウザの主な構成要素 - www.html5rocks.com</a></span></figcaption>
+</figure>
+<p>構成要素の内、ユーザーインターフェース、ブラウザエンジン、レンダリングエンジンに着目します。
+それぞれ、次の役割があります。</p>
+<ul>
+<li>ユーザーインターフェース
+<ul>
+<li>アドレスバーや戻る/進むボタンのようなUIを担当</li>
+</ul>
+</li>
+<li>ブラウザエンジン
+<ul>
+<li>UIとレンダリングエンジンの間の処理を整理</li>
+</ul>
+</li>
+<li>レンダリングエンジン
+<ul>
+<li>要求されたコンテンツ(HTMLなど)の表示を担当</li>
+</ul>
+</li>
+</ul>
+<p>ちなみに、Chromiumのレンダリングエンジンには、webkitを使っていましたが、blinkに変わりました。</p>
+<ul>
+<li><a href="https://webkit.org/">webkit</a></li>
 <li><a href="https://www.chromium.org/blink">blink</a></li>
 </ul>
-<p>ブラウザの基本的なフローは、次の図のようです。</p>
+<p>ブラウザの基本的なフローは、次の図の通りです。</p>
 <figure title="レンダリングの基本的なフロー">
 <amp-img src="https://www.html5rocks.com/ja/tutorials/internals/howbrowserswork/flow.png" alt="レンダリングの基本的なフロー" width="600" height="66" layout="intrinsic" class="i-amphtml-layout-intrinsic i-amphtml-layout-size-defined" i-amphtml-layout="intrinsic"><i-amphtml-sizer class="i-amphtml-sizer"><img alt aria-hidden="true" class="i-amphtml-intrinsic-sizer" role="presentation" src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjY2IiB3aWR0aD0iNjAwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIvPg=="></i-amphtml-sizer></amp-img>
 <figcaption><span><a href="https://www.html5rocks.com/ja/tutorials/internals/howbrowserswork/">レンダリングの基本的なフロー - www.html5rocks.com</a></span></figcaption>
@@ -78,12 +101,12 @@ Chromeは、Chromiumを元に開発されています。
 <li>Layout of the render tree</li>
 <li>Painting the render tree</li>
 </ol>
+<p>それぞれ見ていきます。</p>
 <hr>
 <p>① Parsing HTML to construct the DOM tree</p>
-<p>1は、HTMLをレキサ(字句解析. ex:flex)・パーサ(構文解析. ex:bison)してDOMツリーを作ります。
-レキサでは、ステートマシンによって読み込み状態を管理しつつトークンを識別します。
-空白とかコメントなどを削除したりもします。
-レキサから識別されたトークンをパーサに渡し、構文解析していきます。
+<p>1は、HTMLをレキサ(字句解析. ex:flex)・パーサ(構文解析. ex:bison)を使ってDOMツリーを構築します。</p>
+<p>レキサでは、ステートマシンによって読み込み状態を管理しつつトークンを識別します。空白とかコメントなどは削除されます。</p>
+<p>レキサから識別されたトークンをパーサに渡し、構文解析していきます。
 HTMLはDTD（Document Type Definition）で文脈自由文法なため、機械的に解析できます。
 ただ、HTMLは寛大な仕様で、次のようなパターンも許容するようになっています。</p>
 <ul>
@@ -96,34 +119,97 @@ HTMLはDTD（Document Type Definition）で文脈自由文法なため、機械�
 <p>パーサからDOM（Document Object Model）を構築します。
 DOMは、これまでの単なるテキストから、APIを持たせたオブジェクトモデルを作ることで、
 以降はDOMを使って処理しやすくなります。</p>
-<p>これまではHTMLの話をしていましたが、HTMLと並行してCSSも同様に処理していきレンダーオブジェクトを作っていきます。
-基本的に、CSSとHTMLは互いに独立しているので、並列処理が可能です。
-例えば、CSSを処理したことで、HTMLが変化することはないはずです。
-ただ、Javascriptは話が違うので、Javascriptが読み込まれた時点でHTMLのパースを中断してJavascriptのパースが開始されます。</p>
+<figure title="サンプル マークアップのDOMツリー">
+<amp-img src="https://www.html5rocks.com/ja/tutorials/internals/howbrowserswork/image015.png" alt="サンプル マークアップのDOMツリー" width="400" height="219" layout="intrinsic" class="i-amphtml-layout-intrinsic i-amphtml-layout-size-defined" i-amphtml-layout="intrinsic"><i-amphtml-sizer class="i-amphtml-sizer"><img alt aria-hidden="true" class="i-amphtml-intrinsic-sizer" role="presentation" src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjIxOSIgd2lkdGg9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4="></i-amphtml-sizer></amp-img>
+<figcaption><span><a href="https://www.html5rocks.com/ja/tutorials/internals/howbrowserswork/">サンプル マークアップのDOMツリー - www.html5rocks.com</a></span></figcaption>
+</figure>
+<p>これまではHTMLの話をしていましたが、HTMLと並行してCSSも同様に処理していきレンダーオブジェクトというオブジェクトを作っていきます。これは、スタイル情報を付与したオブジェクトになります。
+基本的に、CSSとHTMLは互いに独立しているので、並列処理が可能です。例えば、CSSを処理したことで、HTMLが変化することはないはずです。</p>
+<figure title="CSSの解析">
+<amp-img src="https://www.html5rocks.com/ja/tutorials/internals/howbrowserswork/image023.png" alt="CSSの解析" width="500" height="393" layout="intrinsic" class="i-amphtml-layout-intrinsic i-amphtml-layout-size-defined" i-amphtml-layout="intrinsic"><i-amphtml-sizer class="i-amphtml-sizer"><img alt aria-hidden="true" class="i-amphtml-intrinsic-sizer" role="presentation" src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjM5MyIgd2lkdGg9IjUwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4="></i-amphtml-sizer></amp-img>
+<figcaption><span><a href="https://www.html5rocks.com/ja/tutorials/internals/howbrowserswork/">CSSの解析 - www.html5rocks.com</a></span></figcaption>
+</figure>
+<p>ただ、Javascriptは話が違うので、Javascriptが読み込まれた時点でHTMLのパースを中断してJavascriptのパースが開始されます。
+また、Javascriptが、まだ読み込まれていないスタイルシートの影響を受けそうな特定のスタイルプロパティにアクセスした場合、Javascriptはブロックされます。</p>
 <hr>
 <p>② Render tree construction</p>
 <p>①のDOMとレンダーオブジェクトから、レンダーツリーを構築します。
 DOMとレンダーオブジェクトは、1対1という訳ではなく、例えばhead要素や、<code>display:none;</code>の要素もレンダーツリーに含まれません。
-このレンダーツリーの構築は、処理が複雑です。</p>
+レンダーツリーの更新は、DOMツリーが更新される度に行われます。</p>
+<figure title="レンダーツリーと対応するDOMツリー">
+<amp-img src="https://www.html5rocks.com/ja/tutorials/internals/howbrowserswork/image025.png" alt="レンダーツリーと対応するDOMツリー" width="731" height="396" layout="intrinsic" class="i-amphtml-layout-intrinsic i-amphtml-layout-size-defined" i-amphtml-layout="intrinsic"><i-amphtml-sizer class="i-amphtml-sizer"><img alt aria-hidden="true" class="i-amphtml-intrinsic-sizer" role="presentation" src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjM5NiIgd2lkdGg9IjczMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4="></i-amphtml-sizer></amp-img>
+<figcaption><span><a href="https://www.html5rocks.com/ja/tutorials/internals/howbrowserswork/">レンダーツリーと対応するDOMツリー - www.html5rocks.com</a></span></figcaption>
+</figure>
+<p>レンダーオブジェクトからスタイルを計算するのですが、ちょっと複雑です。
+詳しくは、<a href="https://www.html5rocks.com/ja/tutorials/internals/howbrowserswork/#Style_Computation">スタイルの計算</a>を見てください。</p>
 <hr>
 <p>③ Layout of the render tree</p>
-<p>レンダーツリーから、レイアウト情報を生成していきます。
+<p>レンダーツリーから、レイアウト情報を計算していきます。
 レイアウト情報とは、位置(x,y)とサイズ(width,height)です。</p>
-<p>ルートから再帰的にレイアウト情報を計算していきます。
-padding,marginが登場します。</p>
+<p>レンダーツリーのルートから再帰的にレイアウト情報を計算(layoutメソッド)していきます。</p>
+<ol>
+<li>親レンダラーが自身の幅を決定します。</li>
+<li>親が子を確認して、
+<ol>
+<li>子レンダラーを配置します（xとyを設定します）。</li>
+<li>必要な場合は子のlayoutメソッドを呼び出します。これにより、子の高さを計算します。</li>
+</ol>
+</li>
+<li>親は子の高さの累積、マージンの高さ、パディングを使用して、自身の高さを設定します。この高さは親レンダラーのさらに親によって使用されます。</li>
+</ol>
+<p>※ <a href="https://www.html5rocks.com/ja/tutorials/internals/howbrowserswork/#The_layout_process">レイアウト処理</a> 参考</p>
+<p>CSSボックスモデルの図を参考までに共有しておきます。</p>
+<figure title="CSS 基本ボックスモデル">
+<amp-img src="https://mdn.mozillademos.org/files/8685/boxmodel-(3).png" alt="CSS 基本ボックスモデル" width="548" height="384" layout="intrinsic" class="i-amphtml-layout-intrinsic i-amphtml-layout-size-defined" i-amphtml-layout="intrinsic"><i-amphtml-sizer class="i-amphtml-sizer"><img alt aria-hidden="true" class="i-amphtml-intrinsic-sizer" role="presentation" src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjM4NCIgd2lkdGg9IjU0OCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4="></i-amphtml-sizer></amp-img>
+<figcaption><span><a href="https://developer.mozilla.org/ja/docs/Web/CSS/CSS_Box_Model/Introduction_to_the_CSS_box_model">CSS 基本ボックスモデル - developer.mozilla.org</a></span></figcaption>
+</figure>
 <hr>
 <p>④ Painting the render tree</p>
-<p>ようやく描画します。</p>
-<ol>
-<li>背景色</li>
-<li>背景画像</li>
-<li>ボーダー</li>
-<li>子</li>
-<li>アウトライン</li>
-</ol>
+<p>ようやく描画します。
+どこに描画するかという配置方法について考えることになります。
+大きく分けて、3つに分かれます。</p>
+<ul>
+<li>通常
+<ul>
+<li>オブジェクトはドキュメント内の場所に従って配置されます。つまり、レンダーツリー内の場所はDOMツリー内の場所と同様になり、ボックスの種類や寸法に従ってレイアウトされます。
+<ul>
+<li>position:static,relative</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>フロート
+<ul>
+<li>オブジェクトは最初に通常のフローのようにレイアウトされてから、左右のできるだけ遠くに移動されます。
+<ul>
+<li>float:right,left</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>絶対
+<ul>
+<li>オブジェクトはレンダーツリー内でDOMツリーとは異なる場所に配置されます。
+<ul>
+<li>position:absolute,fixed</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>※ <a href="https://www.html5rocks.com/ja/tutorials/internals/howbrowserswork/#Positioning_scheme">配置方法</a></p>
+<p>配置方法が分かれば、今度は描画する形について考えます。ブロックボックスとインラインボックスです。</p>
+<figure title="ブロックとインラインの配列">
+<amp-img src="https://www.html5rocks.com/ja/tutorials/internals/howbrowserswork/image061.png" alt="ブロックとインラインの配列" width="350" height="324" layout="intrinsic" class="i-amphtml-layout-intrinsic i-amphtml-layout-size-defined" i-amphtml-layout="intrinsic"><i-amphtml-sizer class="i-amphtml-sizer"><img alt aria-hidden="true" class="i-amphtml-intrinsic-sizer" role="presentation" src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjMyNCIgd2lkdGg9IjM1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4="></i-amphtml-sizer></amp-img>
+<figcaption><span><a href="https://www.html5rocks.com/ja/tutorials/internals/howbrowserswork/">ブロックとインラインの配列 - www.html5rocks.com</a></span></figcaption>
+</figure>
+<p>ブロックボックスは、短形の形であり垂直に並びます。
+インラインボックスは、独自の形を持たず水平に並びます。</p>
+<p>z-indexのようなプロパティでは、スタッキングコンテキストという概念を知る必要があります。
+詳しくは、<a href="https://developer.mozilla.org/ja/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context">重ね合わせコンテキスト - developer.mozilla.org</a> をご確認ください。</p>
 <hr>
-<p>なんとなく、ブラウザの動作を分かったのですが、やっぱり書いたり読んだりしてみたいところです。
-そうです、自作です。</p>
+<p>資料を通して、ブラウザの動作は理解できました。
+さらに理解を深堀りするために、自作してみます。</p>
 <h1 id="ブラウザを自作してみる"><a class="anchor" aria-label="Anchor" data-anchor-icon="#" href="#ブラウザを自作してみる"></a>ブラウザを自作してみる</h1>
 <p>Rust製のServoというブラウザエンジンを開発している人が書いた記事が、とても参考になります。</p>
 <ul>
@@ -141,7 +227,7 @@ padding,marginが登場します。</p>
 <amp-img src="https://res.cloudinary.com/silverbirder/image/upload/v1622034247/silver-birder.github.io/blog/mbrubeck_robinson_output.png" alt="Toyブラウザエンジン(mbrubeck)のアウトプット" width="800" height="600" layout="intrinsic" class="i-amphtml-layout-intrinsic i-amphtml-layout-size-defined" i-amphtml-layout="intrinsic"><i-amphtml-sizer class="i-amphtml-sizer"><img alt aria-hidden="true" class="i-amphtml-intrinsic-sizer" role="presentation" src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjYwMCIgd2lkdGg9IjgwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4="></i-amphtml-sizer></amp-img>
 <figcaption><span><a href="https://github.com/mbrubeck/robinson">Toyブラウザエンジン(mbrubeck)のアウトプット - github.com/mbrubeck/robinson</a></span></figcaption>
 </figure>
-<p>なので、これはRustで作られています。
+<p>このToyブラウザエンジンはRustで作られています。
 次のリンクにある自作ブラウザエンジンは、C++で書かれていて、さっきのよりも高機能です。</p>
 <ul>
 <li><a href="https://github.com/askerry/toy-browser">askerry/toy-browser</a></li>
@@ -159,9 +245,10 @@ padding,marginが登場します。</p>
 <li><a href="http://kaitei.net/cpp/">C++入門 - kaitei.net</a></li>
 </ul>
 <h1 id="re:_ブラウザの仕組み資料を読む"><a class="anchor" aria-label="Anchor" data-anchor-icon="#" href="#re:_ブラウザの仕組み資料を読む"></a>Re: ブラウザの仕組み資料を読む</h1>
-<p>もう一度、<a href="https://www.html5rocks.com/ja/tutorials/internals/howbrowserswork/">ブラウザの仕組み: 最新ウェブブラウザの内部構造</a> を読むと、初めて読んだときに比べて、深く理解できます。</p>
+<p>もう一度、<a href="https://www.html5rocks.com/ja/tutorials/internals/howbrowserswork/">ブラウザの仕組み: 最新ウェブブラウザの内部構造</a> を読むと、初めて読んだときに比べて、深く理解できるんじゃないかなと思います。</p>
 <h1 id="最後に"><a class="anchor" aria-label="Anchor" data-anchor-icon="#" href="#最後に"></a>最後に</h1>
-<p>以上。</p>
+<p>ブラウザの動作について資料や自作を通して理解を深めました。
+次は、Javascriptエンジンも自作してみたいと思います。</p>
 <h1 id="その他"><a class="anchor" aria-label="Anchor" data-anchor-icon="#" href="#その他"></a>その他</h1>
 <p>Chromiumのアドベントカレンダーがありました。参考までにざっと見てみると良いでしょう。
 <a href="https://qiita.com/advent-calendar/2017/chromium">Chromium Browser Advent Calendar 2017</a></p>
