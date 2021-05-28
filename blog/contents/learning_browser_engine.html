@@ -33,15 +33,10 @@ Chromeは、Chromiumを元に開発されています。
 <h1 id="chromiumのリバースエンジニアリング"><a class="anchor" aria-label="Anchor" data-anchor-icon="#" href="#chromiumのリバースエンジニアリング"></a>Chromiumのリバースエンジニアリング</h1>
 <p>ではさっそく、Chromiumのソースコードを見ていきましょう。</p>
 <p>これです。</p>
-<ul>
-<li><a href="https://source.chromium.org/chromium">source.chromium.org/chromium</a></li>
-</ul>
-<p>他にも参考となるリンクも載せておきます。</p>
-<ul>
-<li><a href="https://www.chromium.org/Home">chromium.org</a></li>
-<li><a href="https://chromium.googlesource.com/">chromium.googlesource.com</a></li>
-<li><a href="https://chromium.googlesource.com/chromium/src/+/master/docs/README.md">chromium.googlesource.com/docs/</a></li>
-</ul>
+<figure title="chromium/src">
+<amp-img src="https://res.cloudinary.com/silverbirder/image/upload/v1622126149/silver-birder.github.io/blog/chromium_src.png" alt="chromium/src" width="2870" height="1524" layout="intrinsic" class="i-amphtml-layout-intrinsic i-amphtml-layout-size-defined" i-amphtml-layout="intrinsic"><i-amphtml-sizer class="i-amphtml-sizer"><img alt aria-hidden="true" class="i-amphtml-intrinsic-sizer" role="presentation" src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE1MjQiIHdpZHRoPSIyODcwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIvPg=="></i-amphtml-sizer></amp-img>
+<figcaption><span><a href="https://source.chromium.org/chromium/chromium/src">chromium/src - source.chromium.org</a></span></figcaption>
+</figure>
 <p><a href="https://en.wikipedia.org/wiki/Chromium_(web_browser)">Chromium - Wiki</a>によれば、Chromiumのソースコードは約3,500万行あるそうです。
 しかも、言語はC++。私はあまりそれを詳しくないのです😞。</p>
 <p>実際にソースコードをローカルマシン(Macbook Air)へチェックアウトし、ビルドをしてみました。
@@ -160,7 +155,7 @@ DOMとレンダーオブジェクトは、1対1という訳ではなく、例え
 <p>※ <a href="https://www.html5rocks.com/ja/tutorials/internals/howbrowserswork/#The_layout_process">レイアウト処理</a> 参考</p>
 <p>CSSボックスモデルの図を参考までに共有しておきます。</p>
 <figure title="CSS 基本ボックスモデル">
-<amp-img src="https://mdn.mozillademos.org/files/8685/boxmodel-(3).png" alt="CSS 基本ボックスモデル" width="548" height="384" layout="intrinsic" class="i-amphtml-layout-intrinsic i-amphtml-layout-size-defined" i-amphtml-layout="intrinsic"><i-amphtml-sizer class="i-amphtml-sizer"><img alt aria-hidden="true" class="i-amphtml-intrinsic-sizer" role="presentation" src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjM4NCIgd2lkdGg9IjU0OCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4="></i-amphtml-sizer></amp-img>
+<img src="https://mdn.mozillademos.org/files/8685/boxmodel-(3).png" alt="CSS 基本ボックスモデル">
 <figcaption><span><a href="https://developer.mozilla.org/ja/docs/Web/CSS/CSS_Box_Model/Introduction_to_the_CSS_box_model">CSS 基本ボックスモデル - developer.mozilla.org</a></span></figcaption>
 </figure>
 <hr>
@@ -208,35 +203,240 @@ DOMとレンダーオブジェクトは、1対1という訳ではなく、例え
 <p>z-indexのようなプロパティでは、スタッキングコンテキストという概念を知る必要があります。
 詳しくは、<a href="https://developer.mozilla.org/ja/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context">重ね合わせコンテキスト - developer.mozilla.org</a> をご確認ください。</p>
 <hr>
-<p>資料を通して、ブラウザの動作は理解できました。
-さらに理解を深堀りするために、自作してみます。</p>
 <h1 id="ブラウザを自作してみる"><a class="anchor" aria-label="Anchor" data-anchor-icon="#" href="#ブラウザを自作してみる"></a>ブラウザを自作してみる</h1>
-<p>Rust製のServoというブラウザエンジンを開発している人が書いた記事が、とても参考になります。</p>
+<p>前章では、資料を通してブラウザの動作が理解できました。
+読むだけじゃなく、動かして理解してみたいとは思いませんか？
+そうです、自作してみましょう。</p>
+<p>Rust製のServoというブラウザエンジンを開発している人が書いた、次の記事がとても分かりやすいです。</p>
 <ul>
 <li><a href="https://limpet.net/mbrubeck/2014/08/08/toy-layout-engine-1.html">Let's build a browser engine! Part 1: Getting started</a>
 <ul>
-<li><a href="https://github.com/mbrubeck/robinson">mbrubeck/robinson</a></li>
+<li><a href="https://github.com/mbrubeck/robinson">mbrubeck/robinson</a>
+<ul>
+<li>Toyブラウザエンジン(mbrubeck)</li>
+<li>Rust製</li>
 </ul>
 </li>
 </ul>
+</li>
+</ul>
+<p>Toyブラウザエンジン(mbrubeck)のメインフローが、これまでの話ととても似ています。</p>
 <figure title="Toyブラウザエンジン(mbrubeck)のメインフロー">
 <amp-img src="https://res.cloudinary.com/silverbirder/image/upload/v1622034177/silver-birder.github.io/blog/mbrubeck_toy-layout-engine-7-painting.png" alt="Toyブラウザエンジン(mbrubeck)のメインフロー" width="2844" height="738" layout="intrinsic" class="i-amphtml-layout-intrinsic i-amphtml-layout-size-defined" i-amphtml-layout="intrinsic"><i-amphtml-sizer class="i-amphtml-sizer"><img alt aria-hidden="true" class="i-amphtml-intrinsic-sizer" role="presentation" src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjczOCIgd2lkdGg9IjI4NDQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmVyc2lvbj0iMS4xIi8+"></i-amphtml-sizer></amp-img>
 <figcaption><span><a href="https://limpet.net/mbrubeck/2014/11/05/toy-layout-engine-7-painting.html">Toyブラウザエンジン(mbrubeck)のメインフロー - limpet.net</a></span></figcaption>
 </figure>
+<p>Style treeは、これまでの話でいうとRender treeだと思います。
+Toyブラウザエンジン(mbrubeck)に、次のHTMLとCSSを読み込ませると、下記の画像のようなアウトプットになります。</p>
+<pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- https://github.com/mbrubeck/robinson/blob/master/examples/test.html --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Test<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"outer"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"inner"</span>&gt;</span>
+      Hello, <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"name"</span>&gt;</span>world!<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"inner"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"bye"</span>&gt;</span>
+      Goodbye!
+    <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+</code></pre>
+<pre><code class="hljs css"><span class="hljs-comment">/* https://github.com/mbrubeck/robinson/blob/master/examples/test.css */</span>
+* {
+  <span class="hljs-attribute">display</span>: block;
+}
+
+<span class="hljs-selector-tag">span</span> {
+  <span class="hljs-attribute">display</span>: inline;
+}
+
+<span class="hljs-selector-tag">html</span> {
+  <span class="hljs-attribute">width</span>: <span class="hljs-number">600px</span>;
+  <span class="hljs-attribute">padding</span>: <span class="hljs-number">10px</span>;
+  <span class="hljs-attribute">border-width</span>: <span class="hljs-number">1px</span>;
+  <span class="hljs-attribute">margin</span>: auto;
+  <span class="hljs-attribute">background</span>: <span class="hljs-number">#ffffff</span>;
+}
+
+<span class="hljs-selector-tag">head</span> {
+  <span class="hljs-attribute">display</span>: none;
+}
+
+<span class="hljs-selector-class">.outer</span> {
+  <span class="hljs-attribute">background</span>: <span class="hljs-number">#00ccff</span>;
+  <span class="hljs-attribute">border-color</span>: <span class="hljs-number">#666666</span>;
+  <span class="hljs-attribute">border-width</span>: <span class="hljs-number">2px</span>;
+  <span class="hljs-attribute">margin</span>: <span class="hljs-number">50px</span>;
+  <span class="hljs-attribute">padding</span>: <span class="hljs-number">50px</span>;
+}
+
+<span class="hljs-selector-class">.inner</span> {
+  <span class="hljs-attribute">border-color</span>: <span class="hljs-number">#cc0000</span>;
+  <span class="hljs-attribute">border-width</span>: <span class="hljs-number">4px</span>;
+  <span class="hljs-attribute">height</span>: <span class="hljs-number">100px</span>;
+  <span class="hljs-attribute">margin-bottom</span>: <span class="hljs-number">20px</span>;
+  <span class="hljs-attribute">width</span>: <span class="hljs-number">500px</span>;
+}
+
+<span class="hljs-selector-class">.inner</span><span class="hljs-selector-id">#bye</span> {
+  <span class="hljs-attribute">background</span>: <span class="hljs-number">#ffff00</span>;
+}
+
+<span class="hljs-selector-tag">span</span><span class="hljs-selector-id">#name</span> {
+  <span class="hljs-attribute">background</span>: red;
+  <span class="hljs-attribute">color</span>: white;
+}
+</code></pre>
 <figure title="Toyブラウザエンジン(mbrubeck)のアウトプット">
 <amp-img src="https://res.cloudinary.com/silverbirder/image/upload/v1622034247/silver-birder.github.io/blog/mbrubeck_robinson_output.png" alt="Toyブラウザエンジン(mbrubeck)のアウトプット" width="800" height="600" layout="intrinsic" class="i-amphtml-layout-intrinsic i-amphtml-layout-size-defined" i-amphtml-layout="intrinsic"><i-amphtml-sizer class="i-amphtml-sizer"><img alt aria-hidden="true" class="i-amphtml-intrinsic-sizer" role="presentation" src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjYwMCIgd2lkdGg9IjgwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4="></i-amphtml-sizer></amp-img>
 <figcaption><span><a href="https://github.com/mbrubeck/robinson">Toyブラウザエンジン(mbrubeck)のアウトプット - github.com/mbrubeck/robinson</a></span></figcaption>
 </figure>
-<p>このToyブラウザエンジンはRustで作られています。
-次のリンクにある自作ブラウザエンジンは、C++で書かれていて、さっきのよりも高機能です。</p>
+<p>次のリンクにある自作ブラウザエンジンは、<a href="https://github.com/mbrubeck/robinson">mbrubeck/robinson</a>を参考にして作られたものだそうです。</p>
 <ul>
-<li><a href="https://github.com/askerry/toy-browser">askerry/toy-browser</a></li>
+<li><a href="https://github.com/askerry/toy-browser">askerry/toy-browser</a>
+<ul>
+<li>Toyブラウザエンジン(askerry)</li>
+<li>C++製</li>
 </ul>
+</li>
+</ul>
+<p>Toyブラウザエンジン(askerry)に、次のHTMLとCSSを読み込ませると、下記の画像のようなアウトプットになります。
+見たら分かると思いますが、とても高機能です。</p>
+<pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- https://github.com/askerry/toy-browser/blob/master/examples/demo.html --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">"http://www.w3.org/1999/xhtml"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Browser Test<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">http-equiv</span>=<span class="hljs-string">"Content-Type"</span> <span class="hljs-attr">content</span>=<span class="hljs-string">"text/html; charset=utf-8"</span> /&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">"stylesheet"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"demo.css"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"page"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">header</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"header"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Toy Browser Engine<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">header</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"main"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"navbar"</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"navitem"</span>&gt;</span>
+                        Home
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"navitem"</span>&gt;</span>
+                        About
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"navitem"</span>&gt;</span>
+                        Some random stuff
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"navitem"</span>&gt;</span>
+                        Conclusion
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"img"</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"images/otters.jpg"</span>/&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"content"</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>What is this?<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span>
+                    This is a <span class="hljs-tag">&lt;<span class="hljs-name">b</span>&gt;</span>toy<span class="hljs-tag">&lt;/<span class="hljs-name">b</span>&gt;</span> browser engine, implemented for
+                    <span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>fun <span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"icon"</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"images/fun.png"</span>/&gt;</span>
+                    and <span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>glory <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"icon"</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"images/glory.png"</span>/&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>.
+                    <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Why would anyone do this?<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span>
+                    This seems pretty pointless! But I had a few goals:
+                    <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>Something to build to learn C++<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>Learn more about how browsers work<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>Make something I've never made before<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>What can it do?<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>
+                        Currently, the engine can parse a subset of HTML
+                        and build a DOM tree. It can also parse a small subset of
+                        CSS (sometimes incorrectly) and use simple selector matching
+                        to apply styles to elements.
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>
+                        It supports <span class="hljs-tag">&lt;<span class="hljs-name">em</span>&gt;</span>very basic<span class="hljs-tag">&lt;/<span class="hljs-name">em</span>&gt;</span> rendering of boxes, images, and
+                        text with simple block and inline layouts.
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+</code></pre>
+<pre><code class="hljs css"><span class="hljs-comment">/* https://github.com/askerry/toy-browser/blob/master/examples/demo.css */</span>
+<span class="hljs-selector-tag">body</span> {
+    <span class="hljs-attribute">font-family</span>: Arial, sans-serif;
+    <span class="hljs-attribute">background-color</span>: <span class="hljs-number">#BFC0C0</span>;
+    <span class="hljs-attribute">color</span>: <span class="hljs-number">#253237</span>;
+    <span class="hljs-attribute">font-size</span>: <span class="hljs-number">16px</span>;
+}
+<span class="hljs-selector-id">#page</span> {
+    <span class="hljs-attribute">padding</span>: <span class="hljs-number">20</span>;
+    <span class="hljs-comment">/* width: 800px; */</span>
+    <span class="hljs-attribute">margin</span>: auto;
+}
+
+<span class="hljs-selector-tag">header</span> {
+    <span class="hljs-attribute">padding</span>: <span class="hljs-number">10px</span>;
+    <span class="hljs-attribute">padding-left</span>: <span class="hljs-number">20px</span>;
+    <span class="hljs-attribute">background-color</span>: <span class="hljs-number">#434371</span>;
+    <span class="hljs-attribute">color</span>: <span class="hljs-number">#4acebd</span>;
+}
+
+<span class="hljs-selector-tag">span</span> {
+    <span class="hljs-attribute">color</span>: <span class="hljs-number">#4acebd</span>;
+}
+
+<span class="hljs-selector-id">#main</span> {
+    <span class="hljs-attribute">background-color</span>: white;
+    <span class="hljs-attribute">display</span>: flex;
+}
+
+<span class="hljs-selector-id">#navbar</span> {
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">180px</span>;
+    <span class="hljs-attribute">padding</span>: <span class="hljs-number">30px</span>;
+    <span class="hljs-attribute">background-color</span>: <span class="hljs-number">#4acebd</span>;
+    <span class="hljs-attribute">height</span>: <span class="hljs-number">500px</span>;
+}
+
+<span class="hljs-selector-class">.navitem</span> {
+    <span class="hljs-attribute">display</span>: block;
+    <span class="hljs-attribute">text-align</span>: center;
+    <span class="hljs-attribute">background-color</span>: <span class="hljs-number">#434371</span>;
+    <span class="hljs-attribute">color</span>: <span class="hljs-number">#4acebd</span>;
+    <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">5px</span>;
+    <span class="hljs-attribute">margin-bottom</span>: <span class="hljs-number">5px</span>;
+    <span class="hljs-attribute">padding</span>: <span class="hljs-number">10px</span>;
+    <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">4px</span>;
+    <span class="hljs-attribute">border-style</span>: solid;
+    <span class="hljs-attribute">border-width</span>: <span class="hljs-number">2px</span>;
+    <span class="hljs-attribute">border-color</span>: <span class="hljs-number">#253237</span>;
+}
+
+<span class="hljs-selector-id">#content</span> {
+    <span class="hljs-attribute">padding</span>: <span class="hljs-number">20px</span>;
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">500</span>;
+}
+
+<span class="hljs-selector-class">.img</span> {
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">180px</span>;
+}
+
+<span class="hljs-selector-class">.icon</span> {
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">2em</span>;
+}
+
+<span class="hljs-selector-tag">h2</span> {
+    <span class="hljs-attribute">color</span>: <span class="hljs-number">#434371</span>;
+}
+
+<span class="hljs-selector-tag">li</span> {
+    <span class="hljs-attribute">margin-bottom</span>: <span class="hljs-number">5px</span>;
+}
+</code></pre>
 <figure title="Toyブラウザエンジン(askerry)のアウトプット">
-<amp-img src="https://github.com/askerry/toy-browser/raw/master/examples/demo.png" alt="Toyブラウザエンジン(askerry)のアウトプット" width="981" height="652" layout="intrinsic" class="i-amphtml-layout-intrinsic i-amphtml-layout-size-defined" i-amphtml-layout="intrinsic"><i-amphtml-sizer class="i-amphtml-sizer"><img alt aria-hidden="true" class="i-amphtml-intrinsic-sizer" role="presentation" src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjY1MiIgd2lkdGg9Ijk4MSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4="></i-amphtml-sizer></amp-img>
+<img src="https://github.com/askerry/toy-browser/raw/master/examples/demo.png" alt="Toyブラウザエンジン(askerry)のアウトプット">
 <figcaption><span><a href="https://github.com/askerry/toy-browser">Toyブラウザエンジン(askerry)のアウトプット - github.com/askerry/toy-browser</a></span></figcaption>
 </figure>
-<p>私としては、こちらのほうが興味があるので、まずこっちを知り、それをRust版で作り直したいなと思います。</p>
+<p>私としては、こちらの方が興味があるので、まずこちらを知り、それをRust版で作り直したいなと思います。</p>
 <h1 id="c++_を学ぶ"><a class="anchor" aria-label="Anchor" data-anchor-icon="#" href="#c++_を学ぶ"></a>C++ を学ぶ</h1>
 <p>さて、C++を学ぶために、次のサイトをざっと眺めてみます。</p>
 <ul>
@@ -244,11 +444,130 @@ DOMとレンダーオブジェクトは、1対1という訳ではなく、例え
 <li><a href="http://wisdom.sakura.ne.jp/programming/cpp/">C++入門 - wisdom.sakura.ne.jp</a></li>
 <li><a href="http://kaitei.net/cpp/">C++入門 - kaitei.net</a></li>
 </ul>
+<h1 id="自作ブラウザのソースコード"><a class="anchor" aria-label="Anchor" data-anchor-icon="#" href="#自作ブラウザのソースコード"></a>自作ブラウザのソースコード</h1>
+<p><a href="https://github.com/askerry/toy-browser">askerry/toy-browser</a>のメインコード(main.cc)を載せます。</p>
+<pre><code class="hljs arduino"><span class="hljs-comment">/* https://github.com/askerry/toy-browser/blob/master/src/main.cc */</span>
+<span class="hljs-keyword">namespace</span> {
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">renderWindow</span><span class="hljs-params">(<span class="hljs-keyword">int</span> <span class="hljs-built_in">width</span>, <span class="hljs-keyword">int</span> <span class="hljs-built_in">height</span>, <span class="hljs-keyword">const</span> style::StyledNode &amp;sn,
+                  sf::RenderWindow *window)</span> </span>{
+  layout::Dimensions viewport;
+  viewport.content.<span class="hljs-built_in">width</span> = <span class="hljs-built_in">width</span>;
+  viewport.content.<span class="hljs-built_in">height</span> = <span class="hljs-built_in">height</span>;
+  <span class="hljs-comment">// Create layout tree for the specified viewport dimensions.</span>
+  <span class="hljs-built_in">std</span>::<span class="hljs-built_in">unique_ptr</span>&lt;layout::LayoutElement&gt; layout_root =
+      layout::layout_tree(sn, viewport);
+  <span class="hljs-comment">// Paint to window.</span>
+  paint(*layout_root, viewport.content, window);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">windowLoop</span><span class="hljs-params">(<span class="hljs-keyword">const</span> style::StyledNode &amp;sn)</span> </span>{
+  <span class="hljs-comment">// Create browser window.</span>
+  <span class="hljs-function"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">unique_ptr</span>&lt;sf::RenderWindow&gt; <span class="hljs-title">window</span><span class="hljs-params">(<span class="hljs-keyword">new</span> sf::RenderWindow())</span></span>;
+  window-&gt;create(sf::VideoMode(FLAGS_window_width, FLAGS_window_height),
+                 <span class="hljs-string">"Toy Browser"</span>, sf::Style::Close | sf::Style::Resize);
+  window-&gt;setPosition(sf::Vector2i(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>));
+  window-&gt;<span class="hljs-built_in">clear</span>(sf::Color::Black);
+  <span class="hljs-comment">// Render initial window contents.</span>
+  renderWindow(FLAGS_window_width, FLAGS_window_height, sn, window.<span class="hljs-built_in">get</span>());
+  <span class="hljs-comment">// Run the main event loop as long as the window is open.</span>
+  <span class="hljs-keyword">while</span> (window-&gt;isOpen()) {
+    sf::Event event;
+    <span class="hljs-keyword">while</span> (window-&gt;pollEvent(event)) {
+      <span class="hljs-keyword">switch</span> (event.type) {
+        <span class="hljs-keyword">case</span> sf::Event::Closed:
+          window-&gt;<span class="hljs-built_in">close</span>();
+          <span class="hljs-keyword">break</span>;
+
+        <span class="hljs-keyword">case</span> sf::Event::KeyPressed:
+          logger::debug(<span class="hljs-string">"keypress: "</span> + <span class="hljs-built_in">std</span>::to_string(event.key.code));
+          <span class="hljs-keyword">break</span>;
+
+        <span class="hljs-keyword">case</span> sf::Event::Resized:
+          logger::debug(<span class="hljs-string">"new width: "</span> + <span class="hljs-built_in">std</span>::to_string(event.<span class="hljs-built_in">size</span>.<span class="hljs-built_in">width</span>));
+          logger::debug(<span class="hljs-string">"new height: "</span> + <span class="hljs-built_in">std</span>::to_string(event.<span class="hljs-built_in">size</span>.<span class="hljs-built_in">height</span>));
+          window-&gt;<span class="hljs-built_in">clear</span>(sf::Color::Black);
+          renderWindow(event.<span class="hljs-built_in">size</span>.<span class="hljs-built_in">width</span>, event.<span class="hljs-built_in">size</span>.<span class="hljs-built_in">height</span>, sn, window.<span class="hljs-built_in">get</span>());
+          <span class="hljs-keyword">break</span>;
+
+        <span class="hljs-keyword">case</span> sf::Event::TextEntered:
+          <span class="hljs-keyword">if</span> (event.<span class="hljs-built_in">text</span>.unicode &lt; <span class="hljs-number">128</span>) {
+            logger::debug(
+                <span class="hljs-string">"ASCII character typed: "</span> +
+                <span class="hljs-built_in">std</span>::to_string(<span class="hljs-keyword">static_cast</span>&lt;<span class="hljs-keyword">char</span>&gt;(event.<span class="hljs-built_in">text</span>.unicode)));
+          }
+          <span class="hljs-keyword">break</span>;
+
+        <span class="hljs-keyword">default</span>:
+          <span class="hljs-keyword">break</span>;
+      }
+    }
+  }
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+}  <span class="hljs-comment">// namespace</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span> </span>{
+  gflags::ParseCommandLineFlags(&amp;argc, &amp;argv, <span class="hljs-literal">true</span>);
+
+  <span class="hljs-comment">// Parse HTML and CSS files.</span>
+  <span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> source = io::readFile(FLAGS_html_file);
+  <span class="hljs-built_in">std</span>::<span class="hljs-built_in">unique_ptr</span>&lt;dom::Node&gt; root = html_parser::parseHtml(source);
+  <span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> css = io::readFile(FLAGS_css_file);
+  <span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">unique_ptr</span>&lt;css::StyleSheet <span class="hljs-keyword">const</span>&gt; stylesheet = css::parseCss(css);
+
+  <span class="hljs-comment">// Initialize font registry singleton.</span>
+  text_render::FontRegistry *registry =
+      text_render::FontRegistry::getInstance();
+
+  <span class="hljs-comment">// Align styles with DOM nodes.</span>
+  <span class="hljs-built_in">std</span>::<span class="hljs-built_in">unique_ptr</span>&lt;style::StyledNode&gt; styled_node =
+      style::styleTree(*root, stylesheet, style::PropertyMap());
+
+  <span class="hljs-comment">// Run main browser window loop.</span>
+  windowLoop(*styled_node);
+
+  <span class="hljs-comment">// Delete styled node and clear font registry.</span>
+  styled_node.reset();
+  registry-&gt;<span class="hljs-built_in">clear</span>();
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>次のとおり、これまで学んできたメインフローと、C++がとても似ていることが分かります。</p>
+<ol>
+<li>HTMLとCSSをパース</li>
+</ol>
+<pre><code class="hljs cpp"><span class="hljs-comment">// Parse HTML and CSS files.</span>
+<span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> source = io::readFile(FLAGS_html_file);
+<span class="hljs-built_in">std</span>::<span class="hljs-built_in">unique_ptr</span>&lt;dom::Node&gt; root = html_parser::parseHtml(source);
+<span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> css = io::readFile(FLAGS_css_file);
+<span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">unique_ptr</span>&lt;css::StyleSheet <span class="hljs-keyword">const</span>&gt; stylesheet = css::parseCss(css);
+</code></pre>
+<ol start="2">
+<li>1の結果からStyle tree(Render tree)を構築</li>
+</ol>
+<pre><code class="hljs cpp"><span class="hljs-comment">// Align styles with DOM nodes.</span>
+<span class="hljs-built_in">std</span>::<span class="hljs-built_in">unique_ptr</span>&lt;style::StyledNode&gt; styled_node =
+    style::styleTree(*root, stylesheet, style::PropertyMap());
+</code></pre>
+<ol start="3">
+<li>2の結果からLayout treeを構築</li>
+</ol>
+<pre><code class="hljs cpp"><span class="hljs-comment">// Create layout tree for the specified viewport dimensions.</span>
+<span class="hljs-built_in">std</span>::<span class="hljs-built_in">unique_ptr</span>&lt;layout::LayoutElement&gt; layout_root =
+    layout::layout_tree(sn, viewport);
+</code></pre>
+<ol start="4">
+<li>3をpaintという描画</li>
+</ol>
+<pre><code class="hljs pgsql">// Paint <span class="hljs-keyword">to</span> <span class="hljs-keyword">window</span>.
+paint(*layout_root, viewport.content, <span class="hljs-keyword">window</span>);
+</code></pre>
 <h1 id="re:_ブラウザの仕組み資料を読む"><a class="anchor" aria-label="Anchor" data-anchor-icon="#" href="#re:_ブラウザの仕組み資料を読む"></a>Re: ブラウザの仕組み資料を読む</h1>
 <p>もう一度、<a href="https://www.html5rocks.com/ja/tutorials/internals/howbrowserswork/">ブラウザの仕組み: 最新ウェブブラウザの内部構造</a> を読むと、初めて読んだときに比べて、深く理解できるんじゃないかなと思います。</p>
 <h1 id="最後に"><a class="anchor" aria-label="Anchor" data-anchor-icon="#" href="#最後に"></a>最後に</h1>
-<p>ブラウザの動作について資料や自作を通して理解を深めました。
-次は、Javascriptエンジンも自作してみたいと思います。</p>
+<p>ブラウザの動作について資料や自作を通して理解を深めました。</p>
+<p>ブラウザの動作が分かれば、ブラウザに優しいWebフロントエンド開発ができると思います。</p>
+<p>(今度こそChromiumのリバースエンジニアリングができるかもしれません。)</p>
 <h1 id="その他"><a class="anchor" aria-label="Anchor" data-anchor-icon="#" href="#その他"></a>その他</h1>
 <p>Chromiumのアドベントカレンダーがありました。参考までにざっと見てみると良いでしょう。
 <a href="https://qiita.com/advent-calendar/2017/chromium">Chromium Browser Advent Calendar 2017</a></p>
