@@ -135,8 +135,6 @@
 </tbody>
 </table>
 <h3 id="🏠_[wip]_テクニカルスキル"><a class="anchor" aria-label="Anchor" data-anchor-icon="###" href="#🏠_[wip]_テクニカルスキル"></a>🏠 [WIP] テクニカルスキル</h3>
-<p> <span class="badge badge-primary">経験年数</span> <span class="badge badge-secondary">利用場面</span> <span class="badge badge-info">技術種類</span>
-</p>
 <p><amp-list width="auto" height="1500" layout="fixed-height" class="resume-tech-items i-amphtml-layout-fixed-height i-amphtml-layout-size-defined" src="https://silver-birder.github.io/resume/index.json" style="height:1500px;" i-amphtml-layout="fixed-height">
 <template type="amp-mustache">
 {{#results}}
@@ -155,16 +153,21 @@
 {{/icon}}
 <div class="card-body">
 <p class="lead"><strong>{{name}}</strong></p>
-<p>{{results}}</p>
-<p><span class="badge badge-primary">{{actual_years}}</span></p>
-<p>
+<p><span class="badge badge-success">経験内容</span><br><span>{{results}}</span></p>
+<p><span class="badge badge-primary">経験年数</span><br><span>{{actual_years}}</span></p>
+<p><span class="badge badge-secondary">利用場面</span><br>
+[
 {{#usage_scenarios}}
-<span class="badge badge-secondary">{{.}}</span>
+<span>{{.}}</span>,
 {{/usage_scenarios}}
-</p><p>
+]
+</p>
+<p><span class="badge badge-info">技術種類</span><br>
+[
 {{#tech_types}}
-<span class="badge badge-info">{{.}}</span>
+<span>{{.}}</span>,
 {{/tech_types}}
+]
 </p>
 <p>
 {{#github_url}}
