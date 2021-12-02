@@ -237,7 +237,8 @@ FROM句で関数呼び出しする際、モックデータを返却できるよ�
 <p>順を追って説明します。</p>
 <hr>
 <p>①番目は、<code>元データをMock差し替えできるように、テーブル関数化</code> です。</p>
-<p>shop.fruitsテーブルをMockで差し替えられるように、テーブル関数化します。</p>
+<p>元データは、今回<code>shop.fruits</code>テーブルですので、Mockで差し替えられるようにテーブル関数化します。
+次のコードが、Mock差し替え可能なテーブル関数です。</p>
 <pre><code class="language-sql hljs"><span class="hljs-comment">-- fruits_tvf.sql</span>
 <span class="hljs-comment">--   function:</span>
 <span class="hljs-comment">--    - shop.fruits_inject()</span>
@@ -276,10 +277,24 @@ FROM句で関数呼び出しする際、モックデータを返却できるよ�
 <li>テーブル関数 shop.fruitsの定義</li>
 </ol>
 <p>1つ目は、後でMock差し替え(上書き)するための関数です。</p>
-<p>2つ目は、<code>is_test BOOL</code> という値を引数とした関数で、実データ(shop.fruits)とモックデータ(shop.fruits_inject)の和集合を返します。</p>
+<p>2つ目は、<code>is_test BOOL</code> という値を引数とした関数で、次の条件分岐があります。</p>
+<ul>
+<li>is_testがTrueの場合
+<ul>
+<li>モックデータ(shop.fruits_inject)を返却</li>
+</ul>
+</li>
+<li>is_testがFalseの場合
+<ul>
+<li>実データ(shop.fruits)を返却</li>
+</ul>
+</li>
+</ul>
+<p>プロダクションコード時は、is_testをFalseとし、テストコード時は、is_testをTrueとして使う想定です。</p>
 <hr>
 <p>②番目は、<code>ロジックを含んだSQLのFROM句を、①のテーブル関数に差し替えて、テーブル関数化</code> です。</p>
-<p><code>fruits_less_than_100</code>テーブルを関数化します。</p>
+<p>ロジックを含んだSQL、今回は、<code>fruits_less_than_100</code>テーブルを関数化します。
+次のコードが、①のテーブル関数で差し替えたテーブル関数です。</p>
 <pre><code class="language-sql hljs"><span class="hljs-comment">-- fruits_less_than_tvf.sql</span>
 <span class="hljs-comment">--  function: </span>
 <span class="hljs-comment">--    - shop.fruits_less_than(is_test BOOL, p INT)</span>
@@ -294,8 +309,8 @@ FROM句で関数呼び出しする際、モックデータを返却できるよ�
 <span class="hljs-keyword">WHERE</span>
   price <span class="hljs-operator">&lt;</span> p
 </code></pre>
-<p>FROM句に、先程定義したshop.fruitsテーブル関数を呼び出します。
-引数は、shop.fruits_less_than関数から渡ってくる<code>is_test BOOL</code>をそのままセットします。
+<p>FROM句に、先程①番で定義したshop.fruitsテーブル関数を呼び出します。
+shop.fruitsテーブル関数の引数は、shop.fruits_less_than関数から渡ってくる<code>is_test BOOL</code>をそのままセットします。
 また、shop.fruits_less_than関数には、<code>p INT</code>という引数も持ち、less_thanのpriceを柔軟に対応できるようにします。</p>
 <hr>
 <p>これにて、テーブル関数化を終えました。次は、プロダクトコードとテストコードを紹介します。</p>
@@ -310,7 +325,7 @@ FROM句で関数呼び出しする際、モックデータを返却できるよ�
 <span class="hljs-keyword">FROM</span>
   shop.fruits_less_than(<span class="hljs-literal">False</span>, <span class="hljs-number">100</span>)
 </code></pre>
-<p>取り上げて重要なことは、ありません。</p>
+<p>取り上げて重要なことは、ありません。プロダクションコードは、is_testをFalseとします。</p>
 <p>次が、本記事のメインである、<strong>BigQueryのSQLに対するユニットテストコード</strong>です。</p>
 <pre><code class="language-sql hljs"><span class="hljs-comment">-- test_fruits_less_than_100.sql</span>
 <span class="hljs-comment">-- arrange</span>
@@ -347,7 +362,7 @@ ASSERT
 <ol>
 <li>shop.fruits_inject関数の上書き(<strong>モックの差し込み</strong>)</li>
 <li>shop.fruits_less_than関数で、is_test=Trueとして生成し、一時テーブルで保存</li>
-<li>fruits_less_than_100に対してアサーション</li>
+<li>②の一時テーブルに対してアサーション</li>
 </ol>
 <p>重要なのが、①番です。shop.fruits_inject関数を上書きします。
 そうすると、shop.fruits関数で参照するshop.fruits_inject関数結果が、上書きされたものに切り替わります。</p>
@@ -470,7 +485,7 @@ bq query --use_legacy_sql=<span class="hljs-literal">false</span> &lt; <span cla
 <li>回避案
 <ul>
 <li>BigQueryのScriptingを利用</li>
-<li>Cloud Buildの<code>waitFor</code>利用</li>
+<li>Cloud Buildの<code>waitFor</code>を利用</li>
 </ul>
 </li>
 </ul>
