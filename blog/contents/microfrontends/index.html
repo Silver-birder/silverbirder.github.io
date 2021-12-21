@@ -1,0 +1,713 @@
+<!DOCTYPE html><html lang="ja" dir="ltr"><head>
+  
+    
+
+  
+
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Micro Frontends を学んだすべて: silverbirder</title>
+<meta property="og:title" content="Micro Frontends を学んだすべて: silverbirder">
+
+<meta name="generator" content="rocket 0.1">
+<link rel="canonical" href="http://localhost:8080/blog/contents/microfrontends/">
+
+
+
+  
+
+<meta name="description" content="Micro FrontendsというWebフロントエンドアーキテクチャがあります。このアーキテクチャを知るために、書籍を読み、簡単なサンプルWebアプリを開発しました。そこから学んだことをすべて議事録として残したいと思います。">
+<meta property="og:description" content="Micro FrontendsというWebフロントエンドアーキテクチャがあります。このアーキテクチャを知るために、書籍を読み、簡単なサンプルWebアプリを開発しました。そこから学んだことをすべて議事録として残したいと思います。">
+
+  
+    
+<link rel="apple-touch-icon" sizes="180x180" href="../../../assets/apple-touch-icon.jpg">
+<link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../../assets/favicon-16x16.png">
+<link rel="manifest" href="../../../assets/webmanifest.json">
+
+<meta name="msapplication-TileColor" content="#1d3557">
+<meta name="theme-color" content="#1d3557">
+
+  
+    <meta property="og:site_name" content="silverbirder">
+<meta property="og:type" content="website">
+
+<meta property="og:image" content="https://res.cloudinary.com/silverbirder/image/upload/v1614431108/silver-birder.github.io/blog/everything_I_ve_learned_about_Micro_Frontends.jpg">
+<meta property="og:url" content="http://localhost:8080/blog/contents/microfrontends/">
+
+<meta name="twitter:card" content="summary_large_image">
+
+  
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="">
+
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&amp;display=optional" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&amp;display=optional" rel="stylesheet">
+
+  
+    <link rel="stylesheet" href="../../../3cb4adfb.css">
+<link rel="stylesheet" href="../../../0f4765a3.css">
+<link rel="stylesheet" href="../../../ac2ea3b8.css">
+<link rel="stylesheet" href="../../../2366292e.css">
+
+  
+    <noscript><link rel="stylesheet" href="/_merged_assets/_static/search/noscript.css"></noscript>
+
+  
+    <link rel="stylesheet" href="../../../f5cf94c7.css">
+  
+    
+  
+    <noscript><link rel="stylesheet" href="/_merged_assets/_static/noscript.css"/></noscript>
+
+  
+    <link rel="stylesheet" href="../../../b1403e10.css">
+  
+    <meta name="twitter:creator" content="@Silver_birder">
+
+<link rel="stylesheet" href="../../../611b393e.css" mdjs-use="">
+
+<meta name="google-site-verification" content="-8bAm041798VvU0oItcuyuShbVINfNMLfTmP7tENPDY">
+  
+
+<link rel="preload" href="../../../b089d234.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../d3f07d73.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../46ae44d0.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../dd4fcd54.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../08df7a3c35.js" as="script" crossorigin="anonymous">
+</head>
+
+  
+
+  
+  <body layout="layout-blog-details">
+  
+
+    
+      <header id="main-header">
+  <div class="content-area">
+    
+      <button id="mobile-menu-trigger" data-action="trigger-mobile-menu">
+	<span class="sr-only">Show Menu</span>
+	      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon">
+        <path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path>
+      </svg>
+
+</button>
+
+    
+      
+	<a class="logo-link" href="/">
+  <img src="../../../90a4fb13.svg" alt="Rocket Logo">
+  <span>silverbirder</span>
+</a>
+
+
+
+    
+      <rocket-search class="search" json-url="/_merged_assets/_static/rocket-search-index.json">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129" style="width: 25px;">
+    <path d="M51.6 96.7c11 0 21-3.9 28.8-10.5l35 35c.8.8 1.8 1.2 2.9 1.2s2.1-.4 2.9-1.2c1.6-1.6 1.6-4.2 0-5.8l-35-35c6.5-7.8 10.5-17.9 10.5-28.8 0-24.9-20.2-45.1-45.1-45.1-24.8 0-45.1 20.3-45.1 45.1 0 24.9 20.3 45.1 45.1 45.1zm0-82c20.4 0 36.9 16.6 36.9 36.9C88.5 72 72 88.5 51.6 88.5S14.7 71.9 14.7 51.6c0-20.3 16.6-36.9 36.9-36.9z"></path>
+  </svg>
+</rocket-search>
+
+
+
+    
+      
+  <a href="/blog/" class="
+          
+           active 
+        ">Blog</a>
+  <a href="/resume/" class="
+          
+          
+        ">Resume</a>
+  <a href="/misc/" class="
+          
+          
+        ">Misc</a>
+
+    
+      <launch-dark-switch class="light-dark-switch" label="Toggle darkmode">Toggle darkmode</launch-dark-switch>
+
+
+    
+      
+	<a class="social-link" href="https://github.com/Silver-birder/Silver-birder.github.io" aria-label="silverbirder on GitHub" rel="noopener noreferrer" target="_blank">
+		<span class="sr-only">GitHub</span>
+		
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 16" fill="none">
+  <title>GitHub</title>
+  <path fill="currentColor" fill-rule="evenodd" d="M8.18391.249268C3.82241.249268.253906 3.81777.253906 8.17927c0 3.46933 2.279874 6.44313 5.451874 7.53353.3965.0991.49563-.1983.49563-.3965v-1.3878c-2.18075.4956-2.67638-.9912-2.67638-.9912-.3965-.8922-.89212-1.1895-.89212-1.1895-.69388-.4957.09912-.4957.09912-.4957.793.0992 1.1895.793 1.1895.793.69388 1.2887 1.88338.8922 2.27988.6939.09912-.4956.29737-.8921.49562-1.0904-1.78425-.1982-3.5685-.8921-3.5685-3.96496 0-.89212.29738-1.586.793-2.08162-.09912-.19825-.3965-.99125.09913-2.08163 0 0 .69387-.19825 2.18075.793.59475-.19825 1.28862-.29737 1.9825-.29737.69387 0 1.38775.09912 1.98249.29737 1.4869-.99125 2.1808-.793 2.1808-.793.3965 1.09038.1982 1.88338.0991 2.08163.4956.59475.793 1.28862.793 2.08162 0 3.07286-1.8834 3.66766-3.66764 3.86586.29737.3965.59474.8921.59474 1.586v2.1808c0 .1982.0991.4956.5948.3965 3.172-1.0904 5.4518-4.0642 5.4518-7.53353-.0991-4.3615-3.6676-7.930002-8.02909-7.930002z" clip-rule="evenodd"></path>
+</svg>
+
+		
+	</a>
+	<a class="social-link" href="https://twitter.com/silver_birder" aria-label="silverbirder on Twitter" rel="noopener noreferrer" target="_blank">
+		<span class="sr-only">Twitter</span>
+		
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 274 223"><title>Twitter</title><path d="M85.98 223c-31.675 0-61.158-9.285-85.98-25.199 4.388.518 8.853.783 13.38.783 26.278 0 50.463-8.967 69.659-24.01-24.544-.453-45.258-16.669-52.395-38.953a56.014 56.014 0 0 0 10.552 1.006c5.116 0 10.071-.685 14.778-1.967-25.66-5.152-44.993-27.822-44.993-54.998 0-.236 0-.471.004-.705a55.865 55.865 0 0 0 25.406 7.015c-15.05-10.058-24.953-27.226-24.953-46.685 0-10.279 2.766-19.914 7.594-28.198 27.664 33.934 68.993 56.264 115.609 58.603a56.31 56.31 0 0 1-1.453-12.782c0-30.975 25.114-56.088 56.091-56.088 16.132 0 30.709 6.812 40.941 17.713a112.328 112.328 0 0 0 35.617-13.611c-4.188 13.097-13.081 24.089-24.662 31.031a112.148 112.148 0 0 0 32.215-8.832 114 114 0 0 1-27.988 29.035c.108 2.405.162 4.824.162 7.256C245.564 137.533 189.148 223 85.98 223" fill="currentColor"></path></svg>
+
+		
+	</a>
+
+    
+  </div>
+</header>
+
+    
+
+    
+  <div id="content-wrapper">
+    <div class="content-area">
+      
+	<rocket-drawer id="sidebar">
+  <nav slot="content" id="sidebar-nav">
+    
+      <a class="logo-link" href="/">
+  <img src="../../../90a4fb13.svg" alt="Rocket Logo">
+  <span>silverbirder</span>
+</a>
+
+
+    
+      <rocket-navigation>
+  <ul>
+    <li class="current">
+      <h3>Headings</h3>
+      <ul><li class="menu-item">
+<a href="/blog/contents/microfrontends/#サービス">サービス</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/microfrontends/#仕組み">仕組み</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/microfrontends/#状態管理-ルーティング">状態管理, ルーティング</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/microfrontends/#その他">その他</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/microfrontends/#ssr--csr-hydration-が実現可能">SSR + CSR (Hydration) が実現可能</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/microfrontends/#サービス内で技術スタックを選択できる">サービス内で技術スタックを選択できる</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/microfrontends/#サービス毎のフロントエンドに集中できる">サービス毎のフロントエンドに集中できる</a>
+</li></ul>
+    </li>
+  </ul>
+  <div class="sidebar-tags">
+    <h3>Date</h3>
+    <div>Mon May 04 2020</div>
+  </div>
+  <div class="sidebar-tags">
+    <h3>Tags</h3>
+    <div class="tags">
+      
+        <span class="tag">Micro Frontends</span>
+      
+        <span class="tag">Learning</span>
+      
+    </div>
+  </div>
+  <div class="sidebar-bottom">
+  <hr> <launch-dark-switch class="light-dark-switch" label="Toggle darkmode">Toggle darkmode</launch-dark-switch>
+
+  
+    <a href="https://github.com/Silver-birder/Silver-birder.github.io/issues">Help and Feedback</a>
+  
+</div>
+
+</rocket-navigation>
+
+    
+  </nav>
+</rocket-drawer>
+
+
+      
+  <main class="markdown-body">
+    <main class="markdown-body">
+  
+    
+  <h1>Micro Frontends を学んだすべて</h1>
+
+
+  <img src="https://res.cloudinary.com/silverbirder/image/upload/v1614431108/silver-birder.github.io/blog/everything_I_ve_learned_about_Micro_Frontends.jpg" alt="">
+
+
+  
+    <p>Micro FrontendsというWebフロントエンドアーキテクチャがあります。
+このアーキテクチャを知るために、書籍を読み、簡単なサンプルWebアプリを開発しました。
+そこから学んだことをすべて議事録として残したいと思います。</p>
+<!--  TODO: TOC -->
+<h1 id="モノリシックな-webアプリケーション"><a class="anchor" href="#モノリシックな-webアプリケーション"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>モノリシックな Webアプリケーション</h1>
+<p>マイクロサービスという考え方の多くは、バックエンドへ適用されることが一般的です。
+一方で、フロントエンドは依然モノリシックなままの状態です。</p>
+<p>ECサイトのようなWebアプリケーションでは、様々な専門知識(商品、注文、検索など)を必要とし、フロントエンド開発者の守備範囲がとても広くなってしまいます。
+開発者には限界があり、いつしか<b>トラブルシューティングに追われる日々</b>になってしまいます。</p>
+<p>そこで、Micro Frontendsというアーキテクチャの出番です。</p>
+<h1 id="micro-frontends-とは"><a class="anchor" href="#micro-frontends-とは"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Micro Frontends とは</h1>
+<blockquote>
+<p>それはマイクロサービスの考え方をフロントエンドに拡張したものです。</p>
+</blockquote>
+<p><img src="https://micro-frontends-japanese.org/resources/monolith-frontback-microservices.png" alt="micro frontends monolith-frontback-microservices" rocket-image="responsive"></p>
+<p><img src="https://micro-frontends-japanese.org/resources/verticals-headline.png" alt="micro frontends verticals-headline" rocket-image="responsive"></p>
+<p>※ <a href="https://micro-frontends-japanese.org">https://micro-frontends-japanese.org</a></p>
+<p>要は、バックエンドだけでなく、バックエンドからフロントエンドまでをマイクロサービス化することです。</p>
+<p>さらに詳しく知りたい方は、次のページをご参考下さい。とてもわかりやすいです。</p>
+<p><a href="https://micro-frontends-japanese.org/">https://micro-frontends-japanese.org/</a>  <!--  TODO: embed  --></p>
+<p>また、次の書籍を読むと、
+<a href="https://www.manning.com/books/micro-frontends-in-action">https://www.manning.com/books/micro-frontends-in-action</a>  <!--  TODO: embed  --></p>
+<blockquote>
+<p>Amazon does not talk a lot about its internal development structure. However, there are reports that <b>the teams who run its e-commerce site have been working like this </b>for a long time.  ...</p>
+</blockquote>
+<blockquote>
+<p><b>Micro frontends are indeed quite popular in the e-commerce</b> sector.  <b>In 2012</b> the Otto Group, a Germany based mail order company and one of the world’s largest e-commerce players started to split up its monolith.  ...</p>
+</blockquote>
+<blockquote>
+<p>The Swedish furniture company <b>IKEA and Zalando</b>, one of Europes biggest fashion retailers, moved to this model. ...</p>
+</blockquote>
+<blockquote>
+<p>But micro frontends are also used in other industries. <b>Spotify</b> organizes itself in autonomous end-to-end teams they call Squads. ...</p>
+</blockquote>
+<p>Excerpt From: Michael Geers. “Micro Frontends in Action MEAP V03.” iBooks.</p>
+<p>という内容があります。</p>
+<p>IKEAやZalando といった<b>ECサイトがMicro Frontendsを採用する</b>ケースが多く、公には言っていませんが、AmazonもMicro Frontendsで取り組んでいるようです。
+ECサイトだけでなく、Spotifyのようなサービスにも適用されるケースがあります。</p>
+<h1 id="micro-frontends-の良さ"><a class="anchor" href="#micro-frontends-の良さ"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Micro Frontends の良さ</h1>
+<p>私が思う Micro Frontends から得られる最大の恩恵は、"<b>局所化</b>" だと思います。</p>
+<p>フロントエンドをサービス毎(商品、注文、検索など)に分割することで</p>
+<ul>
+<li>サービスの<b>専門性</b>向上
+<ul>
+<li>ex. 対象サービスのフロントエンドだけに集中できる</li>
+</ul>
+</li>
+<li>サービスの<b>開発速度</b>向上
+<ul>
+<li>ex. 対象サービスのソースコードだけ読めば良い</li>
+<li>ex. 対象サービスだけにライブラリアップデートすれば良い</li>
+<li>ex. フレームワークの切り替えは対象サービスだけすれば良い</li>
+</ul>
+</li>
+</ul>
+<p>少し薄っぺらいかも知れませんが、↑のように実感しています。</p>
+<p>※ Micro Frontendsは Webベースのアーキテクチャになります。</p>
+<h1 id="micro-frontends-の難しさ"><a class="anchor" href="#micro-frontends-の難しさ"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Micro Frontends の難しさ</h1>
+<p>ここは、まだちゃんと掘り下げれていませんが、次のようなものがあります。</p>
+<ul>
+<li>特定チームが改善しても、チーム全体が改善しない
+<ul>
+<li>ex. あるチームがwebpackのビルド時間短縮に成功しても、他のチームは影響を受けない</li>
+<li>ex. 全てのチームが採用しているライブラリのセキュリティパッチは、それぞれのチームが更新しなければならない</li>
+</ul>
+</li>
+<li>チーム全体へ共有する仕組みを考える必要がある
+<ul>
+<li>ex. デザインシステム、パフォーマンス、ナレッジ</li>
+</ul>
+</li>
+<li>エッジな技術スタック採用は、チームメンバー移動を困難にする
+<ul>
+<li>ex. パラダイムシフトが発生してしまう 技術スタック</li>
+</ul>
+</li>
+</ul>
+<h1 id="micro-frontends-の作る上で考えること"><a class="anchor" href="#micro-frontends-の作る上で考えること"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Micro Frontends の作る上で考えること</h1>
+<p>フロントエンドをマイクロサービス化するということは、各サービスで HTML/CSS/JSを作ることになります。
+それらの<b>サービスを統合するサービス</b>が重要になってきます。</p>
+<p>大きく分けて2つの統合パターンがあります。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>種類</th><th>解決手段</th><th>メリット</th><th>デメリット</th></tr></thead><tbody><tr><td>サーバーサイド統合</td><td>SSI, ESI, Tailor, Podium</td><td>・SEO対策上良い<br>・ユーザーのネットワークレイテンシーが少ない<br>・初回ロードパフォーマンスが優れている</td><td>・インタラクションアプローチが不得意</td></tr><tr><td>クライアントサイド統合</td><td><s>Ajax, Iframe,</s> Web Components</td><td>・Web標準<br>・シャドウDOMによる堅牢な作り</td><td>・サポートブラウザに依存する<br>・クライアント側のJavaScriptが有効であること</td></tr></tbody></table>
+<p>また、これら2つの選択基準は次のようになります。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>種類</th><th>選択基準</th></tr></thead><tbody><tr><td>サーバーサイド統合</td><td>良好な読み込みパフォーマンスと検索エンジンのランキングがプロジェクトの優先事項であること</td></tr><tr><td>クライアントサイド統合</td><td>さまざまなチームのユーザーインターフェイスを1つの画面に統合する必要があるインタラクティブなアプリケーションを構築すること</td></tr></tbody></table>
+<p>今回、私はサーバーサイド統合(Podium)を選択しました。
+ただ、インタラクティブなアプローチも必要だったため、<b>Hydration</b>を使いました。</p>
+<blockquote>
+<p>Hydration refers to the client-side process during which Vue takes over the static HTML sent by the server and turns it into dynamic DOM that can react to client-side data changes.</p>
+</blockquote>
+<p>※ <a href="https://ssr.vuejs.org/guide/hydration.html">https://ssr.vuejs.org/guide/hydration.html</a></p>
+<p>Hydrationは、サーバーサイドでレンダリングした静的HTMLに、クライアントサイドの動的レンダリングができるようにするようなものです。</p>
+<p>※ クライアントサイド統合(Web Components)でも良かったのですが、私都合により却下となりました。</p>
+<h1 id="micro-frontends-サンプルwebアプリ"><a class="anchor" href="#micro-frontends-サンプルwebアプリ"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Micro Frontends サンプルWebアプリ</h1>
+<p>apple, banana, orangeという商品を検索するだけのサンプルWebアプリを作りました。</p>
+<p>概要図はこちらです。</p>
+<p><img src="https://res.cloudinary.com/silverbirder/image/upload/v1588513402/micro-frontends-sample-code/micro_frontends_sample.jpg" alt="micro frontends sample overview" rocket-image="responsive"></p>
+<p>サンプルコードは、ここに置いています。
+<a href="https://github.com/Silver-birder/micro-frontends-sample-code">https://github.com/Silver-birder/micro-frontends-sample-code</a>  <!--  TODO: embed  --></p>
+<h2 id="サービス"><a class="anchor" href="#サービス"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>サービス</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>サービス</th><th>役割</th><th>JSフレームワーク</th></tr></thead><tbody><tr><td>team-search</td><td>商品を検索するサービス</td><td>Vue.js</td></tr><tr><td>team-product</td><td>商品を表示するサービス</td><td>React.js</td></tr><tr><td>team-page</td><td>サービスを統合するサービス</td><td>フレームワーク未使用 (Node.js)</td></tr></tbody></table>
+<h2 id="仕組み"><a class="anchor" href="#仕組み"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>仕組み</h2>
+<p>Podium というライブラリを採用しました。</p>
+<p><a href="https://github.com/podium-lib/">https://github.com/podium-lib/</a>  <!--  TODO: embed  --></p>
+<p>これは、フロントエンドのサービスを簡単に統合できるようなライブラリになっています。
+Podium には大きく分けて3つの機能があります。</p>
+<ul>
+<li><a href="https://www.npmjs.com/package/@podium/podlet">@podium/podlet</a>
+<ul>
+<li>ページフラグメントサーバーを構築する</li>
+<li>ex. team-search, team-product</li>
+</ul>
+</li>
+<li><a href="https://www.npmjs.com/package/@podium/layout">@podium/layout</a>
+<ul>
+<li>Podletを集めて、ページ全体のレイアウトを構築する</li>
+<li>ex. team-page</li>
+</ul>
+</li>
+<li><a href="https://www.npmjs.com/package/@podium/browser">@podium/browser</a>
+<ul>
+<li>ブラウザベースの機能を提供する</li>
+<li>MessageBus による Podlet同士のコミュニケーション</li>
+<li>ex. team-search, team-product で publish/subscribe</li>
+</ul>
+</li>
+</ul>
+<h3 id="podiumpodlet"><a class="anchor" href="#podiumpodlet"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>@podium/podlet</h3>
+<p>Podletには、manifest.json と呼ばれる値を返却することが必須になっています。
+menifest.jsonには、サービスのエンドポイントや、Asset(JSやCSS)のパスが明記されています。</p>
+<p>team-search では</p>
+<pre class="language-shell"><code class="language-shell">$ <span class="token function">curl</span> https://team-search.fly.dev/manifest.json <span class="token operator">|</span> jq <span class="token builtin class-name">.</span>
+  <span class="token punctuation">{</span>
+    <span class="token string">"name"</span><span class="token builtin class-name">:</span> <span class="token string">"search"</span>,
+    <span class="token string">"version"</span><span class="token builtin class-name">:</span> <span class="token string">"1.0.0"</span>,
+    <span class="token string">"content"</span><span class="token builtin class-name">:</span> <span class="token string">"/"</span>,
+    <span class="token string">"fallback"</span><span class="token builtin class-name">:</span> <span class="token string">""</span>,
+    <span class="token string">"assets"</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span>
+      <span class="token string">"js"</span><span class="token builtin class-name">:</span> <span class="token string">"/search/static/fragment.js"</span>,
+      <span class="token string">"css"</span><span class="token builtin class-name">:</span> <span class="token string">""</span>
+    <span class="token punctuation">}</span>,
+    <span class="token string">"css"</span><span class="token builtin class-name">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>,
+    <span class="token string">"js"</span><span class="token builtin class-name">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span>
+        <span class="token string">"value"</span><span class="token builtin class-name">:</span> <span class="token string">"/search/static/fragment.js"</span>,
+        <span class="token string">"async"</span><span class="token builtin class-name">:</span> true,
+        <span class="token string">"defer"</span><span class="token builtin class-name">:</span> true,
+        <span class="token string">"type"</span><span class="token builtin class-name">:</span> <span class="token string">"default"</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>,
+    <span class="token string">"proxy"</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+</code></pre>
+<p>というレスポンス結果になります。</p>
+<h3 id="podiumlayout"><a class="anchor" href="#podiumlayout"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>@podium/layout</h3>
+<p>Layoutでは、Podletのmanifest.jsonの定義に従って fetchすることになります。</p>
+<p>team-page では</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token comment">// server.js (express)</span>
+app<span class="token punctuation">.</span><span class="token method function property-access">get</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">/</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span> <span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token arrow operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> incoming <span class="token operator">=</span> res<span class="token punctuation">.</span><span class="token property-access">locals</span><span class="token punctuation">.</span><span class="token property-access">podium</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">const</span> <span class="token punctuation">[</span>searchBox<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token known-class-name class-name">Promise</span><span class="token punctuation">.</span><span class="token method function property-access">all</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+        podletSearch<span class="token punctuation">.</span><span class="token method function property-access">fetch</span><span class="token punctuation">(</span>incoming<span class="token punctuation">,</span> <span class="token punctuation">{</span>pathname<span class="token punctuation">:</span> <span class="token string">'/search/box'</span><span class="token punctuation">,</span> query<span class="token punctuation">:</span> req<span class="token punctuation">.</span><span class="token property-access">query</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> <span class="token punctuation">[</span>items<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">await</span>  <span class="token known-class-name class-name">Promise</span><span class="token punctuation">.</span><span class="token method function property-access">all</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+       podletProduct<span class="token punctuation">.</span><span class="token method function property-access">fetch</span><span class="token punctuation">(</span>incoming<span class="token punctuation">,</span> <span class="token punctuation">{</span>pathname<span class="token punctuation">:</span> <span class="token string">'/product/items'</span><span class="token punctuation">,</span> query<span class="token punctuation">:</span> <span class="token punctuation">{</span>id<span class="token punctuation">:</span> searchBox<span class="token punctuation">.</span><span class="token property-access">headers</span><span class="token punctuation">[</span><span class="token string">'x-product-items'</span><span class="token punctuation">]</span><span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    res<span class="token punctuation">.</span><span class="token method function property-access">podiumSend</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">
+        &lt;html&gt;
+            &lt;head&gt;
+                &lt;title&gt;Shop&lt;/title&gt;
+                </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>searchBox<span class="token punctuation">.</span><span class="token property-access">js</span><span class="token punctuation">.</span><span class="token method function property-access">map</span><span class="token punctuation">(</span><span class="token parameter">js</span> <span class="token arrow operator">=&gt;</span> js<span class="token punctuation">.</span><span class="token method function property-access">toHTML</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">
+                </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>items<span class="token punctuation">.</span><span class="token property-access">js</span><span class="token punctuation">.</span><span class="token method function property-access">map</span><span class="token punctuation">(</span><span class="token parameter">js</span> <span class="token arrow operator">=&gt;</span> js<span class="token punctuation">.</span><span class="token method function property-access">toHTML</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">
+            &lt;/head&gt;
+            &lt;body&gt;
+                &lt;div id="app-shell"&gt;
+                    </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>searchBox<span class="token punctuation">.</span><span class="token property-access">content</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">
+                    </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>items<span class="token punctuation">.</span><span class="token property-access">content</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">
+                &lt;/div&gt;
+            &lt;/body&gt;
+        &lt;/html&gt;
+    </span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>のようにPodletを使って、ページ全体を構築します。このようにサーバーサイドで統合しています(SSR)。
+しかし、インタラクティブなアクションも必要なため、PodletからHydrateするためのjsを読み込んでいます。</p>
+<p>また、team-searchの検索結果(x-product-items)をteam-productへ渡しているため、商品の検索結果を含めてSSRが実現できます。</p>
+<h3 id="podiumbrowser"><a class="anchor" href="#podiumbrowser"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>@podium/browser</h3>
+<p>サーバーサイドは、podium/podlet, podium/layoutで連携できます。
+クライアントサイドは、この @podium/browserのMessageBusで連携できます。</p>
+<p>今回のサンプルWebアプリでは、次のようなユースケースに使用しています。</p>
+<ol>
+<li>ユーザーが検索ボックスにキーワードを入力する</li>
+<li>team-searchがキーワードから商品を検索する</li>
+<li>team-searchが2の結果をpublishする</li>
+<li>team-productが3をsubscribeし、商品を更新する</li>
+</ol>
+<pre class="language-javascript"><code class="language-javascript"><span class="token comment">// team-search.js</span>
+messageBus<span class="token punctuation">.</span><span class="token method function property-access">publish</span><span class="token punctuation">(</span><span class="token string">'search'</span><span class="token punctuation">,</span> <span class="token string">'search.word'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>items<span class="token punctuation">:</span> hitItems<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<pre class="language-javascript"><code class="language-javascript"><span class="token comment">// team-product.js</span>
+messageBus<span class="token punctuation">.</span><span class="token method function property-access">subscribe</span><span class="token punctuation">(</span><span class="token string">'search'</span><span class="token punctuation">,</span> <span class="token string">'search.word'</span><span class="token punctuation">,</span> <span class="token parameter">event</span> <span class="token arrow operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token function">hydrate</span><span class="token punctuation">(</span><span class="token operator">&lt;</span><span class="token maybe-class-name">Items</span> <span class="token punctuation">{</span><span class="token spread operator">...</span><span class="token punctuation">{</span>items<span class="token punctuation">:</span> event<span class="token punctuation">.</span><span class="token property-access">payload</span><span class="token punctuation">.</span><span class="token property-access">items</span><span class="token punctuation">}</span><span class="token punctuation">}</span> <span class="token operator">/</span><span class="token operator">&gt;</span><span class="token punctuation">,</span> <span class="token dom variable">document</span><span class="token punctuation">.</span><span class="token method function property-access">querySelector</span><span class="token punctuation">(</span><span class="token string">'#team-product-items'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>このようにすることで、画面更新ではなく部分更新ができました。
+インタラクティブな操作も実現可能です。</p>
+<h2 id="状態管理-ルーティング"><a class="anchor" href="#状態管理-ルーティング"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>状態管理, ルーティング</h2>
+<p>ここは、まだきちんと作っていませんが、次のようなコンセプトで設計するのが良いと思います。</p>
+<ul>
+<li>状態管理
+<ul>
+<li>各サービスが状態管理する。状態は共有しない。</li>
+<li>統合サービスが共通的な状態を管理する。</li>
+</ul>
+</li>
+<li>ルーティング
+<ul>
+<li>各サービスがqueryを設定する。</li>
+<li>統合サービスがURLパスを管理する。</li>
+</ul>
+</li>
+</ul>
+<h2 id="その他"><a class="anchor" href="#その他"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>その他</h2>
+<p>各サービスは、fly.io というPaaSへデプロイしています。</p>
+<p><a href="https://fly.io/">https://fly.io/</a>  <!--  TODO: embed  --></p>
+<p>CDNでSSRが実行できる <b>Edge Worker</b>を使用しています。
+これにより、SSR結果をキャッシュし、高速にレスポンスを返却できます。</p>
+<p>ただ、サンプルWebアプリでは、全くその力を引き出せていないです...</p>
+<p>※ 参考記事
+<a href="https://mizchi.hatenablog.com/entry/2019/02/21/235403">https://mizchi.hatenablog.com/entry/2019/02/21/235403</a>  <!--  TODO: embed  --></p>
+<h1 id="サンプルwebアプリで分かったこと"><a class="anchor" href="#サンプルwebアプリで分かったこと"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>サンプルWebアプリで分かったこと</h1>
+<h2 id="ssr--csr-hydration-が実現可能"><a class="anchor" href="#ssr--csr-hydration-が実現可能"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>SSR + CSR (Hydration) が実現可能</h2>
+<p><b>サーバーサイド統合であっても、CSRは実現可能</b>です。
+ただし、Hydrationには<b>パフォーマンス面に難有り</b>なため、このあたりは課題として残ります。
+また、CSRするためのbundleしたjavascriptのsizeには注意が必要です。</p>
+<p>例えば、次のリポジトリにある "shared_vendor_webpack_dll" のように、vendorファイルを共有することで、
+javascriptのsizeを減らすといった手段があります。</p>
+<p><a href="https://github.com/naltatis/micro-frontends-in-action-code">https://github.com/naltatis/micro-frontends-in-action-code</a>  <!--  TODO: embed  --></p>
+<p>また、次のリポジトリにある zalando tailorは、script loadをstreamingすることで、
+全体のscript load完了時間を短縮するツールもあります。</p>
+<p><a href="https://github.com/zalando/tailor">https://github.com/zalando/tailor</a>  <!--  TODO: embed  --></p>
+<h2 id="サービス内で技術スタックを選択できる"><a class="anchor" href="#サービス内で技術スタックを選択できる"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>サービス内で技術スタックを選択できる</h2>
+<p>マイクロサービスでは、よくあるメリットとして挙げられるものです。
+フロントエンドでも、同様に技術スタックを自由に選択できます。</p>
+<p>今回では、React.jsとVue.jsを使用しています。
+これを Riot.jsやSvelte.jsにも切り替えることも可能です。
+<b>フロントエンド界隈では、JSフレームワークの変化が激しい</b>ので、
+このメリットは大切だと思います。</p>
+<p>ただし、Podiumのmanifest.jsonを返却しなければなりません。
+今の所、Podiumに対応しているのはExpressのみなので、Expressを使用する
+フレームワークのみとなります。</p>
+<h2 id="サービス毎のフロントエンドに集中できる"><a class="anchor" href="#サービス毎のフロントエンドに集中できる"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>サービス毎のフロントエンドに集中できる</h2>
+<p>検索サービスだと、検索に特化したフロントエンドのみに集中することができます。
+商品サービスだと、商品の表示内容のみに集中することができます。</p>
+<p>ただ、どうしても他サービスと連携する要件が出てきます。
+これは、マイクロサービスとしての難しさだと思います。
+例えば、各サービスがどのタイミングでイベント登録するのかを考える必要があります。</p>
+<h1 id="最後に"><a class="anchor" href="#最後に"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>最後に</h1>
+<p>ECサイトのようなアプリケーションでは『商品を探しやすくする』『買いたくなるような商品を表示する』
+『商品を簡単に購入できる』などフロントエンドでやるべきことが多くあります。</p>
+<p>そういうサービスにおけるフロントエンドがモノリシックであれば、
+統一性が欠けてしまったり、知らぬ間にバグを埋め込んでしまうケースが発生してしまいます。</p>
+<p>Micro Frontendsは、このような<b>複雑化するフロントエンドにメスを入れる良いアーキテクチャ</b>だと思います。
+ただし、バックエンドにおけるマイクロサービス化による課題があるように、フロントエンドにおける
+マイクロサービス化にも課題はあるはずです。</p>
+<p>日本では、Micro Frontendsの導入実績が少なく、まだまだ発展途上だと思います。
+この記事が、どこかのサービスへの参考になればと思います。</p>
+<p>最後まで読んで頂き、ありがとうございました。</p>
+<h1 id="参考リンク"><a class="anchor" href="#参考リンク"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>参考リンク</h1>
+<p><a href="https://github.com/ChristianUlbrich/awesome-microfrontends">https://github.com/ChristianUlbrich/awesome-microfrontends</a>  <!--  TODO: embed  --></p>
+
+  
+    <div class="content-footer">
+  <p>
+    Caught a mistake or want to improve the blog?
+    <a href="https://github.com/Silver-birder/Silver-birder.github.io/edit/main/./docs/blog/contents/microfrontends.md">Edit this blog post on GitHub!</a>
+  </p>
+</div>
+
+
+  
+</main>
+
+  </main>
+
+    </div>
+  </div>
+
+
+    
+      <footer id="main-footer">
+  
+    
+
+  
+    <div id="footer-menu">
+  <div class="content-area">
+    
+      <nav>
+        <h3>Discover</h3>
+        <ul>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/blog">Blog</a>
+            </li>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/Silver-birder.github.io/issues">Help and Feedback</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>My Sales</h3>
+        <ul>
+          
+            <li>
+              <a href="https://www.amazon.co.jp/芝本雅史/e/B08FJK5C43">Amazon</a>
+            </li>
+          
+            <li>
+              <a href="https://silverbirder.booth.pm">Booth</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>Follow</h3>
+        <ul>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/Silver-birder.github.io">GitHub</a>
+            </li>
+          
+            <li>
+              <a href="https://twitter.com/silver_birder">Twitter</a>
+            </li>
+          
+            <li>
+              <a href="https://www.google.com/maps/contrib/101722346324226588907/reviews/@34.6907839,135.4537926,13z/">Google Map</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>Support</h3>
+        <ul>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/Silver-birder.github.io/blob/main/CONTRIBUTING.md">Contribute</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+  </div>
+</div>
+
+  
+</footer>
+
+    
+
+    
+  
+
+
+  
+
+<script>
+  window.__rocketServiceWorkerUrl = '/service-worker.js';
+</script>
+
+
+
+
+
+
+  
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-146805630-4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-146805630-4');
+  </script>
+
+
+
+
+  
+
+
+<script type="module" src="../../../b089d234.js"></script>
+<script type="module" src="../../../46ae44d0.js"></script>
+<script type="module" src="../../../dd4fcd54.js" inject-service-worker=""></script>
+<script type="module" src="../../../08df7a3c35.js"></script>
+
+</body></html>

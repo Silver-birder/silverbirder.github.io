@@ -1,0 +1,718 @@
+<!DOCTYPE html><html lang="ja" dir="ltr"><head>
+  
+    
+
+  
+
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一足遅れて Kubernetes を学び始める - 13. ヘルスチェックとコンテナライフサイクル -: silverbirder</title>
+<meta property="og:title" content="一足遅れて Kubernetes を学び始める - 13. ヘルスチェックとコンテナライフサイクル -: silverbirder">
+
+<meta name="generator" content="rocket 0.1">
+<link rel="canonical" href="http://localhost:8080/blog/contents/start_the_learning_kubernetes_13/">
+
+
+
+  
+
+<meta name="description" content="前回 一足遅れて Kubernetes を学び始める - 12. リソース制限 -では、requestsやlimitなどのリソース制限について学習しました。今回は、ヘルスチェックとコンテナライフサイクルについて学習します。">
+<meta property="og:description" content="前回 一足遅れて Kubernetes を学び始める - 12. リソース制限 -では、requestsやlimitなどのリソース制限について学習しました。今回は、ヘルスチェックとコンテナライフサイクルについて学習します。">
+
+  
+    
+<link rel="apple-touch-icon" sizes="180x180" href="../../../assets/apple-touch-icon.jpg">
+<link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../../assets/favicon-16x16.png">
+<link rel="manifest" href="../../../assets/webmanifest.json">
+
+<meta name="msapplication-TileColor" content="#1d3557">
+<meta name="theme-color" content="#1d3557">
+
+  
+    <meta property="og:site_name" content="silverbirder">
+<meta property="og:type" content="website">
+
+<meta property="og:image" content="https://res.cloudinary.com/silverbirder/image/upload/v1611128736/silver-birder.github.io/assets/logo.png">
+<meta property="og:url" content="http://localhost:8080/blog/contents/start_the_learning_kubernetes_13/">
+
+<meta name="twitter:card" content="summary_large_image">
+
+  
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="">
+
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&amp;display=optional" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&amp;display=optional" rel="stylesheet">
+
+  
+    <link rel="stylesheet" href="../../../3cb4adfb.css">
+<link rel="stylesheet" href="../../../0f4765a3.css">
+<link rel="stylesheet" href="../../../ac2ea3b8.css">
+<link rel="stylesheet" href="../../../2366292e.css">
+
+  
+    <noscript><link rel="stylesheet" href="/_merged_assets/_static/search/noscript.css"></noscript>
+
+  
+    <link rel="stylesheet" href="../../../f5cf94c7.css">
+  
+    
+  
+    <noscript><link rel="stylesheet" href="/_merged_assets/_static/noscript.css"/></noscript>
+
+  
+    <link rel="stylesheet" href="../../../b1403e10.css">
+  
+    <meta name="twitter:creator" content="@Silver_birder">
+
+<link rel="stylesheet" href="../../../611b393e.css" mdjs-use="">
+
+<meta name="google-site-verification" content="-8bAm041798VvU0oItcuyuShbVINfNMLfTmP7tENPDY">
+  
+
+<link rel="preload" href="../../../b089d234.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../d3f07d73.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../46ae44d0.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../dd4fcd54.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../08df7a3c58.js" as="script" crossorigin="anonymous">
+</head>
+
+  
+
+  
+  <body layout="layout-blog-details">
+  
+
+    
+      <header id="main-header">
+  <div class="content-area">
+    
+      <button id="mobile-menu-trigger" data-action="trigger-mobile-menu">
+	<span class="sr-only">Show Menu</span>
+	      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon">
+        <path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path>
+      </svg>
+
+</button>
+
+    
+      
+	<a class="logo-link" href="/">
+  <img src="../../../90a4fb13.svg" alt="Rocket Logo">
+  <span>silverbirder</span>
+</a>
+
+
+
+    
+      <rocket-search class="search" json-url="/_merged_assets/_static/rocket-search-index.json">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129" style="width: 25px;">
+    <path d="M51.6 96.7c11 0 21-3.9 28.8-10.5l35 35c.8.8 1.8 1.2 2.9 1.2s2.1-.4 2.9-1.2c1.6-1.6 1.6-4.2 0-5.8l-35-35c6.5-7.8 10.5-17.9 10.5-28.8 0-24.9-20.2-45.1-45.1-45.1-24.8 0-45.1 20.3-45.1 45.1 0 24.9 20.3 45.1 45.1 45.1zm0-82c20.4 0 36.9 16.6 36.9 36.9C88.5 72 72 88.5 51.6 88.5S14.7 71.9 14.7 51.6c0-20.3 16.6-36.9 36.9-36.9z"></path>
+  </svg>
+</rocket-search>
+
+
+
+    
+      
+  <a href="/blog/" class="
+          
+           active 
+        ">Blog</a>
+  <a href="/resume/" class="
+          
+          
+        ">Resume</a>
+  <a href="/misc/" class="
+          
+          
+        ">Misc</a>
+
+    
+      <launch-dark-switch class="light-dark-switch" label="Toggle darkmode">Toggle darkmode</launch-dark-switch>
+
+
+    
+      
+	<a class="social-link" href="https://github.com/Silver-birder/Silver-birder.github.io" aria-label="silverbirder on GitHub" rel="noopener noreferrer" target="_blank">
+		<span class="sr-only">GitHub</span>
+		
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 16" fill="none">
+  <title>GitHub</title>
+  <path fill="currentColor" fill-rule="evenodd" d="M8.18391.249268C3.82241.249268.253906 3.81777.253906 8.17927c0 3.46933 2.279874 6.44313 5.451874 7.53353.3965.0991.49563-.1983.49563-.3965v-1.3878c-2.18075.4956-2.67638-.9912-2.67638-.9912-.3965-.8922-.89212-1.1895-.89212-1.1895-.69388-.4957.09912-.4957.09912-.4957.793.0992 1.1895.793 1.1895.793.69388 1.2887 1.88338.8922 2.27988.6939.09912-.4956.29737-.8921.49562-1.0904-1.78425-.1982-3.5685-.8921-3.5685-3.96496 0-.89212.29738-1.586.793-2.08162-.09912-.19825-.3965-.99125.09913-2.08163 0 0 .69387-.19825 2.18075.793.59475-.19825 1.28862-.29737 1.9825-.29737.69387 0 1.38775.09912 1.98249.29737 1.4869-.99125 2.1808-.793 2.1808-.793.3965 1.09038.1982 1.88338.0991 2.08163.4956.59475.793 1.28862.793 2.08162 0 3.07286-1.8834 3.66766-3.66764 3.86586.29737.3965.59474.8921.59474 1.586v2.1808c0 .1982.0991.4956.5948.3965 3.172-1.0904 5.4518-4.0642 5.4518-7.53353-.0991-4.3615-3.6676-7.930002-8.02909-7.930002z" clip-rule="evenodd"></path>
+</svg>
+
+		
+	</a>
+	<a class="social-link" href="https://twitter.com/silver_birder" aria-label="silverbirder on Twitter" rel="noopener noreferrer" target="_blank">
+		<span class="sr-only">Twitter</span>
+		
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 274 223"><title>Twitter</title><path d="M85.98 223c-31.675 0-61.158-9.285-85.98-25.199 4.388.518 8.853.783 13.38.783 26.278 0 50.463-8.967 69.659-24.01-24.544-.453-45.258-16.669-52.395-38.953a56.014 56.014 0 0 0 10.552 1.006c5.116 0 10.071-.685 14.778-1.967-25.66-5.152-44.993-27.822-44.993-54.998 0-.236 0-.471.004-.705a55.865 55.865 0 0 0 25.406 7.015c-15.05-10.058-24.953-27.226-24.953-46.685 0-10.279 2.766-19.914 7.594-28.198 27.664 33.934 68.993 56.264 115.609 58.603a56.31 56.31 0 0 1-1.453-12.782c0-30.975 25.114-56.088 56.091-56.088 16.132 0 30.709 6.812 40.941 17.713a112.328 112.328 0 0 0 35.617-13.611c-4.188 13.097-13.081 24.089-24.662 31.031a112.148 112.148 0 0 0 32.215-8.832 114 114 0 0 1-27.988 29.035c.108 2.405.162 4.824.162 7.256C245.564 137.533 189.148 223 85.98 223" fill="currentColor"></path></svg>
+
+		
+	</a>
+
+    
+  </div>
+</header>
+
+    
+
+    
+  <div id="content-wrapper">
+    <div class="content-area">
+      
+	<rocket-drawer id="sidebar">
+  <nav slot="content" id="sidebar-nav">
+    
+      <a class="logo-link" href="/">
+  <img src="../../../90a4fb13.svg" alt="Rocket Logo">
+  <span>silverbirder</span>
+</a>
+
+
+    
+      <rocket-navigation>
+  <ul>
+    <li class="current">
+      <h3>Headings</h3>
+      
+    </li>
+  </ul>
+  <div class="sidebar-tags">
+    <h3>Date</h3>
+    <div>Thu May 30 2019</div>
+  </div>
+  <div class="sidebar-tags">
+    <h3>Tags</h3>
+    <div class="tags">
+      
+        <span class="tag">Kubernetes</span>
+      
+        <span class="tag">Story</span>
+      
+        <span class="tag">Beginner</span>
+      
+    </div>
+  </div>
+  <div class="sidebar-bottom">
+  <hr> <launch-dark-switch class="light-dark-switch" label="Toggle darkmode">Toggle darkmode</launch-dark-switch>
+
+  
+    <a href="https://github.com/Silver-birder/Silver-birder.github.io/issues">Help and Feedback</a>
+  
+</div>
+
+</rocket-navigation>
+
+    
+  </nav>
+</rocket-drawer>
+
+
+      
+  <main class="markdown-body">
+    <main class="markdown-body">
+  
+    
+  <h1>一足遅れて Kubernetes を学び始める - 13. ヘルスチェックとコンテナライフサイクル -</h1>
+
+
+  <img src="https://res.cloudinary.com/silverbirder/image/upload/v1611128736/silver-birder.github.io/assets/logo.png" alt="">
+
+
+  
+    <!--  TODO: TOC -->
+<h1 id="ストーリー"><a class="anchor" href="#ストーリー"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>ストーリー</h1>
+<ol>
+<li><a href="../start_the_learning_kubernetes_01/">一足遅れて Kubernetes を学び始める - 01. 環境選択編 -</a></li>
+<li><a href="../start_the_learning_kubernetes_02/">一足遅れて Kubernetes を学び始める - 02. Docker For Mac -</a></li>
+<li><a href="../start_the_learning_kubernetes_03/">一足遅れて Kubernetes を学び始める - 03. Raspberry Pi -</a></li>
+<li><a href="../start_the_learning_kubernetes_04/">一足遅れて Kubernetes を学び始める - 04. kubectl -</a></li>
+<li><a href="../start_the_learning_kubernetes_05/">一足遅れて Kubernetes を学び始める - 05. workloads その1 -</a></li>
+<li><a href="../start_the_learning_kubernetes_06/">一足遅れて Kubernetes を学び始める - 06. workloads その2 -</a></li>
+<li><a href="../start_the_learning_kubernetes_07/">一足遅れて Kubernetes を学び始める - 07. workloads その3 -</a></li>
+<li><a href="../start_the_learning_kubernetes_08/">一足遅れて Kubernetes を学び始める - 08. discovery&amp;LB その1 -</a></li>
+<li><a href="../start_the_learning_kubernetes_09/">一足遅れて Kubernetes を学び始める - 09. discovery&amp;LB その2 -</a></li>
+<li><a href="../start_the_learning_kubernetes_10/">一足遅れて Kubernetes を学び始める - 10. config&amp;storage その1 -</a></li>
+<li><a href="../start_the_learning_kubernetes_11/">一足遅れて Kubernetes を学び始める - 11. config&amp;storage その2 -</a></li>
+<li><a href="../start_the_learning_kubernetes_12/">一足遅れて Kubernetes を学び始める - 12. リソース制限 -</a></li>
+<li><a href="../start_the_learning_kubernetes_13/">一足遅れて Kubernetes を学び始める - 13. ヘルスチェックとコンテナライフサイクル -</a></li>
+<li><a href="../start_the_learning_kubernetes_14/">一足遅れて Kubernetes を学び始める - 14. スケジューリング -</a></li>
+<li><a href="../start_the_learning_kubernetes_15/">一足遅れて Kubernetes を学び始める - 15. セキュリティ -</a></li>
+<li><a href="../start_the_learning_kubernetes_16/">一足遅れて Kubernetes を学び始める - 16. コンポーネント -</a></li>
+</ol>
+<h1 id="前回"><a class="anchor" href="#前回"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>前回</h1>
+<p><a href="../start_the_learning_kubernetes_12/">一足遅れて Kubernetes を学び始める - 12. リソース制限 -</a>では、requestsやlimitなどのリソース制限について学習しました。今回は、ヘルスチェックとコンテナライフサイクルについて学習します。</p>
+<h1 id="ヘルスチェック"><a class="anchor" href="#ヘルスチェック"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>ヘルスチェック</h1>
+<p>Kubernetesでは、Podの正常生判断のためのヘルスチェックが2種類用意されています。</p>
+<ul>
+<li>Liveness Probe
+<ul>
+<li>Podが正常か判断。異常だった場合、Podを再起動。</li>
+</ul>
+</li>
+<li>Readiness Probe
+<ul>
+<li>Podがサービスインする準備ができているか判断。準備できていなかったら、トラフィックを流さない。</li>
+</ul>
+</li>
+</ul>
+<p>たとえば、Pod内でメモリリークが発生し応答しなくなった場合に有効です。
+LoadBalancerのサービスは、ICMPによる簡易ヘルスチェックがデフォルトで用意されています。</p>
+<p>また、Liveness、Readinessどちらにも３つの方式があります。</p>
+<ul>
+<li>exec
+<ul>
+<li>コマンドを実行し、終了コードが0でなければ失敗</li>
+</ul>
+</li>
+<li>httpGet
+<ul>
+<li>HTTP GETリクエストを実行し、statusCodeが200~399でなければ失敗</li>
+</ul>
+</li>
+<li>tcpSocket
+<ul>
+<li>TCPセッションが確立できなければ失敗</li>
+</ul>
+</li>
+</ul>
+<p>では、試してみましょう。</p>
+<pre class="language-yaml"><code class="language-yaml"><span class="token comment"># sample-healthcheck.yaml</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Pod
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> sample<span class="token punctuation">-</span>healthcheck
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app</span><span class="token punctuation">:</span> sample<span class="token punctuation">-</span>app
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">containers</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> nginx<span class="token punctuation">-</span>container
+      <span class="token key atrule">image</span><span class="token punctuation">:</span> nginx<span class="token punctuation">:</span><span class="token number">1.12</span>
+      <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">containerPort</span><span class="token punctuation">:</span> <span class="token number">80</span>
+      <span class="token key atrule">livenessProbe</span><span class="token punctuation">:</span>
+        <span class="token key atrule">httpGet</span><span class="token punctuation">:</span>
+          <span class="token key atrule">path</span><span class="token punctuation">:</span> /index.html
+          <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">80</span>
+          <span class="token key atrule">scheme</span><span class="token punctuation">:</span> HTTP
+        <span class="token key atrule">timeoutSeconds</span><span class="token punctuation">:</span> <span class="token number">1</span>
+        <span class="token key atrule">successThreshold</span><span class="token punctuation">:</span> <span class="token number">1</span>
+        <span class="token key atrule">failureThreshold</span><span class="token punctuation">:</span> <span class="token number">2</span>
+        <span class="token key atrule">initialDelaySeconds</span><span class="token punctuation">:</span> <span class="token number">5</span>
+        <span class="token key atrule">periodSeconds</span><span class="token punctuation">:</span> <span class="token number">3</span>
+      <span class="token key atrule">readinessProbe</span><span class="token punctuation">:</span>
+        <span class="token key atrule">exec</span><span class="token punctuation">:</span>
+          <span class="token key atrule">command</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"ls"</span><span class="token punctuation">,</span> <span class="token string">"/usr/share/nginx/html/50x.html"</span><span class="token punctuation">]</span>
+        <span class="token key atrule">timeoutSeconds</span><span class="token punctuation">:</span> <span class="token number">1</span>
+        <span class="token key atrule">successThreshold</span><span class="token punctuation">:</span> <span class="token number">2</span>
+        <span class="token key atrule">failureThreshold</span><span class="token punctuation">:</span> <span class="token number">1</span>
+        <span class="token key atrule">initialDelaySeconds</span><span class="token punctuation">:</span> <span class="token number">5</span>
+        <span class="token key atrule">periodSeconds</span><span class="token punctuation">:</span> <span class="token number">3</span>
+</code></pre>
+<ul>
+<li>timeoutSeconds
+<ul>
+<li>タイムアウトまでの秒数</li>
+</ul>
+</li>
+<li>successThreshold
+<ul>
+<li>成功と判断するまでのチェック回数</li>
+</ul>
+</li>
+<li>failureThreshold
+<ul>
+<li>失敗と判断するまでのチェック回数</li>
+</ul>
+</li>
+<li>initialDelaySeconds
+<ul>
+<li>初回ヘルスチェック開始までの遅延</li>
+</ul>
+</li>
+<li>periodSeconds
+<ul>
+<li>ヘルスチェックの間隔</li>
+</ul>
+</li>
+</ul>
+<pre class="language-shell"><code class="language-shell">pi@raspi001:~/tmp $ k apply -f sample-healthcheck.yaml
+pi@raspi001:~/tmp $ k describe pod sample-healthcheck <span class="token operator">|</span> <span class="token function">egrep</span> <span class="token string">"Liveness|Readiness"</span>
+    Liveness:       http-get http://:80/index.html <span class="token assign-left variable">delay</span><span class="token operator">=</span>5s <span class="token assign-left variable">timeout</span><span class="token operator">=</span>1s <span class="token assign-left variable">period</span><span class="token operator">=</span>3s <span class="token comment">#success=1 #failure=2</span>
+    Readiness:      <span class="token builtin class-name">exec</span> <span class="token punctuation">[</span>ls /usr/share/nginx/html/50x.html<span class="token punctuation">]</span> <span class="token assign-left variable">delay</span><span class="token operator">=</span>5s <span class="token assign-left variable">timeout</span><span class="token operator">=</span>1s <span class="token assign-left variable">period</span><span class="token operator">=</span>3s <span class="token comment">#success=2 #failure=1</span>
+</code></pre>
+<p>設定どおりに動作していますね。では、失敗させましょう。</p>
+<p>livenessを失敗させるにはindex.htmlを削除すれば良いですね。</p>
+<pre class="language-shell"><code class="language-shell">pi@raspi001:~/tmp $ k <span class="token builtin class-name">exec</span> -it sample-healthcheck <span class="token function">rm</span> /usr/share/nginx/html/index.html
+pi@raspi001:~/tmp $ k get pods --watch
+NAME                                      READY   STATUS    RESTARTS   AGE
+sample-healthcheck                        <span class="token number">1</span>/1     Running   <span class="token number">1</span>          9m54s
+sample-healthcheck                        <span class="token number">0</span>/1     Running   <span class="token number">2</span>          10m
+sample-healthcheck                        <span class="token number">1</span>/1     Running   <span class="token number">2</span>          10m
+</code></pre>
+<p>一度削除されて、再起動しましたね。
+今度は、readinessを失敗させましょう。こちらは50x.htmlを削除すれば良いですね。</p>
+<pre class="language-shell"><code class="language-shell">pi@raspi001:~/tmp $ k <span class="token builtin class-name">exec</span> -it sample-healthcheck <span class="token function">rm</span> /usr/share/nginx/html/50x.html
+pi@raspi001:~/tmp $ k get pods --watch
+NAME                                      READY   STATUS    RESTARTS   AGE
+sample-healthcheck                        <span class="token number">1</span>/1     Running   <span class="token number">2</span>          16m
+sample-healthcheck                        <span class="token number">0</span>/1     Running   <span class="token number">2</span>          16m
+pi@raspi001:~/tmp $ k <span class="token builtin class-name">exec</span> -it sample-healthcheck <span class="token function">touch</span> /usr/share/nginx/html/50x.html
+pi@raspi001:~/tmp $ k get pods --watch
+NAME                                      READY   STATUS    RESTARTS   AGE
+sample-healthcheck                        <span class="token number">0</span>/1     Running   <span class="token number">2</span>          17m
+sample-healthcheck                        <span class="token number">1</span>/1     Running   <span class="token number">2</span>          17m
+</code></pre>
+<p>期待通り、50x.htmlを削除すると、READYから外れて、追加するとREADYに戻りました。</p>
+<h1 id="コンテナの再起動"><a class="anchor" href="#コンテナの再起動"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>コンテナの再起動</h1>
+<p>コンテナのプロセスが停止、またはヘルスチェックの失敗によってコンテナを再起動するかどうかは、spec.restartPolicyによって決まります。
+種類は下記３つです。</p>
+<ul>
+<li>Always
+<ul>
+<li>常にPodを再起動させる</li>
+</ul>
+</li>
+<li>OnFailure
+<ul>
+<li>終了コード0以外の予期せぬ停止の場合、Podを再起動させる</li>
+</ul>
+</li>
+<li>Never
+<ul>
+<li>再起動させない</li>
+</ul>
+</li>
+</ul>
+<p>試してみましょう。</p>
+<pre class="language-yaml"><code class="language-yaml"><span class="token comment"># sample-restart-always.yaml</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Pod
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> sample<span class="token punctuation">-</span>restart<span class="token punctuation">-</span>always
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">restartPolicy</span><span class="token punctuation">:</span> Always
+  <span class="token key atrule">containers</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> nginx<span class="token punctuation">-</span>container
+      <span class="token key atrule">image</span><span class="token punctuation">:</span> nginx<span class="token punctuation">:</span><span class="token number">1.12</span>
+      <span class="token key atrule">command</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"sh"</span><span class="token punctuation">,</span> <span class="token string">"-c"</span><span class="token punctuation">,</span> <span class="token string">"exit 0"</span><span class="token punctuation">]</span> <span class="token comment"># 成功の場合</span>
+<span class="token comment">#      command: ["sh", "-c", "exit 1"] # 失敗の場合</span>
+</code></pre>
+<pre class="language-shell"><code class="language-shell">pi@raspi001:~/tmp $ k apply -f sample-restart-always.yaml
+<span class="token comment"># 成功の場合</span>
+pi@raspi001:~/tmp $ k get pods sample-restart-always --watch
+NAME                    READY   STATUS              RESTARTS   AGE
+sample-restart-always   <span class="token number">0</span>/1     ContainerCreating   <span class="token number">0</span>          13s
+sample-restart-always   <span class="token number">0</span>/1     Completed           <span class="token number">0</span>          19s
+sample-restart-always   <span class="token number">0</span>/1     Completed           <span class="token number">1</span>          27s
+sample-restart-always   <span class="token number">0</span>/1     CrashLoopBackOff    <span class="token number">1</span>          28s
+sample-restart-always   <span class="token number">0</span>/1     Completed           <span class="token number">2</span>          37s
+<span class="token comment"># 失敗の場合</span>
+pi@raspi001:~/tmp $ k get pods sample-restart-always --watch
+NAME                    READY   STATUS              RESTARTS   AGE
+sample-restart-always   <span class="token number">0</span>/1     ContainerCreating   <span class="token number">0</span>          7s
+sample-restart-always   <span class="token number">0</span>/1     Error               <span class="token number">0</span>          12s
+sample-restart-always   <span class="token number">0</span>/1     Error               <span class="token number">1</span>          17s
+sample-restart-always   <span class="token number">0</span>/1     CrashLoopBackOff    <span class="token number">1</span>          18s
+sample-restart-always   <span class="token number">0</span>/1     Error               <span class="token number">2</span>          37s
+</code></pre>
+<p>成功、失敗どちらも再起動していることがわかります。</p>
+<pre class="language-yaml"><code class="language-yaml"><span class="token comment"># sample-restart-onfailure.yaml</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Pod
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> sample<span class="token punctuation">-</span>restart<span class="token punctuation">-</span>onfailure
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">restartPolicy</span><span class="token punctuation">:</span> OnFailure
+  <span class="token key atrule">containers</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> nginx<span class="token punctuation">-</span>container
+      <span class="token key atrule">image</span><span class="token punctuation">:</span> nginx<span class="token punctuation">:</span><span class="token number">1.12</span>
+      <span class="token key atrule">command</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"sh"</span><span class="token punctuation">,</span> <span class="token string">"-c"</span><span class="token punctuation">,</span> <span class="token string">"exit 0"</span><span class="token punctuation">]</span> <span class="token comment"># 成功の場合</span>
+<span class="token comment">#      command: ["sh", "-c", "exit 1"] # 失敗の場合</span>
+</code></pre>
+<pre class="language-shell"><code class="language-shell">pi@raspi001:~/tmp $ k apply -f sample-restart-onfailure.yaml
+<span class="token comment"># 成功の場合</span>
+pi@raspi001:~/tmp $ k get pods sample-restart-onfailure --watch
+NAME                       READY   STATUS              RESTARTS   AGE
+sample-restart-onfailure   <span class="token number">0</span>/1     ContainerCreating   <span class="token number">0</span>          3s
+sample-restart-onfailure   <span class="token number">0</span>/1     Completed           <span class="token number">0</span>          15s
+<span class="token comment"># 失敗の場合</span>
+pi@raspi001:~/tmp $ k get pods sample-restart-onfailure --watch
+NAME                       READY   STATUS              RESTARTS   AGE
+sample-restart-onfailure   <span class="token number">0</span>/1     ContainerCreating   <span class="token number">0</span>          4s
+sample-restart-onfailure   <span class="token number">0</span>/1     Error               <span class="token number">0</span>          22s
+sample-restart-onfailure   <span class="token number">0</span>/1     Error               <span class="token number">1</span>          28s
+sample-restart-onfailure   <span class="token number">0</span>/1     CrashLoopBackOff    <span class="token number">1</span>          29s
+sample-restart-onfailure   <span class="token number">0</span>/1     Error               <span class="token number">2</span>          50s
+</code></pre>
+<p>成功時は、Completedの終了していますね。CrashLoopBackOffしていません。失敗時は、Errorとなり、CrashLoopBackOffしています。
+期待通りですね。</p>
+<h1 id="initcontainers"><a class="anchor" href="#initcontainers"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>initContainers</h1>
+<p>Podのメインとなるコンテナを起動する前に別のコンテナを起動させるための機能です。
+spec.containersがもともとありますが、こちらは同時並列で起動するので、順序が必要な場合には向いていません。
+initContainersは、spec.initContainersで設定でき、複数指定できます。複数の場合は上から順に起動します。</p>
+<p>試してみましょう。</p>
+<pre class="language-yaml"><code class="language-yaml"><span class="token comment"># sample-initcontainer.yaml</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Pod
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> sample<span class="token punctuation">-</span>initcontainer
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">initContainers</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> output<span class="token punctuation">-</span><span class="token number">1</span>
+      <span class="token key atrule">image</span><span class="token punctuation">:</span> nginx<span class="token punctuation">:</span><span class="token number">1.12</span>
+      <span class="token key atrule">command</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'sh'</span><span class="token punctuation">,</span> <span class="token string">'-c'</span><span class="token punctuation">,</span> <span class="token string">'sleep 20; echo 1st &gt; /usr/share/nginx/html/index.html'</span><span class="token punctuation">]</span>
+      <span class="token key atrule">volumeMounts</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> html<span class="token punctuation">-</span>volume
+        <span class="token key atrule">mountPath</span><span class="token punctuation">:</span> /usr/share/nginx/html/
+    <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> output<span class="token punctuation">-</span><span class="token number">2</span>
+      <span class="token key atrule">image</span><span class="token punctuation">:</span> nginx<span class="token punctuation">:</span><span class="token number">1.12</span>
+      <span class="token key atrule">command</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'sh'</span><span class="token punctuation">,</span> <span class="token string">'-c'</span><span class="token punctuation">,</span> <span class="token string">'sleep 10; echo 2nd &gt;&gt; /usr/share/nginx/html/index.html'</span><span class="token punctuation">]</span>
+      <span class="token key atrule">volumeMounts</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> html<span class="token punctuation">-</span>volume
+        <span class="token key atrule">mountPath</span><span class="token punctuation">:</span> /usr/share/nginx/html/
+  <span class="token key atrule">containers</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> nginx<span class="token punctuation">-</span>container
+      <span class="token key atrule">image</span><span class="token punctuation">:</span> nginx<span class="token punctuation">:</span><span class="token number">1.12</span>
+      <span class="token key atrule">volumeMounts</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> html<span class="token punctuation">-</span>volume
+        <span class="token key atrule">mountPath</span><span class="token punctuation">:</span> /usr/share/nginx/html/
+  <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> html<span class="token punctuation">-</span>volume
+    <span class="token key atrule">emptyDir</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+</code></pre>
+<pre class="language-shell"><code class="language-shell">pi@raspi001:~/tmp $ k get pod sample-initcontainer --watch
+NAME                   READY   STATUS     RESTARTS   AGE
+sample-initcontainer   <span class="token number">0</span>/1     Init:0/2   <span class="token number">0</span>          3s
+sample-initcontainer   <span class="token number">0</span>/1     Init:0/2   <span class="token number">0</span>          9s
+sample-initcontainer   <span class="token number">0</span>/1     Init:1/2   <span class="token number">0</span>          30s
+sample-initcontainer   <span class="token number">0</span>/1     Init:1/2   <span class="token number">0</span>          38s
+sample-initcontainer   <span class="token number">0</span>/1     PodInitializing   <span class="token number">0</span>          51s
+sample-initcontainer   <span class="token number">1</span>/1     Running           <span class="token number">0</span>          59s
+pi@raspi001:~/tmp $ k <span class="token builtin class-name">exec</span> -it sample-initcontainer <span class="token function">cat</span> /usr/share/nginx/html/index.html
+1st
+2nd
+</code></pre>
+<p>確かに、initContainersが順序通り起動できています。ふむふむ。</p>
+<h1 id="起動時と終了時のコマンド実行poststartprestop"><a class="anchor" href="#起動時と終了時のコマンド実行poststartprestop"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>起動時と終了時のコマンド実行(postStart,preStop)</h1>
+<p>コンテナ起動後に実行するコマンドをpostStart,
+コンテナ終了前に実行するコマンドをpreStopという機能で実現できます。</p>
+<pre class="language-yaml"><code class="language-yaml"><span class="token comment"># sample-lifecycle.yaml</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Pod
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> sample<span class="token punctuation">-</span>lifecycle
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">containers</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> nginx<span class="token punctuation">-</span>container
+      <span class="token key atrule">image</span><span class="token punctuation">:</span> nginx<span class="token punctuation">:</span><span class="token number">1.12</span>
+      <span class="token key atrule">command</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"/bin/sh"</span><span class="token punctuation">,</span> <span class="token string">"-c"</span><span class="token punctuation">,</span> <span class="token string">"touch /tmp/started; sleep 3600"</span><span class="token punctuation">]</span>
+      <span class="token key atrule">lifecycle</span><span class="token punctuation">:</span>
+        <span class="token key atrule">postStart</span><span class="token punctuation">:</span>
+          <span class="token key atrule">exec</span><span class="token punctuation">:</span>
+            <span class="token key atrule">command</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"/bin/sh"</span><span class="token punctuation">,</span> <span class="token string">"-c"</span><span class="token punctuation">,</span> <span class="token string">"sleep 20; touch /tmp/poststart"</span><span class="token punctuation">]</span>
+        <span class="token key atrule">preStop</span><span class="token punctuation">:</span>
+          <span class="token key atrule">exec</span><span class="token punctuation">:</span>
+            <span class="token key atrule">command</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"/bin/sh"</span><span class="token punctuation">,</span> <span class="token string">"-c"</span><span class="token punctuation">,</span> <span class="token string">"touch /tmp/prestop; sleep 20"</span><span class="token punctuation">]</span>
+</code></pre>
+<pre class="language-shell"><code class="language-shell">pi@raspi001:~/tmp $  k apply -f sample-lifecycle.yaml
+pi@raspi001:~/tmp $  k <span class="token builtin class-name">exec</span> -it sample-lifecycle <span class="token function">ls</span> /tmp
+started
+<span class="token comment"># 数秒後</span>
+pi@raspi001:~/tmp $  $ k <span class="token builtin class-name">exec</span> -it sample-lifecycle <span class="token function">ls</span> /tmp
+poststart  started
+pi@raspi001:~/tmp $ k delete -f sample-lifecycle.yaml
+<span class="token comment"># すぐ!</span>
+pi@raspi001:~/tmp $ k <span class="token builtin class-name">exec</span> -it sample-lifecycle <span class="token function">ls</span> /tmp
+poststart  prestop  started
+</code></pre>
+<p>たしかに、postStart, preStopが動いています。
+注意しないといけないのが、postStartは、spec.containers[].commandの実行とほぼ同じだそうです。（非同期)</p>
+<h1 id="podの安全な停止とタイミング"><a class="anchor" href="#podの安全な停止とタイミング"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Podの安全な停止とタイミング</h1>
+<p>terminationGracePeriodSecondsに指定した秒数は、podが削除開始時からの猶予です。
+デフォルトで30秒となっています。30秒の間にpreStop+SIGTERMの処理が終わらなければ、
+強制的にSIGKILLされて停止されます。ただし、preStopが終わっていなくて30秒たった場合、
+SIGTERM処理を2秒だけ実施できます。
+terminationGracePeriodSecondsの値は、prePostを必ず終える秒数に設定しましょう。</p>
+<h1 id="nodeをスケジューリング対象から外す"><a class="anchor" href="#nodeをスケジューリング対象から外す"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Nodeをスケジューリング対象から外す</h1>
+<p>Nodeをkubernetesのスケジューリング対象から外すcordonというコマンドがあります。
+Nodeの状態には、SchedulingEnabledとSchedulingDisabledがあり、後者の状態になると、
+kubernetesからのスケジューリング対象外となり、たとえばReplicaSetの更新などが機能しなくなります。</p>
+<p>cordonコマンドを使うと、指定するNodeがSchedulingDisabledになります。(uncordonは逆)
+ただし、現在動作しているPodはスケジューリング対象になったままで、新たに追加するものが
+スケジューリング対象外になります。現在動作しているものも対象にしたい場合は、drainコマンド
+を使います。
+実際に試してみます。</p>
+<pre class="language-shell"><code class="language-shell">pi@raspi001:~/tmp $ k get nodes
+NAME       STATUS   ROLES    AGE   VERSION
+raspi001   Ready    master   33d   v1.14.1
+raspi002   Ready    worker   33d   v1.14.1
+raspi003   Ready    worker   32d   v1.14.1
+pi@raspi001:~/tmp $ k cordon raspi002
+pi@raspi001:~/tmp $ k get nodes
+NAME       STATUS                     ROLES    AGE   VERSION
+raspi001   Ready                      master   33d   v1.14.1
+raspi002   Ready,SchedulingDisabled   worker   33d   v1.14.1
+raspi003   Ready                      worker   32d   v1.14.1
+pi@raspi001:~/tmp $ k uncordon raspi002
+pi@raspi001:~/tmp $ k get nodes
+NAME       STATUS   ROLES    AGE   VERSION
+raspi001   Ready    master   33d   v1.14.1
+raspi002   Ready    worker   33d   v1.14.1
+raspi003   Ready    worker   32d   v1.14.1
+pi@raspi001:~/tmp $ k drain raspi002
+node/raspi002 cordoned
+error: unable to drain node <span class="token string">"raspi002"</span>, aborting command<span class="token punctuation">..</span>.
+
+There are pending nodes to be drained:
+ raspi002
+error: cannot delete DaemonSet-managed Pods <span class="token punctuation">(</span>use --ignore-daemonsets to ignore<span class="token punctuation">)</span>: kube-system/kube-flannel-ds-arm-7nnbj, kube-system/kube-proxy-wgjdq, metallb-system/speaker-tsxdk
+</code></pre>
+<p>drainすると、ReplicaSetのように管理したPodであれば、別Nodeに作成されるので良いのですが、
+単体Podなど管理されていないものは、削除されてしまいます。上記の警告は、DaemonSetで管理されているPodは、
+削除するしかないけど、良いですか？というものです。
+そのため、drainをすると、いくつか警告されます。警告内容に従って適宜操作する必要があります。</p>
+<h1 id="お片付け"><a class="anchor" href="#お片付け"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>お片付け</h1>
+<pre class="language-shell"><code class="language-shell">pi@raspi001:~/tmp $ k delete -f sample-healthcheck.yaml -f sample-restart-always.yaml -f sample-restart-onfailure.yaml -f sample-initcontainer.yaml -f sample-lifecycle.yaml
+</code></pre>
+<h1 id="最後に"><a class="anchor" href="#最後に"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>最後に</h1>
+<p>今回は、ヘルスチェックの動作と、コンテナを停止するまでのステップを学習しました。
+わざわざヘルスチェックの処理をアプリケーションに用意せずとも、kubernetesに機能として
+存在することに、驚きました。次回は、<a href="../start_the_learning_kubernetes_14/">こちら</a>です。</p>
+
+  
+    <div class="content-footer">
+  <p>
+    Caught a mistake or want to improve the blog?
+    <a href="https://github.com/Silver-birder/Silver-birder.github.io/edit/main/./docs/blog/contents/start_the_learning_kubernetes_13.md">Edit this blog post on GitHub!</a>
+  </p>
+</div>
+
+
+  
+</main>
+
+  </main>
+
+    </div>
+  </div>
+
+
+    
+      <footer id="main-footer">
+  
+    
+
+  
+    <div id="footer-menu">
+  <div class="content-area">
+    
+      <nav>
+        <h3>Discover</h3>
+        <ul>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/blog">Blog</a>
+            </li>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/Silver-birder.github.io/issues">Help and Feedback</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>My Sales</h3>
+        <ul>
+          
+            <li>
+              <a href="https://www.amazon.co.jp/芝本雅史/e/B08FJK5C43">Amazon</a>
+            </li>
+          
+            <li>
+              <a href="https://silverbirder.booth.pm">Booth</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>Follow</h3>
+        <ul>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/Silver-birder.github.io">GitHub</a>
+            </li>
+          
+            <li>
+              <a href="https://twitter.com/silver_birder">Twitter</a>
+            </li>
+          
+            <li>
+              <a href="https://www.google.com/maps/contrib/101722346324226588907/reviews/@34.6907839,135.4537926,13z/">Google Map</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>Support</h3>
+        <ul>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/Silver-birder.github.io/blob/main/CONTRIBUTING.md">Contribute</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+  </div>
+</div>
+
+  
+</footer>
+
+    
+
+    
+  
+
+
+  
+
+<script>
+  window.__rocketServiceWorkerUrl = '/service-worker.js';
+</script>
+
+
+
+
+
+
+  
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-146805630-4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-146805630-4');
+  </script>
+
+
+
+
+  
+
+
+<script type="module" src="../../../b089d234.js"></script>
+<script type="module" src="../../../46ae44d0.js"></script>
+<script type="module" src="../../../dd4fcd54.js" inject-service-worker=""></script>
+<script type="module" src="../../../08df7a3c58.js"></script>
+
+</body></html>

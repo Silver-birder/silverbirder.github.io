@@ -1,0 +1,606 @@
+<!DOCTYPE html><html lang="ja" dir="ltr"><head>
+  
+    
+
+  
+
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Webアプリのテスト観点を調べてまとめてみた (25選): silverbirder</title>
+<meta property="og:title" content="Webアプリのテスト観点を調べてまとめてみた (25選): silverbirder">
+
+<meta name="generator" content="rocket 0.1">
+<link rel="canonical" href="http://localhost:8080/blog/contents/testing_pattern/">
+
+
+
+  
+
+<meta name="description" content="最近、Property Based Test という言葉を知りました。他にどういうテストの種類があるのか気になったので、調べてみました。本記事は、テストの種類を列挙します。※ 使用する技術は、私の都合上、node.jsで選んでいます。">
+<meta property="og:description" content="最近、Property Based Test という言葉を知りました。他にどういうテストの種類があるのか気になったので、調べてみました。本記事は、テストの種類を列挙します。※ 使用する技術は、私の都合上、node.jsで選んでいます。">
+
+  
+    
+<link rel="apple-touch-icon" sizes="180x180" href="../../../assets/apple-touch-icon.jpg">
+<link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../../assets/favicon-16x16.png">
+<link rel="manifest" href="../../../assets/webmanifest.json">
+
+<meta name="msapplication-TileColor" content="#1d3557">
+<meta name="theme-color" content="#1d3557">
+
+  
+    <meta property="og:site_name" content="silverbirder">
+<meta property="og:type" content="website">
+
+<meta property="og:image" content="https://res.cloudinary.com/silverbirder/image/upload/v1614429879/silver-birder.github.io/blog/WebApp_Test.jpg">
+<meta property="og:url" content="http://localhost:8080/blog/contents/testing_pattern/">
+
+<meta name="twitter:card" content="summary_large_image">
+
+  
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="">
+
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&amp;display=optional" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&amp;display=optional" rel="stylesheet">
+
+  
+    <link rel="stylesheet" href="../../../3cb4adfb.css">
+<link rel="stylesheet" href="../../../0f4765a3.css">
+<link rel="stylesheet" href="../../../ac2ea3b8.css">
+<link rel="stylesheet" href="../../../2366292e.css">
+
+  
+    <noscript><link rel="stylesheet" href="/_merged_assets/_static/search/noscript.css"></noscript>
+
+  
+    <link rel="stylesheet" href="../../../f5cf94c7.css">
+  
+    
+  
+    <noscript><link rel="stylesheet" href="/_merged_assets/_static/noscript.css"/></noscript>
+
+  
+    <link rel="stylesheet" href="../../../b1403e10.css">
+  
+    <meta name="twitter:creator" content="@Silver_birder">
+
+<link rel="stylesheet" href="../../../611b393e.css" mdjs-use="">
+
+<meta name="google-site-verification" content="-8bAm041798VvU0oItcuyuShbVINfNMLfTmP7tENPDY">
+  
+
+<link rel="preload" href="../../../b089d234.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../d3f07d73.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../46ae44d0.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../dd4fcd54.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../08df7a3c64.js" as="script" crossorigin="anonymous">
+</head>
+
+  
+
+  
+  <body layout="layout-blog-details">
+  
+
+    
+      <header id="main-header">
+  <div class="content-area">
+    
+      <button id="mobile-menu-trigger" data-action="trigger-mobile-menu">
+	<span class="sr-only">Show Menu</span>
+	      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon">
+        <path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path>
+      </svg>
+
+</button>
+
+    
+      
+	<a class="logo-link" href="/">
+  <img src="../../../90a4fb13.svg" alt="Rocket Logo">
+  <span>silverbirder</span>
+</a>
+
+
+
+    
+      <rocket-search class="search" json-url="/_merged_assets/_static/rocket-search-index.json">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129" style="width: 25px;">
+    <path d="M51.6 96.7c11 0 21-3.9 28.8-10.5l35 35c.8.8 1.8 1.2 2.9 1.2s2.1-.4 2.9-1.2c1.6-1.6 1.6-4.2 0-5.8l-35-35c6.5-7.8 10.5-17.9 10.5-28.8 0-24.9-20.2-45.1-45.1-45.1-24.8 0-45.1 20.3-45.1 45.1 0 24.9 20.3 45.1 45.1 45.1zm0-82c20.4 0 36.9 16.6 36.9 36.9C88.5 72 72 88.5 51.6 88.5S14.7 71.9 14.7 51.6c0-20.3 16.6-36.9 36.9-36.9z"></path>
+  </svg>
+</rocket-search>
+
+
+
+    
+      
+  <a href="/blog/" class="
+          
+           active 
+        ">Blog</a>
+  <a href="/resume/" class="
+          
+          
+        ">Resume</a>
+  <a href="/misc/" class="
+          
+          
+        ">Misc</a>
+
+    
+      <launch-dark-switch class="light-dark-switch" label="Toggle darkmode">Toggle darkmode</launch-dark-switch>
+
+
+    
+      
+	<a class="social-link" href="https://github.com/Silver-birder/Silver-birder.github.io" aria-label="silverbirder on GitHub" rel="noopener noreferrer" target="_blank">
+		<span class="sr-only">GitHub</span>
+		
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 16" fill="none">
+  <title>GitHub</title>
+  <path fill="currentColor" fill-rule="evenodd" d="M8.18391.249268C3.82241.249268.253906 3.81777.253906 8.17927c0 3.46933 2.279874 6.44313 5.451874 7.53353.3965.0991.49563-.1983.49563-.3965v-1.3878c-2.18075.4956-2.67638-.9912-2.67638-.9912-.3965-.8922-.89212-1.1895-.89212-1.1895-.69388-.4957.09912-.4957.09912-.4957.793.0992 1.1895.793 1.1895.793.69388 1.2887 1.88338.8922 2.27988.6939.09912-.4956.29737-.8921.49562-1.0904-1.78425-.1982-3.5685-.8921-3.5685-3.96496 0-.89212.29738-1.586.793-2.08162-.09912-.19825-.3965-.99125.09913-2.08163 0 0 .69387-.19825 2.18075.793.59475-.19825 1.28862-.29737 1.9825-.29737.69387 0 1.38775.09912 1.98249.29737 1.4869-.99125 2.1808-.793 2.1808-.793.3965 1.09038.1982 1.88338.0991 2.08163.4956.59475.793 1.28862.793 2.08162 0 3.07286-1.8834 3.66766-3.66764 3.86586.29737.3965.59474.8921.59474 1.586v2.1808c0 .1982.0991.4956.5948.3965 3.172-1.0904 5.4518-4.0642 5.4518-7.53353-.0991-4.3615-3.6676-7.930002-8.02909-7.930002z" clip-rule="evenodd"></path>
+</svg>
+
+		
+	</a>
+	<a class="social-link" href="https://twitter.com/silver_birder" aria-label="silverbirder on Twitter" rel="noopener noreferrer" target="_blank">
+		<span class="sr-only">Twitter</span>
+		
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 274 223"><title>Twitter</title><path d="M85.98 223c-31.675 0-61.158-9.285-85.98-25.199 4.388.518 8.853.783 13.38.783 26.278 0 50.463-8.967 69.659-24.01-24.544-.453-45.258-16.669-52.395-38.953a56.014 56.014 0 0 0 10.552 1.006c5.116 0 10.071-.685 14.778-1.967-25.66-5.152-44.993-27.822-44.993-54.998 0-.236 0-.471.004-.705a55.865 55.865 0 0 0 25.406 7.015c-15.05-10.058-24.953-27.226-24.953-46.685 0-10.279 2.766-19.914 7.594-28.198 27.664 33.934 68.993 56.264 115.609 58.603a56.31 56.31 0 0 1-1.453-12.782c0-30.975 25.114-56.088 56.091-56.088 16.132 0 30.709 6.812 40.941 17.713a112.328 112.328 0 0 0 35.617-13.611c-4.188 13.097-13.081 24.089-24.662 31.031a112.148 112.148 0 0 0 32.215-8.832 114 114 0 0 1-27.988 29.035c.108 2.405.162 4.824.162 7.256C245.564 137.533 189.148 223 85.98 223" fill="currentColor"></path></svg>
+
+		
+	</a>
+
+    
+  </div>
+</header>
+
+    
+
+    
+  <div id="content-wrapper">
+    <div class="content-area">
+      
+	<rocket-drawer id="sidebar">
+  <nav slot="content" id="sidebar-nav">
+    
+      <a class="logo-link" href="/">
+  <img src="../../../90a4fb13.svg" alt="Rocket Logo">
+  <span>silverbirder</span>
+</a>
+
+
+    
+      <rocket-navigation>
+  <ul>
+    <li class="current">
+      <h3>Headings</h3>
+      <ul><li class="menu-item">
+<a href="/blog/contents/testing_pattern/#cache-test">Cache Test</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/testing_pattern/#code-size-test">Code Size Test</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/testing_pattern/#complexity-test">Complexity Test</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/testing_pattern/#copypaste-test">Copy&amp;Paste Test</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/testing_pattern/#cross-browserplatform-test">Cross Browser/Platform Test</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/testing_pattern/#e2e-test">E2E Test</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/testing_pattern/#exception-test">Exception Test</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/testing_pattern/#flaky-test">Flaky Test</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/testing_pattern/#integration-test">Integration Test</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/testing_pattern/#logging-test">Logging Test</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/testing_pattern/#monkey-test">Monkey Test</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/testing_pattern/#multi-tenanct-test">Multi Tenanct Test</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/testing_pattern/#mutation-test">Mutation Test</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/testing_pattern/#chaos-test">Chaos Test</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/testing_pattern/#performance-test">Performance Test</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/testing_pattern/#property-based-test">Property Based Test</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/testing_pattern/#regression-test">Regression Test</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/testing_pattern/#robustness-test">Robustness Test</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/testing_pattern/#security-test">Security Test</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/testing_pattern/#seo-test">SEO Test</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/testing_pattern/#smoke-test">Smoke Test</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/testing_pattern/#snapshot-test">Snapshot Test</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/testing_pattern/#static-test">Static Test</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/testing_pattern/#unit-test">Unit Test</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/testing_pattern/#visual-regression-test">Visual Regression Test</a>
+</li></ul>
+    </li>
+  </ul>
+  <div class="sidebar-tags">
+    <h3>Date</h3>
+    <div>Thu Jun 18 2020</div>
+  </div>
+  <div class="sidebar-tags">
+    <h3>Tags</h3>
+    <div class="tags">
+      
+        <span class="tag">Web</span>
+      
+        <span class="tag">Testing</span>
+      
+    </div>
+  </div>
+  <div class="sidebar-bottom">
+  <hr> <launch-dark-switch class="light-dark-switch" label="Toggle darkmode">Toggle darkmode</launch-dark-switch>
+
+  
+    <a href="https://github.com/Silver-birder/Silver-birder.github.io/issues">Help and Feedback</a>
+  
+</div>
+
+</rocket-navigation>
+
+    
+  </nav>
+</rocket-drawer>
+
+
+      
+  <main class="markdown-body">
+    <main class="markdown-body">
+  
+    
+  <h1>Webアプリのテスト観点を調べてまとめてみた (25選)</h1>
+
+
+  <img src="https://res.cloudinary.com/silverbirder/image/upload/v1614429879/silver-birder.github.io/blog/WebApp_Test.jpg" alt="">
+
+
+  
+    <p>最近、Property Based Test という言葉を知りました。
+他にどういうテストの種類があるのか気になったので、調べてみました。
+本記事は、テストの種類を列挙します。
+※ 使用する技術は、私の都合上、node.jsで選んでいます。</p>
+<!--  TODO: TOC -->
+<h1 id="テスト観点一覧"><a class="anchor" href="#テスト観点一覧"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>テスト観点一覧</h1>
+<h2 id="cache-test"><a class="anchor" href="#cache-test"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Cache Test</h2>
+<p>Webアプリでは、様々なCacheが使われます。
+例えば、ブラウザCache、CDN Cache、プロキシCache、バックエンドCache などなどです。
+Cacheは、便利な反面、使いすぎると、どこがどうCacheしているのか迷子になってしまいます。
+Webアプリでも、Cacheをテストする必要がありそうです。</p>
+<p><a href="https://github.com/http-tests/cache-tests">https://github.com/http-tests/cache-tests</a>  <!--  TODO: embed  --></p>
+<h2 id="code-size-test"><a class="anchor" href="#code-size-test"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Code Size Test</h2>
+<p>大きなサイズのJSライブラリを読み込むと、レスポンスタイムが悪化してしまいます。そこで、常にコードサイズを計測する必要があります。</p>
+<p><a href="https://github.com/ai/size-limit">https://github.com/ai/size-limit</a>  <!--  TODO: embed  --></p>
+<figure title="https://github.com/ai/size-limit">
+<img alt="https://github.com/ai/size-limit" src="https://res.cloudinary.com/silverbirder/image/upload/v1614429908/silver-birder.github.io/blog/size-limit.png">
+<figcaption><a href="https://github.com/ai/size-limit">https://github.com/ai/size-limit</a></figcaption>
+</figure>
+<h2 id="complexity-test"><a class="anchor" href="#complexity-test"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Complexity Test</h2>
+<p>循環的複雑度(Cyclomatic complexity)は、制御文(ifやfor)の複雑さを計測します。
+複雑なコードは、バグの温床になりがちなので、極力シンプルなコードを心がけたいところです。</p>
+<p><a href="https://eslint.org/docs/rules/complexity">https://eslint.org/docs/rules/complexity</a>  <!--  TODO: embed  --></p>
+<h2 id="copypaste-test"><a class="anchor" href="#copypaste-test"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Copy&amp;Paste Test</h2>
+<p>Copy&amp;Pasteは、DRYの原則に反するため、特別な理由がない限りは、してはいけません。Copy&amp;Pasteを検出するツールがあるみたいです。</p>
+<p><a href="https://github.com/kucherenko/jscpd">https://github.com/kucherenko/jscpd</a>  <!--  TODO: embed  --></p>
+<figure title="https://github.com/kucherenko/jscpd">
+<img alt="jscpd" src="https://res.cloudinary.com/silverbirder/image/upload/v1614429933/silver-birder.github.io/blog/jscpd.png">
+<figcaption><a href="https://github.com/kucherenko/jscpd">https://github.com/kucherenko/jscpd</a></figcaption>
+</figure>
+<h2 id="cross-browserplatform-test"><a class="anchor" href="#cross-browserplatform-test"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Cross Browser/Platform Test</h2>
+<p>サポートするブラウザや、プラットフォーム(iOS,Android,Desktopなど)の動作検証が必要です。
+そのため、サポートするブラウザやプラットフォームの環境を準備しなければなりません。
+そういう環境を手軽に使えるサービスがあったりします。</p>
+<p><a href="https://github.com/browserstack">https://github.com/browserstack</a>  <!--  TODO: embed  --></p>
+<h2 id="e2e-test"><a class="anchor" href="#e2e-test"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>E2E Test</h2>
+<p>Webアプリを、端から端まで (End To End: E2E)を検証します。
+例えば、ユーザーがWebアプリを訪れて、クリックや入力するなど、使ってみることです。
+このテストは、不安定なテスト(よく失敗する)になりがちなので、安定稼働できるような取り組みが必要です。
+例えば、操作する処理の抽象化や、データ固定などです。</p>
+<p><a href="https://github.com/cypress-io/cypress">https://github.com/cypress-io/cypress</a>  <!--  TODO: embed  --></p>
+<h2 id="exception-test"><a class="anchor" href="#exception-test"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Exception Test</h2>
+<p>正常系、準正常系、異常系などのテストが必要です。
+準正常系は、システムが意図的にエラーとしているものです。例えば、フォーム入力値エラーとかです。
+異常系は、システムが意図せずエラーとなるものです。例えば、Timeoutエラーとかです。</p>
+<p>また、Javaが得意な人なら知っているであろう、検査例外や非検査例外という例外の扱い方があります。
+基本的には検査例外はエラーハンドリングし、非検査例外はエラーハンドリングしない方針が良いです。</p>
+<h2 id="flaky-test"><a class="anchor" href="#flaky-test"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Flaky Test</h2>
+<p>不安定なテストのことを指します。これに対するアプローチ方法の１つに、Google社の資料があります。</p>
+<p><a href="https://static.googleusercontent.com/media/research.google.com/ja//pubs/archive/45880.pdf">https://static.googleusercontent.com/media/research.google.com/ja//pubs/archive/45880.pdf</a></p>
+<p>日本人がまとめて頂いたものが、次の資料です。
+<a href="https://speakerdeck.com/nihonbuson/flakytests">https://speakerdeck.com/nihonbuson/flakytests</a>  <!--  TODO: embed  --></p>
+<h2 id="integration-test"><a class="anchor" href="#integration-test"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Integration Test</h2>
+<p>Integration Testは、Unit Testのような単一機能を統合した検証になります。
+定義によりますが、私は『Unit Testでは発見できないようなもの』かなと思います。
+Unit Testでカバーできていなくても、他のテストで検証できていれば、Integration Testは不要になります。</p>
+<h2 id="logging-test"><a class="anchor" href="#logging-test"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Logging Test</h2>
+<p>ログ出力が適切なレベルで出力されているか検証する必要があります。
+INFO, WARN, ERRORなどがルールに基づいて使い分けされているか気になります。
+ログを出すことができるかどうかは、ログライブラリの検証になりますので、必要ないかもしれませんが、
+意図したタイミングで、意図したログレベルで、意図したメッセージが出力されるかは、テストしても良いと思います。</p>
+<h2 id="monkey-test"><a class="anchor" href="#monkey-test"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Monkey Test</h2>
+<p>お猿さんがランダムにテストするような、モンキーテストです。
+テストのパターン網羅が難しい場合や、パターン網羅できているけどダメ押しで、このテストをします。</p>
+<p><a href="https://github.com/marmelab/gremlins.js/">https://github.com/marmelab/gremlins.js/</a>  <!--  TODO: embed  --></p>
+<figure title="https://github.com/marmelab/gremlins.js">
+<img alt="gremlins.js" src="https://res.cloudinary.com/silverbirder/image/upload/v1614429752/silver-birder.github.io/blog/gremlins.gif">
+<figcaption><a href="https://github.com/marmelab/gremlins.js">https://github.com/marmelab/gremlins.js</a></figcaption>
+</figure>
+<h2 id="multi-tenanct-test"><a class="anchor" href="#multi-tenanct-test"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Multi Tenanct Test</h2>
+<p>マルチテナントは、企業者（利用者）毎に区別した、同一のシステムを提供する方式です。
+これは、企業毎にサブドメインを分けたりするため、その環境毎のテストが必要になります。</p>
+<h2 id="mutation-test"><a class="anchor" href="#mutation-test"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Mutation Test</h2>
+<p>テストを検証するため、突然変異テストというものがあります。
+プロダクトコードを破壊することで、テストも壊れるかどうかを検証します。
+もし、プロダクトコードを壊しても、テストが成功してしまうと、それは正しくテストできていません。</p>
+<p><a href="https://github.com/stryker-mutator/stryker">https://github.com/stryker-mutator/stryker</a>  <!--  TODO: embed  --></p>
+<figure title="https://stryker-mutator.io/stryker/quickstart">
+<img alt="https://stryker-mutator.io/stryker/quickstart" src="https://res.cloudinary.com/silverbirder/image/upload/v1614429792/silver-birder.github.io/blog/stryker-mutator.gif">
+<figcaption><a href="https://stryker-mutator.io/stryker/quickstart">https://stryker-mutator.io/stryker/quickstart</a></figcaption>
+</figure>
+<h2 id="chaos-test"><a class="anchor" href="#chaos-test"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Chaos Test</h2>
+<p>障害を注入した際に、どういった動きになるのかを検証するテストです。</p>
+<p><a href="https://github.com/goldbergyoni/node-chaos-monkey">https://github.com/goldbergyoni/node-chaos-monkey</a>  <!--  TODO: embed  --></p>
+<h2 id="performance-test"><a class="anchor" href="#performance-test"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Performance Test</h2>
+<p>パフォーマンスと言っても、
+CPU使用率、メモリ使用率、レスポンスタイム、RPS など様々な指標があります。
+これらを計測し、SLOなどの基準値を満たせているかを検証しておく必要があります。</p>
+<p><a href="https://github.com/bestiejs/benchmark.js/">https://github.com/bestiejs/benchmark.js/</a>  <!--  TODO: embed  --></p>
+<h2 id="property-based-test"><a class="anchor" href="#property-based-test"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Property Based Test</h2>
+<p>データを半自動生成し、テストをする手法です。</p>
+<p><a href="https://github.com/dubzzz/fast-check">https://github.com/dubzzz/fast-check</a>  <!--  TODO: embed  --></p>
+<h2 id="regression-test"><a class="anchor" href="#regression-test"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Regression Test</h2>
+<p>Regression Testは、修正した内容が意図せず他の箇所に影響を及ぼしていないか(デグレーション)を確認するテストです。
+このテストは幅広い意味を持つので、ここに内容されるテスト種類は多いと思います。</p>
+<h2 id="robustness-test"><a class="anchor" href="#robustness-test"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Robustness Test</h2>
+<p>Webアプリは、ロバストであるべきです。
+何かしらWebアプリ内で障害が発生したとしても、最低限のサービスだけでも提供するのが好まれます。
+もちろん、その際のHTTPステータスを200にせず、障害にあったステータスを返しましょう。</p>
+<h2 id="security-test"><a class="anchor" href="#security-test"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Security Test</h2>
+<p>セキュリティのテストは、どんなWebアプリでも必須になります。
+セキュリティの専門家ではないので、どういうテストが必要なのかは、ここでは割愛します。</p>
+<p>依存するパッケージ脆弱性検査には、下記のコマンドが有効です。</p>
+<pre><code>npm audit fix
+</code></pre>
+<h2 id="seo-test"><a class="anchor" href="#seo-test"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>SEO Test</h2>
+<p>Webアプリへ流入数を改善するためには、SEOは不可欠です。
+lighthouseというツールでSEOスコアを見ることができるみたいです。</p>
+<p><a href="https://github.com/GoogleChrome/lighthouse-ci">https://github.com/GoogleChrome/lighthouse-ci</a>  <!--  TODO: embed  --></p>
+<figure title="https://github.com/GoogleChrome/lighthouse-ci">
+<img alt="https://github.com/GoogleChrome/lighthouse-ci" src="https://res.cloudinary.com/silverbirder/image/upload/v1614429818/silver-birder.github.io/blog/lighthouse-ci.png">
+<figcaption><a href="https://github.com/GoogleChrome/lighthouse-ci">https://github.com/GoogleChrome/lighthouse-ci</a></figcaption>
+</figure>
+<h2 id="smoke-test"><a class="anchor" href="#smoke-test"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Smoke Test</h2>
+<p>Smoke Testは、Webアプリが最低限動作するために必要なケースを確保する検証です。
+例えば、トップページへリクエストしたら、レスポンスがHTTP 200で返却されるとかです。</p>
+<p>この最低限の動作保証がなければ、これ以上の詳細なテストができません。
+個人的には、Smoke Test → E2E Test の順で進むのかなと思っています。</p>
+<h2 id="snapshot-test"><a class="anchor" href="#snapshot-test"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Snapshot Test</h2>
+<p>Webアプリへリクエストし、そのレスポンスであるHTML(スナップショット)を保存します。
+このHTMLが、変更前と比較して変化がないかの検証をするのが、Snapshot testです。
+リファクタリングなど、変化がない修正に対して有効です。</p>
+<p><a href="https://jestjs.io/docs/ja/snapshot-testing">https://jestjs.io/docs/ja/snapshot-testing</a>  <!--  TODO: embed  --></p>
+<h2 id="static-test"><a class="anchor" href="#static-test"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Static Test</h2>
+<p>Static Testは、Webアプリを動かさなくても検証できるテストです。
+よくあるのが、Linter です。</p>
+<ul>
+<li>HTML</li>
+</ul>
+<p><a href="https://github.com/htmlhint/HTMLHint">https://github.com/htmlhint/HTMLHint</a>  <!--  TODO: embed  --></p>
+<ul>
+<li>CSS</li>
+</ul>
+<p><a href="https://github.com/CSSLint/csslint">https://github.com/CSSLint/csslint</a>  <!--  TODO: embed  --></p>
+<ul>
+<li>JS</li>
+</ul>
+<p><a href="https://github.com/eslint/eslint">https://github.com/eslint/eslint</a>  <!--  TODO: embed  --></p>
+<ul>
+<li>SVG</li>
+</ul>
+<p><a href="https://github.com/birjolaxew/svglint">https://github.com/birjolaxew/svglint</a>  <!--  TODO: embed  --></p>
+<ul>
+<li>Commit</li>
+</ul>
+<p><a href="https://github.com/conventional-changelog/commitlint">https://github.com/conventional-changelog/commitlint</a>  <!--  TODO: embed  --></p>
+<ul>
+<li>Docker</li>
+</ul>
+<p><a href="https://github.com/RedCoolBeans/dockerlint/">https://github.com/RedCoolBeans/dockerlint/</a>  <!--  TODO: embed  --></p>
+<p>これらは、プルリクエストで機械的に指摘する Danger との相性が良いです。</p>
+<p><a href="https://github.com/danger/danger">https://github.com/danger/danger</a>  <!--  TODO: embed  --></p>
+<h2 id="unit-test"><a class="anchor" href="#unit-test"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Unit Test</h2>
+<p>単一機能をテストするUnit Testがあります。このUnit Testが全てPASSしたら、
+他のテストを進めるのが一般的かなと思います。</p>
+<p><a href="https://github.com/facebook/jest">https://github.com/facebook/jest</a>  <!--  TODO: embed  --></p>
+<h3 id="code-coverage"><a class="anchor" href="#code-coverage"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Code Coverage</h3>
+<p>Unitテストで、どこをテストできたかのカバレッジを見ることができます。
+感覚としては、全体の8割を満たしていれば良いかなと思います。</p>
+<p><a href="https://jestjs.io/docs/en/cli.html#--coverageboolean">https://jestjs.io/docs/en/cli.html#--coverageboolean</a></p>
+<p>実際に動作しているJSやCSSのカバレッジを収集することもできます。</p>
+<p><a href="https://speakerdeck.com/pirosikick/puppeteerdeiranaicsswoxiao-su">https://speakerdeck.com/pirosikick/puppeteerdeiranaicsswoxiao-su</a>  <!--  TODO: embed  --></p>
+<p><a href="https://gist.github.com/Silver-birder/71135913192fbca51a7e26924bd36b8b">https://gist.github.com/Silver-birder/71135913192fbca51a7e26924bd36b8b</a>  <!--  TODO: embed  --></p>
+<h2 id="visual-regression-test"><a class="anchor" href="#visual-regression-test"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Visual Regression Test</h2>
+<p>見た目の変化を監視する必要があります。例えば、リンク切れとかがあれば、検出するべきです。</p>
+<p><a href="https://github.com/garris/BackstopJS">https://github.com/garris/BackstopJS</a>  <!--  TODO: embed  --></p>
+<figure title="https://github.com/garris/BackstopJS">
+<img alt="https://github.com/garris/BackstopJS" src="https://res.cloudinary.com/silverbirder/image/upload/v1614429842/silver-birder.github.io/blog/BackstopJS.png">
+<figcaption><a href="https://github.com/garris/BackstopJS">https://github.com/garris/BackstopJS</a></figcaption>
+</figure>
+<h1 id="最後に"><a class="anchor" href="#最後に"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>最後に</h1>
+<p>どういうテストの観点があるのか、調べたり、経験則よりざっと書いてみました。
+全てをテストする必要はなく、『どういう動作の品質を担保したいか』を意識して、
+取捨選択するのが良いと思います。
+最後まで読んでいただき、ありがとございます。</p>
+
+  
+    <div class="content-footer">
+  <p>
+    Caught a mistake or want to improve the blog?
+    <a href="https://github.com/Silver-birder/Silver-birder.github.io/edit/main/./docs/blog/contents/testing_pattern.md">Edit this blog post on GitHub!</a>
+  </p>
+</div>
+
+
+  
+</main>
+
+  </main>
+
+    </div>
+  </div>
+
+
+    
+      <footer id="main-footer">
+  
+    
+
+  
+    <div id="footer-menu">
+  <div class="content-area">
+    
+      <nav>
+        <h3>Discover</h3>
+        <ul>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/blog">Blog</a>
+            </li>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/Silver-birder.github.io/issues">Help and Feedback</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>My Sales</h3>
+        <ul>
+          
+            <li>
+              <a href="https://www.amazon.co.jp/芝本雅史/e/B08FJK5C43">Amazon</a>
+            </li>
+          
+            <li>
+              <a href="https://silverbirder.booth.pm">Booth</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>Follow</h3>
+        <ul>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/Silver-birder.github.io">GitHub</a>
+            </li>
+          
+            <li>
+              <a href="https://twitter.com/silver_birder">Twitter</a>
+            </li>
+          
+            <li>
+              <a href="https://www.google.com/maps/contrib/101722346324226588907/reviews/@34.6907839,135.4537926,13z/">Google Map</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>Support</h3>
+        <ul>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/Silver-birder.github.io/blob/main/CONTRIBUTING.md">Contribute</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+  </div>
+</div>
+
+  
+</footer>
+
+    
+
+    
+  
+
+
+  
+
+<script>
+  window.__rocketServiceWorkerUrl = '/service-worker.js';
+</script>
+
+
+
+
+
+
+  
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-146805630-4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-146805630-4');
+  </script>
+
+
+
+
+  
+
+
+<script type="module" src="../../../b089d234.js"></script>
+<script type="module" src="../../../46ae44d0.js"></script>
+<script type="module" src="../../../dd4fcd54.js" inject-service-worker=""></script>
+<script type="module" src="../../../08df7a3c64.js"></script>
+
+</body></html>

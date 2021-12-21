@@ -1,0 +1,521 @@
+<!DOCTYPE html><html lang="ja" dir="ltr"><head>
+  
+    
+
+  
+
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Summit Osaka 2019 2019年6月27日参加レポート: silverbirder</title>
+<meta property="og:title" content="AWS Summit Osaka 2019 2019年6月27日参加レポート: silverbirder">
+
+<meta name="generator" content="rocket 0.1">
+<link rel="canonical" href="http://localhost:8080/blog/contents/aws_summit_osaka_2019/">
+
+
+
+  
+
+<meta name="description" content="大阪のグランフロント大阪で開かれました「AWS Summit Osaka 2019」に参加してきましたので、私の中で良かった３つのセッションを紹介したいなと思います。">
+<meta property="og:description" content="大阪のグランフロント大阪で開かれました「AWS Summit Osaka 2019」に参加してきましたので、私の中で良かった３つのセッションを紹介したいなと思います。">
+
+  
+    
+<link rel="apple-touch-icon" sizes="180x180" href="../../../assets/apple-touch-icon.jpg">
+<link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../../assets/favicon-16x16.png">
+<link rel="manifest" href="../../../assets/webmanifest.json">
+
+<meta name="msapplication-TileColor" content="#1d3557">
+<meta name="theme-color" content="#1d3557">
+
+  
+    <meta property="og:site_name" content="silverbirder">
+<meta property="og:type" content="website">
+
+<meta property="og:image" content="https://res.cloudinary.com/silverbirder/image/upload/v1614430707/silver-birder.github.io/blog/AWS_Summit_Osaka_2019.png">
+<meta property="og:url" content="http://localhost:8080/blog/contents/aws_summit_osaka_2019/">
+
+<meta name="twitter:card" content="summary_large_image">
+
+  
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="">
+
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&amp;display=optional" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&amp;display=optional" rel="stylesheet">
+
+  
+    <link rel="stylesheet" href="../../../3cb4adfb.css">
+<link rel="stylesheet" href="../../../0f4765a3.css">
+<link rel="stylesheet" href="../../../ac2ea3b8.css">
+<link rel="stylesheet" href="../../../2366292e.css">
+
+  
+    <noscript><link rel="stylesheet" href="/_merged_assets/_static/search/noscript.css"></noscript>
+
+  
+    <link rel="stylesheet" href="../../../f5cf94c7.css">
+  
+    
+  
+    <noscript><link rel="stylesheet" href="/_merged_assets/_static/noscript.css"/></noscript>
+
+  
+    <link rel="stylesheet" href="../../../b1403e10.css">
+  
+    <meta name="twitter:creator" content="@Silver_birder">
+
+<link rel="stylesheet" href="../../../611b393e.css" mdjs-use="">
+
+<meta name="google-site-verification" content="-8bAm041798VvU0oItcuyuShbVINfNMLfTmP7tENPDY">
+  
+
+<link rel="preload" href="../../../b089d234.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../d3f07d73.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../46ae44d0.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../dd4fcd54.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../08df7a3c9.js" as="script" crossorigin="anonymous">
+</head>
+
+  
+
+  
+  <body layout="layout-blog-details">
+  
+
+    
+      <header id="main-header">
+  <div class="content-area">
+    
+      <button id="mobile-menu-trigger" data-action="trigger-mobile-menu">
+	<span class="sr-only">Show Menu</span>
+	      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon">
+        <path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path>
+      </svg>
+
+</button>
+
+    
+      
+	<a class="logo-link" href="/">
+  <img src="../../../90a4fb13.svg" alt="Rocket Logo">
+  <span>silverbirder</span>
+</a>
+
+
+
+    
+      <rocket-search class="search" json-url="/_merged_assets/_static/rocket-search-index.json">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129" style="width: 25px;">
+    <path d="M51.6 96.7c11 0 21-3.9 28.8-10.5l35 35c.8.8 1.8 1.2 2.9 1.2s2.1-.4 2.9-1.2c1.6-1.6 1.6-4.2 0-5.8l-35-35c6.5-7.8 10.5-17.9 10.5-28.8 0-24.9-20.2-45.1-45.1-45.1-24.8 0-45.1 20.3-45.1 45.1 0 24.9 20.3 45.1 45.1 45.1zm0-82c20.4 0 36.9 16.6 36.9 36.9C88.5 72 72 88.5 51.6 88.5S14.7 71.9 14.7 51.6c0-20.3 16.6-36.9 36.9-36.9z"></path>
+  </svg>
+</rocket-search>
+
+
+
+    
+      
+  <a href="/blog/" class="
+          
+           active 
+        ">Blog</a>
+  <a href="/resume/" class="
+          
+          
+        ">Resume</a>
+  <a href="/misc/" class="
+          
+          
+        ">Misc</a>
+
+    
+      <launch-dark-switch class="light-dark-switch" label="Toggle darkmode">Toggle darkmode</launch-dark-switch>
+
+
+    
+      
+	<a class="social-link" href="https://github.com/Silver-birder/Silver-birder.github.io" aria-label="silverbirder on GitHub" rel="noopener noreferrer" target="_blank">
+		<span class="sr-only">GitHub</span>
+		
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 16" fill="none">
+  <title>GitHub</title>
+  <path fill="currentColor" fill-rule="evenodd" d="M8.18391.249268C3.82241.249268.253906 3.81777.253906 8.17927c0 3.46933 2.279874 6.44313 5.451874 7.53353.3965.0991.49563-.1983.49563-.3965v-1.3878c-2.18075.4956-2.67638-.9912-2.67638-.9912-.3965-.8922-.89212-1.1895-.89212-1.1895-.69388-.4957.09912-.4957.09912-.4957.793.0992 1.1895.793 1.1895.793.69388 1.2887 1.88338.8922 2.27988.6939.09912-.4956.29737-.8921.49562-1.0904-1.78425-.1982-3.5685-.8921-3.5685-3.96496 0-.89212.29738-1.586.793-2.08162-.09912-.19825-.3965-.99125.09913-2.08163 0 0 .69387-.19825 2.18075.793.59475-.19825 1.28862-.29737 1.9825-.29737.69387 0 1.38775.09912 1.98249.29737 1.4869-.99125 2.1808-.793 2.1808-.793.3965 1.09038.1982 1.88338.0991 2.08163.4956.59475.793 1.28862.793 2.08162 0 3.07286-1.8834 3.66766-3.66764 3.86586.29737.3965.59474.8921.59474 1.586v2.1808c0 .1982.0991.4956.5948.3965 3.172-1.0904 5.4518-4.0642 5.4518-7.53353-.0991-4.3615-3.6676-7.930002-8.02909-7.930002z" clip-rule="evenodd"></path>
+</svg>
+
+		
+	</a>
+	<a class="social-link" href="https://twitter.com/silver_birder" aria-label="silverbirder on Twitter" rel="noopener noreferrer" target="_blank">
+		<span class="sr-only">Twitter</span>
+		
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 274 223"><title>Twitter</title><path d="M85.98 223c-31.675 0-61.158-9.285-85.98-25.199 4.388.518 8.853.783 13.38.783 26.278 0 50.463-8.967 69.659-24.01-24.544-.453-45.258-16.669-52.395-38.953a56.014 56.014 0 0 0 10.552 1.006c5.116 0 10.071-.685 14.778-1.967-25.66-5.152-44.993-27.822-44.993-54.998 0-.236 0-.471.004-.705a55.865 55.865 0 0 0 25.406 7.015c-15.05-10.058-24.953-27.226-24.953-46.685 0-10.279 2.766-19.914 7.594-28.198 27.664 33.934 68.993 56.264 115.609 58.603a56.31 56.31 0 0 1-1.453-12.782c0-30.975 25.114-56.088 56.091-56.088 16.132 0 30.709 6.812 40.941 17.713a112.328 112.328 0 0 0 35.617-13.611c-4.188 13.097-13.081 24.089-24.662 31.031a112.148 112.148 0 0 0 32.215-8.832 114 114 0 0 1-27.988 29.035c.108 2.405.162 4.824.162 7.256C245.564 137.533 189.148 223 85.98 223" fill="currentColor"></path></svg>
+
+		
+	</a>
+
+    
+  </div>
+</header>
+
+    
+
+    
+  <div id="content-wrapper">
+    <div class="content-area">
+      
+	<rocket-drawer id="sidebar">
+  <nav slot="content" id="sidebar-nav">
+    
+      <a class="logo-link" href="/">
+  <img src="../../../90a4fb13.svg" alt="Rocket Logo">
+  <span>silverbirder</span>
+</a>
+
+
+    
+      <rocket-navigation>
+  <ul>
+    <li class="current">
+      <h3>Headings</h3>
+      <ul><li class="menu-item">
+<a href="/blog/contents/aws_summit_osaka_2019/#amazon-sumerianの位置づけ">Amazon Sumerianの位置づけ</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/aws_summit_osaka_2019/#xrアプリの課題">xRアプリの課題</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/aws_summit_osaka_2019/#sumerianの特徴">Sumerianの特徴</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/aws_summit_osaka_2019/#感想">感想</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/aws_summit_osaka_2019/#モダンアプリケーションのデザインパターン">モダンアプリケーションのデザインパターン</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/aws_summit_osaka_2019/#感想-1">感想</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/aws_summit_osaka_2019/#nulabの現状">Nulabの現状</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/aws_summit_osaka_2019/#kuberneteseksの導入">Kubernetes・EKSの導入</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/aws_summit_osaka_2019/#感想-2">感想</a>
+</li></ul>
+    </li>
+  </ul>
+  <div class="sidebar-tags">
+    <h3>Date</h3>
+    <div>Sat Jun 29 2019</div>
+  </div>
+  <div class="sidebar-tags">
+    <h3>Tags</h3>
+    <div class="tags">
+      
+        <span class="tag">AWS</span>
+      
+        <span class="tag">Report</span>
+      
+        <span class="tag">Osaka</span>
+      
+    </div>
+  </div>
+  <div class="sidebar-bottom">
+  <hr> <launch-dark-switch class="light-dark-switch" label="Toggle darkmode">Toggle darkmode</launch-dark-switch>
+
+  
+    <a href="https://github.com/Silver-birder/Silver-birder.github.io/issues">Help and Feedback</a>
+  
+</div>
+
+</rocket-navigation>
+
+    
+  </nav>
+</rocket-drawer>
+
+
+      
+  <main class="markdown-body">
+    <main class="markdown-body">
+  
+    
+  <h1>AWS Summit Osaka 2019 2019年6月27日参加レポート</h1>
+
+
+  <img src="https://res.cloudinary.com/silverbirder/image/upload/v1614430707/silver-birder.github.io/blog/AWS_Summit_Osaka_2019.png" alt="">
+
+
+  
+    <p>大阪のグランフロント大阪で開かれました「AWS Summit Osaka 2019」に参加してきましたので、
+私の中で良かった３つのセッションを紹介したいなと思います。</p>
+<p><a href="https://aws.amazon.com/jp/summits/osaka-2019/">https://aws.amazon.com/jp/summits/osaka-2019/</a>  <!--  TODO: embed  --></p>
+<figure title="もらったもの">
+<img alt="もらったもの" src="https://res.cloudinary.com/silverbirder/image/upload/v1614430752/silver-birder.github.io/blog/AWS_Summit_Osaka_2019_Novelty.png">
+<figcaption>もらったもの</figcaption>
+</figure>
+<p>hastagはこちら <a href="https://twitter.com/hashtag/AWSSummit">#AWSSummit</a></p>
+<p>私のメモはこちら
+<a href="https://scrapbox.io/silverbirder-memo/AWS_Summit_Osaka_2019">https://scrapbox.io/silverbirder-memo/AWS_Summit_Osaka_2019</a>  <!--  TODO: embed  --></p>
+<!--  TODO: TOC -->
+<h1 id="amazon-sumerian-によるvrarmrアプリケーションの開発"><a class="anchor" href="#amazon-sumerian-によるvrarmrアプリケーションの開発"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Amazon Sumerian によるVR/AR/MRアプリケーションの開発</h1>
+<h2 id="amazon-sumerianの位置づけ"><a class="anchor" href="#amazon-sumerianの位置づけ"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Amazon Sumerianの位置づけ</h2>
+<p>xRと呼ばれる３つのRについて説明がありました。</p>
+<ul>
+<li>xR
+<ul>
+<li>VR (virtual reality)
+<ul>
+<li>仮想の世界に没入</li>
+</ul>
+</li>
+<li>AR (augmented reality)
+<ul>
+<li>物理に仮想をオーバレイ</li>
+</ul>
+</li>
+<li>MR(mixed reality)
+<ul>
+<li>物理と仮想が相互作用</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>VRやARについては、広く知れ渡っていると思いますが、MRははじめて聞きました。</p>
+<p>VRは、Oculus Questのようなヘッドセットで仮想世界に没入できます。</p>
+<p><a href="https://www.youtube.com/watch?v=BqM27iLnDJs">https://www.youtube.com/watch?v=BqM27iLnDJs</a>  <!--  TODO: embed  --></p>
+<p>ARは、ポケモンGoのようなアプリで現実世界に仮想のキャラクタを投影できます。</p>
+<p><a href="https://www.youtube.com/watch?time_continue=11&amp;v=E7nwr6sA6Es">https://www.youtube.com/watch?time_continue=11&amp;v=E7nwr6sA6Es</a>  <!--  TODO: embed  --></p>
+<p>MRは、VRとARのMixみたいな感じですね。ヘッドセットをかぶりながら、現実世界に仮想世界がmixされた景色が見えます。<br>
+代表的なものとして、Microsoft HoloLensがあります。</p>
+<p><a href="https://www.youtube.com/watch?time_continue=69&amp;v=KXkmyhoIcGQ">https://www.youtube.com/watch?time_continue=69&amp;v=KXkmyhoIcGQ</a>  <!--  TODO: embed  --></p>
+<p>Amazon Sumerianは、このVR/ARにフォーカスしたサービスになります。</p>
+<h2 id="xrアプリの課題"><a class="anchor" href="#xrアプリの課題"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>xRアプリの課題</h2>
+<p>課題は下記の感じです。</p>
+<ul>
+<li>ハードウェアが浸透していない</li>
+<li>何が必要？</li>
+<li>どうやって作る？</li>
+<li>使ってもらえるかわからない</li>
+</ul>
+<p>私自身、xRのアプリを作ったことが１回だけありますが、同じような課題に悩んだことがあります。どうしても専用ハードウェアが必要になり、使ってもらうハードルが高くなってしまいます。</p>
+<h2 id="sumerianの特徴"><a class="anchor" href="#sumerianの特徴"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Sumerianの特徴</h2>
+<p>特徴は4つあります。</p>
+<ul>
+<li>Webブラウザベースの開発環境
+<ul>
+<li>開発する環境はWebブラウザベースになるので、特別なものを用意する必要がないです。良いですね。</li>
+</ul>
+</li>
+<li>マルチプラットフォーム
+<ul>
+<li>モバイル、デスクトップ、VRヘッドセット、ARプラットフォームに対応しています。これが<b>一番魅力的</b>なんじゃないかなと思います。開発者にとってもユーザーにとってもありがたいですよね。</li>
+</ul>
+</li>
+<li>Sumerian Host
+<ul>
+<li>セリフにあわせて口を動かしたりジェスチャーを行うキャラクターが8人いるそうです。こちらのキャラで開発する感じでしょうか？</li>
+</ul>
+</li>
+<li>AWSのサービスとの連携
+<ul>
+<li>AWS SDKを使って各種サービスを使えます。そのため、より柔軟なアプリケーションを開発することができます。</li>
+</ul>
+</li>
+</ul>
+<h2 id="感想"><a class="anchor" href="#感想"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>感想</h2>
+<p>xRはWeb好きな私でも興味がある技術です。Sumerianをつかうことで、xRの開発をよりスピーディに進めれるようなサービスと感じました。
+実際触るかどうかは分かりませんが（無料枠使い切ってしまったので...)、こういったxRを開発するための手段を１つ知れたことは良かったと思います。<br>
+（他のクラウドサービスにはxR向けサービスないのですかね...?）</p>
+<p><a href="https://aws.amazon.com/jp/sumerian/pricing/">https://aws.amazon.com/jp/sumerian/pricing/</a>  <!--  TODO: embed  --></p>
+<p><a href="https://aws.amazon.com/jp/sumerian/">https://aws.amazon.com/jp/sumerian/</a>  <!--  TODO: embed  --></p>
+<p>※ 下記のレポートもご参考下さい
+<a href="https://dev.classmethod.jp/cloud/aws/awssummit-2019-tokyo-h2-01/">https://dev.classmethod.jp/cloud/aws/awssummit-2019-tokyo-h2-01/</a>  <!--  TODO: embed  --></p>
+<h1 id="クラウドネイティブなモダンアプリケーション開発入門"><a class="anchor" href="#クラウドネイティブなモダンアプリケーション開発入門"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>クラウドネイティブなモダンアプリケーション開発入門</h1>
+<h2 id="モダンアプリケーションのデザインパターン"><a class="anchor" href="#モダンアプリケーションのデザインパターン"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>モダンアプリケーションのデザインパターン</h2>
+<p>今回紹介されたパターンは、マイクロサービスのデザインパターンのことを指しているのでしょうか。
+<a href="https://microservices.io/patterns/microservices.html">https://microservices.io/patterns/microservices.html</a>  <!--  TODO: embed  --></p>
+<p>デザインパターンといえば、GoFのデザインパターンが有名ですね。
+<a href="https://en.wikipedia.org/wiki/Software_design_pattern">https://en.wikipedia.org/wiki/Software_design_pattern</a>  <!--  TODO: embed  -->
+最近では、分散システムにフォーカスした<a href="https://www.oreilly.co.jp/books/9784873118758/">分散システムデザインパターン</a>があります。</p>
+<p>今回登壇で話されいた内容を私が説明するより、下記のほうが十分に説明がありますので、そちらをご参考下さい。
+<a href="https://qiita.com/yasuabe2613/items/3bff44e662c922083264">https://qiita.com/yasuabe2613/items/3bff44e662c922083264</a>  <!--  TODO: embed  --></p>
+<h2 id="感想-1"><a class="anchor" href="#感想-1"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>感想</h2>
+<p>今回のセッションでは、少し駆け足になっていたせいか全て聞き取れなかった印象でした。
+ただ、マイクロサービスデザインパターンの存在を知れてよかったです。
+CQRSというパターンを業務上調査した覚えがあるのですが、マイクロサービスデザインパターンの
+１種だったんですね。知りませんでした。
+デザインパターンというのは、先人の知恵が蓄積された素晴らしいカタログなので、
+１度目を通しておこうと思いました。</p>
+<p>※ 下記のレポートもご参考下さい
+<a href="https://dev.classmethod.jp/cloud/aws-summit-2019-day3-a03-06/">https://dev.classmethod.jp/cloud/aws-summit-2019-day3-a03-06/</a>  <!--  TODO: embed  --></p>
+<h1 id="クラウドネイティブがもたらすスケーラブルな開発インフラストラクチャーそして組織"><a class="anchor" href="#クラウドネイティブがもたらすスケーラブルな開発インフラストラクチャーそして組織"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>クラウドネイティブがもたらすスケーラブルな開発、インフラストラクチャー、そして組織</h1>
+<h2 id="nulabの現状"><a class="anchor" href="#nulabの現状"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Nulabの現状</h2>
+<h3 id="nulabのサービス"><a class="anchor" href="#nulabのサービス"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Nulabのサービス</h3>
+<p>Nulabでは<a href="https://backlog.com/ja/">backlog</a>,<a href="https://cacoo.com/ja/">cacoo</a>,<a href="https://www.typetalk.com/ja/">typetalk</a>の３つプロダクトをもっています。
+backlogでは、ユーザー数が順調に伸びてきており、今年で100万人を突破したそうです。</p>
+<h3 id="backlogについて"><a class="anchor" href="#backlogについて"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>backlogについて</h3>
+<p>backlogには、4つのサービスに分かれており、それぞれIssues, Wiki, Gantt, Gitがあります。
+前3つのサービスがMonolithで作られており、後1つのサービスが3つの言語(Perl, Python, Java)で作らていたそうです(Goで再実装されました)。</p>
+<p>インフラ部分については(backlogの話に限らない...?)、クラスタが日本に6個、海外に2個存在し、インスタンスが200個もあるそうです。
+それらは、Terraform+Ansibleで管理するようにしていたそうですが、<b>物理ホストのメンテナンスに大きくコストがかかる</b>という問題がありました。
+また、コードベースが巨大化になると開発者、特に新規の人は理解するのに時間がかかってしまう問題もありました。</p>
+<h2 id="kuberneteseksの導入"><a class="anchor" href="#kuberneteseksの導入"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Kubernetes・EKSの導入</h2>
+<p>Backlogの問題点から、開発やインフラをスケールするためKubernetesを検討するようになりました。
+そこで(比較的規模が小さい?)CaccoにKubernetesで動くように運用してみたそうです。Nulabではコンテナのノウハウが蓄積されているので、効率よく進めれたそうですね。
+しかし、kubernetesで運用していくと、ControlPlaneの面倒を見るのが手間になってきます。そこで、マネージドサービスであるEKSを使いはじめたそうです。</p>
+<p>どういった点にメリット/デメリットがあるのか知るために、既存と新規をNginxを通して平行提供したそうです。
+運用を進めることでkubernetesやEKSのノウハウが蓄積され、BacklogにEKSを検討する材料を手に入れることができます。</p>
+<h2 id="感想-2"><a class="anchor" href="#感想-2"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>感想</h2>
+<p>Nulabさんの取り組みで勉強になったのは「小さなところから検討したい技術を導入し、ノウハウを蓄積する」ところです。
+社内で実績がない技術をプロダクトとして導入するには、それなりに調査する必要があります。<br>
+また、その技術に明るい人がいれば導入までの工数は短くなると思いますが、大抵の場合、そういった人は少ないはずです。
+そこで、Nulabさんのような取り組みをすると、低いリスクで大きなリターンが得られます。<br>
+小さいところからスタートするので、失敗してもリスクは少なくて済みますし、<br>
+運用ノウハウが蓄積できれば、拡大できます。<br>
+私も、プロダクトへ何度か提案したことがありますが、今回のポイントも検討してみたいなと思います。</p>
+<p>※ 下記のレポートもご参考下さい
+<a href="https://aws.amazon.com/jp/blogs/startup/summit-osaka-2019-racap/">https://aws.amazon.com/jp/blogs/startup/summit-osaka-2019-racap/</a>  <!--  TODO: embed  --></p>
+<h1 id="全体感想"><a class="anchor" href="#全体感想"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>全体感想</h1>
+<p>AWS Summit Osakaは今回が初めてだそうです。前回は震災の影響で中止になったみたいです。<br>
+AWSは、私がはじめて触ったクラウドサービスなので、今回参加してみました。<br>
+Sumerianってものを知りませんでしたし、マイクロサービスデザインパターンも知りませんでした。<br>
+こういう大規模なセミナーでは、様々なジャンルのセッションが集まっているので、全く知らない領域のセッションを受けてみたり、よりDeepなセッションを受けたりと面白いです。<br>
+関西に住んでいる私にとっては、こういった大規模セミナーは中々珍しいので、とてもありがたかったです。</p>
+
+  
+    <div class="content-footer">
+  <p>
+    Caught a mistake or want to improve the blog?
+    <a href="https://github.com/Silver-birder/Silver-birder.github.io/edit/main/./docs/blog/contents/aws_summit_osaka_2019.md">Edit this blog post on GitHub!</a>
+  </p>
+</div>
+
+
+  
+</main>
+
+  </main>
+
+    </div>
+  </div>
+
+
+    
+      <footer id="main-footer">
+  
+    
+
+  
+    <div id="footer-menu">
+  <div class="content-area">
+    
+      <nav>
+        <h3>Discover</h3>
+        <ul>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/blog">Blog</a>
+            </li>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/Silver-birder.github.io/issues">Help and Feedback</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>My Sales</h3>
+        <ul>
+          
+            <li>
+              <a href="https://www.amazon.co.jp/芝本雅史/e/B08FJK5C43">Amazon</a>
+            </li>
+          
+            <li>
+              <a href="https://silverbirder.booth.pm">Booth</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>Follow</h3>
+        <ul>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/Silver-birder.github.io">GitHub</a>
+            </li>
+          
+            <li>
+              <a href="https://twitter.com/silver_birder">Twitter</a>
+            </li>
+          
+            <li>
+              <a href="https://www.google.com/maps/contrib/101722346324226588907/reviews/@34.6907839,135.4537926,13z/">Google Map</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>Support</h3>
+        <ul>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/Silver-birder.github.io/blob/main/CONTRIBUTING.md">Contribute</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+  </div>
+</div>
+
+  
+</footer>
+
+    
+
+    
+  
+
+
+  
+
+<script>
+  window.__rocketServiceWorkerUrl = '/service-worker.js';
+</script>
+
+
+
+
+
+
+  
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-146805630-4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-146805630-4');
+  </script>
+
+
+
+
+  
+
+
+<script type="module" src="../../../b089d234.js"></script>
+<script type="module" src="../../../46ae44d0.js"></script>
+<script type="module" src="../../../dd4fcd54.js" inject-service-worker=""></script>
+<script type="module" src="../../../08df7a3c9.js"></script>
+
+</body></html>

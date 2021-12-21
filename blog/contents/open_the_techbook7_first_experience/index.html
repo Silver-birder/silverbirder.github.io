@@ -1,0 +1,1015 @@
+<!DOCTYPE html><html lang="ja" dir="ltr"><head>
+  
+    
+
+  
+
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>技術書典7で初執筆した経験をすべて公開: silverbirder</title>
+<meta property="og:title" content="技術書典7で初執筆した経験をすべて公開: silverbirder">
+
+<meta name="generator" content="rocket 0.1">
+<link rel="canonical" href="http://localhost:8080/blog/contents/open_the_techbook7_first_experience/">
+
+
+
+  
+
+<meta name="description" content="技術書典7で初執筆しました。記事の目的 * 執筆でどういったことをしたのかの備忘録 * 執筆を考えている人の助けになりたい実際に販売する本は↓のものです。">
+<meta property="og:description" content="技術書典7で初執筆しました。記事の目的 * 執筆でどういったことをしたのかの備忘録 * 執筆を考えている人の助けになりたい実際に販売する本は↓のものです。">
+
+  
+    
+<link rel="apple-touch-icon" sizes="180x180" href="../../../assets/apple-touch-icon.jpg">
+<link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../../assets/favicon-16x16.png">
+<link rel="manifest" href="../../../assets/webmanifest.json">
+
+<meta name="msapplication-TileColor" content="#1d3557">
+<meta name="theme-color" content="#1d3557">
+
+  
+    <meta property="og:site_name" content="silverbirder">
+<meta property="og:type" content="website">
+
+<meta property="og:image" content="https://res.cloudinary.com/silverbirder/image/upload/v1614430347/silver-birder.github.io/blog/ReViewStarter_sample_page.png">
+<meta property="og:url" content="http://localhost:8080/blog/contents/open_the_techbook7_first_experience/">
+
+<meta name="twitter:card" content="summary_large_image">
+
+  
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="">
+
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&amp;display=optional" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&amp;display=optional" rel="stylesheet">
+
+  
+    <link rel="stylesheet" href="../../../3cb4adfb.css">
+<link rel="stylesheet" href="../../../0f4765a3.css">
+<link rel="stylesheet" href="../../../ac2ea3b8.css">
+<link rel="stylesheet" href="../../../2366292e.css">
+
+  
+    <noscript><link rel="stylesheet" href="/_merged_assets/_static/search/noscript.css"></noscript>
+
+  
+    <link rel="stylesheet" href="../../../f5cf94c7.css">
+  
+    
+  
+    <noscript><link rel="stylesheet" href="/_merged_assets/_static/noscript.css"/></noscript>
+
+  
+    <link rel="stylesheet" href="../../../b1403e10.css">
+  
+    <meta name="twitter:creator" content="@Silver_birder">
+
+<link rel="stylesheet" href="../../../611b393e.css" mdjs-use="">
+
+<meta name="google-site-verification" content="-8bAm041798VvU0oItcuyuShbVINfNMLfTmP7tENPDY">
+  
+
+<link rel="preload" href="../../../b089d234.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../d3f07d73.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../46ae44d0.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../dd4fcd54.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../08df7a3c39.js" as="script" crossorigin="anonymous">
+</head>
+
+  
+
+  
+  <body layout="layout-blog-details">
+  
+
+    
+      <header id="main-header">
+  <div class="content-area">
+    
+      <button id="mobile-menu-trigger" data-action="trigger-mobile-menu">
+	<span class="sr-only">Show Menu</span>
+	      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon">
+        <path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path>
+      </svg>
+
+</button>
+
+    
+      
+	<a class="logo-link" href="/">
+  <img src="../../../90a4fb13.svg" alt="Rocket Logo">
+  <span>silverbirder</span>
+</a>
+
+
+
+    
+      <rocket-search class="search" json-url="/_merged_assets/_static/rocket-search-index.json">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129" style="width: 25px;">
+    <path d="M51.6 96.7c11 0 21-3.9 28.8-10.5l35 35c.8.8 1.8 1.2 2.9 1.2s2.1-.4 2.9-1.2c1.6-1.6 1.6-4.2 0-5.8l-35-35c6.5-7.8 10.5-17.9 10.5-28.8 0-24.9-20.2-45.1-45.1-45.1-24.8 0-45.1 20.3-45.1 45.1 0 24.9 20.3 45.1 45.1 45.1zm0-82c20.4 0 36.9 16.6 36.9 36.9C88.5 72 72 88.5 51.6 88.5S14.7 71.9 14.7 51.6c0-20.3 16.6-36.9 36.9-36.9z"></path>
+  </svg>
+</rocket-search>
+
+
+
+    
+      
+  <a href="/blog/" class="
+          
+           active 
+        ">Blog</a>
+  <a href="/resume/" class="
+          
+          
+        ">Resume</a>
+  <a href="/misc/" class="
+          
+          
+        ">Misc</a>
+
+    
+      <launch-dark-switch class="light-dark-switch" label="Toggle darkmode">Toggle darkmode</launch-dark-switch>
+
+
+    
+      
+	<a class="social-link" href="https://github.com/Silver-birder/Silver-birder.github.io" aria-label="silverbirder on GitHub" rel="noopener noreferrer" target="_blank">
+		<span class="sr-only">GitHub</span>
+		
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 16" fill="none">
+  <title>GitHub</title>
+  <path fill="currentColor" fill-rule="evenodd" d="M8.18391.249268C3.82241.249268.253906 3.81777.253906 8.17927c0 3.46933 2.279874 6.44313 5.451874 7.53353.3965.0991.49563-.1983.49563-.3965v-1.3878c-2.18075.4956-2.67638-.9912-2.67638-.9912-.3965-.8922-.89212-1.1895-.89212-1.1895-.69388-.4957.09912-.4957.09912-.4957.793.0992 1.1895.793 1.1895.793.69388 1.2887 1.88338.8922 2.27988.6939.09912-.4956.29737-.8921.49562-1.0904-1.78425-.1982-3.5685-.8921-3.5685-3.96496 0-.89212.29738-1.586.793-2.08162-.09912-.19825-.3965-.99125.09913-2.08163 0 0 .69387-.19825 2.18075.793.59475-.19825 1.28862-.29737 1.9825-.29737.69387 0 1.38775.09912 1.98249.29737 1.4869-.99125 2.1808-.793 2.1808-.793.3965 1.09038.1982 1.88338.0991 2.08163.4956.59475.793 1.28862.793 2.08162 0 3.07286-1.8834 3.66766-3.66764 3.86586.29737.3965.59474.8921.59474 1.586v2.1808c0 .1982.0991.4956.5948.3965 3.172-1.0904 5.4518-4.0642 5.4518-7.53353-.0991-4.3615-3.6676-7.930002-8.02909-7.930002z" clip-rule="evenodd"></path>
+</svg>
+
+		
+	</a>
+	<a class="social-link" href="https://twitter.com/silver_birder" aria-label="silverbirder on Twitter" rel="noopener noreferrer" target="_blank">
+		<span class="sr-only">Twitter</span>
+		
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 274 223"><title>Twitter</title><path d="M85.98 223c-31.675 0-61.158-9.285-85.98-25.199 4.388.518 8.853.783 13.38.783 26.278 0 50.463-8.967 69.659-24.01-24.544-.453-45.258-16.669-52.395-38.953a56.014 56.014 0 0 0 10.552 1.006c5.116 0 10.071-.685 14.778-1.967-25.66-5.152-44.993-27.822-44.993-54.998 0-.236 0-.471.004-.705a55.865 55.865 0 0 0 25.406 7.015c-15.05-10.058-24.953-27.226-24.953-46.685 0-10.279 2.766-19.914 7.594-28.198 27.664 33.934 68.993 56.264 115.609 58.603a56.31 56.31 0 0 1-1.453-12.782c0-30.975 25.114-56.088 56.091-56.088 16.132 0 30.709 6.812 40.941 17.713a112.328 112.328 0 0 0 35.617-13.611c-4.188 13.097-13.081 24.089-24.662 31.031a112.148 112.148 0 0 0 32.215-8.832 114 114 0 0 1-27.988 29.035c.108 2.405.162 4.824.162 7.256C245.564 137.533 189.148 223 85.98 223" fill="currentColor"></path></svg>
+
+		
+	</a>
+
+    
+  </div>
+</header>
+
+    
+
+    
+  <div id="content-wrapper">
+    <div class="content-area">
+      
+	<rocket-drawer id="sidebar">
+  <nav slot="content" id="sidebar-nav">
+    
+      <a class="logo-link" href="/">
+  <img src="../../../90a4fb13.svg" alt="Rocket Logo">
+  <span>silverbirder</span>
+</a>
+
+
+    
+      <rocket-navigation>
+  <ul>
+    <li class="current">
+      <h3>Headings</h3>
+      <ul><li class="menu-item">
+<a href="/blog/contents/open_the_techbook7_first_experience/#きっかけ">きっかけ</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/open_the_techbook7_first_experience/#11-書籍化ツール">1.1. 書籍化ツール</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/open_the_techbook7_first_experience/#12-他ツール">1.2. 他ツール</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/open_the_techbook7_first_experience/#13-レビュー">1.3. レビュー</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/open_the_techbook7_first_experience/#15-本のタイトル">1.5. 本のタイトル</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/open_the_techbook7_first_experience/#16-イラストの作成">1.6. イラストの作成</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/open_the_techbook7_first_experience/#31-物品購入">3.1. 物品購入</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/open_the_techbook7_first_experience/#32-電子書籍の準備">3.2. 電子書籍の準備</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/open_the_techbook7_first_experience/#33-支払い手段の準備">3.3. 支払い手段の準備</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/open_the_techbook7_first_experience/#宣伝">宣伝</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/open_the_techbook7_first_experience/#被チェック数と販売冊数">被チェック数と販売冊数</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/open_the_techbook7_first_experience/#公式ツイッター">公式ツイッター</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/open_the_techbook7_first_experience/#google-カレンダー-登録">Google カレンダー 登録</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/open_the_techbook7_first_experience/#スケジュールと実績">スケジュールと実績</a>
+</li></ul>
+    </li>
+  </ul>
+  <div class="sidebar-tags">
+    <h3>Date</h3>
+    <div>Fri Sep 06 2019</div>
+  </div>
+  <div class="sidebar-tags">
+    <h3>Tags</h3>
+    <div class="tags">
+      
+        <span class="tag">Writing Book</span>
+      
+        <span class="tag">Learning</span>
+      
+    </div>
+  </div>
+  <div class="sidebar-bottom">
+  <hr> <launch-dark-switch class="light-dark-switch" label="Toggle darkmode">Toggle darkmode</launch-dark-switch>
+
+  
+    <a href="https://github.com/Silver-birder/Silver-birder.github.io/issues">Help and Feedback</a>
+  
+</div>
+
+</rocket-navigation>
+
+    
+  </nav>
+</rocket-drawer>
+
+
+      
+  <main class="markdown-body">
+    <main class="markdown-body">
+  
+    
+  <h1>技術書典7で初執筆した経験をすべて公開</h1>
+
+
+  <img src="https://res.cloudinary.com/silverbirder/image/upload/v1614430347/silver-birder.github.io/blog/ReViewStarter_sample_page.png" alt="">
+
+
+  
+    <p>技術書典7で初執筆しました。</p>
+<h1 id="記事の目的"><a class="anchor" href="#記事の目的"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>記事の目的</h1>
+<ul>
+<li>執筆でどういったことをしたのかの備忘録</li>
+<li><b>執筆を考えている人</b>の助けになりたい</li>
+</ul>
+<p>実際に販売する本は↓のものです。</p>
+<p><a href="https://techbookfest.org/event/tbf07/circle/5117648689954816">https://techbookfest.org/event/tbf07/circle/5117648689954816</a>  <!--  TODO: embed  --></p>
+<!--  TODO: TOC -->
+<h2 id="きっかけ"><a class="anchor" href="#きっかけ"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>きっかけ</h2>
+<p>大学時代の友人であるcastaneaiくんが技術書典6で初執筆しました。</p>
+<p><a href="https://castaneai.hatenablog.com/entry/2019/04/24/093514">https://castaneai.hatenablog.com/entry/2019/04/24/093514</a>  <!--  TODO: embed  --></p>
+<p>castaneaiくんの話を聞いていると、得られるメリット(実績、交流)が大きいことと、
+製本までのフローがそこまで難しくないことを知りました。
+そこから、私も参加しようと思えるようになりました。
+castaneaiくんは、今回の技術書典7も参加するみたいです。興味がある方は是非お立ち寄りください。</p>
+<p><a href="https://techbookfest.org/event/tbf07/circle/5182251830607872">https://techbookfest.org/event/tbf07/circle/5182251830607872</a>  <!--  TODO: embed  --></p>
+<h1 id="何をするのか"><a class="anchor" href="#何をするのか"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>何をするのか</h1>
+<p>大きく分けて３つのステップになります。</p>
+<ol>
+<li>文章作成</li>
+<li>製本</li>
+<li>販売準備</li>
+</ol>
+<p>それぞれ説明していきます。</p>
+<h1 id="1-文章作成"><a class="anchor" href="#1-文章作成"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>1. 文章作成</h1>
+<p>本は何よりも文章が必要です。
+ただ文章を書くだけでは、本になりません。
+書籍化するためのツールを使うと効率よく進みます。</p>
+<h2 id="11-書籍化ツール"><a class="anchor" href="#11-書籍化ツール"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>1.1. 書籍化ツール</h2>
+<p>文章を書き、本っぽい見た目にする必要があります。
+Re:VIEW Starterというツールを使うと、学習コストゼロで、良い感じの本が出来上がります。</p>
+<p><a href="https://kauplan.org/reviewstarter/">https://kauplan.org/reviewstarter/</a>  <!--  TODO: embed  --></p>
+<p>次のコマンド１つで本のPDFが作られます。</p>
+<pre class="language-shell"><code class="language-shell">$ docker run --rm -v <span class="token environment constant">$PWD</span>:/work kauplan/review2.5 /bin/bash -c <span class="token string">"cd /work; rake pdf"</span>
+</code></pre>
+<figure title="ReViewStarter sample page">
+<img alt="ReViewStarter sample page" src="https://res.cloudinary.com/silverbirder/image/upload/v1614430347/silver-birder.github.io/blog/ReViewStarter_sample_page.png">
+<figcaption>ReViewStarter sample page</figcaption>
+</figure>
+<p><strong>良い感じの本</strong>のPDFが作成されました、最高です。</p>
+<h2 id="12-他ツール"><a class="anchor" href="#12-他ツール"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>1.2. 他ツール</h2>
+<p>他にも次のようなツールがあります。</p>
+<ul>
+<li><a href="https://github.com/textlint/textlint">textlint</a>
+<ul>
+<li>テキストの表記ゆれを防止</li>
+</ul>
+</li>
+<li><a href="https://circleci.com">CircleCI</a>
+<ul>
+<li>GitOps的な執筆が可能</li>
+</ul>
+</li>
+<li><a href="https://github.com/yoshiko-pg/review-live-reload">Review Live Reload</a>
+<ul>
+<li>テキスト更新後の自動Preview</li>
+</ul>
+</li>
+</ul>
+<p>執筆当初は、これらのツールを調査していました。
+しかし、一人で100ページ未満の規模の本を書くなら、特に必要ないかなと思ったので導入しませんでした。
+実際、なくても困りませんでした。</p>
+<h2 id="13-レビュー"><a class="anchor" href="#13-レビュー"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>1.3. レビュー</h2>
+<p>文章を書いて終わる訳ではないです。
+文章の構成や表現が適切に伝わっているか確認する必要があります。
+読んでもらいたい対象読書に近い人を探して、レビューしてもらいます。</p>
+<h3 id="131-1st-レビュー"><a class="anchor" href="#131-1st-レビュー"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>1.3.1. 1st レビュー</h3>
+<p>文章をざっくりと作り終えた時点でレビューしてもらいます。
+イメージとしては、各章とそれぞれの第一節ぐらいが書き終えている感じです。</p>
+<p>各章の構成がおかしくないかをレビューしてもらいます。構成がおかしいと、読者は困惑してしまいます。
+後々になって構成を変更すると、<strong>後戻りコスト</strong>が高く付きます。</p>
+<p>※ 実際は時間の都合上していません。</p>
+<h3 id="132-2nd-レビュー"><a class="anchor" href="#132-2nd-レビュー"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>1.3.2. 2nd レビュー</h3>
+<p>各章の文章を<strong>とりあえず</strong>書き終えた段階でレビューしてもらいます。
+これも、1stレビューと同様の目的です。
+2stレビューでは、もう少し細かいレベルで章(節)構成をレビューしてもらいます。</p>
+<h3 id="133-3rd-レビュー"><a class="anchor" href="#133-3rd-レビュー"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>1.3.3. 3rd レビュー</h3>
+<p>コンテンツの構成に問題なければ、ようやく文章の中身をレビューしてもらいます。
+例えば、次のようなものを見てくれました。</p>
+<ul>
+<li>口調の統一 (です、ます）</li>
+<li>言葉の統一 (本、書籍）</li>
+<li>主語の明確化</li>
+<li>文章を短くする</li>
+<li>内容の誤り修正</li>
+<li>誤字脱字</li>
+<li>図や表の挿入</li>
+</ul>
+<p>また、<strong>GoogleDrive上でPDFをレビュー</strong>するのが便利です。
+直接文章にコメントできるので、オススメです。</p>
+<p><a href="https://twitter.com/silver_birder/status/1167314554205786112">https://twitter.com/silver_birder/status/1167314554205786112</a>  <!--  TODO: embed  --></p>
+<h2 id="15-本のタイトル"><a class="anchor" href="#15-本のタイトル"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>1.5. 本のタイトル</h2>
+<p>本を買ってもらうためには、本のタイトルは重要です。
+本の内容を推測しやすく、かつ、注目してもらえるタイトルにしようと考えました。
+私は、特定の技術の入門書を書いたので、「特定の技術 + 入門」という組み合わせにしようと思いました。
+結果、「はじめての WebComponents 入門」というタイトルにしました。</p>
+<h2 id="16-イラストの作成"><a class="anchor" href="#16-イラストの作成"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>1.6. イラストの作成</h2>
+<p>本には、文章だけでなくイラストが必要になります。
+例えば、次のようなイラストが必要になります。</p>
+<ul>
+<li>表表紙</li>
+<li>裏表紙</li>
+<li>背表紙</li>
+<li>文章中に挿入するイラスト</li>
+</ul>
+<p>また、少し内容が異なりますが、次のようなイラストも必要です。</p>
+<ul>
+<li>サークル配置図 案内</li>
+<li>サークルカット</li>
+<li>サークルカット（グレートーン）</li>
+</ul>
+<p>表紙用のテンプレートがありますので、それを使います。</p>
+<p><a href="http://www.nikko-pc.com/offset/template/tonbo.html">http://www.nikko-pc.com/offset/template/tonbo.html</a>  <!--  TODO: embed  --></p>
+<p><strong>背表紙の幅はページ数によって変化します</strong>。
+私は、70ページほど予定していたので4mm幅で背表紙を描きました。
+幅計算は、テンプレート内に詳細が記載されていますので、ご参考下さい。
+（日光企画のお姉さんに指摘頂きました）</p>
+<h3 id="161-初イラスト"><a class="anchor" href="#161-初イラスト"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>1.6.1. 初イラスト</h3>
+<p>私はPhotoshopやIllustratorを使ったことがありません。
+まずは、環境準備からです。</p>
+<ul>
+<li>iPad</li>
+<li>Magic Pencil</li>
+</ul>
+<p>これらを購入しました。
+iPadとMagic Pencilを使うと、紙に書いている感覚で、イラストを書けるようになります。
+特に良かったのは「手の小指側の面がiPadに接しても無視される」ので、
+手の小指側の面をiPadにひっつけながらイラストがかけます。
+iPad, Magic Pencilは買って正解でした。
+ソフトウェアは、次のとおりです。</p>
+<ul>
+<li><a href="https://apps.apple.com/jp/app/clip-studio-paint-%E6%BC%AB%E7%94%BB-%E3%82%A4%E3%83%A9%E3%82%B9%E3%83%88%E5%88%B6%E4%BD%9C/id1262985592">Clip Studio</a>
+<ul>
+<li>メインのイラストツール</li>
+<li>iPad</li>
+</ul>
+</li>
+<li><a href="https://apps.apple.com/jp/app/goodnotes-5/id1444383602">Good Notes</a>
+<ul>
+<li>説明用のイラストツール</li>
+<li>iPad</li>
+</ul>
+</li>
+<li><a href="https://apps.apple.com/jp/app/anyfont/id821560738">AnyFont</a>
+<ul>
+<li>日本語用のFont</li>
+<li>iPad</li>
+</ul>
+</li>
+<li><a href="https://firealpaca.com/ja/">Fire Alpaca</a>
+<ul>
+<li>イラストの調整</li>
+<li>iMac</li>
+</ul>
+</li>
+</ul>
+<p>お絵かきが苦手だったので、知人に助けてもらい、なんとか作れました。</p>
+<figure title="表表紙">
+<img alt="表表紙" src="https://res.cloudinary.com/silverbirder/image/upload/v1614430433/silver-birder.github.io/blog/front_cover_of_web_component_for_the_first_time.png">
+<figcaption>表表紙</figcaption>
+</figure>
+<h1 id="2-製本"><a class="anchor" href="#2-製本"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>2. 製本</h1>
+<p>製本には、技術書典オススメの日光企画さんにお願いしました。
+製本する際には、用紙の種類であったり綴じ方であったりと決める必要があります。</p>
+<p>私は、あまりこだわりがないので一般的なものを選択しました。
+それは、次のようになります。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>種類</th><th>選択</th></tr></thead><tbody><tr><td>ご予約のセットまたは仕様は？</td><td>早割りセット</td></tr><tr><td>用紙サイズ</td><td>A5</td></tr><tr><td>表紙込みページ数</td><td>72ページ (表表紙+裏表紙+本文(70page))</td></tr><tr><td>冊数</td><td>300冊</td></tr><tr><td>本の閉じ方向</td><td>左</td></tr><tr><td>本の閉じ種類</td><td>平綴じ</td></tr><tr><td>表紙用紙</td><td>NPホワイト200kg</td></tr><tr><td>表紙の印刷種類</td><td>通常4色クリアPP</td></tr><tr><td>本文用紙</td><td>上質90kg</td></tr><tr><td>本文の印刷種類</td><td>データ150線印刷</td></tr><tr><td>本文はじまりのページ</td><td>1ページ目</td></tr><tr><td>遊び紙</td><td>有り, 上質90kg/イエロー/前</td></tr></tbody></table>
+<p><a href="https://jumpei-ikegami.hatenablog.com/entry/2018/10/21/084634">https://jumpei-ikegami.hatenablog.com/entry/2018/10/21/084634</a>  <!--  TODO: embed  --></p>
+<p>を参考にしました。</p>
+<p>本文はじまりのページは、nombreをというものを設定する必要があります。
+Re:VIEW Starterはnombre対応していて、次のコマンドを叩くだけです。</p>
+<pre class="language-shell"><code class="language-shell">$ docker run --rm -v <span class="token environment constant">$PWD</span>:/work kauplan/review2.5 /bin/bash -c <span class="token string">"cd /work; rake pdf:nombre"</span>
+</code></pre>
+<p>用紙についてこだわりたい方は、次のリンクにあるようにサンプルを手に入れると良いでしょう。</p>
+<p><a href="https://natuna.jp/marcket/10282/">https://natuna.jp/marcket/10282/</a>  <!--  TODO: embed  --></p>
+<h1 id="3-販売準備"><a class="anchor" href="#3-販売準備"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>3. 販売準備</h1>
+<h2 id="31-物品購入"><a class="anchor" href="#31-物品購入"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>3.1. 物品購入</h2>
+<p>技術書典では、会場で本を販売することになります。
+販売するサークルブースを目立たせるために、いくつか物品を準備しました。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>名前</th><th>店舗</th><th>用途</th><th>サイズ</th><th>イラスト</th></tr></thead><tbody><tr><td><a href="https://iemonocatalog.com/wp-content/uploads/2019/05/daiso-100yen-card-stand01b.jpg">折りたたみカードスタンド</a></td><td>ダイソー</td><td>値札</td><td>110mm×60mm</td><td>必</td></tr><tr><td><a href="https://stripehome.net/wp-content/uploads/2018/05/daisobookcover11.jpg">軟質クリアブックカバー</a></td><td>ダイソー</td><td>見本誌カバー</td><td>A5</td><td>不</td></tr><tr><td><a href="http://livedoor.blogimg.jp/n_lattice/imgs/0/7/07a9de37.jpg">T型カードスタンド</a></td><td>ダイソー</td><td>公式後払いQRコード</td><td>90mm×128mm</td><td>必</td></tr><tr><td><a href="http://livedoor.blogimg.jp/n_lattice/imgs/0/7/07a9de37.jpg">T型カードスタンド</a></td><td>ダイソー</td><td>PixivPayQRコード</td><td>90mm×128mm</td><td>必</td></tr><tr><td><a href="http://livedoor.blogimg.jp/n_lattice/imgs/0/7/07a9de37.jpg">T型カードスタンド</a></td><td>ダイソー</td><td>商品紹介</td><td>90mm×128mm</td><td>必</td></tr><tr><td><a href="http://livedoor.blogimg.jp/n_lattice/imgs/0/7/07a9de37.jpg">T型カードスタンド</a></td><td>ダイソー</td><td>TwitterQRコード</td><td>90mm×128mm</td><td>必</td></tr><tr><td><a href="http://anonuno.shop-pro.jp/">あの布</a></td><td>公式サイト</td><td>テーブル作業</td><td>-</td><td>不</td></tr><tr><td>テーブルクロス前用紙</td><td>印刷業社</td><td>宣伝</td><td>900mm×600mm</td><td>必</td></tr><tr><td><a href="https://iemonocatalog.com/wp-content/uploads/2019/01/table-cloth-100yen-main03.jpg">テーブルクロス</a></td><td>ダイソー</td><td>あの布を隠す</td><td>900mm×1200mm</td><td>不</td></tr><tr><td><a href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7H8zYedCGI_RtVMpgjakWWv5Gt6PT76gu93WcAUqx5e5XOxtH">テーブルクロス滑り止めシート</a></td><td>ダイソー</td><td>あの布</td><td>-</td><td>不</td></tr><tr><td><a href="https://www.instagram.com/p/BibVAdbFcAN/media/?size=l">本スタンド</a></td><td>ダイソー</td><td>見本誌</td><td>-</td><td>不</td></tr><tr><td>タペストリー用紙</td><td>印刷業社</td><td>宣伝</td><td>728mm×1030mm</td><td>必</td></tr><tr><td><a href="https://www.amazon.co.jp/gp/product/B0052QLJEI/">タペストリースタンド</a></td><td>ダイソー</td><td>宣伝</td><td>-</td><td>不</td></tr><tr><td><a href="https://iemonocatalog.com/wp-content/uploads/2018/12/namecard-cliptyle-100yen-main.jpg">名札</a></td><td>ダイソー</td><td>著者、売り子</td><td>50mm×25mm</td><td>必</td></tr><tr><td><a href="https://i2.wp.com/zatsuknowledge.com/wp-content/uploads/2019/04/IMG_4649.jpg">硬質カードケース</a></td><td>ダイソー</td><td>お品書き</td><td>A5</td><td>不</td></tr><tr><td>複写式 領収書</td><td>ダイソー</td><td>お客さん</td><td>-</td><td>不</td></tr><tr><td>メモ、ふせん</td><td>ダイソー</td><td>作業</td><td>-</td><td>不</td></tr><tr><td>養生テープ</td><td>ダイソー</td><td>作業</td><td>-</td><td>不</td></tr><tr><td>スケッチブック</td><td>ダイソー</td><td>作業</td><td>-</td><td>不</td></tr><tr><td>ダンボールカッター</td><td>ダイソー</td><td>作業</td><td>-</td><td>不</td></tr></tbody></table>
+<p><a href="https://note.mu/mochikoastech/n/nf484f114855c">https://note.mu/mochikoastech/n/nf484f114855c</a>  <!--  TODO: embed  --></p>
+<p><a href="https://blog.vtryo.me/entry/techbookfest5-preparation-of-journey#%E7%99%BB%E5%A3%87%E3%83%96%E3%83%AD%E3%82%B0%E3%81%AA%E3%81%A9%E3%81%AB%E3%82%88%E3%82%8B%E5%AE%A3%E4%BC%9D%E6%B4%BB%E5%8B%95">https://blog.vtryo.me/entry/techbookfest5-preparation-of-journey#登壇ブログなどによる宣伝活動</a>  <!--  TODO: embed  --></p>
+<p><a href="https://note.mu/yagitch/n/nc796a0c2c796">https://note.mu/yagitch/n/nc796a0c2c796</a>  <!--  TODO: embed  --></p>
+<p>印刷する手段は3つあります。</p>
+<ul>
+<li>細かいもの
+<ul>
+<li>1つのファイルにして<a href="https://blog.vtryo.me/entry/techbookfest5-preparation-of-journey#%E7%99%BB%E5%A3%87%E3%83%96%E3%83%AD%E3%82%B0%E3%81%AA%E3%81%A9%E3%81%AB%E3%82%88%E3%82%8B%E5%AE%A3%E4%BC%9D%E6%B4%BB%E5%8B%95">セブンイレブン印刷</a></li>
+</ul>
+</li>
+<li>大きなもの
+<ul>
+<li><a href="https://www.ooban-senmon.com">ソクプリ</a>で印刷</li>
+</ul>
+</li>
+<li>大量印刷
+<ul>
+<li><a href="https://www.printpac.co.jp/">プリントパック</a>で印刷</li>
+</ul>
+</li>
+</ul>
+<h2 id="32-電子書籍の準備"><a class="anchor" href="#32-電子書籍の準備"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>3.2. 電子書籍の準備</h2>
+<p>ピクシブ社のサービスであるBoothを利用しました。</p>
+<p><a href="https://booth.pm/ja">https://booth.pm/ja</a>  <!--  TODO: embed  --></p>
+<p>特に専門的な知識が必要なことがなく、本のPDFを登録するだけです。
+せっかく足を運んで会場に来て頂いた方のために、電子書籍と物理本の違いを出そうと考えました。
+（中身のデータは同じです）
+そこで、物理本を購入して頂いた方には、<strong>無料で電子書籍をプレゼント</strong>することにしました。
+技術書典ではよくある方法だそうです。</p>
+<p>また、サンプルの本をアップロードし、無料でダウンロードできるようにすることで、
+事前に本の中身を確認できるようにしました。</p>
+<p><a href="https://silverbirder.booth.pm/items/1536228">[見本誌] はじめてのWeb Components入門 -4つの基本機能から関連ライブラリまで-</a></p>
+<p>ただ、ダウンロード数を見る限り、あまり数は多くありませんでした。
+Google Analytics (<strong>初登録</strong>)とBoothが連携できるので、流入数を見れるのですが、
+離脱率が86%という悲しい結果を知りました。ここは改善の余地がありそうです。</p>
+<figure title="Booth on Google Analytics">
+<img alt="Booth on Google Analytics" src="https://res.cloudinary.com/silverbirder/image/upload/v1614430470/silver-birder.github.io/blog/booth_on_google_analytics.png">
+<figcaption>Booth on Google Analytics</figcaption>
+</figure>
+<p>pixiv ID登録しないとダウンロードできないので、ここが駄目ならサービスを使わない方が良いかもしれません。
+見本誌に限っては、GoogleDriveで渡すようにするとかですかね。</p>
+<h2 id="33-支払い手段の準備"><a class="anchor" href="#33-支払い手段の準備"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>3.3. 支払い手段の準備</h2>
+<p>技術書典では、次のような支払手段を用意しました。</p>
+<ul>
+<li>公式かんたん後払い</li>
+<li>pixiv pay</li>
+</ul>
+<p>前者は、技術書典で口座情報を登録すると利用できます。
+後者は、アプリをダウンロードして商品を登録するだけです。無料です。</p>
+<p>他にもPayPayやKyashといった手段も用意しようか迷ったのですが、やめました。
+理由は、支払い方法が若干複雑そうでしたからです。</p>
+<h1 id="4-その他"><a class="anchor" href="#4-その他"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>4. その他</h1>
+<h2 id="宣伝"><a class="anchor" href="#宣伝"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>宣伝</h2>
+<p>この本のことを広く知ってもらうためには、宣伝が必要です。
+私が取った宣伝手段は次の通りです。</p>
+<ol>
+<li>Twitterで "#技術書典7" タグ</li>
+<li>LINEのOpenChatやTL</li>
+<li>FaceBook</li>
+<li>本の内容と関係する勉強会ハッシュタグ</li>
+<li>会社</li>
+<li>友人</li>
+</ol>
+<p>あとは、勉強会に参加して宣伝する手段もあります。</p>
+<p><strong>「興味を持ってくれそうな人」が「多い」場</strong>を探す必要があります。
+例えば、4番は事前に <a href="https://connpass.com">connpass</a>で関係がありそうな勉強会を調べて、
+該当ハッシュタグで宣伝したりしました。
+また、積極的に1番を実施していると、他のサークル参加さんがリツイートしてくれるため、とても助かりました。</p>
+<p>Twitterで宣伝するために、16:9の画像を用意したりもしました。</p>
+<p><a href="https://twitter.com/silver_birder/status/1172097536510676994">https://twitter.com/silver_birder/status/1172097536510676994</a>  <!--  TODO: embed  --></p>
+<h2 id="被チェック数と販売冊数"><a class="anchor" href="#被チェック数と販売冊数"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>被チェック数と販売冊数</h2>
+<p>被チェック数は、お客さんが気になる本をチェックした数になります。
+この数字から、印刷する冊数を決める大きな要因になります。</p>
+<p><a href="https://note.mu/yagitch/n/n2b5576363f4e">https://note.mu/yagitch/n/n2b5576363f4e</a>  <!--  TODO: embed  --></p>
+<p>恥ずかしい話になりますが、私は毎朝この数字を見ていました。（笑）</p>
+<p><a href="https://github.com/Silver-birder/get-checked-number-for-techbook">https://github.com/Silver-birder/get-checked-number-for-techbook</a>  <!--  TODO: embed  --></p>
+<p>被チェック数を定期的に取得するAPIをサクッと作って、CloudFunctionで稼働させています。</p>
+<p><a href="https://twitter.com/silver_birder/status/1171178281380405248">https://twitter.com/silver_birder/status/1171178281380405248</a>  <!--  TODO: embed  --></p>
+<p>このようにどの時間やどの曜日にチェックされるのかがわかるようになります。</p>
+<p>今回、300冊を印刷することにしました。間違いなく残ってしまうと思うので、
+とらのあなさんへ委託しようと考えています。</p>
+<p><a href="https://news.toranoana.jp/107460">https://news.toranoana.jp/107460</a>  <!--  TODO: embed  --></p>
+<p>残ってしまったいくつかの本は、お家に保存用として持ち帰ろうと考えています。（笑）</p>
+<h2 id="公式ツイッター"><a class="anchor" href="#公式ツイッター"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>公式ツイッター</h2>
+<p>公式ツイッターアカウントをフォローしておくと、なにかと便利です。</p>
+<p><a href="https://twitter.com/techbookfest">https://twitter.com/techbookfest</a>  <!--  TODO: embed  --></p>
+<h2 id="google-カレンダー-登録"><a class="anchor" href="#google-カレンダー-登録"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Google カレンダー 登録</h2>
+<p>技術書典のスケジュールが登録されているGoogleカレンダーを、ご自身のカレンダーにも登録することをオススメします。</p>
+<p><a href="https://twitter.com/techbookfest/status/1083948257095503872">https://twitter.com/techbookfest/status/1083948257095503872</a>  <!--  TODO: embed  --></p>
+<p>いつまでに何をしないといけないのか逆算できるので、知っておいたほうが良いです。</p>
+<h2 id="スケジュールと実績"><a class="anchor" href="#スケジュールと実績"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>スケジュールと実績</h2>
+<p>公式予定と私の実績は次のとおりです。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>日付</th><th>公式予定</th><th>筆者実績</th></tr></thead><tbody><tr><td>07/10</td><td>当落通知日</td><td>当選</td></tr><tr><td>07/12</td><td>-</td><td><a href="https://twitter.com/silver_birder/status/1149650432039387137">入金済</a></td></tr><tr><td>07/17</td><td>入金締切日</td><td>入金済</td></tr><tr><td>07/20</td><td>-</td><td>計画立てる＆テーマ確定</td></tr><tr><td>07/23</td><td>-</td><td>castaneaiくんに<br>印刷用サークルカット書いてもらう</td></tr><tr><td>07/27</td><td>-</td><td><a href="https://twitter.com/silver_birder/status/1155089319410843648">サンプルコード作成完了</a></td></tr><tr><td>07/31</td><td>印刷用サークルカット締切日</td><td>登録済</td></tr><tr><td>08/02</td><td>-</td><td>原稿作成開始</td></tr><tr><td>08/15</td><td>-</td><td>レビュー対応中(2st)</td></tr><tr><td>08/21</td><td>サークル配置発表日</td><td><a href="https://twitter.com/silver_birder/status/1164294933752119296">宣伝済</a></td></tr><tr><td>08/26</td><td>一般参加者向け正式サイトオープン</td><td><a href="https://twitter.com/silver_birder/status/1166171153875886080">宣伝済</a></td></tr><tr><td>08/29</td><td>-</td><td><a href="https://twitter.com/silver_birder/status/1167051004308684800">レビュー対応中(3st)</a></td></tr><tr><td>08/30</td><td>-</td><td>原稿作成完了, <a href="https://twitter.com/silver_birder/status/1167265421373788161">Booth登録</a>, <a href="https://twitter.com/silver_birder/status/1167379639724994560">製本依頼</a></td></tr><tr><td>08/31</td><td>-</td><td><a href="https://twitter.com/silver_birder/status/1167775260139114496">物品購入</a>(あの布は事前購入)</td></tr><tr><td>09/06</td><td>-</td><td>現在</td></tr><tr><td>09/07</td><td>サークル通行証の割当日</td><td>-</td></tr><tr><td>09/19</td><td>見本誌の提出締切</td><td>-</td></tr><tr><td>09/22</td><td>イベント当日</td><td>-</td></tr></tbody></table>
+<p>※ レビュー依頼中に、表紙等のイラスト作成を並行して進めていました。</p>
+<p>サンプルコードを書いている時は、「こんな話も増やそうかな？」と楽しい気分になれました。
+原稿を書いている時は、「予定日の◯◯日には終わらせないと…」という苦しい時期がありました。
+なんだかんだで、日光企画さんの早割チケットを手に入れれたので満足です。</p>
+<h1 id="終わりに"><a class="anchor" href="#終わりに"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>終わりに</h1>
+<p>私が今回、初執筆した経験を包み隠さずすべて公開しました。
+執筆をやってみてよかったことは次のとおりです。</p>
+<ul>
+<li>本を作るのは、意外と簡単
+<ul>
+<li>ツールやサービスが十分整っている</li>
+</ul>
+</li>
+<li>書いた本が好きになる
+<ul>
+<li>いろんな人にみてほしい</li>
+<li>書いた知識は、とても定着する</li>
+</ul>
+</li>
+<li>コミュニティが楽しい
+<ul>
+<li>"#技術書典"のハッシュタグはオススメ</li>
+<li>フォロワーが増えた</li>
+</ul>
+</li>
+</ul>
+<p>逆につらかったことは次のとおりです。</p>
+<ul>
+<li>ずーっと本のことを考える</li>
+<li>締め切りに追われる</li>
+<li>文章力のなさを痛感する</li>
+</ul>
+<p>初執筆しようと考えている人にとって、何かの助けになれば幸いです。</p>
+<p>あとは、技術書典7 当日を楽しむだけ！！</p>
+
+  
+    <div class="content-footer">
+  <p>
+    Caught a mistake or want to improve the blog?
+    <a href="https://github.com/Silver-birder/Silver-birder.github.io/edit/main/./docs/blog/contents/open_the_techbook7_first_experience.md">Edit this blog post on GitHub!</a>
+  </p>
+</div>
+
+
+  
+</main>
+
+  </main>
+
+    </div>
+  </div>
+
+
+    
+      <footer id="main-footer">
+  
+    
+
+  
+    <div id="footer-menu">
+  <div class="content-area">
+    
+      <nav>
+        <h3>Discover</h3>
+        <ul>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/blog">Blog</a>
+            </li>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/Silver-birder.github.io/issues">Help and Feedback</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>My Sales</h3>
+        <ul>
+          
+            <li>
+              <a href="https://www.amazon.co.jp/芝本雅史/e/B08FJK5C43">Amazon</a>
+            </li>
+          
+            <li>
+              <a href="https://silverbirder.booth.pm">Booth</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>Follow</h3>
+        <ul>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/Silver-birder.github.io">GitHub</a>
+            </li>
+          
+            <li>
+              <a href="https://twitter.com/silver_birder">Twitter</a>
+            </li>
+          
+            <li>
+              <a href="https://www.google.com/maps/contrib/101722346324226588907/reviews/@34.6907839,135.4537926,13z/">Google Map</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>Support</h3>
+        <ul>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/Silver-birder.github.io/blob/main/CONTRIBUTING.md">Contribute</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+  </div>
+</div>
+
+  
+</footer>
+
+    
+
+    
+  
+
+
+  
+
+<script>
+  window.__rocketServiceWorkerUrl = '/service-worker.js';
+</script>
+
+
+
+
+
+
+  
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-146805630-4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-146805630-4');
+  </script>
+
+
+
+
+  
+
+
+<script type="module" src="../../../b089d234.js"></script>
+<script type="module" src="../../../46ae44d0.js"></script>
+<script type="module" src="../../../dd4fcd54.js" inject-service-worker=""></script>
+<script type="module" src="../../../08df7a3c39.js"></script>
+
+</body></html>

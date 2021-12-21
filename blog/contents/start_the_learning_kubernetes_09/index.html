@@ -1,0 +1,721 @@
+<!DOCTYPE html><html lang="ja" dir="ltr"><head>
+  
+    
+
+  
+
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一足遅れて Kubernetes を学び始める - 09. discovery&amp;LB その2 -: silverbirder</title>
+<meta property="og:title" content="一足遅れて Kubernetes を学び始める - 09. discovery&amp;LB その2 -: silverbirder">
+
+<meta name="generator" content="rocket 0.1">
+<link rel="canonical" href="http://localhost:8080/blog/contents/start_the_learning_kubernetes_09/">
+
+
+
+  
+
+<meta name="description" content="前回 一足遅れて Kubernetes を学び始める - 08. discovery&amp;LB その1 -でServiceについての概要を学びました。今回は下記を一気に学びます。">
+<meta property="og:description" content="前回 一足遅れて Kubernetes を学び始める - 08. discovery&amp;LB その1 -でServiceについての概要を学びました。今回は下記を一気に学びます。">
+
+  
+    
+<link rel="apple-touch-icon" sizes="180x180" href="../../../assets/apple-touch-icon.jpg">
+<link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../../assets/favicon-16x16.png">
+<link rel="manifest" href="../../../assets/webmanifest.json">
+
+<meta name="msapplication-TileColor" content="#1d3557">
+<meta name="theme-color" content="#1d3557">
+
+  
+    <meta property="og:site_name" content="silverbirder">
+<meta property="og:type" content="website">
+
+<meta property="og:image" content="https://res.cloudinary.com/silverbirder/image/upload/v1639816612/silver-birder.github.io/blog/sample_deployment_1.png">
+<meta property="og:url" content="http://localhost:8080/blog/contents/start_the_learning_kubernetes_09/">
+
+<meta name="twitter:card" content="summary_large_image">
+
+  
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="">
+
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&amp;display=optional" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&amp;display=optional" rel="stylesheet">
+
+  
+    <link rel="stylesheet" href="../../../3cb4adfb.css">
+<link rel="stylesheet" href="../../../0f4765a3.css">
+<link rel="stylesheet" href="../../../ac2ea3b8.css">
+<link rel="stylesheet" href="../../../2366292e.css">
+
+  
+    <noscript><link rel="stylesheet" href="/_merged_assets/_static/search/noscript.css"></noscript>
+
+  
+    <link rel="stylesheet" href="../../../f5cf94c7.css">
+  
+    
+  
+    <noscript><link rel="stylesheet" href="/_merged_assets/_static/noscript.css"/></noscript>
+
+  
+    <link rel="stylesheet" href="../../../b1403e10.css">
+  
+    <meta name="twitter:creator" content="@Silver_birder">
+
+<link rel="stylesheet" href="../../../611b393e.css" mdjs-use="">
+
+<meta name="google-site-verification" content="-8bAm041798VvU0oItcuyuShbVINfNMLfTmP7tENPDY">
+  
+
+<link rel="preload" href="../../../b089d234.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../d3f07d73.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../46ae44d0.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../dd4fcd54.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../08df7a3c54.js" as="script" crossorigin="anonymous">
+</head>
+
+  
+
+  
+  <body layout="layout-blog-details">
+  
+
+    
+      <header id="main-header">
+  <div class="content-area">
+    
+      <button id="mobile-menu-trigger" data-action="trigger-mobile-menu">
+	<span class="sr-only">Show Menu</span>
+	      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon">
+        <path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path>
+      </svg>
+
+</button>
+
+    
+      
+	<a class="logo-link" href="/">
+  <img src="../../../90a4fb13.svg" alt="Rocket Logo">
+  <span>silverbirder</span>
+</a>
+
+
+
+    
+      <rocket-search class="search" json-url="/_merged_assets/_static/rocket-search-index.json">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129" style="width: 25px;">
+    <path d="M51.6 96.7c11 0 21-3.9 28.8-10.5l35 35c.8.8 1.8 1.2 2.9 1.2s2.1-.4 2.9-1.2c1.6-1.6 1.6-4.2 0-5.8l-35-35c6.5-7.8 10.5-17.9 10.5-28.8 0-24.9-20.2-45.1-45.1-45.1-24.8 0-45.1 20.3-45.1 45.1 0 24.9 20.3 45.1 45.1 45.1zm0-82c20.4 0 36.9 16.6 36.9 36.9C88.5 72 72 88.5 51.6 88.5S14.7 71.9 14.7 51.6c0-20.3 16.6-36.9 36.9-36.9z"></path>
+  </svg>
+</rocket-search>
+
+
+
+    
+      
+  <a href="/blog/" class="
+          
+           active 
+        ">Blog</a>
+  <a href="/resume/" class="
+          
+          
+        ">Resume</a>
+  <a href="/misc/" class="
+          
+          
+        ">Misc</a>
+
+    
+      <launch-dark-switch class="light-dark-switch" label="Toggle darkmode">Toggle darkmode</launch-dark-switch>
+
+
+    
+      
+	<a class="social-link" href="https://github.com/Silver-birder/Silver-birder.github.io" aria-label="silverbirder on GitHub" rel="noopener noreferrer" target="_blank">
+		<span class="sr-only">GitHub</span>
+		
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 16" fill="none">
+  <title>GitHub</title>
+  <path fill="currentColor" fill-rule="evenodd" d="M8.18391.249268C3.82241.249268.253906 3.81777.253906 8.17927c0 3.46933 2.279874 6.44313 5.451874 7.53353.3965.0991.49563-.1983.49563-.3965v-1.3878c-2.18075.4956-2.67638-.9912-2.67638-.9912-.3965-.8922-.89212-1.1895-.89212-1.1895-.69388-.4957.09912-.4957.09912-.4957.793.0992 1.1895.793 1.1895.793.69388 1.2887 1.88338.8922 2.27988.6939.09912-.4956.29737-.8921.49562-1.0904-1.78425-.1982-3.5685-.8921-3.5685-3.96496 0-.89212.29738-1.586.793-2.08162-.09912-.19825-.3965-.99125.09913-2.08163 0 0 .69387-.19825 2.18075.793.59475-.19825 1.28862-.29737 1.9825-.29737.69387 0 1.38775.09912 1.98249.29737 1.4869-.99125 2.1808-.793 2.1808-.793.3965 1.09038.1982 1.88338.0991 2.08163.4956.59475.793 1.28862.793 2.08162 0 3.07286-1.8834 3.66766-3.66764 3.86586.29737.3965.59474.8921.59474 1.586v2.1808c0 .1982.0991.4956.5948.3965 3.172-1.0904 5.4518-4.0642 5.4518-7.53353-.0991-4.3615-3.6676-7.930002-8.02909-7.930002z" clip-rule="evenodd"></path>
+</svg>
+
+		
+	</a>
+	<a class="social-link" href="https://twitter.com/silver_birder" aria-label="silverbirder on Twitter" rel="noopener noreferrer" target="_blank">
+		<span class="sr-only">Twitter</span>
+		
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 274 223"><title>Twitter</title><path d="M85.98 223c-31.675 0-61.158-9.285-85.98-25.199 4.388.518 8.853.783 13.38.783 26.278 0 50.463-8.967 69.659-24.01-24.544-.453-45.258-16.669-52.395-38.953a56.014 56.014 0 0 0 10.552 1.006c5.116 0 10.071-.685 14.778-1.967-25.66-5.152-44.993-27.822-44.993-54.998 0-.236 0-.471.004-.705a55.865 55.865 0 0 0 25.406 7.015c-15.05-10.058-24.953-27.226-24.953-46.685 0-10.279 2.766-19.914 7.594-28.198 27.664 33.934 68.993 56.264 115.609 58.603a56.31 56.31 0 0 1-1.453-12.782c0-30.975 25.114-56.088 56.091-56.088 16.132 0 30.709 6.812 40.941 17.713a112.328 112.328 0 0 0 35.617-13.611c-4.188 13.097-13.081 24.089-24.662 31.031a112.148 112.148 0 0 0 32.215-8.832 114 114 0 0 1-27.988 29.035c.108 2.405.162 4.824.162 7.256C245.564 137.533 189.148 223 85.98 223" fill="currentColor"></path></svg>
+
+		
+	</a>
+
+    
+  </div>
+</header>
+
+    
+
+    
+  <div id="content-wrapper">
+    <div class="content-area">
+      
+	<rocket-drawer id="sidebar">
+  <nav slot="content" id="sidebar-nav">
+    
+      <a class="logo-link" href="/">
+  <img src="../../../90a4fb13.svg" alt="Rocket Logo">
+  <span>silverbirder</span>
+</a>
+
+
+    
+      <rocket-navigation>
+  <ul>
+    <li class="current">
+      <h3>Headings</h3>
+      
+    </li>
+  </ul>
+  <div class="sidebar-tags">
+    <h3>Date</h3>
+    <div>Wed May 15 2019</div>
+  </div>
+  <div class="sidebar-tags">
+    <h3>Tags</h3>
+    <div class="tags">
+      
+        <span class="tag">Kubernetes</span>
+      
+        <span class="tag">Story</span>
+      
+        <span class="tag">Beginner</span>
+      
+    </div>
+  </div>
+  <div class="sidebar-bottom">
+  <hr> <launch-dark-switch class="light-dark-switch" label="Toggle darkmode">Toggle darkmode</launch-dark-switch>
+
+  
+    <a href="https://github.com/Silver-birder/Silver-birder.github.io/issues">Help and Feedback</a>
+  
+</div>
+
+</rocket-navigation>
+
+    
+  </nav>
+</rocket-drawer>
+
+
+      
+  <main class="markdown-body">
+    <main class="markdown-body">
+  
+    
+  <h1>一足遅れて Kubernetes を学び始める - 09. discovery&amp;LB その2 -</h1>
+
+
+  <img src="https://res.cloudinary.com/silverbirder/image/upload/v1639816612/silver-birder.github.io/blog/sample_deployment_1.png" alt="">
+
+
+  
+    <!--  TODO: TOC -->
+<h1 id="ストーリー"><a class="anchor" href="#ストーリー"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>ストーリー</h1>
+<ol>
+<li><a href="../start_the_learning_kubernetes_01/">一足遅れて Kubernetes を学び始める - 01. 環境選択編 -</a></li>
+<li><a href="../start_the_learning_kubernetes_02/">一足遅れて Kubernetes を学び始める - 02. Docker For Mac -</a></li>
+<li><a href="../start_the_learning_kubernetes_03/">一足遅れて Kubernetes を学び始める - 03. Raspberry Pi -</a></li>
+<li><a href="../start_the_learning_kubernetes_04/">一足遅れて Kubernetes を学び始める - 04. kubectl -</a></li>
+<li><a href="../start_the_learning_kubernetes_05/">一足遅れて Kubernetes を学び始める - 05. workloads その1 -</a></li>
+<li><a href="../start_the_learning_kubernetes_06/">一足遅れて Kubernetes を学び始める - 06. workloads その2 -</a></li>
+<li><a href="../start_the_learning_kubernetes_07/">一足遅れて Kubernetes を学び始める - 07. workloads その3 -</a></li>
+<li><a href="../start_the_learning_kubernetes_08/">一足遅れて Kubernetes を学び始める - 08. discovery&amp;LB その1 -</a></li>
+<li><a href="../start_the_learning_kubernetes_09/">一足遅れて Kubernetes を学び始める - 09. discovery&amp;LB その2 -</a></li>
+<li><a href="../start_the_learning_kubernetes_10/">一足遅れて Kubernetes を学び始める - 10. config&amp;storage その1 -</a></li>
+<li><a href="../start_the_learning_kubernetes_11/">一足遅れて Kubernetes を学び始める - 11. config&amp;storage その2 -</a></li>
+<li><a href="../start_the_learning_kubernetes_12/">一足遅れて Kubernetes を学び始める - 12. リソース制限 -</a></li>
+<li><a href="../start_the_learning_kubernetes_13/">一足遅れて Kubernetes を学び始める - 13. ヘルスチェックとコンテナライフサイクル -</a></li>
+<li><a href="../start_the_learning_kubernetes_14/">一足遅れて Kubernetes を学び始める - 14. スケジューリング -</a></li>
+<li><a href="../start_the_learning_kubernetes_15/">一足遅れて Kubernetes を学び始める - 15. セキュリティ -</a></li>
+<li><a href="../start_the_learning_kubernetes_16/">一足遅れて Kubernetes を学び始める - 16. コンポーネント -</a></li>
+</ol>
+<h1 id="前回"><a class="anchor" href="#前回"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>前回</h1>
+<p><a href="../start_the_learning_kubernetes_08/">一足遅れて Kubernetes を学び始める - 08. discovery&amp;LB その1 -</a>でServiceについての概要を学びました。今回は下記を一気に学びます。</p>
+<ul>
+<li>ExternalIP</li>
+<li>NodePort</li>
+<li>LocadBalancer</li>
+<li>Headless</li>
+<li>ExternalName</li>
+<li>None-Selector</li>
+<li>Ingress</li>
+</ul>
+<p>※ ClusterIPを飛ばしたのは、前回使った内容で十分だと思ったため。</p>
+<h1 id="externalip"><a class="anchor" href="#externalip"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>ExternalIP</h1>
+<p>こちらは、外向けのIPアドレスを割り振ります。</p>
+<pre class="language-yaml"><code class="language-yaml"><span class="token comment"># sample-externalip.yaml</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Service
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> sample<span class="token punctuation">-</span>externalip
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">type</span><span class="token punctuation">:</span> ClusterIP
+  <span class="token key atrule">externalIPs</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> 192.168.3.33
+  <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token string">"http-port"</span>
+      <span class="token key atrule">protocol</span><span class="token punctuation">:</span> <span class="token string">"TCP"</span>
+      <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">8080</span>
+      <span class="token key atrule">targetPort</span><span class="token punctuation">:</span> <span class="token number">80</span>
+  <span class="token key atrule">selector</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app</span><span class="token punctuation">:</span> sample<span class="token punctuation">-</span>app
+</code></pre>
+<p>私のNode情報では、下記の状態です。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th align="left">host</th><th align="left">ip</th></tr></thead><tbody><tr><td align="left">raspi001(master)</td><td align="left">192.168.3.32</td></tr><tr><td align="left">raspi002(worker)</td><td align="left">192.168.3.33</td></tr><tr><td align="left">raspi003(worker)</td><td align="left">192.168.3.34</td></tr><tr><td align="left">nfspi(NFS)</td><td align="left">192.168.3.35</td></tr></tbody></table>
+<p>ここで、spec. externalIPsに、公開したいIPアドレスを上記NodeのIPアドレスより設定します。
+今回は、１つだけ(raspi002:193.168.3.33)にしました。</p>
+<pre class="language-yaml"><code class="language-yaml"><span class="token comment"># sample-deployment.yaml</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Deployment
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> sample<span class="token punctuation">-</span>deployment
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">replicas</span><span class="token punctuation">:</span> <span class="token number">3</span>
+  <span class="token key atrule">selector</span><span class="token punctuation">:</span>
+    <span class="token key atrule">matchLabels</span><span class="token punctuation">:</span>
+      <span class="token key atrule">app</span><span class="token punctuation">:</span> sample<span class="token punctuation">-</span>app
+  <span class="token key atrule">template</span><span class="token punctuation">:</span>
+    <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+      <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+        <span class="token key atrule">app</span><span class="token punctuation">:</span> sample<span class="token punctuation">-</span>app
+    <span class="token key atrule">spec</span><span class="token punctuation">:</span>
+      <span class="token key atrule">containers</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> nginx<span class="token punctuation">-</span>container
+          <span class="token key atrule">image</span><span class="token punctuation">:</span> nginx<span class="token punctuation">:</span><span class="token number">1.12</span>
+          <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+            <span class="token punctuation">-</span> <span class="token key atrule">containerPort</span><span class="token punctuation">:</span> <span class="token number">80</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> redis<span class="token punctuation">-</span>container
+          <span class="token key atrule">image</span><span class="token punctuation">:</span> redis<span class="token punctuation">:</span><span class="token number">3.2</span>
+</code></pre>
+<p>前回同様のファイルを用意します。</p>
+<pre class="language-shell"><code class="language-shell">pi@raspi001:~/tmp $ k apply -f sample-deployment.yaml -f sample-externalip.yaml
+pi@raspi001:~/tmp $ k get pod -o<span class="token operator">=</span>wide
+NAME                                      READY   STATUS    RESTARTS   AGE   IP            NODE       NOMINATED NODE   READINESS GATES
+sample-deployment-9dc487867-7n2sz         <span class="token number">2</span>/2     Running   <span class="token number">0</span>          16m   <span class="token number">10.244</span>.1.73   raspi002   <span class="token operator">&lt;</span>none<span class="token operator">&gt;</span>           <span class="token operator">&lt;</span>none<span class="token operator">&gt;</span>
+sample-deployment-9dc487867-nnnqm         <span class="token number">2</span>/2     Running   <span class="token number">0</span>          16m   <span class="token number">10.244</span>.1.74   raspi002   <span class="token operator">&lt;</span>none<span class="token operator">&gt;</span>           <span class="token operator">&lt;</span>none<span class="token operator">&gt;</span>
+sample-deployment-9dc487867-qfdhw         <span class="token number">2</span>/2     Running   <span class="token number">0</span>          16m   <span class="token number">10.244</span>.2.68   raspi003   <span class="token operator">&lt;</span>none<span class="token operator">&gt;</span>           <span class="token operator">&lt;</span>none<span class="token operator">&gt;</span>
+pi@raspi001:~/tmp $ k get <span class="token function">service</span>
+NAME                TYPE        CLUSTER-IP       EXTERNAL-IP    PORT<span class="token punctuation">(</span>S<span class="token punctuation">)</span>    AGE
+sample-externalip   ClusterIP   <span class="token number">10.104</span>.170.220   <span class="token number">192.168</span>.3.33   <span class="token number">8080</span>/TCP   15m
+</code></pre>
+<p>externalIPが設定されました。</p>
+<pre class="language-shell"><code class="language-shell">pi@raspi001:~/tmp $ <span class="token keyword">for</span> <span class="token for-or-select variable">PODNAME</span> <span class="token keyword">in</span> <span class="token variable"><span class="token variable">`</span>k get pods -l <span class="token assign-left variable">app</span><span class="token operator">=</span>sample-app -o <span class="token assign-left variable">jsonpath</span><span class="token operator">=</span><span class="token string">'{.items[*].metadata.name}'</span><span class="token variable">`</span></span><span class="token punctuation">;</span> <span class="token keyword">do</span> k <span class="token builtin class-name">exec</span> -it <span class="token variable">${PODNAME}</span> -- <span class="token function">cp</span> /etc/hostname /usr/share/nginx/html/index.html<span class="token punctuation">;</span> <span class="token keyword">done</span>
+</code></pre>
+<p>どこのpodかどうかわかりやすいくするため、index.htmlを書き換えます。
+では、ブラウザからアクセスしてみます。</p>
+<p><img src="https://res.cloudinary.com/silverbirder/image/upload/v1639816612/silver-birder.github.io/blog/sample_deployment_1.png" alt="sample_deployment_1" rocket-image="responsive">
+<img src="https://res.cloudinary.com/silverbirder/image/upload/v1639816612/silver-birder.github.io/blog/sample_deployment_2.png" alt="sample_deployment_2" rocket-image="responsive"></p>
+<p>raspi002を公開したので、そのNodeに存在するPodがランダムに出力されている、つまりロードバランサが動作していることがわかります。</p>
+<h1 id="nodeport"><a class="anchor" href="#nodeport"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>NodePort</h1>
+<p>ExternalIPのような特定Nodeを公開するのと違って、NodePortは、<strong>全て</strong>のNodeを公開します。</p>
+<p>試してみます。</p>
+<pre class="language-yaml"><code class="language-yaml"><span class="token comment"># sample-nodeport.yaml</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Service
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> sample<span class="token punctuation">-</span>nodeport
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">type</span><span class="token punctuation">:</span> NodePort
+  <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token string">"http-port"</span>
+      <span class="token key atrule">protocol</span><span class="token punctuation">:</span> <span class="token string">"TCP"</span>
+      <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">8080</span>
+      <span class="token key atrule">targetPort</span><span class="token punctuation">:</span> <span class="token number">80</span>
+      <span class="token key atrule">nodePort</span><span class="token punctuation">:</span> <span class="token number">30080</span>
+  <span class="token key atrule">selector</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app</span><span class="token punctuation">:</span> sample<span class="token punctuation">-</span>app
+</code></pre>
+<pre class="language-shell"><code class="language-shell">pi@raspi001:~/tmp $ k delete -f sample-externalip.yaml <span class="token comment">#しなくても良い</span>
+pi@raspi001:~/tmp $ k apply -f sample-nodeport.yaml
+pi@raspi001:~/tmp $ k get <span class="token function">service</span>
+NAME              TYPE        CLUSTER-IP      EXTERNAL-IP   PORT<span class="token punctuation">(</span>S<span class="token punctuation">)</span>          AGE
+sample-nodeport   NodePort    <span class="token number">10.96</span>.173.243   <span class="token operator">&lt;</span>none<span class="token operator">&gt;</span>        <span class="token number">8080</span>:30080/TCP   66s
+</code></pre>
+<p>内向けには、10.96.173.243:8080でアクセスでき、外向けには、各NodeのIPアドレス:30080にアクセスします。
+どちらも正常にアクセスできています。もちろん、アクセス先のPodは、ロードバランシングされます。ロードバランシングさせるのが嫌な場合にも対応できます。アクセスされたNodeの先は、そのNode内にあるPodのみにアクセスさせる「spec.externalTrafficPolicy：Local」に設定すれば大丈夫です。
+注意点として、nodePortは、30000~32767の範囲と決まっています。</p>
+<h1 id="loadbalancer"><a class="anchor" href="#loadbalancer"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>LoadBalancer</h1>
+<p>ExternalIPやNodePortの場合、ロードバランシングするのはクラスタ内のNodeになります。そのため、アクセスが集中することで、Node単一障害が発生しやすいそうです。そこで、LoadBalancerを使うことで、<strong>クラスタ外</strong>にロードバランサを作成します。</p>
+<p>ただ、クラスタ外にロードバランサを作成する際は、プラットフォームによって対応しているか確認が必要です。私のようなraspberryPi環境では、もちろんそういった機能がないため、準備する必要があります。</p>
+<p>master(raspi001)に移動</p>
+<pre class="language-shell"><code class="language-shell">pi@raspi001:~/tmp $ k apply -f https://raw.githubusercontent.com/google/metallb/v0.7.3/manifests/metallb.yaml
+</code></pre>
+<p>metallbと呼ばれるロードバランサを適用します。</p>
+<p><a href="https://metallb.universe.tf">https://metallb.universe.tf</a></p>
+<blockquote>
+<p>MetalLB is a load-balancer implementation for bare metal Kubernetes clusters, using standard routing protocols.</p>
+</blockquote>
+<pre class="language-yaml"><code class="language-yaml"><span class="token comment"># l2-config.yaml</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> ConfigMap
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> metallb<span class="token punctuation">-</span>system
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> config
+<span class="token key atrule">data</span><span class="token punctuation">:</span>
+ <span class="token key atrule">config</span><span class="token punctuation">:</span> <span class="token punctuation">|</span><span class="token scalar string">
+  address-pools:
+  - name: default
+    protocol: layer2
+    addresses:
+    - 192.168.3.100-192.168.3.200</span>
+</code></pre>
+<pre class="language-shell"><code class="language-shell">pi@raspi001:~/tmp $ k apply -f l2-config.yaml
+</code></pre>
+<p>これで、raspberryPi環境でもloadBalancerが使えます。さっそくつかってみましょう。</p>
+<pre class="language-yaml"><code class="language-yaml"><span class="token comment"># sample-lb.yaml</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Service
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> sample<span class="token punctuation">-</span>lb
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">type</span><span class="token punctuation">:</span> LoadBalancer
+  <span class="token key atrule">loadBalancerIP</span><span class="token punctuation">:</span> 192.168.3.100
+  <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token string">"http-port"</span>
+      <span class="token key atrule">protocol</span><span class="token punctuation">:</span> <span class="token string">"TCP"</span>
+      <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">8080</span>
+      <span class="token key atrule">targetPort</span><span class="token punctuation">:</span> <span class="token number">80</span>
+      <span class="token key atrule">nodePort</span><span class="token punctuation">:</span> <span class="token number">30082</span>
+  <span class="token key atrule">selector</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app</span><span class="token punctuation">:</span> sample<span class="token punctuation">-</span>app
+  <span class="token key atrule">loadBalancerSourceRanges</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> 192.168.3.0/8
+</code></pre>
+<pre class="language-shell"><code class="language-shell">pi@raspi001:~/tmp $ k apply -f sample-deployment.yaml
+pi@raspi001:~/tmp $ k apply -f sample-lb.yaml
+pi@raspi001:~/tmp $ k get services
+NAME         TYPE           CLUSTER-IP      EXTERNAL-IP     PORT<span class="token punctuation">(</span>S<span class="token punctuation">)</span>          AGE
+kubernetes   ClusterIP      <span class="token number">10.96</span>.0.1       <span class="token operator">&lt;</span>none<span class="token operator">&gt;</span>          <span class="token number">443</span>/TCP          16d
+sample-lb    LoadBalancer   <span class="token number">10.106</span>.253.65   <span class="token number">192.168</span>.3.100   <span class="token number">8080</span>:30082/TCP   8m4s
+</code></pre>
+<p>お、192.168.3.100:8080にアクセス可能みたいです。</p>
+<p>iMacに移動</p>
+<pre class="language-shell"><code class="language-shell">~ $ <span class="token function">curl</span> -s http://192.168.3.100:8080
+<span class="token operator">&lt;</span><span class="token operator">!</span>DOCTYPE html<span class="token operator">&gt;</span>
+<span class="token punctuation">..</span>.
+</code></pre>
+<p>OK</p>
+<h1 id="headless"><a class="anchor" href="#headless"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Headless</h1>
+<p>今までのロードバランスと違い、公開するIPアドレスは提供されません。
+DNS ラウンドロビンによる転送先のPodのIPアドレスを取得できます。
+つまり、Headlessのサービスへ問い合わせすると、spec.selectorで登録したPodのIPアドレスが手に入ります。
+PodのIPアドレスがほしいときには便利です。（Envoyとか?）</p>
+<pre class="language-yaml"><code class="language-yaml"><span class="token comment"># sample-statefulset-headless.yaml</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> StatefulSet
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> sample<span class="token punctuation">-</span>statefulset<span class="token punctuation">-</span>headless
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">serviceName</span><span class="token punctuation">:</span> sample<span class="token punctuation">-</span>headless
+  <span class="token key atrule">replicas</span><span class="token punctuation">:</span> <span class="token number">3</span>
+  <span class="token key atrule">selector</span><span class="token punctuation">:</span>
+    <span class="token key atrule">matchLabels</span><span class="token punctuation">:</span>
+      <span class="token key atrule">app</span><span class="token punctuation">:</span> sample<span class="token punctuation">-</span>app
+  <span class="token key atrule">template</span><span class="token punctuation">:</span>
+    <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+      <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+        <span class="token key atrule">app</span><span class="token punctuation">:</span> sample<span class="token punctuation">-</span>app
+    <span class="token key atrule">spec</span><span class="token punctuation">:</span>
+      <span class="token key atrule">containers</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> nginx<span class="token punctuation">-</span>container
+          <span class="token key atrule">image</span><span class="token punctuation">:</span> nginx<span class="token punctuation">:</span><span class="token number">1.12</span>
+</code></pre>
+<pre class="language-yaml"><code class="language-yaml"><span class="token comment"># sample-headless.yaml</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Service
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> sample<span class="token punctuation">-</span>headless
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">type</span><span class="token punctuation">:</span> ClusterIP
+  <span class="token key atrule">clusterIP</span><span class="token punctuation">:</span> None
+  <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token string">"http-port"</span>
+      <span class="token key atrule">protocol</span><span class="token punctuation">:</span> <span class="token string">"TCP"</span>
+      <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">80</span>
+      <span class="token key atrule">targetPort</span><span class="token punctuation">:</span> <span class="token number">80</span>
+  <span class="token key atrule">selector</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app</span><span class="token punctuation">:</span> sample<span class="token punctuation">-</span>app
+</code></pre>
+<p>spec.typeがClusterIPであり、spec.clusterIPがNone、そして、metadata.nameがstatefulsetのspec.serviceNameと同じことで、Headless Serviceと呼ぶそうです。</p>
+<pre class="language-shell"><code class="language-shell">pi@raspi001:~/tmp $ k apply -f sample-statefulset-headless.yaml
+pi@raspi001:~/tmp $ k run --image<span class="token operator">=</span>centos:7 --restart<span class="token operator">=</span>Never --rm -i testpod  -- <span class="token function">dig</span> sample-headless.default.svc.cluster.local
+<span class="token punctuation">..</span>.
+<span class="token punctuation">;</span><span class="token punctuation">;</span> ANSWER SECTION:
+sample-headless.default.svc.cluster.local. <span class="token number">5</span> IN	A <span class="token number">10.244</span>.1.75
+sample-headless.default.svc.cluster.local. <span class="token number">5</span> IN	A <span class="token number">10.244</span>.2.72
+sample-headless.default.svc.cluster.local. <span class="token number">5</span> IN	A <span class="token number">10.244</span>.2.73
+sample-headless.default.svc.cluster.local. <span class="token number">5</span> IN	A <span class="token number">10.244</span>.1.78
+sample-headless.default.svc.cluster.local. <span class="token number">5</span> IN	A <span class="token number">10.244</span>.1.76
+sample-headless.default.svc.cluster.local. <span class="token number">5</span> IN	A <span class="token number">10.244</span>.2.70
+</code></pre>
+<p>たしかに、headlessのサービスに問い合わせると、IPアドレスが返ってきました。</p>
+<h1 id="externalname"><a class="anchor" href="#externalname"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>ExternalName</h1>
+<p>外部のドメイン宛のCNAMEを返すサービスです。
+例えば、Podから外部の<a href="http://example.com/">example.com</a>へアクセスする場合、下記のように設定します。</p>
+<pre class="language-yaml"><code class="language-yaml"><span class="token comment"># sample-externalname.yaml</span>
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Service
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> sample<span class="token punctuation">-</span>externalname
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> default
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">type</span><span class="token punctuation">:</span> ExternalName
+  <span class="token key atrule">externalName</span><span class="token punctuation">:</span> example.com
+</code></pre>
+<pre class="language-shell"><code class="language-shell">pi@raspi001:~/tmp $ k apply -f sample-externalname.yaml
+pi@raspi001:~/tmp $ k run --image<span class="token operator">=</span>centos:7 --restart<span class="token operator">=</span>Never --rm -i testpod  -- <span class="token function">dig</span> sample-externalname.default.svc.cluster.local
+<span class="token punctuation">..</span>.
+<span class="token punctuation">;</span><span class="token punctuation">;</span> ANSWER SECTION:
+sample-externalname.default.svc.cluster.local. <span class="token number">5</span> IN CNAME example.com.
+example.com.		<span class="token number">5</span>	IN	A	<span class="token number">93.184</span>.216.34
+</code></pre>
+<p>確かに、<code>sample-externalname.default.svc.cluster.local</code>と問い合わせすることで、外部の<a href="http://example.com/">example.com</a>へのCNAMEを取得できます。また、外部のサイトを切り替えたいときは、問い合わせ先は<strong>変わらず</strong>に、sample-externalname.yamlのspec.externalNameを変更するだけで済みます。これは切り替えが楽ですね。</p>
+<h1 id="none-selector"><a class="anchor" href="#none-selector"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>None-Selector</h1>
+<p>外部のサービスに対してロードバランシングします。</p>
+<pre class="language-yaml"><code class="language-yaml"><span class="token comment"># sample-none-selector.yaml</span>
+<span class="token punctuation">---</span>
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Service
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> sample<span class="token punctuation">-</span>none<span class="token punctuation">-</span>selector
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">type</span><span class="token punctuation">:</span> ClusterIP
+  <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">protocol</span><span class="token punctuation">:</span> TCP
+    <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">8080</span>
+    <span class="token key atrule">targetPort</span><span class="token punctuation">:</span> <span class="token number">80</span>
+<span class="token punctuation">---</span>
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Endpoints
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> sample<span class="token punctuation">-</span>none<span class="token punctuation">-</span>selector
+<span class="token key atrule">subsets</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">addresses</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">ip</span><span class="token punctuation">:</span> 172.217.31.164
+    <span class="token punctuation">-</span> <span class="token key atrule">ip</span><span class="token punctuation">:</span> 172.217.31.165
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">protocol</span><span class="token punctuation">:</span> TCP
+        <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">80</span>
+</code></pre>
+<p>172.217.31.164と172.217.31.165は、どちらも<a href="https://www.google.com/">www.google.com</a>を指します。</p>
+<pre class="language-shell"><code class="language-shell">pi@raspi001:~/tmp $ k apply -f sample-none-selector.yaml
+pi@raspi001:~/tmp $ k get <span class="token function">service</span>
+NAME                   TYPE           CLUSTER-IP      EXTERNAL-IP     PORT<span class="token punctuation">(</span>S<span class="token punctuation">)</span>          AGE
+sample-none-selector   ClusterIP      <span class="token number">10.102</span>.225.99   <span class="token operator">&lt;</span>none<span class="token operator">&gt;</span>          <span class="token number">8080</span>/TCP         88s
+pi@raspi001:~/tmp $ k describe svc sample-none-selector
+Name:              sample-none-selector
+<span class="token punctuation">..</span>.
+Type:              ClusterIP
+IP:                <span class="token number">10.102</span>.225.99
+Port:              <span class="token operator">&lt;</span>unset<span class="token operator">&gt;</span>  <span class="token number">8080</span>/TCP
+TargetPort:        <span class="token number">80</span>/TCP
+Endpoints:         <span class="token number">172.217</span>.31.164:80,172.217.31.165:80
+<span class="token punctuation">..</span>.
+</code></pre>
+<p>ClusterIPなので、内部で公開されていますね。</p>
+<pre class="language-shell"><code class="language-shell">pi@raspi001:~/tmp $ <span class="token function">curl</span> <span class="token number">10.102</span>.225.99:8080
+<span class="token operator">&lt;</span>HTML<span class="token operator">&gt;</span><span class="token operator">&lt;</span>HEAD<span class="token operator">&gt;</span><span class="token operator">&lt;</span>meta http-equiv<span class="token operator">=</span><span class="token string">"content-type"</span> <span class="token assign-left variable">content</span><span class="token operator">=</span><span class="token string">"text/html;charset=utf-8"</span><span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>TITLE<span class="token operator">&gt;</span><span class="token number">301</span> Moved<span class="token operator">&lt;</span>/TITLE<span class="token operator">&gt;</span><span class="token operator">&lt;</span>/HEAD<span class="token operator">&gt;</span><span class="token operator">&lt;</span>BODY<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>H<span class="token operator"><span class="token file-descriptor important">1</span>&gt;</span><span class="token number">301</span> Moved<span class="token operator">&lt;</span>/H<span class="token operator"><span class="token file-descriptor important">1</span>&gt;</span>
+The document has moved
+<span class="token operator">&lt;</span>A <span class="token assign-left variable">HREF</span><span class="token operator">=</span><span class="token string">"http://www.google.com:8080/"</span><span class="token operator">&gt;</span>here<span class="token operator">&lt;</span>/A<span class="token operator">&gt;</span>.
+<span class="token operator">&lt;</span>/BODY<span class="token operator">&gt;</span><span class="token operator">&lt;</span>/HTML<span class="token operator">&gt;</span>
+<span class="token punctuation">..</span>.
+</code></pre>
+<p>少し結果が不自然だったのですが、確かにgoogle.comへアクセスしました。
+外部サービスへのロードバランシングも容易に実現できます。</p>
+<p>※ <a href="http://172.217.31.164">172.217.31.164</a>へアクセスすると、リダイレクトがかかります。<code>Status Code:  301</code></p>
+<h1 id="ingress"><a class="anchor" href="#ingress"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Ingress</h1>
+<p>今までのロードバランサは、l4レイヤーのロードバランサです。(IPアドレスとポート番号による負荷分散)
+Ingressでは、l7レイヤーのロードバランサを提供します。(URLやHTTPヘッダーで負荷分散が可能)</p>
+<p>Ingressを置く場所は、クラスタ内、外の２つあります。
+クラスタ外の場合は、使うプラットフォームによります。
+クラスタ内の場合は、Nginx Ingressを使うことができます。</p>
+<p>raspberryPi環境では、Ingress-Nginx-Controllerを使うことで、Ingressを使えるそうです。
+<a href="https://kubernetes.github.io/ingress-nginx/deploy/#bare-metal">NGINX Ingress Controller - Installation Guide</a>
+を参考にして進めたのですが、arm64環境では動きませんでした。</p>
+<p>そこで、下記のyamlを発見し、試してみると動作します。ぜひ、お試しあれ。
+<a href="https://gist.github.com/hectcastro/097ba8e9759689b6b29dd164cd116eeb">hectcastro/mandatory.yaml</a></p>
+<p>※ namespaceを削除できない場合は、<a href="https://www.ibm.com/support/knowledgecenter/en/SSBS6K_3.1.1/troubleshoot/ns_terminating.html">こちら</a>を参考下さい。</p>
+<h1 id="お片付け"><a class="anchor" href="#お片付け"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>お片付け</h1>
+<pre class="language-shell"><code class="language-shell">pi@raspi001:~/tmp $ k delete -f sample-externalip.yaml -f sample-deployment.yaml -f sample-nodeport.yaml -f sample-lb.yaml -f sample-statefulset-headless.yaml -f sample-headless.yaml -f sample-none-selector.yaml -f sample-externalname.yaml
+</code></pre>
+<h1 id="最後に"><a class="anchor" href="#最後に"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>最後に</h1>
+<p>Serviceについて学びました。
+様々な用途に応じて、エンドポイントを公開する手段を学びました。
+手を動かして確認してみると、理解が深まりました。
+本番でk8sを使った経験はありませんが、今後必要に迫られた際に、こちらの記事を思い返そうと思います。</p>
+<p>次回は<a href="../start_the_learning_kubernetes_10/">こちら</a>です。</p>
+
+  
+    <div class="content-footer">
+  <p>
+    Caught a mistake or want to improve the blog?
+    <a href="https://github.com/Silver-birder/Silver-birder.github.io/edit/main/./docs/blog/contents/start_the_learning_kubernetes_09.md">Edit this blog post on GitHub!</a>
+  </p>
+</div>
+
+
+  
+</main>
+
+  </main>
+
+    </div>
+  </div>
+
+
+    
+      <footer id="main-footer">
+  
+    
+
+  
+    <div id="footer-menu">
+  <div class="content-area">
+    
+      <nav>
+        <h3>Discover</h3>
+        <ul>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/blog">Blog</a>
+            </li>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/Silver-birder.github.io/issues">Help and Feedback</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>My Sales</h3>
+        <ul>
+          
+            <li>
+              <a href="https://www.amazon.co.jp/芝本雅史/e/B08FJK5C43">Amazon</a>
+            </li>
+          
+            <li>
+              <a href="https://silverbirder.booth.pm">Booth</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>Follow</h3>
+        <ul>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/Silver-birder.github.io">GitHub</a>
+            </li>
+          
+            <li>
+              <a href="https://twitter.com/silver_birder">Twitter</a>
+            </li>
+          
+            <li>
+              <a href="https://www.google.com/maps/contrib/101722346324226588907/reviews/@34.6907839,135.4537926,13z/">Google Map</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>Support</h3>
+        <ul>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/Silver-birder.github.io/blob/main/CONTRIBUTING.md">Contribute</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+  </div>
+</div>
+
+  
+</footer>
+
+    
+
+    
+  
+
+
+  
+
+<script>
+  window.__rocketServiceWorkerUrl = '/service-worker.js';
+</script>
+
+
+
+
+
+
+  
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-146805630-4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-146805630-4');
+  </script>
+
+
+
+
+  
+
+
+<script type="module" src="../../../b089d234.js"></script>
+<script type="module" src="../../../46ae44d0.js"></script>
+<script type="module" src="../../../dd4fcd54.js" inject-service-worker=""></script>
+<script type="module" src="../../../08df7a3c54.js"></script>
+
+</body></html>

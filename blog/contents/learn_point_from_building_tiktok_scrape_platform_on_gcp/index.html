@@ -1,0 +1,650 @@
+<!DOCTYPE html><html lang="ja" dir="ltr"><head>
+  
+    
+
+  
+
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TikTokスクレイプ基盤をGCP上で構築してハマったこと: silverbirder</title>
+<meta property="og:title" content="TikTokスクレイプ基盤をGCP上で構築してハマったこと: silverbirder">
+
+<meta name="generator" content="rocket 0.1">
+<link rel="canonical" href="http://localhost:8080/blog/contents/learn_point_from_building_tiktok_scrape_platform_on_gcp/">
+
+
+
+  
+
+<meta name="description" content="TikTokへスクレイプするバッチをGCP上で構築しました。GCP構築のシステム設計話と、その構築時に、ハマったことを共有します。">
+<meta property="og:description" content="TikTokへスクレイプするバッチをGCP上で構築しました。GCP構築のシステム設計話と、その構築時に、ハマったことを共有します。">
+
+  
+    
+<link rel="apple-touch-icon" sizes="180x180" href="../../../assets/apple-touch-icon.jpg">
+<link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../../assets/favicon-16x16.png">
+<link rel="manifest" href="../../../assets/webmanifest.json">
+
+<meta name="msapplication-TileColor" content="#1d3557">
+<meta name="theme-color" content="#1d3557">
+
+  
+    <meta property="og:site_name" content="silverbirder">
+<meta property="og:type" content="website">
+
+<meta property="og:image" content="https://res.cloudinary.com/silverbirder/image/upload/v1630224935/silver-birder.github.io/blog/tiktok_scraper_doc2.png">
+<meta property="og:url" content="http://localhost:8080/blog/contents/learn_point_from_building_tiktok_scrape_platform_on_gcp/">
+
+<meta name="twitter:card" content="summary_large_image">
+
+  
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="">
+
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&amp;display=optional" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&amp;display=optional" rel="stylesheet">
+
+  
+    <link rel="stylesheet" href="../../../3cb4adfb.css">
+<link rel="stylesheet" href="../../../0f4765a3.css">
+<link rel="stylesheet" href="../../../ac2ea3b8.css">
+<link rel="stylesheet" href="../../../2366292e.css">
+
+  
+    <noscript><link rel="stylesheet" href="/_merged_assets/_static/search/noscript.css"></noscript>
+
+  
+    <link rel="stylesheet" href="../../../f5cf94c7.css">
+  
+    
+  
+    <noscript><link rel="stylesheet" href="/_merged_assets/_static/noscript.css"/></noscript>
+
+  
+    <link rel="stylesheet" href="../../../b1403e10.css">
+  
+    <meta name="twitter:creator" content="@Silver_birder">
+
+<link rel="stylesheet" href="../../../611b393e.css" mdjs-use="">
+
+<meta name="google-site-verification" content="-8bAm041798VvU0oItcuyuShbVINfNMLfTmP7tENPDY">
+  
+
+<link rel="preload" href="../../../b089d234.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../d3f07d73.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../46ae44d0.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../dd4fcd54.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../08df7a3c31.js" as="script" crossorigin="anonymous">
+</head>
+
+  
+
+  
+  <body layout="layout-blog-details">
+  
+
+    
+      <header id="main-header">
+  <div class="content-area">
+    
+      <button id="mobile-menu-trigger" data-action="trigger-mobile-menu">
+	<span class="sr-only">Show Menu</span>
+	      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon">
+        <path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path>
+      </svg>
+
+</button>
+
+    
+      
+	<a class="logo-link" href="/">
+  <img src="../../../90a4fb13.svg" alt="Rocket Logo">
+  <span>silverbirder</span>
+</a>
+
+
+
+    
+      <rocket-search class="search" json-url="/_merged_assets/_static/rocket-search-index.json">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129" style="width: 25px;">
+    <path d="M51.6 96.7c11 0 21-3.9 28.8-10.5l35 35c.8.8 1.8 1.2 2.9 1.2s2.1-.4 2.9-1.2c1.6-1.6 1.6-4.2 0-5.8l-35-35c6.5-7.8 10.5-17.9 10.5-28.8 0-24.9-20.2-45.1-45.1-45.1-24.8 0-45.1 20.3-45.1 45.1 0 24.9 20.3 45.1 45.1 45.1zm0-82c20.4 0 36.9 16.6 36.9 36.9C88.5 72 72 88.5 51.6 88.5S14.7 71.9 14.7 51.6c0-20.3 16.6-36.9 36.9-36.9z"></path>
+  </svg>
+</rocket-search>
+
+
+
+    
+      
+  <a href="/blog/" class="
+          
+           active 
+        ">Blog</a>
+  <a href="/resume/" class="
+          
+          
+        ">Resume</a>
+  <a href="/misc/" class="
+          
+          
+        ">Misc</a>
+
+    
+      <launch-dark-switch class="light-dark-switch" label="Toggle darkmode">Toggle darkmode</launch-dark-switch>
+
+
+    
+      
+	<a class="social-link" href="https://github.com/Silver-birder/Silver-birder.github.io" aria-label="silverbirder on GitHub" rel="noopener noreferrer" target="_blank">
+		<span class="sr-only">GitHub</span>
+		
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 16" fill="none">
+  <title>GitHub</title>
+  <path fill="currentColor" fill-rule="evenodd" d="M8.18391.249268C3.82241.249268.253906 3.81777.253906 8.17927c0 3.46933 2.279874 6.44313 5.451874 7.53353.3965.0991.49563-.1983.49563-.3965v-1.3878c-2.18075.4956-2.67638-.9912-2.67638-.9912-.3965-.8922-.89212-1.1895-.89212-1.1895-.69388-.4957.09912-.4957.09912-.4957.793.0992 1.1895.793 1.1895.793.69388 1.2887 1.88338.8922 2.27988.6939.09912-.4956.29737-.8921.49562-1.0904-1.78425-.1982-3.5685-.8921-3.5685-3.96496 0-.89212.29738-1.586.793-2.08162-.09912-.19825-.3965-.99125.09913-2.08163 0 0 .69387-.19825 2.18075.793.59475-.19825 1.28862-.29737 1.9825-.29737.69387 0 1.38775.09912 1.98249.29737 1.4869-.99125 2.1808-.793 2.1808-.793.3965 1.09038.1982 1.88338.0991 2.08163.4956.59475.793 1.28862.793 2.08162 0 3.07286-1.8834 3.66766-3.66764 3.86586.29737.3965.59474.8921.59474 1.586v2.1808c0 .1982.0991.4956.5948.3965 3.172-1.0904 5.4518-4.0642 5.4518-7.53353-.0991-4.3615-3.6676-7.930002-8.02909-7.930002z" clip-rule="evenodd"></path>
+</svg>
+
+		
+	</a>
+	<a class="social-link" href="https://twitter.com/silver_birder" aria-label="silverbirder on Twitter" rel="noopener noreferrer" target="_blank">
+		<span class="sr-only">Twitter</span>
+		
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 274 223"><title>Twitter</title><path d="M85.98 223c-31.675 0-61.158-9.285-85.98-25.199 4.388.518 8.853.783 13.38.783 26.278 0 50.463-8.967 69.659-24.01-24.544-.453-45.258-16.669-52.395-38.953a56.014 56.014 0 0 0 10.552 1.006c5.116 0 10.071-.685 14.778-1.967-25.66-5.152-44.993-27.822-44.993-54.998 0-.236 0-.471.004-.705a55.865 55.865 0 0 0 25.406 7.015c-15.05-10.058-24.953-27.226-24.953-46.685 0-10.279 2.766-19.914 7.594-28.198 27.664 33.934 68.993 56.264 115.609 58.603a56.31 56.31 0 0 1-1.453-12.782c0-30.975 25.114-56.088 56.091-56.088 16.132 0 30.709 6.812 40.941 17.713a112.328 112.328 0 0 0 35.617-13.611c-4.188 13.097-13.081 24.089-24.662 31.031a112.148 112.148 0 0 0 32.215-8.832 114 114 0 0 1-27.988 29.035c.108 2.405.162 4.824.162 7.256C245.564 137.533 189.148 223 85.98 223" fill="currentColor"></path></svg>
+
+		
+	</a>
+
+    
+  </div>
+</header>
+
+    
+
+    
+  <div id="content-wrapper">
+    <div class="content-area">
+      
+	<rocket-drawer id="sidebar">
+  <nav slot="content" id="sidebar-nav">
+    
+      <a class="logo-link" href="/">
+  <img src="../../../90a4fb13.svg" alt="Rocket Logo">
+  <span>silverbirder</span>
+</a>
+
+
+    
+      <rocket-navigation>
+  <ul>
+    <li class="current">
+      <h3>Headings</h3>
+      <ul><li class="menu-item">
+<a href="/blog/contents/learn_point_from_building_tiktok_scrape_platform_on_gcp/#目的">目的</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/learn_point_from_building_tiktok_scrape_platform_on_gcp/#io">I/O</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/learn_point_from_building_tiktok_scrape_platform_on_gcp/#gcpリソース選定">GCPリソース選定</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/learn_point_from_building_tiktok_scrape_platform_on_gcp/#設計図">設計図</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/learn_point_from_building_tiktok_scrape_platform_on_gcp/#cloud-workflowsの制限が厳しい">Cloud Workflowsの制限が厳しい</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/learn_point_from_building_tiktok_scrape_platform_on_gcp/#firestoreのページカーソルに2ページ以降への移動が難しい">Firestoreのページカーソルに±2ページ以降への移動が難しい</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/learn_point_from_building_tiktok_scrape_platform_on_gcp/#eventacのリソース選択が物足りない">Eventacのリソース選択が物足りない</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/learn_point_from_building_tiktok_scrape_platform_on_gcp/#pubsubをトリガーとするcloudrunでhttpレスポンス500を返却するとpubsubが再試行される">PubSubをトリガーとするCloudRunでHTTPレスポンス500を返却すると、PubSubが再試行される</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/learn_point_from_building_tiktok_scrape_platform_on_gcp/#cloud-workflowsの処理はあまりカスタマイズできない">Cloud Workflowsの処理は、あまりカスタマイズできない</a>
+</li></ul>
+    </li>
+  </ul>
+  <div class="sidebar-tags">
+    <h3>Date</h3>
+    <div>Sat Aug 28 2021</div>
+  </div>
+  <div class="sidebar-tags">
+    <h3>Tags</h3>
+    <div class="tags">
+      
+        <span class="tag">TikTok</span>
+      
+        <span class="tag">GCP</span>
+      
+        <span class="tag">Learning</span>
+      
+    </div>
+  </div>
+  <div class="sidebar-bottom">
+  <hr> <launch-dark-switch class="light-dark-switch" label="Toggle darkmode">Toggle darkmode</launch-dark-switch>
+
+  
+    <a href="https://github.com/Silver-birder/Silver-birder.github.io/issues">Help and Feedback</a>
+  
+</div>
+
+</rocket-navigation>
+
+    
+  </nav>
+</rocket-drawer>
+
+
+      
+  <main class="markdown-body">
+    <main class="markdown-body">
+  
+    
+  <h1>TikTokスクレイプ基盤をGCP上で構築してハマったこと</h1>
+
+
+  <img src="https://res.cloudinary.com/silverbirder/image/upload/v1630224935/silver-birder.github.io/blog/tiktok_scraper_doc2.png" alt="">
+
+
+  
+    <p>TikTokへスクレイプするバッチをGCP上で構築しました。
+GCP構築のシステム設計話と、その構築時に、ハマったことを共有します。</p>
+<!--  TODO: TOC -->
+<h1 id="きっかけ"><a class="anchor" href="#きっかけ"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>きっかけ</h1>
+<p>2020年、最もダウンロードされたアプリがFacebookを抜いて<strong>TikTok</strong>が一位になったそうです。</p>
+<p><a href="https://gigazine.net/news/20210811-tiktok-overtakes-facebook/">https://gigazine.net/news/20210811-tiktok-overtakes-facebook/</a>  <!--  TODO: embed  --></p>
+<p>私もTikTokを利用しています。</p>
+<p>ネットサーフィンをしている時に、<a href="https://www.npmjs.com/package/tiktok-scraper">tiktok-scraper</a>というライブラリを<a href="https://workers.cloudflare.com/works">cloudflareのサイト</a>で発見しました。これを使って、TikTokの情報収集できるんじゃないかなと思い始めましたのがきっかけです。</p>
+<p>※ スクレイプは私的利用であることが前提です。また、TikTokへ負荷をかけないようスクレイプ間隔に配慮しましょう。</p>
+<h1 id="tiktok-scraper"><a class="anchor" href="#tiktok-scraper"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>tiktok-scraper</h1>
+<p><a href="https://www.npmjs.com/package/tiktok-scraper">https://www.npmjs.com/package/tiktok-scraper</a>  <!--  TODO: embed  --></p>
+<blockquote>
+<p>Scrape and download useful information from TikTok.</p>
+</blockquote>
+<p>No login or password are required.
+This is not an official API support and etc. This is just a scraper that is using TikTok Web API to scrape media and related meta information.</p>
+<p>上記とおり、TikTokのWebAPIを通してスクレイプします。
+ライブラリでは、特定のTikTok動画をダウンロードすることができますが、次の切り口で、TikTok動画を一括ダウンロードすることもできます。</p>
+<ul>
+<li>ユーザー</li>
+<li>ハッシュタグ</li>
+<li>トレンド</li>
+<li>音楽</li>
+</ul>
+<figure title="tiktok_scraper_doc1">
+<img src="https://res.cloudinary.com/silverbirder/image/upload/v1630224934/silver-birder.github.io/blog/tiktok_scraper_doc1.png" alt="tiktok_scraper_doc1">
+<figcaption>動画をダウンロード</figcaption>
+</figure>
+<figure title="tiktok_scraper_doc2">
+<img src="https://res.cloudinary.com/silverbirder/image/upload/v1630224935/silver-birder.github.io/blog/tiktok_scraper_doc2.png" alt="tiktok_scraper_doc2">
+<figcaption>様々な切り口で、動画をダウンロード</figcaption>
+</figure>
+<p>加えて、メタ情報(フォロワー数やいいね数など)も手に入ります。</p>
+<p>中には、ユーザー画像や動画カバー画像などのTikTok CDNへのリンクもあります。(<a href="https://p16-sign-va.tiktokcdn.com">https://p16-sign-va.tiktokcdn.com</a>)</p>
+<p>リンクには、有効期限を示す文字が含まれており、一定の時間が経過すると <code>Access Denied</code> となります。</p>
+<figure title="tiktok_scraper_doc3">
+<img src="https://res.cloudinary.com/silverbirder/image/upload/v1630224935/silver-birder.github.io/blog/tiktok_scraper_doc3.png" alt="tiktok_scraper_doc3">
+<figcaption>様々な切り口で、メタ情報をダウンロード</figcaption>
+</figure>
+<p>手に入れられない情報は、<strong>ログインが必要なもの</strong>です。
+例えば、私がフォローしているユーザーとかです。
+その情報が欲しかったので、どうにかして手に入れました。(詳細は省きます)
+そのユーザー情報を使って、先程のユーザーという切り口でTikTokの動画やメタ情報を収集するバッチを作ろうと考えました。</p>
+<p>※ WebAPIを叩きすぎると、TikTok側のブラックリストに追加され、アクセス拒否されます。</p>
+<h1 id="システム設計"><a class="anchor" href="#システム設計"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>システム設計</h1>
+<p>バッチを動かす環境ですが、プライベートでよく使っているGCP上で構築しようと思いました。
+バッチで収集したデータを閲覧するWebアプリケーションも作ろうと考え、NetlifyとReactで動かすことにしました。</p>
+<figure title="tiktok_scraper_web_app_sample">
+<img src="https://res.cloudinary.com/silverbirder/image/upload/v1630404283/silver-birder.github.io/blog/tiktok_scraper_web_app_sample.png" alt="tiktok_scraper_web_app_sample">
+<figcaption>Webアプリケーション UI</figcaption>
+</figure>
+<h2 id="目的"><a class="anchor" href="#目的"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>目的</h2>
+<p>私がフォローしているユーザーのTikTok動画やメタ情報を集めること。</p>
+<h2 id="io"><a class="anchor" href="#io"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>I/O</h2>
+<ul>
+<li>インプット
+<ul>
+<li>ユーザー情報</li>
+</ul>
+</li>
+<li>アウトプット
+<ul>
+<li>TikTok動画</li>
+<li>メタ情報</li>
+</ul>
+</li>
+</ul>
+<h2 id="gcpリソース選定"><a class="anchor" href="#gcpリソース選定"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>GCPリソース選定</h2>
+<ul>
+<li>TikTok動画
+<ul>
+<li>Cloud Storage へ保存</li>
+</ul>
+</li>
+<li>メタ情報
+<ul>
+<li>Cloud SQL へ保存</li>
+</ul>
+</li>
+<li>コンピューティングリソース
+<ul>
+<li>Cloud Run</li>
+</ul>
+</li>
+</ul>
+<h2 id="設計図"><a class="anchor" href="#設計図"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>設計図</h2>
+<p>実際に構築したGCPのシステム設計図が、次の画像のとおりです。</p>
+<p><img src="https://res.cloudinary.com/silverbirder/image/upload/v1630160345/silver-birder.github.io/blog/tiktok_scrape_platform_overviews.png" alt="tiktok scrape platform overviews" rocket-image="responsive"></p>
+<p>GCPリソースの用途は、次のとおりです。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>GCPリソース</th><th>用途</th></tr></thead><tbody><tr><td>Cloud Scheduler</td><td>バッチ起動のスケジュールを管理</td></tr><tr><td>Cloud Worlflows</td><td>バッチのワークフローを制御</td></tr><tr><td>Cloud Run</td><td>役割に応じて処理</td></tr><tr><td>PubSub</td><td>Cloud Runを繋げる</td></tr><tr><td>Cloud Storage</td><td>動画を保存</td></tr><tr><td>AutoML Vision</td><td>動画のカバー画像をラベル検出</td></tr><tr><td>Cloud SQL</td><td>全てのメタ情報を管理</td></tr></tbody></table>
+<p>各Clour Runの役割は、次のとおりです。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Cloud Run名</th><th>役割</th></tr></thead><tbody><tr><td>Loader</td><td>ユーザー情報を読み込む</td></tr><tr><td>Processor</td><td>一連の処理を行む</td></tr><tr><td>Scraper</td><td>TikTokへスクレイプする</td></tr><tr><td>Storer</td><td>渡された情報を保存する</td></tr><tr><td>Uploader</td><td>動画をダウンロードし、Storageへアップロードする</td></tr><tr><td>Visioner</td><td>画像を(Vision APIを通して)ラベル情報を抽出する</td></tr><tr><td>API</td><td>Cloud SQLとのインターフェース</td></tr></tbody></table>
+<h1 id="ハマったこと"><a class="anchor" href="#ハマったこと"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>ハマったこと</h1>
+<h2 id="cloud-workflowsの制限が厳しい"><a class="anchor" href="#cloud-workflowsの制限が厳しい"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Cloud Workflowsの制限が厳しい</h2>
+<p>当初、PubSubは使わずに、Cloud Runの連携はCloud Workflowsで行おうと考えていました。
+PubSubでワークフローを制御するよりも、Cloud Workflowsのyamlでワークフローを制御した方が分かりやすいと思ったからです。
+具体的には、Cloud RunへHTTPリクエストし、HTTPレスポンスに応じて、次のCloud Runを呼び出そうと考えていました。</p>
+<p>ただ、Cloud Workflowsには、次のページに書いてあるとおり、いくつかの制限があります。</p>
+<p><a href="https://cloud.google.com/workflows/quotas?hl=ja">https://cloud.google.com/workflows/quotas?hl=ja</a>  <!--  TODO: embed  --></p>
+<p>特に困ったのが、全ての変数のメモリ合計が、<strong>64kb</strong> だということです。
+HTTPレスポンスのBodyを変数保持する構成を取ると、そのサイズを考慮しなければいけません。
+いくつかやり方を見直してみたのですが、思うような形に仕上げることができず、断念しました。
+結果、PubSubを使ってCloud Runを連携することになりました。
+Cloud Workflowsは、バッチのキック、通知などをすることとなりました。</p>
+<h2 id="firestoreのページカーソルに2ページ以降への移動が難しい"><a class="anchor" href="#firestoreのページカーソルに2ページ以降への移動が難しい"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Firestoreのページカーソルに±2ページ以降への移動が難しい</h2>
+<p>GCPでデータストレージで、無料枠があるFirestoreを当初使っていました。
+理由は、単純にGCP無料枠としてFirestoreがあったからです。</p>
+<p>当初、Firestoreを使って、バッチとWebアプリを書いていました。
+Webアプリには、バッチで収集したTikTokの動画を一覧表示するViewを用意しました。</p>
+<p>閲覧するTikTok動画が多くなると、ページネーションが欲しくなりました。
+そこで、Firestoreでページネーションの実現方法を調べてみると、次の資料を発見しました。</p>
+<p><a href="https://firebase.google.com/docs/firestore/query-data/query-cursors?hl=ja">https://firebase.google.com/docs/firestore/query-data/query-cursors?hl=ja</a>  <!--  TODO: embed  --></p>
+<p>これを見ると、ページネーションは、現在位置から±1ページの移動は簡単です。
+資料にあるサンプルコードのように、<code>startAfter</code>を使えばよいだけです。</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword">var</span> first <span class="token operator">=</span> db<span class="token punctuation">.</span><span class="token method function property-access">collection</span><span class="token punctuation">(</span><span class="token string">"cities"</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token method function property-access">orderBy</span><span class="token punctuation">(</span><span class="token string">"population"</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token method function property-access">limit</span><span class="token punctuation">(</span><span class="token number">25</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">return</span> first<span class="token punctuation">.</span><span class="token method function property-access">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token method function property-access">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">documentSnapshots</span><span class="token punctuation">)</span> <span class="token arrow operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token comment">// Get the last visible document</span>
+  <span class="token keyword">var</span> lastVisible <span class="token operator">=</span> documentSnapshots<span class="token punctuation">.</span><span class="token property-access">docs</span><span class="token punctuation">[</span>documentSnapshots<span class="token punctuation">.</span><span class="token property-access">docs</span><span class="token punctuation">.</span><span class="token property-access">length</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token console class-name">console</span><span class="token punctuation">.</span><span class="token method function property-access">log</span><span class="token punctuation">(</span><span class="token string">"last"</span><span class="token punctuation">,</span> lastVisible<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// Construct a new query starting at this document,</span>
+  <span class="token comment">// get the next 25 cities.</span>
+  <span class="token keyword">var</span> next <span class="token operator">=</span> db<span class="token punctuation">.</span><span class="token method function property-access">collection</span><span class="token punctuation">(</span><span class="token string">"cities"</span><span class="token punctuation">)</span>
+          <span class="token punctuation">.</span><span class="token method function property-access">orderBy</span><span class="token punctuation">(</span><span class="token string">"population"</span><span class="token punctuation">)</span>
+          <span class="token punctuation">.</span><span class="token method function property-access">startAfter</span><span class="token punctuation">(</span>lastVisible<span class="token punctuation">)</span>
+          <span class="token punctuation">.</span><span class="token method function property-access">limit</span><span class="token punctuation">(</span><span class="token number">25</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>しかし、現在位置から±2ページ目以降への遷移がしたい場合は、どうすれば良いでしょうか。
+上記のサンプルコードで言えば、<code>first</code>をコピペして<code>second</code>変数を生成するのでしょうか。
+それよりも、<code>offset</code>メソッドがほしいところです。
+しかし、次の資料を発見し、諦めることになります。</p>
+<p><a href="https://firebase.google.com/docs/firestore/best-practices?hl=ja">https://firebase.google.com/docs/firestore/best-practices?hl=ja</a>  <!--  TODO: embed  --></p>
+<blockquote>
+<p>オフセットは使用しないでください。その代わりにカーソルを使用します。オフセットを使用すると、スキップされたドキュメントがアプリケーションに返されなくなりますが、内部ではスキップされたドキュメントも引き続き取得されています。スキップされたドキュメントはクエリのレイテンシに影響し、このようなドキュメントの取得に必要な読み取りオペレーションは課金対象になります。</p>
+</blockquote>
+<p>という訳で、クエリカーソルを推奨されています。</p>
+<p>解決策としては、順序を示すフィールドがあれば、解決するかもしれません。
+例えば、<code>order</code>というフィールドを用意し、1,2,3とインクリメントしたデータがあれば、クリアできるかもしれません。
+<code>startAfter</code>の引数はdocumentオブジェクトだけではなく、orderBy句で指定したフィールドの変数を含めることができます。</p>
+<pre class="language-javascript"><code class="language-javascript">  <span class="token keyword">var</span> next <span class="token operator">=</span> db<span class="token punctuation">.</span><span class="token method function property-access">collection</span><span class="token punctuation">(</span><span class="token string">"cities"</span><span class="token punctuation">)</span>
+          <span class="token punctuation">.</span><span class="token method function property-access">orderBy</span><span class="token punctuation">(</span><span class="token string">"order"</span><span class="token punctuation">)</span>
+          <span class="token punctuation">.</span><span class="token method function property-access">startAfter</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">)</span>
+          <span class="token punctuation">.</span><span class="token method function property-access">limit</span><span class="token punctuation">(</span><span class="token number">25</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>これだと、1ページ25個のデータを表示するならば、3ページ目(51~75)を取得できます。(<code>startAfter</code>は開始点を含めません)</p>
+<p><a href="https://cloud.google.com/nodejs/docs/reference/firestore/latest/firestore/query">https://cloud.google.com/nodejs/docs/reference/firestore/latest/firestore/query</a>  <!--  TODO: embed  --></p>
+<p>そもそも、ドキュメントベースの設計よりも、RDBの設計に慣れていた私は、
+Firestoreよりも、Cloud SQLの方が扱いやすいと思いました。
+そこで、データストレージをFirestoreからCloud SQLへ切り替えることとしました。
+改修自体、Cloud Runの役割が明確に分離されていたので、一部の処理を書き換えるだけで、簡単にできました。</p>
+<h2 id="eventacのリソース選択が物足りない"><a class="anchor" href="#eventacのリソース選択が物足りない"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Eventacのリソース選択が物足りない</h2>
+<p>Cloud RunとPubSubの連携には、Eventacを使用します。</p>
+<p><a href="https://cloud.google.com/blog/ja/products/serverless/eventarc-unified-eventing-experience-google-cloud">https://cloud.google.com/blog/ja/products/serverless/eventarc-unified-eventing-experience-google-cloud</a>  <!--  TODO: embed  --></p>
+<blockquote>
+<p>昨年 10 月、60 を超える Google Cloud ソースから Cloud Run にイベントを送信できる新しいイベント機能、Eventarc を発表いたしました。Eventarc は、さまざまなソースから監査ログを読み取り、それらを CloudEvents 形式のイベントとして Cloud Run サービスに送信します。また、カスタム アプリケーションの Pub/Sub トピックからイベントを読み取ることもできます。</p>
+</blockquote>
+<p>このEventarcのソースとして、Cloud StorageのObject.createをトリガーとして設計を考えていました。
+しかし、そのイベントをフィルタリングする選択肢は、2つしかありません。</p>
+<p><a href="https://cloud.google.com/blog/ja/products/serverless/demystifying-event-filters-eventarc">https://cloud.google.com/blog/ja/products/serverless/demystifying-event-filters-eventarc</a>  <!--  TODO: embed  --></p>
+<p>できるのは、執筆時点(2021年8月)で、次の2つです。</p>
+<ul>
+<li>All resource</li>
+<li>Specific resource</li>
+</ul>
+<p>All resourceは、Cloud Storageの全てのバケットにおけるObject.createイベントがトリガーとなります。
+Specific resourceは、特定のObeject名がObject.createされた場合のみ、トリガーとなります。
+欲しいなと思ったのは、Specific resouceの正規表現によるフィルタリング、任意のバケットやフォルダの配下で限定など
+のフィルタリングです。例えば、<code>gs://bucket/folder/*.json</code> のような形式です。現状は、<code>gs://bucket/folder/A.json</code>とするしかありません。</p>
+<p>今回は、PubSubのイベントのみでトリガーするようにしました。</p>
+<h2 id="pubsubをトリガーとするcloudrunでhttpレスポンス500を返却するとpubsubが再試行される"><a class="anchor" href="#pubsubをトリガーとするcloudrunでhttpレスポンス500を返却するとpubsubが再試行される"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>PubSubをトリガーとするCloudRunでHTTPレスポンス500を返却すると、PubSubが再試行される</h2>
+<p>Cloud Runで、5XX系のエラーとなった場合、PubSubの再試行されます。</p>
+<p><a href="https://cloud.google.com/pubsub/docs/admin?hl=ja#using_retry_policies">https://cloud.google.com/pubsub/docs/admin?hl=ja#using_retry_policies</a>  <!--  TODO: embed  --></p>
+<p>何度もPubSubが実行されると、Cloud Runのコンピューティングリソースが消費され続けます。
+そうすると、課金が発生するので、対策が必要です。</p>
+<h2 id="cloud-workflowsの処理はあまりカスタマイズできない"><a class="anchor" href="#cloud-workflowsの処理はあまりカスタマイズできない"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Cloud Workflowsの処理は、あまりカスタマイズできない</h2>
+<p>Cloud Workflowsは、あくまでワークフローの管理です。
+変数処理などは、基本的に使わず、ワークフローのタスクを連結するだけにした方が良いです。
+次の資料には、Cloud Workflowsで使える標準機能です。</p>
+<p><a href="https://cloud.google.com/workflows/docs/reference/stdlib/overview">https://cloud.google.com/workflows/docs/reference/stdlib/overview</a>  <!--  TODO: embed  --></p>
+<p>ワークフローのタスクを並列処理する機能は、まだ実験段階なので、本番環境は使えないようです。</p>
+<p><a href="https://cloud.google.com/workflows/docs/reference/stdlib/experimental.executions/map">https://cloud.google.com/workflows/docs/reference/stdlib/experimental.executions/map</a>  <!--  TODO: embed  --></p>
+<h1 id="終わりに"><a class="anchor" href="#終わりに"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>終わりに</h1>
+<p>システム設計変更が度々変更がありつつも、目的とするTikTok動画やメタ情報を収集することは達成できました。
+変更があったとしても、役割をできる限り小さく保つことで、変更に柔軟に対応することができます。
+また、実際に動かすことで、気付けるポイントもあるので、フィードバックサイクルを短くすることも大切です。</p>
+<p>まだまだ改善する余地はあります。ユーザー情報という切り口で情報収集していましたが、トレンドやハッシュタグなどからも
+取得できるようにしたいです。また、ユーザーのRSSを作ることで、金銭的な節約もしてみたいと思っています。</p>
+
+  
+    <div class="content-footer">
+  <p>
+    Caught a mistake or want to improve the blog?
+    <a href="https://github.com/Silver-birder/Silver-birder.github.io/edit/main/./docs/blog/contents/learn_point_from_building_tiktok_scrape_platform_on_gcp.md">Edit this blog post on GitHub!</a>
+  </p>
+</div>
+
+
+  
+</main>
+
+  </main>
+
+    </div>
+  </div>
+
+
+    
+      <footer id="main-footer">
+  
+    
+
+  
+    <div id="footer-menu">
+  <div class="content-area">
+    
+      <nav>
+        <h3>Discover</h3>
+        <ul>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/blog">Blog</a>
+            </li>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/Silver-birder.github.io/issues">Help and Feedback</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>My Sales</h3>
+        <ul>
+          
+            <li>
+              <a href="https://www.amazon.co.jp/芝本雅史/e/B08FJK5C43">Amazon</a>
+            </li>
+          
+            <li>
+              <a href="https://silverbirder.booth.pm">Booth</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>Follow</h3>
+        <ul>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/Silver-birder.github.io">GitHub</a>
+            </li>
+          
+            <li>
+              <a href="https://twitter.com/silver_birder">Twitter</a>
+            </li>
+          
+            <li>
+              <a href="https://www.google.com/maps/contrib/101722346324226588907/reviews/@34.6907839,135.4537926,13z/">Google Map</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>Support</h3>
+        <ul>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/Silver-birder.github.io/blob/main/CONTRIBUTING.md">Contribute</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+  </div>
+</div>
+
+  
+</footer>
+
+    
+
+    
+  
+
+
+  
+
+<script>
+  window.__rocketServiceWorkerUrl = '/service-worker.js';
+</script>
+
+
+
+
+
+
+  
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-146805630-4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-146805630-4');
+  </script>
+
+
+
+
+  
+
+
+<script type="module" src="../../../b089d234.js"></script>
+<script type="module" src="../../../46ae44d0.js"></script>
+<script type="module" src="../../../dd4fcd54.js" inject-service-worker=""></script>
+<script type="module" src="../../../08df7a3c31.js"></script>
+
+</body></html>

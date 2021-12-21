@@ -1,0 +1,629 @@
+<!DOCTYPE html><html lang="ja" dir="ltr"><head>
+  
+    
+
+  
+
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一足遅れて Kubernetes を学び始める - 08. discovery&amp;LB その1 -: silverbirder</title>
+<meta property="og:title" content="一足遅れて Kubernetes を学び始める - 08. discovery&amp;LB その1 -: silverbirder">
+
+<meta name="generator" content="rocket 0.1">
+<link rel="canonical" href="http://localhost:8080/blog/contents/start_the_learning_kubernetes_08/">
+
+
+
+  
+
+<meta name="description" content="前回 一足遅れて Kubernetes を学び始める - 07. workloads その3 -でようやくworkloadsが終了しました。今回は、discovery&amp;LBを進めようと思います。">
+<meta property="og:description" content="前回 一足遅れて Kubernetes を学び始める - 07. workloads その3 -でようやくworkloadsが終了しました。今回は、discovery&amp;LBを進めようと思います。">
+
+  
+    
+<link rel="apple-touch-icon" sizes="180x180" href="../../../assets/apple-touch-icon.jpg">
+<link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../../assets/favicon-16x16.png">
+<link rel="manifest" href="../../../assets/webmanifest.json">
+
+<meta name="msapplication-TileColor" content="#1d3557">
+<meta name="theme-color" content="#1d3557">
+
+  
+    <meta property="og:site_name" content="silverbirder">
+<meta property="og:type" content="website">
+
+<meta property="og:image" content="https://res.cloudinary.com/silverbirder/image/upload/v1639816788/silver-birder.github.io/blog/pod_ip_adress_kubernetes.png">
+<meta property="og:url" content="http://localhost:8080/blog/contents/start_the_learning_kubernetes_08/">
+
+<meta name="twitter:card" content="summary_large_image">
+
+  
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="">
+
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&amp;display=optional" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&amp;display=optional" rel="stylesheet">
+
+  
+    <link rel="stylesheet" href="../../../3cb4adfb.css">
+<link rel="stylesheet" href="../../../0f4765a3.css">
+<link rel="stylesheet" href="../../../ac2ea3b8.css">
+<link rel="stylesheet" href="../../../2366292e.css">
+
+  
+    <noscript><link rel="stylesheet" href="/_merged_assets/_static/search/noscript.css"></noscript>
+
+  
+    <link rel="stylesheet" href="../../../f5cf94c7.css">
+  
+    
+  
+    <noscript><link rel="stylesheet" href="/_merged_assets/_static/noscript.css"/></noscript>
+
+  
+    <link rel="stylesheet" href="../../../b1403e10.css">
+  
+    <meta name="twitter:creator" content="@Silver_birder">
+
+<link rel="stylesheet" href="../../../611b393e.css" mdjs-use="">
+
+<meta name="google-site-verification" content="-8bAm041798VvU0oItcuyuShbVINfNMLfTmP7tENPDY">
+  
+
+<link rel="preload" href="../../../b089d234.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../d3f07d73.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../46ae44d0.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../dd4fcd54.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../08df7a3c53.js" as="script" crossorigin="anonymous">
+</head>
+
+  
+
+  
+  <body layout="layout-blog-details">
+  
+
+    
+      <header id="main-header">
+  <div class="content-area">
+    
+      <button id="mobile-menu-trigger" data-action="trigger-mobile-menu">
+	<span class="sr-only">Show Menu</span>
+	      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon">
+        <path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path>
+      </svg>
+
+</button>
+
+    
+      
+	<a class="logo-link" href="/">
+  <img src="../../../90a4fb13.svg" alt="Rocket Logo">
+  <span>silverbirder</span>
+</a>
+
+
+
+    
+      <rocket-search class="search" json-url="/_merged_assets/_static/rocket-search-index.json">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129" style="width: 25px;">
+    <path d="M51.6 96.7c11 0 21-3.9 28.8-10.5l35 35c.8.8 1.8 1.2 2.9 1.2s2.1-.4 2.9-1.2c1.6-1.6 1.6-4.2 0-5.8l-35-35c6.5-7.8 10.5-17.9 10.5-28.8 0-24.9-20.2-45.1-45.1-45.1-24.8 0-45.1 20.3-45.1 45.1 0 24.9 20.3 45.1 45.1 45.1zm0-82c20.4 0 36.9 16.6 36.9 36.9C88.5 72 72 88.5 51.6 88.5S14.7 71.9 14.7 51.6c0-20.3 16.6-36.9 36.9-36.9z"></path>
+  </svg>
+</rocket-search>
+
+
+
+    
+      
+  <a href="/blog/" class="
+          
+           active 
+        ">Blog</a>
+  <a href="/resume/" class="
+          
+          
+        ">Resume</a>
+  <a href="/misc/" class="
+          
+          
+        ">Misc</a>
+
+    
+      <launch-dark-switch class="light-dark-switch" label="Toggle darkmode">Toggle darkmode</launch-dark-switch>
+
+
+    
+      
+	<a class="social-link" href="https://github.com/Silver-birder/Silver-birder.github.io" aria-label="silverbirder on GitHub" rel="noopener noreferrer" target="_blank">
+		<span class="sr-only">GitHub</span>
+		
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 16" fill="none">
+  <title>GitHub</title>
+  <path fill="currentColor" fill-rule="evenodd" d="M8.18391.249268C3.82241.249268.253906 3.81777.253906 8.17927c0 3.46933 2.279874 6.44313 5.451874 7.53353.3965.0991.49563-.1983.49563-.3965v-1.3878c-2.18075.4956-2.67638-.9912-2.67638-.9912-.3965-.8922-.89212-1.1895-.89212-1.1895-.69388-.4957.09912-.4957.09912-.4957.793.0992 1.1895.793 1.1895.793.69388 1.2887 1.88338.8922 2.27988.6939.09912-.4956.29737-.8921.49562-1.0904-1.78425-.1982-3.5685-.8921-3.5685-3.96496 0-.89212.29738-1.586.793-2.08162-.09912-.19825-.3965-.99125.09913-2.08163 0 0 .69387-.19825 2.18075.793.59475-.19825 1.28862-.29737 1.9825-.29737.69387 0 1.38775.09912 1.98249.29737 1.4869-.99125 2.1808-.793 2.1808-.793.3965 1.09038.1982 1.88338.0991 2.08163.4956.59475.793 1.28862.793 2.08162 0 3.07286-1.8834 3.66766-3.66764 3.86586.29737.3965.59474.8921.59474 1.586v2.1808c0 .1982.0991.4956.5948.3965 3.172-1.0904 5.4518-4.0642 5.4518-7.53353-.0991-4.3615-3.6676-7.930002-8.02909-7.930002z" clip-rule="evenodd"></path>
+</svg>
+
+		
+	</a>
+	<a class="social-link" href="https://twitter.com/silver_birder" aria-label="silverbirder on Twitter" rel="noopener noreferrer" target="_blank">
+		<span class="sr-only">Twitter</span>
+		
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 274 223"><title>Twitter</title><path d="M85.98 223c-31.675 0-61.158-9.285-85.98-25.199 4.388.518 8.853.783 13.38.783 26.278 0 50.463-8.967 69.659-24.01-24.544-.453-45.258-16.669-52.395-38.953a56.014 56.014 0 0 0 10.552 1.006c5.116 0 10.071-.685 14.778-1.967-25.66-5.152-44.993-27.822-44.993-54.998 0-.236 0-.471.004-.705a55.865 55.865 0 0 0 25.406 7.015c-15.05-10.058-24.953-27.226-24.953-46.685 0-10.279 2.766-19.914 7.594-28.198 27.664 33.934 68.993 56.264 115.609 58.603a56.31 56.31 0 0 1-1.453-12.782c0-30.975 25.114-56.088 56.091-56.088 16.132 0 30.709 6.812 40.941 17.713a112.328 112.328 0 0 0 35.617-13.611c-4.188 13.097-13.081 24.089-24.662 31.031a112.148 112.148 0 0 0 32.215-8.832 114 114 0 0 1-27.988 29.035c.108 2.405.162 4.824.162 7.256C245.564 137.533 189.148 223 85.98 223" fill="currentColor"></path></svg>
+
+		
+	</a>
+
+    
+  </div>
+</header>
+
+    
+
+    
+  <div id="content-wrapper">
+    <div class="content-area">
+      
+	<rocket-drawer id="sidebar">
+  <nav slot="content" id="sidebar-nav">
+    
+      <a class="logo-link" href="/">
+  <img src="../../../90a4fb13.svg" alt="Rocket Logo">
+  <span>silverbirder</span>
+</a>
+
+
+    
+      <rocket-navigation>
+  <ul>
+    <li class="current">
+      <h3>Headings</h3>
+      <ul><li class="menu-item">
+<a href="/blog/contents/start_the_learning_kubernetes_08/#前準備">前準備</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/start_the_learning_kubernetes_08/#同一node同一pod内のコンテナへ通信">同一Node,同一Pod内のコンテナへ通信</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/start_the_learning_kubernetes_08/#同一node異なるpodのコンテナへ通信">同一Node,異なるPodのコンテナへ通信</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/start_the_learning_kubernetes_08/#異なるnode異なるpodのコンテナへ通信">異なるNode,異なるPodのコンテナへ通信</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/start_the_learning_kubernetes_08/#masternodeから各podへ通信">MasterNodeから各Podへ通信</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/start_the_learning_kubernetes_08/#pod宛トラフィックのロードバランシング">pod宛トラフィックのロードバランシング</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/start_the_learning_kubernetes_08/#サービスディスカバリとクラスタ内dns">サービスディスカバリとクラスタ内DNS</a>
+</li></ul>
+    </li>
+  </ul>
+  <div class="sidebar-tags">
+    <h3>Date</h3>
+    <div>Tue May 07 2019</div>
+  </div>
+  <div class="sidebar-tags">
+    <h3>Tags</h3>
+    <div class="tags">
+      
+        <span class="tag">Kubernetes</span>
+      
+        <span class="tag">Story</span>
+      
+        <span class="tag">Beginner</span>
+      
+    </div>
+  </div>
+  <div class="sidebar-bottom">
+  <hr> <launch-dark-switch class="light-dark-switch" label="Toggle darkmode">Toggle darkmode</launch-dark-switch>
+
+  
+    <a href="https://github.com/Silver-birder/Silver-birder.github.io/issues">Help and Feedback</a>
+  
+</div>
+
+</rocket-navigation>
+
+    
+  </nav>
+</rocket-drawer>
+
+
+      
+  <main class="markdown-body">
+    <main class="markdown-body">
+  
+    
+  <h1>一足遅れて Kubernetes を学び始める - 08. discovery&amp;LB その1 -</h1>
+
+
+  <img src="https://res.cloudinary.com/silverbirder/image/upload/v1639816788/silver-birder.github.io/blog/pod_ip_adress_kubernetes.png" alt="">
+
+
+  
+    <!--  TODO: TOC -->
+<h1 id="ストーリー"><a class="anchor" href="#ストーリー"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>ストーリー</h1>
+<ol>
+<li><a href="../start_the_learning_kubernetes_01/">一足遅れて Kubernetes を学び始める - 01. 環境選択編 -</a></li>
+<li><a href="../start_the_learning_kubernetes_02/">一足遅れて Kubernetes を学び始める - 02. Docker For Mac -</a></li>
+<li><a href="../start_the_learning_kubernetes_03/">一足遅れて Kubernetes を学び始める - 03. Raspberry Pi -</a></li>
+<li><a href="../start_the_learning_kubernetes_04/">一足遅れて Kubernetes を学び始める - 04. kubectl -</a></li>
+<li><a href="../start_the_learning_kubernetes_05/">一足遅れて Kubernetes を学び始める - 05. workloads その1 -</a></li>
+<li><a href="../start_the_learning_kubernetes_06/">一足遅れて Kubernetes を学び始める - 06. workloads その2 -</a></li>
+<li><a href="../start_the_learning_kubernetes_07/">一足遅れて Kubernetes を学び始める - 07. workloads その3 -</a></li>
+<li><a href="../start_the_learning_kubernetes_08/">一足遅れて Kubernetes を学び始める - 08. discovery&amp;LB その1 -</a></li>
+<li><a href="../start_the_learning_kubernetes_09/">一足遅れて Kubernetes を学び始める - 09. discovery&amp;LB その2 -</a></li>
+<li><a href="../start_the_learning_kubernetes_10/">一足遅れて Kubernetes を学び始める - 10. config&amp;storage その1 -</a></li>
+<li><a href="../start_the_learning_kubernetes_11/">一足遅れて Kubernetes を学び始める - 11. config&amp;storage その2 -</a></li>
+<li><a href="../start_the_learning_kubernetes_12/">一足遅れて Kubernetes を学び始める - 12. リソース制限 -</a></li>
+<li><a href="../start_the_learning_kubernetes_13/">一足遅れて Kubernetes を学び始める - 13. ヘルスチェックとコンテナライフサイクル -</a></li>
+<li><a href="../start_the_learning_kubernetes_14/">一足遅れて Kubernetes を学び始める - 14. スケジューリング -</a></li>
+<li><a href="../start_the_learning_kubernetes_15/">一足遅れて Kubernetes を学び始める - 15. セキュリティ -</a></li>
+<li><a href="../start_the_learning_kubernetes_16/">一足遅れて Kubernetes を学び始める - 16. コンポーネント -</a></li>
+</ol>
+<h1 id="前回"><a class="anchor" href="#前回"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>前回</h1>
+<p><a href="../start_the_learning_kubernetes_07/">一足遅れて Kubernetes を学び始める - 07. workloads その3 -</a>でようやくworkloadsが終了しました。今回は、discovery&amp;LBを進めようと思います。</p>
+<h1 id="discoverylb"><a class="anchor" href="#discoverylb"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>discovery&amp;LB</h1>
+<p>Kubernetesには、下記のようにリソースの種類が存在します。
+今回は、discovery&amp;LBを学習します。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th align="left">リソースの分類</th><th align="left">内容</th></tr></thead><tbody><tr><td align="left">Workloadsリソース</td><td align="left">コンテナの実行に関するリソース</td></tr><tr><td align="left">Discovery＆LBリソース</td><td align="left">コンテナを外部公開するようなエンドポイントを提供するリソース</td></tr><tr><td align="left">Config＆Storageリソース</td><td align="left">設定・機密情報・永続化ボリュームなどに関するリソース</td></tr><tr><td align="left">Clusterリソース</td><td align="left">セキュリティやクォータなどに関するリソース</td></tr><tr><td align="left">Metadataリソース</td><td align="left">リソースを操作する系統のリソース</td></tr><tr><td align="left">※ <a href="https://thinkit.co.jp/article/13610">KubernetesのWorkloadsリソース（その1）</a></td><td align="left"></td></tr></tbody></table>
+<p>discovery&amp;LBをには、下記8つの種類があります。</p>
+<ul>
+<li>Service
+<ul>
+<li>ClusterIP</li>
+<li>ExternalIP</li>
+<li>NodePort</li>
+<li>LoadBalancer</li>
+<li>Headless (None)</li>
+<li>ExternalName</li>
+<li>None-Selector</li>
+</ul>
+</li>
+<li>Ingress</li>
+</ul>
+<p>Serviceの概要について学びます。</p>
+<h1 id="kubernetesとネットワーク"><a class="anchor" href="#kubernetesとネットワーク"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Kubernetesとネットワーク</h1>
+<p>Kubernetesでは、Pod毎にIPアドレスが割り振られています。
+そのため、異なるPod間で通信する際は、PodのIPアドレスが必要になります。逆に同一のPod内ならlocalhostで通信できます。</p>
+<p>説明するために、準備します。</p>
+<pre class="language-yaml"><code class="language-yaml"><span class="token comment"># sample-deployment.yaml</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Deployment
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> sample<span class="token punctuation">-</span>deployment
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">replicas</span><span class="token punctuation">:</span> <span class="token number">3</span>
+  <span class="token key atrule">selector</span><span class="token punctuation">:</span>
+    <span class="token key atrule">matchLabels</span><span class="token punctuation">:</span>
+      <span class="token key atrule">app</span><span class="token punctuation">:</span> sample<span class="token punctuation">-</span>app
+  <span class="token key atrule">template</span><span class="token punctuation">:</span>
+    <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+      <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+        <span class="token key atrule">app</span><span class="token punctuation">:</span> sample<span class="token punctuation">-</span>app
+    <span class="token key atrule">spec</span><span class="token punctuation">:</span>
+      <span class="token key atrule">containers</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> nginx<span class="token punctuation">-</span>container
+          <span class="token key atrule">image</span><span class="token punctuation">:</span> nginx<span class="token punctuation">:</span><span class="token number">1.12</span>
+          <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+            <span class="token punctuation">-</span> <span class="token key atrule">containerPort</span><span class="token punctuation">:</span> <span class="token number">80</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> redis<span class="token punctuation">-</span>container
+          <span class="token key atrule">image</span><span class="token punctuation">:</span> redis<span class="token punctuation">:</span><span class="token number">3.2</span>
+</code></pre>
+<pre class="language-shell"><code class="language-shell">pi@raspi001:~/tmp $ k apply -f sample-deployment.yaml
+pi@raspi001:~/tmp $ k get pods -l <span class="token assign-left variable">app</span><span class="token operator">=</span>sample-app -o custom-columns<span class="token operator">=</span><span class="token string">"NAME:{metadata.name}, IP:{status.podIP},NODE:{spec.nodeName}"</span>
+NAME                                 IP           NODE
+sample-deployment-9dc487867-h7lww   <span class="token number">10.244</span>.1.72   raspi002
+sample-deployment-9dc487867-n8x5w   <span class="token number">10.244</span>.2.66   raspi003
+sample-deployment-9dc487867-nxbxc   <span class="token number">10.244</span>.2.67   raspi003
+</code></pre>
+<p><img src="https://res.cloudinary.com/silverbirder/image/upload/v1639816788/silver-birder.github.io/blog/pod_ip_adress_kubernetes.png" alt="pod ip adress" rocket-image="responsive"></p>
+<p>このような状況下で、<code>sample-deployment-9dc487867-n8x5w:redis</code>を中心に見ていきます。</p>
+<p>※ nginxは80ポートで開放されています。</p>
+<h2 id="前準備"><a class="anchor" href="#前準備"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>前準備</h2>
+<pre class="language-shell"><code class="language-shell">pi@raspi001:~/tmp $ k <span class="token builtin class-name">exec</span> -it sample-deployment-9dc487867-n8x5w -c redis-container /bin/bash
+root@sample-deployment-9dc487867-n8x5w:/data<span class="token comment"># apt-get update &amp;&amp; apt-get install curl -y</span>
+root@sample-deployment-9dc487867-n8x5w:/data<span class="token comment"># exit</span>
+</code></pre>
+<p>curlがないのでインストールします。</p>
+<h2 id="同一node同一pod内のコンテナへ通信"><a class="anchor" href="#同一node同一pod内のコンテナへ通信"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>同一Node,同一Pod内のコンテナへ通信</h2>
+<pre class="language-shell"><code class="language-shell">pi@raspi001:~/tmp $ k <span class="token builtin class-name">exec</span> -it sample-deployment-9dc487867-n8x5w -c redis-container /bin/bash
+root@sample-deployment-9dc487867-n8x5w:/data<span class="token comment"># curl localhost:80</span>
+<span class="token operator">&lt;</span><span class="token operator">!</span>DOCTYPE html<span class="token operator">&gt;</span>
+<span class="token punctuation">..</span>.
+</code></pre>
+<p>OK</p>
+<h2 id="同一node異なるpodのコンテナへ通信"><a class="anchor" href="#同一node異なるpodのコンテナへ通信"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>同一Node,異なるPodのコンテナへ通信</h2>
+<pre class="language-shell"><code class="language-shell">pi@raspi001:~/tmp $ k <span class="token builtin class-name">exec</span> -it sample-deployment-9dc487867-n8x5w -c redis-container /bin/bash
+root@sample-deployment-9dc487867-n8x5w:/data<span class="token comment"># curl 10.244.2.66:80</span>
+<span class="token operator">&lt;</span><span class="token operator">!</span>DOCTYPE html<span class="token operator">&gt;</span>
+<span class="token punctuation">..</span>.
+root@sample-deployment-9dc487867-n8x5w:/data<span class="token comment"># curl 10.244.2.67:80</span>
+<span class="token operator">&lt;</span><span class="token operator">!</span>DOCTYPE html<span class="token operator">&gt;</span>
+<span class="token punctuation">..</span>.
+</code></pre>
+<p>OK</p>
+<h2 id="異なるnode異なるpodのコンテナへ通信"><a class="anchor" href="#異なるnode異なるpodのコンテナへ通信"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>異なるNode,異なるPodのコンテナへ通信</h2>
+<pre class="language-shell"><code class="language-shell">pi@raspi001:~/tmp $ k <span class="token builtin class-name">exec</span> -it sample-deployment-9dc487867-n8x5w -c redis-container /bin/bash
+root@sample-deployment-9dc487867-n8x5w:/data<span class="token comment"># curl 10.244.1.72:80</span>
+<span class="token operator">&lt;</span><span class="token operator">!</span>DOCTYPE html<span class="token operator">&gt;</span>
+<span class="token punctuation">..</span>.
+</code></pre>
+<p>OK</p>
+<h2 id="masternodeから各podへ通信"><a class="anchor" href="#masternodeから各podへ通信"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>MasterNodeから各Podへ通信</h2>
+<pre class="language-shell"><code class="language-shell">pi@raspi001:~/tmp $ <span class="token function">curl</span> <span class="token number">10.244</span>.1.72:80
+<span class="token operator">&lt;</span><span class="token operator">!</span>DOCTYPE html<span class="token operator">&gt;</span>
+<span class="token punctuation">..</span>.
+pi@raspi001:~/tmp $ <span class="token function">curl</span> <span class="token number">10.244</span>.2.66:80
+<span class="token operator">&lt;</span><span class="token operator">!</span>DOCTYPE html<span class="token operator">&gt;</span>
+<span class="token punctuation">..</span>.
+pi@raspi001:~/tmp $ <span class="token function">curl</span> <span class="token number">10.244</span>.2.67:80
+<span class="token operator">&lt;</span><span class="token operator">!</span>DOCTYPE html<span class="token operator">&gt;</span>
+<span class="token punctuation">..</span>.
+</code></pre>
+<p>OK</p>
+<p>ここから分かるように、Pod内部の通信、Pod間の通信、さらにNode間の通信までも、Kubernetesによってネットワークが構築されています。</p>
+<h1 id="service"><a class="anchor" href="#service"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Service</h1>
+<p>Serviceは、下記の２つの大きな機能が存在します。</p>
+<ul>
+<li>pod宛トラフィックのロードバランシング</li>
+<li>サービスディスカバリとクラスタ内DNS</li>
+</ul>
+<h2 id="pod宛トラフィックのロードバランシング"><a class="anchor" href="#pod宛トラフィックのロードバランシング"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>pod宛トラフィックのロードバランシング</h2>
+<p>先程の例で、Pod間を通信することは可能です。しかし、podを作り直すたびにIPアドレスが変わってしまうため、
+自作すると、少し大変です。そこで、Serviceの出番です。
+サービスは、複数存在するPodに対して<strong>自動的にロードバランスしてくれる</strong>のと、合わせて<strong>外向けのIPアドレス</strong>(ExternalIP)や、<strong>内向けのIPアドレス</strong>(ClusterIP)も提供してくれます。</p>
+<p>さっそく、試してみます。</p>
+<pre class="language-yaml"><code class="language-yaml"><span class="token comment"># sample-clusterip.yaml</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Service
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> sample<span class="token punctuation">-</span>clusterip
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">type</span><span class="token punctuation">:</span> ClusterIP
+  <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token string">"http-port"</span>
+      <span class="token key atrule">protocol</span><span class="token punctuation">:</span> <span class="token string">"TCP"</span>
+      <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">8080</span>
+      <span class="token key atrule">targetPort</span><span class="token punctuation">:</span> <span class="token number">80</span>
+  <span class="token key atrule">selector</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app</span><span class="token punctuation">:</span> sample<span class="token punctuation">-</span>app
+</code></pre>
+<p>これは、<code>app=sample-app</code>にマッチするPodに対してロードバランスしてくれます。外から8080ポートで待ち受けて、80ポートでコンテナへ通信します。
+spec.typeがClusterIPなので、内向けのIPアドレスが提供されています。</p>
+<pre class="language-shell"><code class="language-shell">pi@raspi001:~/tmp $ k apply -f sample-clusterip.yaml
+pi@raspi001:~/tmp $ k get <span class="token function">service</span> sample-clusterip
+NAME               TYPE        CLUSTER-IP      EXTERNAL-IP   PORT<span class="token punctuation">(</span>S<span class="token punctuation">)</span>    AGE
+sample-clusterip   ClusterIP   <span class="token number">10.111</span>.197.69   <span class="token operator">&lt;</span>none<span class="token operator">&gt;</span>        <span class="token number">8080</span>/TCP   30s
+pi@raspi001:~/tmp $ k describe <span class="token function">service</span> sample-clusterip
+Name:              sample-clusterip
+<span class="token punctuation">..</span>.
+Selector:          <span class="token assign-left variable">app</span><span class="token operator">=</span>sample-app
+Type:              ClusterIP
+IP:                <span class="token number">10.111</span>.197.69
+Port:              http-port  <span class="token number">8080</span>/TCP
+TargetPort:        <span class="token number">80</span>/TCP
+Endpoints:         <span class="token number">10.244</span>.1.72:80,10.244.2.66:80,10.244.2.67:80
+<span class="token punctuation">..</span>.
+</code></pre>
+<p>内向けに10.111.197.69のIPアドレスが振られました。また、ロードバランスする対象Podは、先にあげたPodのIPアドレスです。
+Endpintsに<code>:80</code>とあるように、port毎にサービス(clusterIP)を作ることもできます。(serviceのspec.portsは配列指定）</p>
+<p>アクセスできるのか、試します。
+せっかくなので、pod毎にindex.htmlの内容を変化させましょう。</p>
+<pre class="language-shell"><code class="language-shell">pi@raspi001:~/tmp $ <span class="token keyword">for</span> <span class="token for-or-select variable">PODNAME</span> <span class="token keyword">in</span> <span class="token variable"><span class="token variable">`</span>k get pods -l <span class="token assign-left variable">app</span><span class="token operator">=</span>sample-app -o <span class="token assign-left variable">jsonpath</span><span class="token operator">=</span><span class="token string">'{.items[*].metadata.name}'</span><span class="token variable">`</span></span><span class="token punctuation">;</span> <span class="token keyword">do</span>
+<span class="token operator">&gt;</span> k <span class="token builtin class-name">exec</span> -it <span class="token variable">${PODNAME}</span> -- <span class="token function">cp</span> /etc/hostname /usr/share/nginx/html/index.html<span class="token punctuation">;</span>
+<span class="token operator">&gt;</span> <span class="token keyword">done</span>
+pi@raspi001:~/tmp $ <span class="token function">curl</span> <span class="token number">10.111</span>.197.69:8080
+sample-deployment-9dc487867-nxbxc
+pi@raspi001:~/tmp $ <span class="token function">curl</span> <span class="token number">10.111</span>.197.69:8080
+sample-deployment-9dc487867-n8x5w
+pi@raspi001:~/tmp $ <span class="token function">curl</span> <span class="token number">10.111</span>.197.69:8080
+sample-deployment-9dc487867-h7lww
+</code></pre>
+<p>確かに、ロードバランシングによってpodに適度なランダム具合でアクセスできています。
+もちろん、外からはアクセスできません。</p>
+<p>iMacへ移動</p>
+<pre class="language-shell"><code class="language-shell">~ $ <span class="token function">curl</span> <span class="token number">10.111</span>.197.69:8080
+<span class="token comment"># 返答なし</span>
+</code></pre>
+<h2 id="サービスディスカバリとクラスタ内dns"><a class="anchor" href="#サービスディスカバリとクラスタ内dns"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>サービスディスカバリとクラスタ内DNS</h2>
+<p>サービスディスカバリとは、「問題においての解決策」を指しています。
+Kubernetesにおける問題とは、動的にサービスが生成され続けていることによるサービスを特定することが難しくなる問題です。
+そのサービスディスカバリが、Serviceにあります。
+その方法について下記があります。</p>
+<ul>
+<li>環境変数を利用したサービスディスカバリ
+<ul>
+<li>PodにIPアドレスやport,protocolが設定されている。</li>
+</ul>
+</li>
+<li>DNS Aレコードを利用したサービスディスカバリ
+<ul>
+<li>Kubernetes内のクラスタ内DNSによって、ドメイン名によるアクセスができる。(ドメイン名の命名規則に従う)</li>
+</ul>
+</li>
+<li>DNS SRVレコードを利用したサービスディスカバリ
+<ul>
+<li>IPアドレスからドメイン名を取得する逆引きもできる。</li>
+</ul>
+</li>
+</ul>
+<p>dnsPolicyによる明示的な設定がない限り、Pod生成時にクラスタ内DNSへレコード追加されます。
+クラスタ内DNSで名前解決できなかった場合は、クラスタ外DNSに問い合わせします。</p>
+<h1 id="お片付け"><a class="anchor" href="#お片付け"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>お片付け</h1>
+<pre class="language-shell"><code class="language-shell">pi@raspi001:~/tmp $ k delete -f sample-deployment.yaml -f sample-clusterip.yaml
+</code></pre>
+<h1 id="最後に"><a class="anchor" href="#最後に"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>最後に</h1>
+<p>今回は、Serviceについての概要を学びました。Kubernetesの世界では、自動的にネットワーク構築されているため、特段意識することはありませんでした。
+もう少し理解が進めれば、ネットワークがどのように構築されているのか、クラスタ内DNSがどのように動いているのか知りたいと思います。
+次回は、<a href="../start_the_learning_kubernetes_09/">こちら</a>です。</p>
+<p>※ お絵かきしてアウトプットすると、理解が深まるのでおすすめです。</p>
+
+  
+    <div class="content-footer">
+  <p>
+    Caught a mistake or want to improve the blog?
+    <a href="https://github.com/Silver-birder/Silver-birder.github.io/edit/main/./docs/blog/contents/start_the_learning_kubernetes_08.md">Edit this blog post on GitHub!</a>
+  </p>
+</div>
+
+
+  
+</main>
+
+  </main>
+
+    </div>
+  </div>
+
+
+    
+      <footer id="main-footer">
+  
+    
+
+  
+    <div id="footer-menu">
+  <div class="content-area">
+    
+      <nav>
+        <h3>Discover</h3>
+        <ul>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/blog">Blog</a>
+            </li>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/Silver-birder.github.io/issues">Help and Feedback</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>My Sales</h3>
+        <ul>
+          
+            <li>
+              <a href="https://www.amazon.co.jp/芝本雅史/e/B08FJK5C43">Amazon</a>
+            </li>
+          
+            <li>
+              <a href="https://silverbirder.booth.pm">Booth</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>Follow</h3>
+        <ul>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/Silver-birder.github.io">GitHub</a>
+            </li>
+          
+            <li>
+              <a href="https://twitter.com/silver_birder">Twitter</a>
+            </li>
+          
+            <li>
+              <a href="https://www.google.com/maps/contrib/101722346324226588907/reviews/@34.6907839,135.4537926,13z/">Google Map</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>Support</h3>
+        <ul>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/Silver-birder.github.io/blob/main/CONTRIBUTING.md">Contribute</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+  </div>
+</div>
+
+  
+</footer>
+
+    
+
+    
+  
+
+
+  
+
+<script>
+  window.__rocketServiceWorkerUrl = '/service-worker.js';
+</script>
+
+
+
+
+
+
+  
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-146805630-4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-146805630-4');
+  </script>
+
+
+
+
+  
+
+
+<script type="module" src="../../../b089d234.js"></script>
+<script type="module" src="../../../46ae44d0.js"></script>
+<script type="module" src="../../../dd4fcd54.js" inject-service-worker=""></script>
+<script type="module" src="../../../08df7a3c53.js"></script>
+
+</body></html>

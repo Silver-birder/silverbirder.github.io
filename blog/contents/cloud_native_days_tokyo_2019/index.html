@@ -1,0 +1,565 @@
+<!DOCTYPE html><html lang="ja" dir="ltr"><head>
+  
+    
+
+  
+
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloud Native Days Tokyo 2019 -2019年7月22-23日参加レポート: silverbirder</title>
+<meta property="og:title" content="Cloud Native Days Tokyo 2019 -2019年7月22-23日参加レポート: silverbirder">
+
+<meta name="generator" content="rocket 0.1">
+<link rel="canonical" href="http://localhost:8080/blog/contents/cloud_native_days_tokyo_2019/">
+
+
+
+  
+
+<meta name="description" content="今回、東京で開催されましたCloud Native Days Tokyo 2019に2日間とも参加してきましたので、報告しようと思います。セッション毎の報告というより、全体を通した感想を話そうかなと思います。">
+<meta property="og:description" content="今回、東京で開催されましたCloud Native Days Tokyo 2019に2日間とも参加してきましたので、報告しようと思います。セッション毎の報告というより、全体を通した感想を話そうかなと思います。">
+
+  
+    
+<link rel="apple-touch-icon" sizes="180x180" href="../../../assets/apple-touch-icon.jpg">
+<link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../../assets/favicon-16x16.png">
+<link rel="manifest" href="../../../assets/webmanifest.json">
+
+<meta name="msapplication-TileColor" content="#1d3557">
+<meta name="theme-color" content="#1d3557">
+
+  
+    <meta property="og:site_name" content="silverbirder">
+<meta property="og:type" content="website">
+
+<meta property="og:image" content="https://res.cloudinary.com/silverbirder/image/upload/v1614429605/silver-birder.github.io/blog/cloud_native_days_tokyo_2019.png">
+<meta property="og:url" content="http://localhost:8080/blog/contents/cloud_native_days_tokyo_2019/">
+
+<meta name="twitter:card" content="summary_large_image">
+
+  
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="">
+
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&amp;display=optional" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&amp;display=optional" rel="stylesheet">
+
+  
+    <link rel="stylesheet" href="../../../3cb4adfb.css">
+<link rel="stylesheet" href="../../../0f4765a3.css">
+<link rel="stylesheet" href="../../../ac2ea3b8.css">
+<link rel="stylesheet" href="../../../2366292e.css">
+
+  
+    <noscript><link rel="stylesheet" href="/_merged_assets/_static/search/noscript.css"></noscript>
+
+  
+    <link rel="stylesheet" href="../../../f5cf94c7.css">
+  
+    
+  
+    <noscript><link rel="stylesheet" href="/_merged_assets/_static/noscript.css"/></noscript>
+
+  
+    <link rel="stylesheet" href="../../../b1403e10.css">
+  
+    <meta name="twitter:creator" content="@Silver_birder">
+
+<link rel="stylesheet" href="../../../611b393e.css" mdjs-use="">
+
+<meta name="google-site-verification" content="-8bAm041798VvU0oItcuyuShbVINfNMLfTmP7tENPDY">
+  
+
+<link rel="preload" href="../../../b089d234.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../d3f07d73.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../46ae44d0.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../dd4fcd54.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../08df7a3c14.js" as="script" crossorigin="anonymous">
+</head>
+
+  
+
+  
+  <body layout="layout-blog-details">
+  
+
+    
+      <header id="main-header">
+  <div class="content-area">
+    
+      <button id="mobile-menu-trigger" data-action="trigger-mobile-menu">
+	<span class="sr-only">Show Menu</span>
+	      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon">
+        <path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path>
+      </svg>
+
+</button>
+
+    
+      
+	<a class="logo-link" href="/">
+  <img src="../../../90a4fb13.svg" alt="Rocket Logo">
+  <span>silverbirder</span>
+</a>
+
+
+
+    
+      <rocket-search class="search" json-url="/_merged_assets/_static/rocket-search-index.json">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129" style="width: 25px;">
+    <path d="M51.6 96.7c11 0 21-3.9 28.8-10.5l35 35c.8.8 1.8 1.2 2.9 1.2s2.1-.4 2.9-1.2c1.6-1.6 1.6-4.2 0-5.8l-35-35c6.5-7.8 10.5-17.9 10.5-28.8 0-24.9-20.2-45.1-45.1-45.1-24.8 0-45.1 20.3-45.1 45.1 0 24.9 20.3 45.1 45.1 45.1zm0-82c20.4 0 36.9 16.6 36.9 36.9C88.5 72 72 88.5 51.6 88.5S14.7 71.9 14.7 51.6c0-20.3 16.6-36.9 36.9-36.9z"></path>
+  </svg>
+</rocket-search>
+
+
+
+    
+      
+  <a href="/blog/" class="
+          
+           active 
+        ">Blog</a>
+  <a href="/resume/" class="
+          
+          
+        ">Resume</a>
+  <a href="/misc/" class="
+          
+          
+        ">Misc</a>
+
+    
+      <launch-dark-switch class="light-dark-switch" label="Toggle darkmode">Toggle darkmode</launch-dark-switch>
+
+
+    
+      
+	<a class="social-link" href="https://github.com/Silver-birder/Silver-birder.github.io" aria-label="silverbirder on GitHub" rel="noopener noreferrer" target="_blank">
+		<span class="sr-only">GitHub</span>
+		
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 16" fill="none">
+  <title>GitHub</title>
+  <path fill="currentColor" fill-rule="evenodd" d="M8.18391.249268C3.82241.249268.253906 3.81777.253906 8.17927c0 3.46933 2.279874 6.44313 5.451874 7.53353.3965.0991.49563-.1983.49563-.3965v-1.3878c-2.18075.4956-2.67638-.9912-2.67638-.9912-.3965-.8922-.89212-1.1895-.89212-1.1895-.69388-.4957.09912-.4957.09912-.4957.793.0992 1.1895.793 1.1895.793.69388 1.2887 1.88338.8922 2.27988.6939.09912-.4956.29737-.8921.49562-1.0904-1.78425-.1982-3.5685-.8921-3.5685-3.96496 0-.89212.29738-1.586.793-2.08162-.09912-.19825-.3965-.99125.09913-2.08163 0 0 .69387-.19825 2.18075.793.59475-.19825 1.28862-.29737 1.9825-.29737.69387 0 1.38775.09912 1.98249.29737 1.4869-.99125 2.1808-.793 2.1808-.793.3965 1.09038.1982 1.88338.0991 2.08163.4956.59475.793 1.28862.793 2.08162 0 3.07286-1.8834 3.66766-3.66764 3.86586.29737.3965.59474.8921.59474 1.586v2.1808c0 .1982.0991.4956.5948.3965 3.172-1.0904 5.4518-4.0642 5.4518-7.53353-.0991-4.3615-3.6676-7.930002-8.02909-7.930002z" clip-rule="evenodd"></path>
+</svg>
+
+		
+	</a>
+	<a class="social-link" href="https://twitter.com/silver_birder" aria-label="silverbirder on Twitter" rel="noopener noreferrer" target="_blank">
+		<span class="sr-only">Twitter</span>
+		
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 274 223"><title>Twitter</title><path d="M85.98 223c-31.675 0-61.158-9.285-85.98-25.199 4.388.518 8.853.783 13.38.783 26.278 0 50.463-8.967 69.659-24.01-24.544-.453-45.258-16.669-52.395-38.953a56.014 56.014 0 0 0 10.552 1.006c5.116 0 10.071-.685 14.778-1.967-25.66-5.152-44.993-27.822-44.993-54.998 0-.236 0-.471.004-.705a55.865 55.865 0 0 0 25.406 7.015c-15.05-10.058-24.953-27.226-24.953-46.685 0-10.279 2.766-19.914 7.594-28.198 27.664 33.934 68.993 56.264 115.609 58.603a56.31 56.31 0 0 1-1.453-12.782c0-30.975 25.114-56.088 56.091-56.088 16.132 0 30.709 6.812 40.941 17.713a112.328 112.328 0 0 0 35.617-13.611c-4.188 13.097-13.081 24.089-24.662 31.031a112.148 112.148 0 0 0 32.215-8.832 114 114 0 0 1-27.988 29.035c.108 2.405.162 4.824.162 7.256C245.564 137.533 189.148 223 85.98 223" fill="currentColor"></path></svg>
+
+		
+	</a>
+
+    
+  </div>
+</header>
+
+    
+
+    
+  <div id="content-wrapper">
+    <div class="content-area">
+      
+	<rocket-drawer id="sidebar">
+  <nav slot="content" id="sidebar-nav">
+    
+      <a class="logo-link" href="/">
+  <img src="../../../90a4fb13.svg" alt="Rocket Logo">
+  <span>silverbirder</span>
+</a>
+
+
+    
+      <rocket-navigation>
+  <ul>
+    <li class="current">
+      <h3>Headings</h3>
+      <ul><li class="menu-item">
+<a href="/blog/contents/cloud_native_days_tokyo_2019/#chaos-engineering">Chaos Engineering</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/cloud_native_days_tokyo_2019/#docker">Docker</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/cloud_native_days_tokyo_2019/#envoy">Envoy</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/cloud_native_days_tokyo_2019/#logging">Logging</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/cloud_native_days_tokyo_2019/#linuxkernel">LinuxKernel</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/cloud_native_days_tokyo_2019/#prometheus">Prometheus</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/cloud_native_days_tokyo_2019/#sandbox">Sandbox</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/cloud_native_days_tokyo_2019/#scheduler">Scheduler</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/cloud_native_days_tokyo_2019/#spinnaker">Spinnaker</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/cloud_native_days_tokyo_2019/#istio">Istio</a>
+</li></ul>
+    </li>
+  </ul>
+  <div class="sidebar-tags">
+    <h3>Date</h3>
+    <div>Sat Jul 27 2019</div>
+  </div>
+  <div class="sidebar-tags">
+    <h3>Tags</h3>
+    <div class="tags">
+      
+        <span class="tag">Report</span>
+      
+        <span class="tag">Cloud Native Days</span>
+      
+        <span class="tag">Tokyo</span>
+      
+        <span class="tag">Kubernetes</span>
+      
+    </div>
+  </div>
+  <div class="sidebar-bottom">
+  <hr> <launch-dark-switch class="light-dark-switch" label="Toggle darkmode">Toggle darkmode</launch-dark-switch>
+
+  
+    <a href="https://github.com/Silver-birder/Silver-birder.github.io/issues">Help and Feedback</a>
+  
+</div>
+
+</rocket-navigation>
+
+    
+  </nav>
+</rocket-drawer>
+
+
+      
+  <main class="markdown-body">
+    <main class="markdown-body">
+  
+    
+  <h1>Cloud Native Days Tokyo 2019 -2019年7月22-23日参加レポート</h1>
+
+
+  <img src="https://res.cloudinary.com/silverbirder/image/upload/v1614429605/silver-birder.github.io/blog/cloud_native_days_tokyo_2019.png" alt="">
+
+
+  
+    <p>今回、東京で開催されましたCloud Native Days Tokyo 2019に2日間とも参加してきましたので、報告しようと思います。
+セッション毎の報告というより、全体を通した感想を話そうかなと思います。</p>
+<!--  TODO: TOC -->
+<p><a href="https://cloudnativedays.jp/cndt2019/">https://cloudnativedays.jp/cndt2019/</a>  <!--  TODO: embed  --></p>
+<p>リンクをまとめています。</p>
+<p><a href="https://qiita.com/zaki-lknr/items/1c26bb713aef9645f5e6">https://qiita.com/zaki-lknr/items/1c26bb713aef9645f5e6</a>  <!--  TODO: embed  --></p>
+<h1 id="cncfの利用率"><a class="anchor" href="#cncfの利用率"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>CNCFの利用率</h1>
+<p>一日目のKeynoteで印象的だった内容です。
+発表者は、OSDT実行委員長である長谷川さんです。</p>
+<p>来場者アンケート1354人から聞いた「クラウドネイティブ技術を活用フェーズについて」の紹介がありました。
+既に本番環境に適用している人は、なんと<b>46%</b>という驚きの結果でした。また、開発環境に至っては、<b>63%</b>ということでした。<br>
+このイベントに参加している時点である程度フィルターはかかっていると思いますが、それでも大きな割合だと感じました。</p>
+<p>次の図では、CNCFプロジェクトの180日間におけるCommit数をグラフ化したものです。
+生みの親であるGoogleが1位でindependent(個人)が2番目、日本企業Fujitsuが6位です。熱意が伝わってきますね。</p>
+<figure title="https://www.stackalytics.com/cncf?date=180">
+<img alt="https://www.stackalytics.com/cncf?date=180" src="https://res.cloudinary.com/silverbirder/image/upload/v1614429648/silver-birder.github.io/blog/stackalytics_cncf.png">
+<figcaption><a href="https://www.stackalytics.com/cncf?date=180">https://www.stackalytics.com/cncf?date=180</a></figcaption>
+</figure>
+<p>※ 2019/07/24時点</p>
+<p>ただ、CNCFのメンバーとして日本企業は<b>17社</b>しかないそうで、まだまだこれからといったところでしょうか。</p>
+<p><a href="https://landscape.cncf.io/members">https://landscape.cncf.io/members</a>  <!--  TODO: embed  --></p>
+<p>さらには、Kubernetesから認定された日本企業ではまだないみたいです。残念です。</p>
+<p><a href="https://kubernetes.io/partners/#kcsp">https://kubernetes.io/partners/#kcsp</a>  <!--  TODO: embed  --></p>
+<p>今後は、次のようなカンファレンスが海外でもあるみたいです。ぜひ参加してみたいと思います。</p>
+<p><a href="https://events.linuxfoundation.org/events/kubecon-cloudnativecon-europe-2019/">https://events.linuxfoundation.org/events/kubecon-cloudnativecon-europe-2019/</a>  <!--  TODO: embed  --></p>
+<p><a href="https://events.linuxfoundation.org/events/kubecon-cloudnativecon-north-america-2019/">https://events.linuxfoundation.org/events/kubecon-cloudnativecon-north-america-2019/</a>  <!--  TODO: embed  --></p>
+<h1 id="cloudnativeとは"><a class="anchor" href="#cloudnativeとは"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>CloudNativeとは？</h1>
+<blockquote>
+<p>クラウドネイティブ技術は、パブリッククラウド、プライベートクラウド、ハイブリッドクラウドなどの近代的でダイナミックな環境において、スケーラブルなアプリケーションを構築および実行するための能力を組織にもたらします。 このアプローチの代表例に、コンテナ、サービスメッシュ、マイクロサービス、イミューダブルインフラストラクチャ、および宣言型APIがあります。</p>
+</blockquote>
+<p>※ <a href="https://github.com/cncf/toc/blob/master/DEFINITION.md#%E6%97%A5%E6%9C%AC%E8%AA%9E%E7%89%88">https://github.com/cncf/toc/blob/master/DEFINITION.md#日本語版</a></p>
+<p>「スケーラブルなアプリケーションを構築および実行」が重要です。これを実現する手段の１つにKubernetesがあります。
+「CloudNative = Kubernetes」ではなく、「CloudNative ∋ Kubernetes」という感じです。</p>
+<p>ただ、最近ではKubernetesを違う観点で考える人が増えてきたそうです。
+それが、二日目のKeynoteで発表された北山さんのスライドにあります。</p>
+<p><a href="https://speakerdeck.com/shkitayama/change-the-game-change-the-world">https://speakerdeck.com/shkitayama/change-the-game-change-the-world</a>  <!--  TODO: embed  --></p>
+<p>Kubernetesは「platformのためのplatform」と言われるようになりました。
+これは、slide.No.9(Kubernetes is a platform)で見て分かる通りで、次のようなことがわかります。</p>
+<ul>
+<li>運用管理者
+<ul>
+<li>Self-Healingによってスケールが簡単になる</li>
+</ul>
+</li>
+<li>アプリケーション開発者
+<ul>
+<li>簡単にデプロイすることができる</li>
+</ul>
+</li>
+</ul>
+<p>これらは、たしかに「プラットフォームから得られる価値」になりますが、
+逆に次のような考慮が必要なってきます。</p>
+<ul>
+<li>運用管理者
+<ul>
+<li>Self-Healingはどこまで信頼性を担保できるか</li>
+</ul>
+</li>
+<li>アプリケーション開発者
+<ul>
+<li>ユーザー影響を最小限にするためには、どうればよいか</li>
+</ul>
+</li>
+</ul>
+<p>これらのような「プラットフォームを利用するコスト」が「プラットフォームから得られる価値」よりも大きくなってしまいがちになります。
+そこで、Operator (CRD)という概念が最近ホットになっています。</p>
+<h1 id="なぜcrdがホットなのか"><a class="anchor" href="#なぜcrdがホットなのか"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>なぜCRDがホットなのか？</h1>
+<p>CRDという言葉は様々なセッションで取り上げらていました。
+CRDとOperatorについては、下記をご参考下さい。</p>
+<p><a href="../kubernetes_meetup_tokyo_19_osaka_satellite/">./kubernetes_meetup_tokyo_19_osaka_satellite</a>  <!--  TODO: embed  --></p>
+<p>Kubernetesを運用すると、既存のリソースだけでは物足りない所がでてくるそうです。
+そういう部分が「プラットフォームを利用するコスト」を大きくしてしまいます。
+そこで、オリジナルのカスタマイズしたリソースを独自に開発し、運用を自動化することを目的とした
+CRD、Operatorが生まれました。
+ただ、独自に1から作るよりも、下記のサイトから使った方が効率的なときもあります。</p>
+<p><a href="https://operatorhub.io/">https://operatorhub.io/</a>  <!--  TODO: embed  --></p>
+<p>けど、結局は困ったとき、ソースコードを読むことになるので、それぐらいの能力がないと、
+運用を回せない気がします。</p>
+<p>zlabのladicleさんの次のスライドがとてもわかりやすく、まとまっていました。
+これは貴重な資料ですね。</p>
+<p><a href="https://speakerdeck.com/ladicle/kuberneteswokuo-zhang-siteri-falseoperesiyonwozi-dong-hua-suru">https://speakerdeck.com/ladicle/kuberneteswokuo-zhang-siteri-falseoperesiyonwozi-dong-hua-suru</a>  <!--  TODO: embed  --></p>
+<p>ちなみに、独自に1から作ったケースがサイバーエージェントの山本さんの発表で、次のスライドです。</p>
+<p><a href="https://speakerdeck.com/mayuyamamoto/kuberneteskuo-zhang-woli-yong-sitazi-zuo-autoscalerdeshi-xian-surusutoresuhurinayun-yong-falseshi-jie">https://speakerdeck.com/mayuyamamoto/kuberneteskuo-zhang-woli-yong-sitazi-zuo-autoscalerdeshi-xian-surusutoresuhurinayun-yong-falseshi-jie</a>  <!--  TODO: embed  --></p>
+<p>同じくサイバーエージェントの青山さんがライブコーディングされていたリポジトリが次のものになります。</p>
+<p><a href="https://github.com/cloudnativejp/webserver-operator">https://github.com/cloudnativejp/webserver-operator</a>  <!--  TODO: embed  --></p>
+<h1 id="kubernetesは必要ですか"><a class="anchor" href="#kubernetesは必要ですか"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Kubernetesは必要ですか？</h1>
+<p>Kubernetesを使うべきかの話が2日間でちらほらありました。
+次のような議論もあります。</p>
+<p><a href="https://www.atmarkit.co.jp/ait/articles/1907/23/news120.html">https://www.atmarkit.co.jp/ait/articles/1907/23/news120.html</a>  <!--  TODO: embed  --></p>
+<p>CloudNativeなアプリケーション構築を目指す場合、どうしてもKubernetesを使う方向になりがちですよね。<br>
+今回参加したセッションの多くの企業では、Kubernetesを採用するための検討が下記のような感じでした。</p>
+<ul>
+<li>プレインなKubernetesか、マネージドなKubernetesか
+<ul>
+<li>大体はマネージドなKubernetesを使う。</li>
+<li>かゆい所に手を伸ばすときになって、プレインなKubernetesを使う。</li>
+</ul>
+</li>
+<li>Kubernetesのエンジニアは何人か。それは専属か
+<ul>
+<li>どこもKubernetesの知識を保有するエンジニアは少ない。</li>
+<li>数人程度で専任で進めることが多い。</li>
+</ul>
+</li>
+<li>ノウハウを蓄積するために、スモールスタート</li>
+</ul>
+<p>様々なセッションがあった中で、とても王道なステップを踏まれている企業がありました。それは、SoftbankPaymentServiceの鈴木さんの次のスライドです。</p>
+<p><a href="https://www.slideshare.net/JunyaSuzuki1/springpcf-cndt2019-osdt2019-keynote">https://www.slideshare.net/JunyaSuzuki1/springpcf-cndt2019-osdt2019-keynote</a>  <!--  TODO: embed  --></p>
+<p>企業に適したCloudNative化だなと勉強になりました。<br>
+特に「運用を回すコストを考慮すると、KubernetesではなくPaaSを使う」  というポイントが好きです。</p>
+<h1 id="circuit-breaker"><a class="anchor" href="#circuit-breaker"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Circuit Breaker</h1>
+<p>耳にタコができるぐらい、この単語を聞きました。
+下記のサイトが参考になります。</p>
+<p><a href="https://qiita.com/yasuabe2613/items/3bff44e662c922083264#circuit-breaker">https://qiita.com/yasuabe2613/items/3bff44e662c922083264#circuit-breaker</a>  <!--  TODO: embed  --></p>
+<blockquote>
+<p>同期リクエストの先で一部のマイクロサービスに障害があると、クライアントやその先の「クライアントのクライアント」までブロッキングが波及することになりかねない。</p>
+</blockquote>
+<p>この問題を、クライアントと実サービスの間に Circuit Breaker と呼ばれるプロキシを介在させて、実サービスの呼び出し失敗が一定基準を超えると、クライアントからのリクエストを即座にリジェクトさせて、ブロッキング連鎖を解消するパターン。</p>
+<p>Kubernetesでアプリケーションを構築すると、分散システムの恩恵を受けるために、
+アプリケーションをマイクロサービス化する流れになります。そのマイクロサービス化でよく踏む地雷が、
+「後ろのAPIが死んだら、連鎖的に他サーバも死ぬ」という現象です。<br>
+これを回避するために、上記のCircuit Breakerパターンを使う企業が多数いらっしゃいました。
+本当にいろんなセッションで聞きました...。</p>
+<h1 id="twelve-factor-app"><a class="anchor" href="#twelve-factor-app"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>twelve factor app</h1>
+<p>次のWantedlyさんのスライドが、私の中では話題になりました。</p>
+<p><a href="https://speakerdeck.com/potsbo/k8s-kubernetes-8-factors">https://speakerdeck.com/potsbo/k8s-kubernetes-8-factors</a>  <!--  TODO: embed  --></p>
+<p>要は、「アプリケーションとしての設計の考え方(twelve factor app)を、インフラ部分でも適用してみた」という感じです。
+どれも具体的なところまで説明されており、実際にKubernetesを構築する際に役に立つものだと思います。</p>
+<h1 id="技術にフォーカスした発表"><a class="anchor" href="#技術にフォーカスした発表"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>技術にフォーカスした発表</h1>
+<p>今回のイベントでは、何か1つの技術にフォーカスした発表が多くありました。
+それぞれ私なりにまとめてみました。ご参考下さい。</p>
+<h2 id="chaos-engineering"><a class="anchor" href="#chaos-engineering"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Chaos Engineering</h2>
+<p><a href="https://speakerdeck.com/mahito/cndt-osdt-2019-2g1">https://speakerdeck.com/mahito/cndt-osdt-2019-2g1</a>  <!--  TODO: embed  --></p>
+<h2 id="docker"><a class="anchor" href="#docker"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Docker</h2>
+<p><a href="https://www.slideshare.net/AkihiroSuda/cndt-docker">https://www.slideshare.net/AkihiroSuda/cndt-docker</a>  <!--  TODO: embed  --></p>
+<h2 id="envoy"><a class="anchor" href="#envoy"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Envoy</h2>
+<p><a href="https://speakerdeck.com/taiki45/cloudnative-days-tokyo-2019-understanding-envoy">https://speakerdeck.com/taiki45/cloudnative-days-tokyo-2019-understanding-envoy</a>  <!--  TODO: embed  --></p>
+<h2 id="logging"><a class="anchor" href="#logging"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Logging</h2>
+<p><a href="https://speakerdeck.com/yosshi_/kubernetes-loggingru-men">https://speakerdeck.com/yosshi_/kubernetes-loggingru-men</a>  <!--  TODO: embed  --></p>
+<h2 id="linuxkernel"><a class="anchor" href="#linuxkernel"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>LinuxKernel</h2>
+<p><a href="https://speakerdeck.com/tenforward/cndt2019">https://speakerdeck.com/tenforward/cndt2019</a>  <!--  TODO: embed  --></p>
+<h2 id="prometheus"><a class="anchor" href="#prometheus"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Prometheus</h2>
+<p><a href="https://speakerdeck.com/tokibi/prometheus-setup-with-long-term-storage">https://speakerdeck.com/tokibi/prometheus-setup-with-long-term-storage</a>  <!--  TODO: embed  --></p>
+<h2 id="sandbox"><a class="anchor" href="#sandbox"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Sandbox</h2>
+<p><a href="https://docs.google.com/presentation/d/1O9Q9E1hH6mBA5w8oDENnCYObZvij1-Dr_obvsY3X29k/edit">https://docs.google.com/presentation/d/1O9Q9E1hH6mBA5w8oDENnCYObZvij1-Dr_obvsY3X29k/edit</a>  <!--  TODO: embed  --></p>
+<h2 id="scheduler"><a class="anchor" href="#scheduler"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Scheduler</h2>
+<p><a href="https://speakerdeck.com/ytaka23/cloudnative-days-tokyo-2019">https://speakerdeck.com/ytaka23/cloudnative-days-tokyo-2019</a>  <!--  TODO: embed  --></p>
+<h2 id="spinnaker"><a class="anchor" href="#spinnaker"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Spinnaker</h2>
+<p>[<a href="https://speakerdeck.com/sansanbuildersbox/introduction-to-deployment-patterns-with-spinnaker:embed%5D9%5D(">https://speakerdeck.com/sansanbuildersbox/introduction-to-deployment-patterns-with-spinnaker:embed]9](</a><a href="https://speakerdeck.com/sansanbuildersbox/introduction-to-deployment-patterns-with-spinnaker:embed%5D9">https://speakerdeck.com/sansanbuildersbox/introduction-to-deployment-patterns-with-spinnaker:embed]9</a>)  <!--  TODO: embed  --></p>
+<h2 id="istio"><a class="anchor" href="#istio"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Istio</h2>
+<p><a href="https://speakerdeck.com/dangossk/a-deep-dive-into-service-mesh-and-istio-cndt-2019">https://speakerdeck.com/dangossk/a-deep-dive-into-service-mesh-and-istio-cndt-2019</a>  <!--  TODO: embed  --></p>
+<h1 id="その他"><a class="anchor" href="#その他"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>その他</h1>
+<p>サイバーエージェントさんより、エンジニアにとってとても嬉しいアイテムを頂きました。</p>
+<p><a href="https://twitter.com/ca_adtechstudio/status/1152080444445167616">https://twitter.com/ca_adtechstudio/status/1152080444445167616</a>  <!--  TODO: embed  --></p>
+<p>さっそく、キーボードにとりつけてみました。最高です！</p>
+<figure title="ergodox with k8s keycap (cyberAgent)">
+<img alt="ergodox with k8s keycap (cyberAgent)" src="https://res.cloudinary.com/silverbirder/image/upload/v1614429692/silver-birder.github.io/blog/ergodox_with_k8s_keycap.jpg">
+<figcaption>ergodox with k8s keycap (cyberAgent)</figcaption>
+</figure>
+<p>こちらのサービスから作られたそうで、私も自前で何か作ってみようかなと思いました。</p>
+<p><a href="https://www.wasdkeyboards.com/">https://www.wasdkeyboards.com/</a></p>
+<h1 id="最後に"><a class="anchor" href="#最後に"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>最後に</h1>
+<p>CloudNativeにどっぷり浸かった2日間でした。<br>
+どの企業でもCloudNativeを導入したことによる「つらみ」や「価値」を共有して頂いたおかげで、これから導入する人たち（私を含む）にとっては、有意義な時間でした。<br>
+全てのセッションを吸収できたわけではないですが、ここで記載したスライドだけでも理解を深めたいなと思います。</p>
+<p><a href="https://cloudnativedays.jp/cndk2019/">https://cloudnativedays.jp/cndk2019/</a>  <!--  TODO: embed  --></p>
+<p>今度は大阪で開催されるそうです。これも絶対参加したいなと思います！</p>
+<h1 id="蛇足参加するまでの経緯"><a class="anchor" href="#蛇足参加するまでの経緯"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>蛇足（参加するまでの経緯）</h1>
+<p>筆者はWebが大好きなエンジニアで、Kubernetesについては理解が浅い人間です。主にフロントエンドに注力しています。<br>
+ただ、昨年のDeveloperBoost2018で、サイバーエージェントの青山さんのセッションをうけてKubernetesに興味を持ち始めました。</p>
+<p><a href="https://codezine.jp/article/detail/11291">https://codezine.jp/article/detail/11291</a>  <!--  TODO: embed  --></p>
+<p>青山さんはKubernetesにとても詳しい方で、世代が近いせいか、私もこれぐらい夢中になれるものを見つけたいと感じるようになりました。<br>
+私はWebに関わるものなら何でも好きで、Kubernetesも含まれます。そこで、青山さん著作の<a href="http://www.wasdkeyboards.com/index.php/products/printed-keycap-singles/custom-art-cherry-mx-keycaps.html">Kubernetes完全ガイド</a>を全て実践することにしてみました。もちろん<b>お家Kubernetes</b>でです。
+実際に触ってみると、スケールする簡単さに驚きました。ほぼコマンド一発でPodが複製されて、「え！？」とびっくりです。<br>
+そこから、段々とハマっていき今回のイベントに参加することになりました。</p>
+
+  
+    <div class="content-footer">
+  <p>
+    Caught a mistake or want to improve the blog?
+    <a href="https://github.com/Silver-birder/Silver-birder.github.io/edit/main/./docs/blog/contents/cloud_native_days_tokyo_2019.md">Edit this blog post on GitHub!</a>
+  </p>
+</div>
+
+
+  
+</main>
+
+  </main>
+
+    </div>
+  </div>
+
+
+    
+      <footer id="main-footer">
+  
+    
+
+  
+    <div id="footer-menu">
+  <div class="content-area">
+    
+      <nav>
+        <h3>Discover</h3>
+        <ul>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/blog">Blog</a>
+            </li>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/Silver-birder.github.io/issues">Help and Feedback</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>My Sales</h3>
+        <ul>
+          
+            <li>
+              <a href="https://www.amazon.co.jp/芝本雅史/e/B08FJK5C43">Amazon</a>
+            </li>
+          
+            <li>
+              <a href="https://silverbirder.booth.pm">Booth</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>Follow</h3>
+        <ul>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/Silver-birder.github.io">GitHub</a>
+            </li>
+          
+            <li>
+              <a href="https://twitter.com/silver_birder">Twitter</a>
+            </li>
+          
+            <li>
+              <a href="https://www.google.com/maps/contrib/101722346324226588907/reviews/@34.6907839,135.4537926,13z/">Google Map</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>Support</h3>
+        <ul>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/Silver-birder.github.io/blob/main/CONTRIBUTING.md">Contribute</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+  </div>
+</div>
+
+  
+</footer>
+
+    
+
+    
+  
+
+
+  
+
+<script>
+  window.__rocketServiceWorkerUrl = '/service-worker.js';
+</script>
+
+
+
+
+
+
+  
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-146805630-4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-146805630-4');
+  </script>
+
+
+
+
+  
+
+
+<script type="module" src="../../../b089d234.js"></script>
+<script type="module" src="../../../46ae44d0.js"></script>
+<script type="module" src="../../../dd4fcd54.js" inject-service-worker=""></script>
+<script type="module" src="../../../08df7a3c14.js"></script>
+
+</body></html>
