@@ -272,7 +272,7 @@
 <li>SSGの移行コストを極力減らしたい人</li>
 </ul>
 <h2 id="そもそもmarkdownって何"><a class="anchor" href="#そもそもmarkdownって何"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>そもそも、Markdownって何？</h2>
-<p>Markdownは、QiitaやZenn、Hatenaなどの各サービス(以降、執筆サービスと呼ぶ)、に使われていたり、Gitリポジトリの説明書としてREADME.mdを書いたりしますよね。</p>
+<p>Markdownは、QiitaやZenn、はてなブログなどの各サービス(以降、執筆サービスと呼ぶ)、に使われていたり、Gitリポジトリの説明書としてREADME.mdを書いたりしますよね。</p>
 <p>そのMarkdownですが、どういう目的で作られたモノなのでしょうか。</p>
 <p><a href="https://daringfireball.net/projects/markdown/">Daring Fireball: Markdown</a> から引用します。</p>
 <blockquote>
@@ -317,7 +317,7 @@ Markdownは、記法を定義しているだけなので、Markdownに機能拡�
 ただ、本来執筆に集中したいのに、見出しが増えるたびに、目次を手動更新するというのは、非効率的です。</p>
 <p>その非効率、どうしたら良いでしょうか。</p>
 <h3 id="案1-markdownからhtmlへの変換処理で機能拡張する"><a class="anchor" href="#案1-markdownからhtmlへの変換処理で機能拡張する"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>案1. MarkdownからHTMLへの変換処理で、機能拡張する</h3>
-<p>案1は、MarkdownからHTMLへの変換処理で、埋め込みコンテンツや目次生成といった機能を拡張します。
+<p>MarkdownからHTMLへの変換処理で、埋め込みコンテンツや目次生成といった機能を拡張します。
 具体的な話をした方が分かりやすいと思うので、目次生成を例にして、説明します。</p>
 <p>説明しやすいために自前で変換処理を書きますが、本来は、HugoやGatsbyJS、MDXなどを想定しています。</p>
 <p><a href="https://jsprimer.net/use-case/nodecli/md-to-html/">MarkdownをHTMLに変換する · JavaScript Primer #jsprimer</a> がちょうど分かりやすかったので参考にします。</p>
