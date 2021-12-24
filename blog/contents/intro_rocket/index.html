@@ -8,8 +8,8 @@
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Markdownで執筆するなら、WebComponentsが使えるSSG、Rocketがお勧め: silverbirder</title>
-<meta property="og:title" content="Markdownで執筆するなら、WebComponentsが使えるSSG、Rocketがお勧め: silverbirder">
+<title>Markdownで執筆するなら、WebComponentsが使えるSSG、Rocketがオススメ！: silverbirder</title>
+<meta property="og:title" content="Markdownで執筆するなら、WebComponentsが使えるSSG、Rocketがオススメ！: silverbirder">
 
 <meta name="generator" content="rocket 0.1">
 <link rel="canonical" href="https://silver-birder.github.io/blog/contents/intro_rocket/">
@@ -196,9 +196,6 @@
 <a href="/blog/contents/intro_rocket/#ようやく登場rocket">ようやく登場、Rocket</a>
 </li>
 <li class="menu-item">
-<a href="/blog/contents/intro_rocket/#rocketの技術構成">Rocketの技術構成</a>
-</li>
-<li class="menu-item">
 <a href="/blog/contents/intro_rocket/#rocketの特徴">Rocketの特徴</a>
 </li>
 <li class="menu-item">
@@ -254,7 +251,7 @@
     <main class="markdown-body">
   
     
-  <h1>Markdownで執筆するなら、WebComponentsが使えるSSG、Rocketがお勧め</h1>
+  <h1>Markdownで執筆するなら、WebComponentsが使えるSSG、Rocketがオススメ！</h1>
 
 
   <img src="https://res.cloudinary.com/silverbirder/image/upload/v1640308914/silver-birder.github.io/blog/rocket_homepage.png" alt="">
@@ -266,12 +263,12 @@
 <p>そんな方に、MarkdownとWebComponentsがシームレスに統合できる静的サイトジェネレータ(以降、SSGと呼ぶ)、Rocketをおすすめします。</p>
 <h2 id="対象読者"><a class="anchor" href="#対象読者"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>対象読者</h2>
 <ul>
-<li>SSGでWebサイト構築している人</li>
 <li>(ブログなど)執筆活動に集中したい人
 <ul>
 <li>執筆に、Markdownを利用している</li>
 </ul>
 </li>
+<li>執筆したコンテンツをSSGで公開している人</li>
 <li>SSGの移行コストを極力減らしたい人</li>
 </ul>
 <h2 id="そもそもmarkdownって何"><a class="anchor" href="#そもそもmarkdownって何"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>そもそも、Markdownって何？</h2>
@@ -281,7 +278,7 @@
 <blockquote>
 <p>Markdown is a text-to-HTML conversion tool for web writers. Markdown allows you to write using an easy-to-read, easy-to-write plain text format, then convert it to structurally valid XHTML (or HTML).</p>
 </blockquote>
-<p>Markdownは、<strong>Webライター</strong>向けに開発されたTextからHTMLへ変換するためのツールです。
+<p>Markdownは、<strong>Webライター</strong>向けに開発されたPlainTextからHTMLへ変換するためのツールです。
 また、Markdownには<strong>書きやすさ、読みやすさが大切</strong>です。</p>
 <p>Webライターは、ブログ記事やネット広告の文章など、Web向けコンテンツを執筆する人です。
 そう、<strong>執筆</strong>です。Markdownは、執筆のための道具です。</p>
@@ -295,7 +292,7 @@
 <blockquote>
 <p>For any markup that is not covered by Markdown’s syntax, you simply use HTML itself. There’s no need to preface it or delimit it to indicate that you’re switching from Markdown to HTML; you just use the tags.</p>
 </blockquote>
-<p>MarkdownにはHTMLが使えます。執筆サービスのMarkdownプレビューで、HTMLを書いてみると、恐らく使えるはずです。</p>
+<p>MarkdownにはHTMLが使えます。執筆サービスのMarkdownで、HTMLを書いてみると、恐らく使えるはずです。</p>
 <p>MarkdownはHTMLへ変換するという目的を考えると、HTMLが使用できるというのは納得できると思います。
 ただし、<strong>HTMLを使用することで、読みやすさや書きやすさは少し悪くなってしまうため、多用は避けなければいけません</strong>。</p>
 <h2 id="htmlでは物足りない"><a class="anchor" href="#htmlでは物足りない"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>HTMLでは物足りない</h2>
@@ -312,9 +309,11 @@
 </ul>
 </li>
 </ul>
-<p>これらは、記法というより機能だと、私は思うので、Markdownの標準記法に求めるつもりはありません。</p>
-<p>しかし、執筆をしていくと、<strong>どうしても欲しくなってきます</strong>。
-それら機能がなくても、Markdown記法を駆使すれば、埋め込みコンテンツっぽく表示できますし、目次も手動で生成できます。
+<p>これらの機能によって、執筆したコンテンツが読みやすくなったり、執筆の効率性が向上したりします。
+当たり前ですが、Markdownには、そのような機能が存在しません。
+Markdownは、記法を定義しているだけなので、Markdownに機能拡張を望んでいる訳ではありません。</p>
+<p>しかし、執筆をしていくと、それらの機能が<strong>どうしても欲しくなってきます</strong>。
+機能がなくても、Markdown記法を駆使すれば、埋め込みコンテンツっぽく表示できますし、目次も手動で生成できます。
 ただ、本来執筆に集中したいのに、見出しが増えるたびに、目次を手動更新するというのは、非効率的です。</p>
 <p>その非効率、どうしたら良いでしょうか。</p>
 <h3 id="案1-markdownからhtmlへの変換処理で機能拡張する"><a class="anchor" href="#案1-markdownからhtmlへの変換処理で機能拡張する"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>案1. MarkdownからHTMLへの変換処理で、機能拡張する</h3>
@@ -328,10 +327,10 @@
 Hello, World
 </code></pre>
 <pre class="language-javascript"><code class="language-javascript"><span class="token comment">// transform.js</span>
-<span class="token keyword">const</span> fs <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"fs"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">const</span> <span class="token punctuation">{</span> marked <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"marked"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// markdownをhtmlへ変換してくれる</span>
+<span class="token keyword">const</span> fs <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'fs'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token punctuation">{</span> marked <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'marked'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// markdownをhtmlへ変換してくれる</span>
 
-<span class="token keyword">const</span> markdown <span class="token operator">=</span> fs<span class="token punctuation">.</span><span class="token method function property-access">readFileSync</span><span class="token punctuation">(</span><span class="token string">"README.md"</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> encoding<span class="token punctuation">:</span> <span class="token string">'utf-8'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> markdown <span class="token operator">=</span> fs<span class="token punctuation">.</span><span class="token method function property-access">readFileSync</span><span class="token punctuation">(</span><span class="token string">'README.md'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> encoding<span class="token punctuation">:</span> <span class="token string">'utf-8'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">const</span> html <span class="token operator">=</span> <span class="token function">marked</span><span class="token punctuation">(</span>markdown<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token console class-name">console</span><span class="token punctuation">.</span><span class="token method function property-access">log</span><span class="token punctuation">(</span>html<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
@@ -352,10 +351,10 @@ Hello, World
 Hello, World
 </code></pre>
 <pre class="language-javascript"><code class="language-javascript"><span class="token comment">// transform.js</span>
-<span class="token keyword">const</span> fs <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"fs"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">const</span> <span class="token punctuation">{</span> marked <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"marked"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// markdownをhtmlへ変換してくれる</span>
+<span class="token keyword">const</span> fs <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'fs'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token punctuation">{</span> marked <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'marked'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// markdownをhtmlへ変換してくれる</span>
 
-<span class="token keyword">const</span> markdown <span class="token operator">=</span> fs<span class="token punctuation">.</span><span class="token method function property-access">readFileSync</span><span class="token punctuation">(</span><span class="token string">"README.md"</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> encoding<span class="token punctuation">:</span> <span class="token string">'utf-8'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> markdown <span class="token operator">=</span> fs<span class="token punctuation">.</span><span class="token method function property-access">readFileSync</span><span class="token punctuation">(</span><span class="token string">'README.md'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> encoding<span class="token punctuation">:</span> <span class="token string">'utf-8'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 reMarkdown <span class="token operator">=</span> markdown
              <span class="token comment">// TODO: replaceの第2引数の固定を動的に設定</span>
              <span class="token punctuation">.</span><span class="token method function property-access">replace</span><span class="token punctuation">(</span><span class="token regex"><span class="token regex-delimiter">/</span><span class="token language-regex"><span class="token special-escape escape">\[</span>:contents<span class="token special-escape escape">\]</span></span><span class="token regex-delimiter">/</span><span class="token regex-flags">g</span></span><span class="token punctuation">,</span> <span class="token string">'&lt;div id="toc"&gt;&lt;ul&gt;&lt;li&gt;Header1&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -370,34 +369,34 @@ reMarkdown <span class="token operator">=</span> markdown
 <span class="token operator">&lt;</span>h1 <span class="token assign-left variable">id</span><span class="token operator">=</span><span class="token string">"header1"</span><span class="token operator">&gt;</span>Header<span class="token operator"><span class="token file-descriptor important">1</span>&lt;</span>/h<span class="token operator"><span class="token file-descriptor important">1</span>&gt;</span>
 <span class="token operator">&lt;</span>p<span class="token operator">&gt;</span>Hello, World<span class="token operator">&lt;</span>/p<span class="token operator">&gt;</span>
 </code></pre>
-<p>期待通り、Markdownの目次(toc)が生成されています。
+<p>期待通り、Markdownの目次が生成されています。
 これは簡単な例ですが、機能拡張していくと、transform.jsの処理が増えたり、README.mdにマーカーがたくさん書かれていきます。</p>
 <p>このように変換処理に機能拡張するのは、変換処理に機能を一任できるというメリットがあります。
 ですが、<strong>Markdownが変換処理に依存してしまう</strong>こととなってしまいます。
-これは、変換処理を違うものへ移行するときに<strong>移行コスト</strong>が発生してしまいます。(例えば、HugoからGatsbyJSに移行)</p>
+これは、変換処理を違うものへ移行するときに<strong>移行コスト</strong>が発生してしまいます。</p>
 <p>また、Markdown自体に、<strong>Markdown記法やHTMLでもないマーカーを埋める</strong>というのも、ちょっと違和感を感じます。</p>
 <h3 id="案2-webcomponentsで機能拡張する"><a class="anchor" href="#案2-webcomponentsで機能拡張する"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>案2. WebComponentsで、機能拡張する</h3>
 <p>WebComponentsは、Web標準技術の1つで、HTML要素を独自にカスタマイズできる機能(Custom Elements)があります。
-例えば、目次生成するためのHTML要素、<code>&lt;view-toc&gt;</code>をWebComponentsで開発したとします。
+例えば、目次生成するためのHTML要素、<code>&lt;generate-toc&gt;</code>をWebComponentsで開発したとします。
 このHTML要素は、全ての見出しテキストを収集し、箇条書きで表示するだけのWebComponentsだとします。</p>
 <p>Markdownのイメージは、次のとおりになります。</p>
 <pre class="language-markdown"><code class="language-markdown"><span class="token comment">&lt;!-- README.md --&gt;</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>view-toc</span> <span class="token punctuation">/&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>generate-toc</span> <span class="token punctuation">/&gt;</span></span>
 
 <span class="token title important"><span class="token punctuation">#</span> Header1</span>
 Hello, World
 </code></pre>
 <p>このMarkdownを、任意のHTML変換処理(さきほどのtransform.jsでも可)をすると、次の結果になります。</p>
-<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>view-toc</span> <span class="token punctuation">/&gt;</span></span>
+<pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>generate-toc</span> <span class="token punctuation">/&gt;</span></span>
 
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>header1<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>Header1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">&gt;</span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>Hello, World<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
 </code></pre>
-<p>MarkdownはHTMLを許容するため、view-tocタグが、そのままHTML出力されます。
-このままだと、ブラウザが <code>view-toc</code> を識別できません。そのため、<code>view-toc</code>を定義したコード、つまりWebComponentsを読み込む必要があります。
+<p>MarkdownはHTMLを許容するため、<code>&lt;generate-toc /&gt;</code>が、そのままHTML出力されます。
+このままだと、ブラウザが <code>generate-toc</code> を識別できません。そのため、<code>generate-toc</code>を定義したコード、つまりWebComponentsを読み込む必要があります。
 例えば、次のようなコードを読み込みます。</p>
 <pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
-  <span class="token keyword">class</span> <span class="token class-name">ViewToc</span> <span class="token keyword">extends</span> <span class="token class-name">HTMLElement</span> <span class="token punctuation">{</span>
+  <span class="token keyword">class</span> <span class="token class-name">GenerateToc</span> <span class="token keyword">extends</span> <span class="token class-name">HTMLElement</span> <span class="token punctuation">{</span>
     <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
       <span class="token keyword">super</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
       <span class="token keyword">const</span> shadow <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token method function property-access">attachShadow</span><span class="token punctuation">(</span><span class="token punctuation">{</span>mode<span class="token punctuation">:</span> <span class="token string">'open'</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -405,15 +404,15 @@ Hello, World
       shadow<span class="token punctuation">.</span><span class="token property-access">innerHTML</span> <span class="token operator">=</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token embedded-code html">&lt;div id="toc"&gt;&lt;ul&gt;&lt;li&gt;Header1&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
   <span class="token punctuation">}</span>
-  customElements<span class="token punctuation">.</span><span class="token method function property-access">define</span><span class="token punctuation">(</span><span class="token string">'view-toc'</span><span class="token punctuation">,</span> <span class="token maybe-class-name">ViewToc</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  customElements<span class="token punctuation">.</span><span class="token method function property-access">define</span><span class="token punctuation">(</span><span class="token string">'generate-toc'</span><span class="token punctuation">,</span> <span class="token maybe-class-name">GenerateToc</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
 </code></pre>
-<p>これで、ブラウザは <code>view-toc</code>を識別できるようになったため、期待通り目次が表示されます。</p>
+<p>これで、ブラウザは <code>generate-toc</code>を識別できるようになったため、期待通り目次が表示されます。</p>
 <p>WebComponentsを利用するメリットは、<strong>変換処理に依存せずWebComponentsに依存します</strong>。ブラウザの標準技術に依存するというのは、全く問題ありません。
 変換処理の移行をしても、WebComponentsのコードがあれば、同じ動作が実現できます。</p>
 <p>また、再掲ですが、Markdownに次の文章があったとしても、Markdownの仕様に反しません。</p>
 <pre class="language-markdown"><code class="language-markdown"><span class="token comment">&lt;!-- README.md --&gt;</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>view-toc</span> <span class="token punctuation">/&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>generate-toc</span> <span class="token punctuation">/&gt;</span></span>
 
 <span class="token title important"><span class="token punctuation">#</span> Header1</span>
 Hello, World
@@ -431,18 +430,14 @@ Modern Web と呼ばれるWeb標準技術の開発支援を行うプロジェク
 <li><a href="https://open-wc.org/">https://open-wc.org/</a></li>
 <li><a href="https://apolloelements.dev/">https://apolloelements.dev/</a></li>
 </ul>
+<p>Rocketは、技術的には、EleventyというSSGのWrapperになります。
+Eleventyは、MarkdownをHTMLへ変換してくれます。Rocketは、そのEleventyにModern Webの技術(WebComponents,TestRunner,DevServer)を混ぜています。</p>
 <h3 id="modern-web-って"><a class="anchor" href="#modern-web-って"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Modern Web って？</h3>
 <p>Javascriptを使って開発すると、Babelのトランスパイラ、ESLintのリンター、Jestのテスター、Webpackのビルダーなど、扱うツールが多く、必要以上に複雑になり、開発者は疲弊してしまいます。
 本来、開発に注力すべきなのに、それらの複雑さによって、アジリティ低下につながることを、開発者は知っています。</p>
 <p>そこで、WebComponentsや、ESModulesといったWeb標準技術で開発することで、複雑さといったものを軽減していく狙いが、Modern Webにはあります。</p>
 <p>※ JSDOMのようなブラウザAPIをモックすることでテストするのではなく、本来動いているブラウザでテストするテストランナーもあります。</p>
 <p>Modern Webは、そういったWeb標準技術の開発を支援します。</p>
-<h2 id="rocketの技術構成"><a class="anchor" href="#rocketの技術構成"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Rocketの技術構成</h2>
-<p>Rocketは、EleventyというSSGのWrapperになります。
-Eleventyは、MarkdownをHTMLへ変換してくれます。Rocketは、そのEleventyにModern Webの技術(WebComponents,TestRunner,DevServer)を混ぜています。</p>
-<p>Eleventyには、テンプレートに独自の制御プログラムを書けるテンプレートエンジンとして、Numjucksを採用しています。
-Numjucksで、HTMLを柔軟に書き換えられますが、私はあまり好みません。理由は、<strong>そのテンプレートエンジンにどっぷり依存してしまう</strong>からです。
-できれば、(ケースバイケースですが) WebComponentsで書いた方が良いと思っています。</p>
 <h2 id="rocketの特徴"><a class="anchor" href="#rocketの特徴"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Rocketの特徴</h2>
 <p><a href="https://rocket.modern-web.dev/">Rocketのホームページ</a>に、Rocketの特徴を6つ書いてあります。
 しかし、本記事の流れ的にMarkdownとWebComponentsの統合についてを説明すべきだと思うので、次の1つだけ特徴を紹介して、その他は割愛します。</p>
@@ -495,7 +490,7 @@ Numjucksのscriptヘッダに、共通化したいWebComponentsを書いてあ�
 <h3 id="bare-importのサポート"><a class="anchor" href="#bare-importのサポート"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Bare Importのサポート</h3>
 <p>Rocketは、Modern Webの<a href="https://modern-web.dev/docs/dev-server/overview/">開発サーバー</a>を内部で使用しています。開発サーバーには、<a href="https://modern-web.dev/blog/introducing-modern-web/#highlights-1">Bare Importをサポートしています</a>。</p>
 <p>Bare Importの例を示します。
-次のMarkdownは、事前に <code>npm install canvas-confetti</code> インストールしていることを前提とした場合、<code>confetti()</code>が実行されます。</p>
+事前に <code>npm install canvas-confetti</code> インストールしていることを前提とした場合、次のMarkdownは<code>confetti()</code>が実行されます。</p>
 <pre class="language-markdown"><code class="language-markdown"><span class="token code"><span class="token punctuation">```</span><span class="token code-language">js script</span>
 <span class="token code-block language-js"><span class="token keyword module">import</span> confetti <span class="token keyword module">from</span> <span class="token string">'canvas-confetti'</span><span class="token punctuation">;</span>
 <span class="token function">confetti</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></span>
