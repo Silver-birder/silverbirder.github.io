@@ -58,7 +58,9 @@
   
     <link rel="stylesheet" href="../../../f5cf94c7.css">
   
-    
+    <script defer="" async="" src="https://cdn.jsdelivr.net/npm/oembed-component/dist/oEmbed.js"></script>
+
+
   
     <noscript><link rel="stylesheet" href="/_merged_assets/_static/noscript.css"/></noscript>
 
@@ -76,7 +78,7 @@
 <link rel="preload" href="../../../d3f07d73.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../46ae44d0.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../dd4fcd54.js" as="script" crossorigin="anonymous">
-<link rel="preload" href="../../../736906bb71.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../db36032f71.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../90f0e617.js" as="script" crossorigin="anonymous">
 </head>
 
@@ -267,13 +269,13 @@ Tiqav2は、そのTiqavを参考にして作りました。</p>
 <figcaption>Saving flow by Tiqav2</figcaption>
 </figure>
 <p>検索する為には、全文検索サービスのAlgoliaを使います。</p>
-<p><a href="https://www.algolia.com/">https://www.algolia.com/</a>  <!--  TODO: embed  --></p>
+<p><iframely-embed url="https://www.algolia.com/"></iframely-embed></p>
 <p>Algoliaに保存する情報は、主に3つです。画像URLと拡張子、そしてテキストです。
 画像は画像変換&amp;管理サービスのCloudinaryに保存します。保存後、Cloudinaryより、画像URLと拡張子が手に入ります。</p>
-<p><a href="https://cloudinary.com/">https://cloudinary.com/</a>  <!--  TODO: embed  --></p>
+<p><iframely-embed url="https://cloudinary.com/"></iframely-embed></p>
 <p>テキストは、Google Cloud Vision APIへ画像を渡すことでテキストを抽出します。
 もちろん、手動でテキストを設定することもできます。</p>
-<p><a href="https://cloud.google.com/vision/">https://cloud.google.com/vision/</a>  <!--  TODO: embed  --></p>
+<p><iframely-embed url="https://cloud.google.com/vision/"></iframely-embed></p>
 <h3 id="画像を検索表示"><a class="anchor" href="#画像を検索表示"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>画像を検索&amp;表示</h3>
 <figure title="Searching Flow  By Tiqav2">
 <img alt="Searching Flow  By Tiqav2" src="https://res.cloudinary.com/silverbirder/image/upload/v1614429523/silver-birder.github.io/blog/searching_flow_by_tiqav2.png">
@@ -283,21 +285,21 @@ Tiqav2は、そのTiqavを参考にして作りました。</p>
 画像を表示することができます。Extensionの種類は、Cloudinaryのサポートするもの全てになります。</p>
 <pre><code>"gif", "png", "jpg", "bmp", "ico", "pdf", "tiff", "eps", "jpc", "jp2", "psd", "webp", "zip", "svg", "mp4", "webm", "wdp", "hpx", "djvu", "ai", "flif", "bpg", "miff", "tga", "heic"
 </code></pre>
-<p><a href="https://cloudinary.com/documentation/image_transformations#supported_image_formats">https://cloudinary.com/documentation/image_transformations#supported_image_formats</a>  <!--  TODO: embed  --></p>
+<p><iframely-embed url="https://cloudinary.com/documentation/image_transformations#supported_image_formats"></iframely-embed></p>
 <p>この画像を表示する機能を使うと、次のようにSlack上で画像を送信することができます。</p>
 <figure title="Send Tiqav2 URL on Slack">
 <img alt="Send Tiqav2 URL on Slack" src="https://res.cloudinary.com/silverbirder/image/upload/v1614429563/silver-birder.github.io/blog/send_tiqav2_URL_on_slack.png">
 <figcaption>Send Tiqav2 URL on Slack</figcaption>
 </figure>
 <p>詳しい機能は、次のリポジトリをご確認下さい。</p>
-<p><a href="https://github.com/Silver-birder/tiqav2">https://github.com/Silver-birder/tiqav2</a>  <!--  TODO: embed  --></p>
+<p><iframely-embed url="https://github.com/Silver-birder/tiqav2"></iframely-embed></p>
 <h1 id="saasは個人開発には最適"><a class="anchor" href="#saasは個人開発には最適"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>SaaSは個人開発には最適</h1>
 <p>今回、全文検索であったり画像管理は、SaaSに全て任せました。テキスト抽出はなくてもよかったのですが、Google Cloud Vision APIが、そこそこ使えたため、そちらも使いました。</p>
 <p>個人で開発する際、リソース（時間、お金、人）は組織に比べて<strong>とても小さい</strong>です。
 SaaSは、１つのことを上手くやってくれるし、個人の利用範囲であれば無料なものが多いです。
 ニッチなカスタマイズしたい要求がない限り、SaaSは大体の要望を叶えてくれます。
 どんな種類のSaaSがあるか知りたい方は、↓のサイトを見てみて下さい。参考になるはずです。</p>
-<p><a href="https://saasblocks.io/">https://saasblocks.io/</a>  <!--  TODO: embed  --></p>
+<p><iframely-embed url="https://saasblocks.io/"></iframely-embed></p>
 <p><strong>SaaSに面倒なことは任せて、プロダクトコードに集中する</strong>ことは、私にとって、とても大切にしています。
 ちなみに今回のプロダクトコードは、CleanArchitecture + InversifyJSで作りました。</p>
 <h1 id="終わりに"><a class="anchor" href="#終わりに"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>終わりに</h1>
@@ -422,6 +424,6 @@ SaaSは、１つのことを上手くやってくれるし、個人の利用範�
 <script type="module" src="../../../b089d234.js"></script>
 <script type="module" src="../../../46ae44d0.js"></script>
 <script type="module" src="../../../dd4fcd54.js" inject-service-worker=""></script>
-<script type="module" src="../../../736906bb71.js"></script>
+<script type="module" src="../../../db36032f71.js"></script>
 
 </body></html>

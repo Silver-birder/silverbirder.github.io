@@ -58,7 +58,9 @@
   
     <link rel="stylesheet" href="../../../f5cf94c7.css">
   
-    
+    <script defer="" async="" src="https://cdn.jsdelivr.net/npm/oembed-component/dist/oEmbed.js"></script>
+
+
   
     <noscript><link rel="stylesheet" href="/_merged_assets/_static/noscript.css"/></noscript>
 
@@ -76,7 +78,7 @@
 <link rel="preload" href="../../../d3f07d73.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../46ae44d0.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../dd4fcd54.js" as="script" crossorigin="anonymous">
-<link rel="preload" href="../../../736906bb43.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../db36032f43.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../90f0e617.js" as="script" crossorigin="anonymous">
 </head>
 
@@ -244,7 +246,7 @@
     <p>GoogleやGithubなど、様々なサービスのプロフィール情報(画像, etc)を一括更新するツール、puppeteer-account-manager を開発しました。
 開発の目的や、開発から得た知見を紹介します。</p>
 <p>リポジトリは、こちらです。</p>
-<p><a href="https://github.com/Silver-birder/puppeteer-account-manager">https://github.com/Silver-birder/puppeteer-account-manager</a>  <!--  TODO: embed  --></p>
+<p><iframely-embed url="https://github.com/Silver-birder/puppeteer-account-manager"></iframely-embed></p>
 <!--  TODO: TOC -->
 <h1 id="なんで作ったの"><a class="anchor" href="#なんで作ったの"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>なんで作ったの？</h1>
 <p>GithubやTwitter、Facebookなど、Webサービスにはプロフィール画像を登録することができます。
@@ -253,7 +255,7 @@
 そこで、今回、その面倒さを解決したく、このツールを作りました。</p>
 <h1 id="それgravatarで良くない"><a class="anchor" href="#それgravatarで良くない"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>それ、Gravatarで良くない？</h1>
 <p>今回の面倒さは、GravatarというWebサービスで解決できるかもしれません。</p>
-<p><a href="http://gravatar.com/">http://gravatar.com/</a>  <!--  TODO: embed  --></p>
+<p><iframely-embed url="http://gravatar.com/"></iframely-embed></p>
 <p>このサービスは、グローバルなプロフィール画像を提供するサービスです。
 API経由で、プロフィール画像を取得できます。</p>
 <p>しかし、次の問題があったので、却下となりました。</p>
@@ -278,17 +280,17 @@ API経由で、プロフィール画像を取得できます。</p>
 </li>
 </ul>
 <p>そこで、Contentful というAPIベースのCMSを使うことにしました。</p>
-<p><a href="https://www.contentful.com/">https://www.contentful.com/</a>  <!--  TODO: embed  --></p>
+<p><iframely-embed url="https://www.contentful.com/"></iframely-embed></p>
 <p>Contentfulでは、自由に項目を決めることができます。
 独自に作った項目 (画像や紹介文)を、API経由で取得できるため、とても便利です。</p>
 <h1 id="どうやって作ったの"><a class="anchor" href="#どうやって作ったの"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>どうやって作ったの？</h1>
 <p>愚直なやり方です。
 Puppeteerと呼ばれる Chromeブラウザを自動操作できるライブラリを使いました。
 Chromeブラウザから、"各サービスへログインし、写真をアップロードする"処理を自動化しただけです。</p>
-<p><a href="https://github.com/puppeteer/puppeteer">https://github.com/puppeteer/puppeteer</a>  <!--  TODO: embed  --></p>
+<p><iframely-embed url="https://github.com/puppeteer/puppeteer"></iframely-embed></p>
 <h1 id="プロフィール画像を更新するapiはなかったの"><a class="anchor" href="#プロフィール画像を更新するapiはなかったの"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>プロフィール画像を更新するAPIは、なかったの？</h1>
 <p>サービスによってはあります。例えば、Twitterには、次のようなプロフィール画像を更新するAPIがあります。</p>
-<p><a href="https://developer.twitter.com/en/docs/accounts-and-users/manage-account-settings/api-reference/post-account-update_profile_image">https://developer.twitter.com/en/docs/accounts-and-users/manage-account-settings/api-reference/post-account-update_profile_image</a>  <!--  TODO: embed  --></p>
+<p><iframely-embed url="https://developer.twitter.com/en/docs/accounts-and-users/manage-account-settings/api-reference/post-account-update_profile_image"></iframely-embed></p>
 <p>ただ、全てのサービスには、そのようなAPIはありません。
 APIを使って更新するのが正しい姿ですが、全サービスの実装方法の足並みを揃えるために、
 Puppeteer で自動操作することにしました。</p>
@@ -298,7 +300,7 @@ Puppeteer で自動操作することにしました。</p>
 また、パスワードの設定は環境変数から注入するようにしています。
 Dockerコンテナで動作できるようにしているので、ローカルでも、コンテナサービスでも動かすことができます。</p>
 <p>今後、パスワードの管理は、KeepassやLastpassのようなサービスと連携したいと思っています。</p>
-<p><a href="https://github.com/keeweb/kdbxweb">https://github.com/keeweb/kdbxweb</a>  <!--  TODO: embed  --></p>
+<p><iframely-embed url="https://github.com/keeweb/kdbxweb"></iframely-embed></p>
 <h1 id="どのサービスが対応している"><a class="anchor" href="#どのサービスが対応している"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>どのサービスが対応している？</h1>
 <p>これは、私が楽になりたいために作ったため、使い方が、限定的になっています。</p>
 
@@ -509,6 +511,6 @@ ContentfulのWebfook経由で、アカウント情報を更新することがで
 <script type="module" src="../../../b089d234.js"></script>
 <script type="module" src="../../../46ae44d0.js"></script>
 <script type="module" src="../../../dd4fcd54.js" inject-service-worker=""></script>
-<script type="module" src="../../../736906bb43.js"></script>
+<script type="module" src="../../../db36032f43.js"></script>
 
 </body></html>

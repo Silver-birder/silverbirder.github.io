@@ -58,7 +58,9 @@
   
     <link rel="stylesheet" href="../../../f5cf94c7.css">
   
-    
+    <script defer="" async="" src="https://cdn.jsdelivr.net/npm/oembed-component/dist/oEmbed.js"></script>
+
+
   
     <noscript><link rel="stylesheet" href="/_merged_assets/_static/noscript.css"/></noscript>
 
@@ -76,7 +78,7 @@
 <link rel="preload" href="../../../d3f07d73.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../46ae44d0.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../dd4fcd54.js" as="script" crossorigin="anonymous">
-<link rel="preload" href="../../../736906bb22.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../db36032f22.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../90f0e617.js" as="script" crossorigin="anonymous">
 </head>
 
@@ -254,7 +256,7 @@
 
 
   
-    <p><a href="https://gcpug-osaka.connpass.com/event/128130/">https://gcpug-osaka.connpass.com/event/128130/</a>  <!--  TODO: embed  --></p>
+    <p><iframely-embed url="https://gcpug-osaka.connpass.com/event/128130/"></iframely-embed></p>
 <p>こちらの参加しましたので、ご報告します。hashtagはこちらです。<a href="https://twitter.com/hashtag/next19extended">#next19extended</a></p>
 <!--  TODO: TOC -->
 <h1 id="目的"><a class="anchor" href="#目的"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>目的</h1>
@@ -288,7 +290,7 @@ Osakaは、継続して参加しようと思います。GCP大好きですし。
 ・ポリシーオートメーション<br>
 ・一貫したエクスペリエンス</p>
 <p>よーわからないので、ggってみた。</p>
-<p><a href="https://www.publickey1.jp/blog/19/googleanthoskubernetesgoogle_cloud_next_19.html">https://www.publickey1.jp/blog/19/googleanthoskubernetesgoogle_cloud_next_19.html</a>  <!--  TODO: embed  --></p>
+<p><iframely-embed url="https://www.publickey1.jp/blog/19/googleanthoskubernetesgoogle_cloud_next_19.html"></iframely-embed></p>
 <blockquote>
 <p>コンテナ化したアプリケーションをオンプレミスとクラウドのどちらでも実行可能にする、ハイブリッドクラウドおよびマルチクラウドのためのプラットフォーム。</p>
 </blockquote>
@@ -300,7 +302,7 @@ Osakaは、継続して参加しようと思います。GCP大好きですし。
 <p>また、IstioをベースとしてAnthosが作られたとも発表されていました。
 Istioについては、<a href="https://cloud.google.com/istio/?hl=ja">こちら</a>をご確認下さい。<br>
 Istioの機能の特徴として下記があるそうです。</p>
-<p><a href="https://twitter.com/nankouyuukichi/status/1128245474215858176?s=20">https://twitter.com/nankouyuukichi/status/1128245474215858176?s=20</a>  <!--  TODO: embed  --></p>
+<p><o-embed url="https://twitter.com/nankouyuukichi/status/1128245474215858176?s=20" proxy="https://silverbirder-cors-anywhere.herokuapp.com/"></o-embed></p>
 <p>k8sでは、対象とするクラスタを管理します。規模が拡大するにつれ、
 サービスが複雑になってくるケースがあります。その際Istioが、そのあたりを
 良い感じに管理してくれると、理解しています。（ざっくり感）<br>
@@ -308,21 +310,21 @@ Istioの機能の特徴として下記があるそうです。</p>
 <p>Anthosは、その対象範囲をクラウドだけでなく、オンプレ(GKE on Prem)も含めるようにしたと思います。</p>
 <h2 id="cloudrun"><a class="anchor" href="#cloudrun"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>CloudRun</h2>
 <p>これは、下記で一度試した経験があります。</p>
-<p><a href="../cloud_run_3_step_glang/">./cloud_run_3_step_glang</a>  <!--  TODO: embed  --></p>
+<p><iframely-embed url="https://silver-birder.github.io/blog/contents/cloud_run_3_step_glang"></iframely-embed></p>
 <p>コンテナとしてdeployできるようになります。
 正直、AppEngine, CloudFunction, CoundRunとデプロイサービスが増えてきて、
 どれが何に良いのか分からなくなりそうです...。下記に、まとまっていました。</p>
-<p><a href="https://docs.google.com/presentation/d/1DCJlrXQKWN63pAz9vtdVNFhMPHceyiKHK0IrFjcwOcU/edit#slide=id.g5693476139_0_155">https://docs.google.com/presentation/d/1DCJlrXQKWN63pAz9vtdVNFhMPHceyiKHK0IrFjcwOcU/edit#slide=id.g5693476139_0_155</a>  <!--  TODO: embed  --></p>
+<p><iframely-embed url="https://docs.google.com/presentation/d/1DCJlrXQKWN63pAz9vtdVNFhMPHceyiKHK0IrFjcwOcU/edit#slide=id.g5693476139_0_155"></iframely-embed></p>
 <h2 id="cloudrun-on-gke"><a class="anchor" href="#cloudrun-on-gke"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>CloudRun on GKE</h2>
 <p>こちらは、k8sにCloudRunをdeployできるみたいです。
 詳しくは分かりません。</p>
 <h2 id="knative"><a class="anchor" href="#knative"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Knative</h2>
-<p><a href="https://cloud.google.com/knative/?hl=ja">https://cloud.google.com/knative/?hl=ja</a>  <!--  TODO: embed  --></p>
+<p><iframely-embed url="https://cloud.google.com/knative/?hl=ja"></iframely-embed></p>
 <blockquote>
 <p>Knative は、オンプレミス、クラウド、サードパーティのデータセンターなど、場所を選ばず実行できるソース中心でコンテナベースの最新アプリケーションを構築する際には不可欠な一連のミドルウェア コンポーネントです。</p>
 </blockquote>
 <p>んー、なんとなくわからなくないですが、他のサイトを見てみます。</p>
-<p><a href="https://www.apps-gcp.com/knative-overview/">https://www.apps-gcp.com/knative-overview/</a>  <!--  TODO: embed  --></p>
+<p><iframely-embed url="https://www.apps-gcp.com/knative-overview/"></iframely-embed></p>
 <blockquote>
 <p>Knativeを使用するためには、Kubernetesがインストールされたクラスタを用意する必要がありますが、KnativeはKubernetesと同様にコンテナをオーケストレーションするためのものである、という点は変わりません。
 Knativeは、クラウドにおけるPaaSやFaaSのようなアーキテクチャを、Knativeがインストールされていれば(つまり、Kubernetesクラスタであれば)どこでも実現できるものです。</p>
@@ -332,7 +334,7 @@ GCPを使おうがAWSを使おうが、エンジニアにとって、それは�
 アプリケーションのプロダクトコードが重要だと思います。そこで、クラウドサービスを
 意識せずに、k8sを使うことができちゃうということですね。</p>
 <h2 id="gvisor"><a class="anchor" href="#gvisor"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>gVisor</h2>
-<p><a href="https://www.publickey1.jp/blog/18/gvisorgoogle.html">https://www.publickey1.jp/blog/18/gvisorgoogle.html</a>  <!--  TODO: embed  -->
+<p><iframely-embed url="https://www.publickey1.jp/blog/18/gvisorgoogle.html"></iframely-embed>
 従来は、下記のような問題をコンテナは抱えていました。</p>
 <blockquote>
 <p>コンテナ間でOSのカーネルを共有しているためにコンテナ間の分離レベルは高くなく、同一OS上で稼働している別のコンテナの負荷の影響を受けやすかったり、コンテナからOSのシステムコールを直接呼び出せることなどによるセキュリティ上の課題を引き起こしやすくもあります。</p>
@@ -357,7 +359,7 @@ GCPを使おうがAWSを使おうが、エンジニアにとって、それは�
 <h3 id="発表者-3"><a class="anchor" href="#発表者-3"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>発表者</h3>
 <p>ちまめ@rito</p>
 <h3 id="発表資料"><a class="anchor" href="#発表資料"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>発表資料</h3>
-<p><a href="https://speakerdeck.com/chimame/cloud-run-one-step-ahead">https://speakerdeck.com/chimame/cloud-run-one-step-ahead</a>  <!--  TODO: embed  --></p>
+<p><o-embed url="https://speakerdeck.com/chimame/cloud-run-one-step-ahead" proxy="https://silverbirder-cors-anywhere.herokuapp.com/"></o-embed></p>
 <h3 id="内容-3"><a class="anchor" href="#内容-3"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>内容</h3>
 <p>2コマンドでcloudrunできるぐらい、簡単！
 ただ、プロダクトとして扱うには、いくつか問題があるそう。</p>
@@ -365,7 +367,7 @@ GCPを使おうがAWSを使おうが、エンジニアにとって、それは�
 <li>docker full buildするみたいで遅い</li>
 </ol>
 <p>→ kaniko で、cacheが効くそう。<br>
-<a href="https://github.com/GoogleContainerTools/kaniko">https://github.com/GoogleContainerTools/kaniko</a>  <!--  TODO: embed  --></p>
+<iframely-embed url="https://github.com/GoogleContainerTools/kaniko"></iframely-embed></p>
 <ol start="2">
 <li>memoryStoreがまだ未対応(VPC)</li>
 </ol>
@@ -374,7 +376,7 @@ GCPを使おうがAWSを使おうが、エンジニアにとって、それは�
 <p>salamander さん</p>
 <h3 id="内容-4"><a class="anchor" href="#内容-4"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>内容</h3>
 <p>大阪リージョンのレイテンシについて紹介されました。
-<a href="https://docs.google.com/presentation/d/1dbGgjr3Z9o-bOxmT5SQ5bRHMEI0Jzh0BQUQkXlEGyYE/edit?usp=sharing">https://docs.google.com/presentation/d/1dbGgjr3Z9o-bOxmT5SQ5bRHMEI0Jzh0BQUQkXlEGyYE/edit?usp=sharing</a>  <!--  TODO: embed  --></p>
+<iframely-embed url="https://docs.google.com/presentation/d/1dbGgjr3Z9o-bOxmT5SQ5bRHMEI0Jzh0BQUQkXlEGyYE/edit?usp=sharing"></iframely-embed></p>
 <h1 id="最後に"><a class="anchor" href="#最後に"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>最後に</h1>
 <p>Googleでは、もはや当たり前のようにKubernetesのサービスを進めている印象でした。
 クラウド、オンプレを関係なく動かせるプラットフォームであるAnthosや、
@@ -382,7 +384,7 @@ GCPを使おうがAWSを使おうが、エンジニアにとって、それは�
 どこでもkubernetesを動かせるように進めらています。
 これは、kubernetesを使えるようにならないと！
 下記で、勉強中です！</p>
-<p><a href="../start_the_learning_kubernetes_03/">./start_the_learning_kubernetes_03</a>  <!--  TODO: embed  --></p>
+<p><iframely-embed url="https://silver-birder.github.io/blog/contents/start_the_learning_kubernetes_03"></iframely-embed></p>
 
   
     <div class="content-footer">
@@ -502,6 +504,6 @@ GCPを使おうがAWSを使おうが、エンジニアにとって、それは�
 <script type="module" src="../../../b089d234.js"></script>
 <script type="module" src="../../../46ae44d0.js"></script>
 <script type="module" src="../../../dd4fcd54.js" inject-service-worker=""></script>
-<script type="module" src="../../../736906bb22.js"></script>
+<script type="module" src="../../../db36032f22.js"></script>
 
 </body></html>

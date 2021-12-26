@@ -58,7 +58,9 @@
   
     <link rel="stylesheet" href="../../../f5cf94c7.css">
   
-    
+    <script defer="" async="" src="https://cdn.jsdelivr.net/npm/oembed-component/dist/oEmbed.js"></script>
+
+
   
     <noscript><link rel="stylesheet" href="/_merged_assets/_static/noscript.css"/></noscript>
 
@@ -76,7 +78,7 @@
 <link rel="preload" href="../../../d3f07d73.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../46ae44d0.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../dd4fcd54.js" as="script" crossorigin="anonymous">
-<link rel="preload" href="../../../736906bb21.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../db36032f21.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../90f0e617.js" as="script" crossorigin="anonymous">
 </head>
 
@@ -233,7 +235,7 @@
 <p>Twitterに書くリンクは、全て短縮URLになります。
 そのため、短縮URLにアクセスし、リダイレクト先のURLを取りに行く必要がありました。
 GASでは、リクエストメソッドであるfetchがあります。そのfetchの<code>followRedirects</code>というオプションをfalseにし、responseHeaderのlocationを取ることで、解決(リダイレクト先のURL取得が)できます。</p>
-<p><a href="https://developers.google.com/apps-script/reference/url-fetch/url-fetch-app#advanced-parameters">https://developers.google.com/apps-script/reference/url-fetch/url-fetch-app#advanced-parameters</a>  <!--  TODO: embed  --></p>
+<p><iframely-embed url="https://developers.google.com/apps-script/reference/url-fetch/url-fetch-app#advanced-parameters"></iframely-embed></p>
 <p>また、1リクエストだけをするfetchでは、直列処理になってしまうため、大変遅いです。
 複数リクエストが同時にできるfeatchAllを使うことで、並列処理ができ、パフォーマンスが良いです。
 要するに次のようなコードで解決しようと考えていました。</p>
@@ -269,7 +271,7 @@ GASでは、リクエストメソッドであるfetchがあります。そのfet
 <span class="token keyword">return</span> locationList<span class="token punctuation">;</span>
 </code></pre>
 <h5 id="追記-20200228"><a class="anchor" href="#追記-20200228"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>追記 (20200228)</h5>
-<p><a href="https://developer.twitter.com/en/docs/tweets/search/api-reference/get-search-tweets">https://developer.twitter.com/en/docs/tweets/search/api-reference/get-search-tweets</a>  <!--  TODO: embed  --></p>
+<p><iframely-embed url="https://developer.twitter.com/en/docs/tweets/search/api-reference/get-search-tweets"></iframely-embed></p>
 <p>TwitterのAPIレスポンスに <code>urls</code> がありました。説明はありませんでしたが、Tweetに貼られたリンク(短縮URLと、オリジナルURL)の情報が入るそうです。</p>
 <pre><code>"urls": [
           {
@@ -287,7 +289,7 @@ GASでは、リクエストメソッドであるfetchがあります。そのfet
 <p>この手段だと、Locationを1つ1つ辿っていくことになります。
 そのため、リダイレクトを自動的に追う( <code>followRedirects: true</code> )よりも、処理コストが大きいです。まあ、そこは目を瞑ります。</p>
 <p>次です。</p>
-<p><a href="https://www.monotalk.xyz/blog/google-app-script-%E3%81%AE-urlfetchapp-%E3%81%AE-%E4%BE%8B%E5%A4%96%E3%83%8F%E3%83%B3%E3%83%89%E3%83%AA%E3%83%B3%E3%82%B0%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/">https://www.monotalk.xyz/blog/google-app-script-%E3%81%AE-urlfetchapp-%E3%81%AE-%E4%BE%8B%E5%A4%96%E3%83%8F%E3%83%B3%E3%83%89%E3%83%AA%E3%83%B3%E3%82%B0%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/</a>  <!--  TODO: embed  --></p>
+<p><iframely-embed url="https://www.monotalk.xyz/blog/google-app-script-%E3%81%AE-urlfetchapp-%E3%81%AE-%E4%BE%8B%E5%A4%96%E3%83%8F%E3%83%B3%E3%83%89%E3%83%AA%E3%83%B3%E3%82%B0%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/"></iframely-embed></p>
 <p>fetchやfetchAllは、<code>muteHttpExceptions: true</code> としたとしても、ExceptionErrorが発生してしまいます。
 そうすると、例えば1000件のURLをfetchAllした場合、<b>どれが成功で、どれが失敗で、どれが未実施か</b> がわからないというところです。</p>
 <figure title="FetchAllとRedirectURL (Error)">
@@ -438,6 +440,6 @@ GASは、GSuites連携を簡単にできるという良さがあります。</p>
 <script type="module" src="../../../b089d234.js"></script>
 <script type="module" src="../../../46ae44d0.js"></script>
 <script type="module" src="../../../dd4fcd54.js" inject-service-worker=""></script>
-<script type="module" src="../../../736906bb21.js"></script>
+<script type="module" src="../../../db36032f21.js"></script>
 
 </body></html>
