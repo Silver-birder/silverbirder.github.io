@@ -58,9 +58,7 @@
   
     <link rel="stylesheet" href="../../../f5cf94c7.css">
   
-    <script defer="" async="" src="https://cdn.jsdelivr.net/npm/oembed-component/dist/oEmbed.js"></script>
-
-
+    
   
     <noscript><link rel="stylesheet" href="/_merged_assets/_static/noscript.css"/></noscript>
 
@@ -78,7 +76,7 @@
 <link rel="preload" href="../../../d3f07d73.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../46ae44d0.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../dd4fcd54.js" as="script" crossorigin="anonymous">
-<link rel="preload" href="../../../db36032f65.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../57b518f465.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../90f0e617.js" as="script" crossorigin="anonymous">
 </head>
 
@@ -238,7 +236,7 @@
     <!-- <span>Photo by <a href="https://unsplash.com/@kennyluoping?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Kenny Luo</a> on <a href="https://unsplash.com/s/photos/tailor?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span> -->
 <p>Zalando社が開発したTailorを使って、サンプルWebアプリをMicro Frontendsで構築してみました。Tailorはサーバーサイドで統合するアーキテクチャです。クライアントサイドは、Web Componentsで作られているLit Elementを使って統合しました。どういった内容か、ここに投稿しようと思います。</p>
 <p>作ったリポジトリは、下記に残しています。
-<iframely-embed url="https://github.com/Silver-birder/micro-frontends-sample-code-4"></iframely-embed></p>
+<iframely-embed card="small" url="https://github.com/Silver-birder/micro-frontends-sample-code-4"></iframely-embed></p>
 <!--  TODO: TOC -->
 <h1 id="全体構成"><a class="anchor" href="#全体構成"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>全体構成</h1>
 <figure title="アプリケーション構成">
@@ -248,7 +246,7 @@
 <p>ざっくり説明すると、HTMLからTailorに対してフラグメント(コンポーネント)を取得・返却するようにします。各フラグメントは、LitElementでWebComponentsを定義させたJavascriptを指します。フラグメントを読み込むだけで、カスタムエレメントを使えるようになります。</p>
 <h1 id="tailor"><a class="anchor" href="#tailor"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Tailor</h1>
 <p><img src="https://camo.githubusercontent.com/3018354754cc0c9f1f6b27ac68bd8060a11db5a7/68747470733a2f2f7261776769746875622e636f6d2f7a616c616e646f2f7461696c6f722f6d61737465722f6c6f676f2f7461696c6f722d6c6f676f2e737667" alt="image" rocket-image="responsive"></p>
-<p><iframely-embed url="https://github.com/zalando/tailor"></iframely-embed></p>
+<p><iframely-embed card="small" url="https://github.com/zalando/tailor"></iframely-embed></p>
 <blockquote>
 <p>A streaming layout service for front-end microservices</p>
 </blockquote>
@@ -390,7 +388,7 @@ server<span class="token punctuation">.</span><span class="token method function
 </code></pre>
 <h1 id="litelement"><a class="anchor" href="#litelement"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>LitElement</h1>
 <p><img src="https://res.cloudinary.com/silverbirder/image/upload/v1614430086/silver-birder.github.io/blog/LitElement.jpg" alt="LitElement" rocket-image="responsive"></p>
-<p><iframely-embed url="https://lit-element.polymer-project.org/"></iframely-embed></p>
+<p><iframely-embed card="small" url="https://lit-element.polymer-project.org/"></iframely-embed></p>
 <blockquote>
 <p>LitElement</p>
 </blockquote>
@@ -430,17 +428,17 @@ server<span class="token punctuation">.</span><span class="token method function
 <span class="token punctuation">}</span>
 </code></pre>
 <p>LitElement + Typescript では、open-testing を使ってテストすることができます。
-<iframely-embed url="https://github.com/PolymerLabs/lit-element-starter-ts/blob/master/src/test/my-element_test.ts"></iframely-embed></p>
+<iframely-embed card="small" url="https://github.com/PolymerLabs/lit-element-starter-ts/blob/master/src/test/my-element_test.ts"></iframely-embed></p>
 <p>また、jestでもテストができるようです。</p>
-<p><iframely-embed url="https://www.ninkovic.dev/blog/2020/testing-web-components-with-jest-and-lit-element"></iframely-embed></p>
+<p><iframely-embed card="small" url="https://www.ninkovic.dev/blog/2020/testing-web-components-with-jest-and-lit-element"></iframely-embed></p>
 <h1 id="dynamicrendering"><a class="anchor" href="#dynamicrendering"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>DynamicRendering</h1>
 <p><img src="https://res.cloudinary.com/silverbirder/image/upload/v1614430107/silver-birder.github.io/blog/rendertron.png" alt="rendertron" rocket-image="responsive"></p>
 <p>このサンプルでは、カスタムエレメントを使って、ブラウザ側でレンダリングする 所謂SPAの動きで構築しています。
 『SEOガー！』とSSRしなきゃと思う訳ですが、正直SSRを考えたくないです。(ハイドレーションなんて無駄なロードをブラウザにさせたくない）
 次の記事のように、ボットのアクセスのみに、ダイナミックレンダリングした結果（SPAのレンダリング結果HTML）を返すようにしたいです。</p>
-<p><iframely-embed url="https://developers.google.com/search/docs/guides/dynamic-rendering?hl=ja"></iframely-embed></p>
+<p><iframely-embed card="small" url="https://developers.google.com/search/docs/guides/dynamic-rendering?hl=ja"></iframely-embed></p>
 <p>技術的には、次のようなものを使えば良いです。</p>
-<p><iframely-embed url="https://github.com/GoogleChrome/rendertron"></iframely-embed></p>
+<p><iframely-embed card="small" url="https://github.com/GoogleChrome/rendertron"></iframely-embed></p>
 <p>function-renderer-proxy/src/renderer.ts</p>
 <pre class="language-typescript"><code class="language-typescript"><span class="token spread operator">...</span>
 <span class="token keyword">const</span> page <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token property-access">browser</span><span class="token punctuation">.</span><span class="token method function property-access">newPage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// browser: Puppeteer.Browser</span>
@@ -450,17 +448,17 @@ server<span class="token punctuation">.</span><span class="token method function
 <p>要は、Puppeteerで実際にレンダリングさせた結果をBotに返却しているだけです。</p>
 <h1 id="eventhub"><a class="anchor" href="#eventhub"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>EventHub</h1>
 <p>フラグメント同士は、CustomEventを通して連携します。</p>
-<p><iframely-embed url="https://developer.mozilla.org/ja/docs/Web/Guide/Events/Creating_and_triggering_events"></iframely-embed></p>
+<p><iframely-embed card="small" url="https://developer.mozilla.org/ja/docs/Web/Guide/Events/Creating_and_triggering_events"></iframely-embed></p>
 <p>全て、このCustomEventとAddEventListenerを管理するEventHub(packages名)を経由するようにします。(理想)</p>
 <h1 id="history"><a class="anchor" href="#history"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>History</h1>
 <p>ページ全体のヒストリーは、HistoryNavigation(packages名)で管理したいと考えています。(理想)</p>
-<p><iframely-embed url="https://developer.mozilla.org/en-US/docs/Web/API/History_API"></iframely-embed></p>
+<p><iframely-embed card="small" url="https://developer.mozilla.org/en-US/docs/Web/API/History_API"></iframely-embed></p>
 <p>また、ルーティングを制御する Web Components向けライブラリ vaadin/router も便利そうだったので導入してみました。</p>
-<p><iframely-embed url="https://vaadin.com/router"></iframely-embed></p>
+<p><iframely-embed card="small" url="https://vaadin.com/router"></iframely-embed></p>
 <h1 id="sharemodule"><a class="anchor" href="#sharemodule"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>ShareModule</h1>
 <p>LitElementのようなどこでも使っているライブラリは、共通化してバンドルサイズを縮めたいです。
 Webpackのようなバンドルツールには、ExternalやDLLPlugin、ModuleFederationなどの共通化機能があります。</p>
-<p><iframely-embed url="https://webpack.js.org/concepts/module-federation/"></iframely-embed></p>
+<p><iframely-embed card="small" url="https://webpack.js.org/concepts/module-federation/"></iframely-embed></p>
 <p>今回は、externalを使っています。</p>
 <p>common-module/common.js</p>
 <pre class="language-javascript"><code class="language-javascript">exports<span class="token punctuation">[</span><span class="token string">'rxjs'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'rxjs'</span><span class="token punctuation">)</span>
@@ -521,17 +519,17 @@ exports<span class="token punctuation">[</span><span class="token string">'apoll
 <p>APIは、雑にGraphQLを採用しました。特に理由はありません。</p>
 <h2 id="skeltonui"><a class="anchor" href="#skeltonui"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>SkeltonUI</h2>
 <p>Skelton UIも使ってみたいなと思っていました。</p>
-<p><iframely-embed url="https://material-ui.com/components/skeleton/"></iframely-embed></p>
+<p><iframely-embed card="small" url="https://material-ui.com/components/skeleton/"></iframely-embed></p>
 <p>Reactを使わなくても、CSSの@keyframesを使えば良いでしょう。が、まあ使っていません。(笑)</p>
-<p><iframely-embed url="https://developer.mozilla.org/ja/docs/Web/CSS/@keyframes"></iframely-embed></p>
+<p><iframely-embed card="small" url="https://developer.mozilla.org/ja/docs/Web/CSS/@keyframes"></iframely-embed></p>
 <h2 id="rxjs"><a class="anchor" href="#rxjs"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Rxjs</h2>
 <p>typescriptの処理をリアクティブな雰囲気でコーディングしたかったので導入してみました。</p>
 <p>(リアクティブに詳しい人には、怒られそうな理由ですね...笑)</p>
-<p><iframely-embed url="https://rxjs.dev/"></iframely-embed></p>
+<p><iframely-embed card="small" url="https://rxjs.dev/"></iframely-embed></p>
 <h1 id="所感"><a class="anchor" href="#所感"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>所感</h1>
 <p>これまで、Podium、Ara-Framework, そして Tailor といったMicro Frontendsに関わるサーバーサイド統合ライブラリを使ってみました。</p>
-<p><iframely-embed url="https://silver-birder.github.io/blog/contents/microfrontends"></iframely-embed></p>
-<p><iframely-embed url="https://silver-birder.github.io/blog/contents/ara-framework"></iframely-embed></p>
+<p><iframely-embed card="small" url="https://silver-birder.github.io/blog/contents/microfrontends"></iframely-embed></p>
+<p><iframely-embed card="small" url="https://silver-birder.github.io/blog/contents/ara-framework"></iframely-embed></p>
 <p>これらは、どれも考え方が良いなと思っています。
 Podiumのフラグメントのインターフェース設計、Ara-FrameworkのRenderとデータ取得の明確な分離、そしてTailorのストリーム統合です。
 しかし、これらは良いライブラリではありますが、プロダクションとしてはあんまり採用したくない(依存したくない)と思っています。</p>
@@ -657,6 +655,6 @@ Podiumのフラグメントのインターフェース設計、Ara-FrameworkのR
 <script type="module" src="../../../b089d234.js"></script>
 <script type="module" src="../../../46ae44d0.js"></script>
 <script type="module" src="../../../dd4fcd54.js" inject-service-worker=""></script>
-<script type="module" src="../../../db36032f65.js"></script>
+<script type="module" src="../../../57b518f465.js"></script>
 
 </body></html>

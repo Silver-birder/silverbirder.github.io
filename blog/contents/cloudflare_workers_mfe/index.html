@@ -58,9 +58,7 @@
   
     <link rel="stylesheet" href="../../../f5cf94c7.css">
   
-    <script defer="" async="" src="https://cdn.jsdelivr.net/npm/oembed-component/dist/oEmbed.js"></script>
-
-
+    
   
     <noscript><link rel="stylesheet" href="/_merged_assets/_static/noscript.css"/></noscript>
 
@@ -78,7 +76,7 @@
 <link rel="preload" href="../../../d3f07d73.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../46ae44d0.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../dd4fcd54.js" as="script" crossorigin="anonymous">
-<link rel="preload" href="../../../db36032f17.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../57b518f417.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../90f0e617.js" as="script" crossorigin="anonymous">
 </head>
 
@@ -237,10 +235,10 @@
   
     <p>今回、またMicro Frontendsの構築を試みようと思います。構築パターンの内、サーバーサイド統合パターン、特にエッジサイド統合を試しました。
 その内容を紹介します。サンプルコードは、下記に残しています。</p>
-<p><iframely-embed url="https://github.com/Silver-birder/micro-frontends-sample-code-5/"></iframely-embed></p>
+<p><iframely-embed card="small" url="https://github.com/Silver-birder/micro-frontends-sample-code-5/"></iframely-embed></p>
 <!--  TODO: TOC -->
 <h1 id="edge-side-include-esiって"><a class="anchor" href="#edge-side-include-esiって"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Edge Side Include (ESI)って？</h1>
-<p><iframely-embed url="https://www.w3.org/TR/esi-lang/"></iframely-embed></p>
+<p><iframely-embed card="small" url="https://www.w3.org/TR/esi-lang/"></iframely-embed></p>
 <p>ESIは、SSIと似たようなもので、サーバーサイド側でコンテンツを挿入する仕組みの1つです。ESIの場合、挿入するコンテンツ(ページフラグメント)がEdge側にあると理解しています。
 そのため、Edgeキャッシュをコンテンツ毎に効かせれるメリットがあります。
 現状、ESI言語仕様はW3Cへ提出していますが、承認が降りていない状況です。AkamaiなどのCDN企業や、Varnishなどのキャッシュプロキシサーバは、ESIを一部実装しています。</p>
@@ -273,29 +271,29 @@ JSONを返すURLは、/manifest.json と統一しています。</p>
 <p>このような構成を取ることで、担当領域を分割することができます。
 例えば、フラグメントAとページXをチーム1が管理し、フラグメントB、C、ページYをチーム2が管理するなどです。</p>
 <p>また、RustのWebAssemblyを下記のようなテンプレートで組み込むことができます。</p>
-<p><iframely-embed url="https://github.com/cloudflare/rustwasm-worker-template"></iframely-embed></p>
+<p><iframely-embed card="small" url="https://github.com/cloudflare/rustwasm-worker-template"></iframely-embed></p>
 <p>特定の重い処理をRustのWebAssemblyで処理するようなフラグメントをページに混ぜることができます。</p>
 <h1 id="構築して困ったこと"><a class="anchor" href="#構築して困ったこと"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>構築して困ったこと</h1>
 <h2 id="同一ドメイン内でのedge-workers通信が不可"><a class="anchor" href="#同一ドメイン内でのedge-workers通信が不可"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>同一ドメイン内でのEdge Workers通信が不可</h2>
 <p>Cloudflare Workersは、任意のドメインで動かすことになります。
 例えば、ドメインA内に複数のCloudflare Workers XとYがあったとすると、
 XからYへの通信ができないです。</p>
-<p><iframely-embed url="https://community.cloudflare.com/t/issue-with-worker-to-worker-https-request/94472/37"></iframely-embed></p>
+<p><iframely-embed card="small" url="https://community.cloudflare.com/t/issue-with-worker-to-worker-https-request/94472/37"></iframely-embed></p>
 <p>そのため、複数のCloudflare Workersを使用する場合は 複数のドメインが必要になります。
 先程の例なら、ドメインAに属するCloudflare Workers XからドメインBに属するCloudflare Workers Yへ通信することができます。
 私は、freenomのtkドメイン(無料)を複数購入しました。</p>
-<p><iframely-embed url="https://freenom.com/"></iframely-embed></p>
+<p><iframely-embed card="small" url="https://freenom.com/"></iframely-embed></p>
 <h2 id="直接ipアドレスへリクエストできない"><a class="anchor" href="#直接ipアドレスへリクエストできない"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>直接IPアドレスへリクエストできない</h2>
 <p>ローカル開発時に困ったことがあります。
 Cloudflare Workersをローカル開発する場合、<a href="https://github.com/cloudflare/wrangler#-dev">wrangler:dev</a> というコマンドで検証します。
 検証中に、他のCloudflare WorkersのURL(localhost:XXXX)へアクセスしようとしても、直接IPとなるため失敗します。</p>
-<p><iframely-embed url="https://support.cloudflare.com/hc/ja/articles/360029779472-Cloudflare-1XX-%E3%82%A8%E3%83%A9%E3%83%BC%E3%81%AE%E3%83%88%E3%83%A9%E3%83%96%E3%83%AB%E3%82%B7%E3%83%A5%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0#error1003"></iframely-embed></p>
+<p><iframely-embed card="small" url="https://support.cloudflare.com/hc/ja/articles/360029779472-Cloudflare-1XX-%E3%82%A8%E3%83%A9%E3%83%BC%E3%81%AE%E3%83%88%E3%83%A9%E3%83%96%E3%83%AB%E3%82%B7%E3%83%A5%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0#error1003"></iframely-embed></p>
 <p>そのため、下記のようなサービスを使って、私は解決させました。</p>
-<p><iframely-embed url="https://ngrok.com/"></iframely-embed></p>
-<p><iframely-embed url="https://github.com/localtunnel/localtunnel"></iframely-embed></p>
+<p><iframely-embed card="small" url="https://ngrok.com/"></iframely-embed></p>
+<p><iframely-embed card="small" url="https://github.com/localtunnel/localtunnel"></iframely-embed></p>
 <h2 id="cloudflare-workersによる制約が大きい"><a class="anchor" href="#cloudflare-workersによる制約が大きい"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Cloudflare Workersによる制約が大きい</h2>
 <p>Cloudflareのプラットフォーム上では、下記のランタイムAPIが使用できます。</p>
-<p><iframely-embed url="https://developers.cloudflare.com/workers/runtime-apis"></iframely-embed></p>
+<p><iframely-embed card="small" url="https://developers.cloudflare.com/workers/runtime-apis"></iframely-embed></p>
 <p>Cloudflare Workersの仕組みを把握していないのですが、この提供されているAPI以外は、
 確か使えなかったような気がします。</p>
 <h1 id="最後に"><a class="anchor" href="#最後に"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>最後に</h1>
@@ -422,6 +420,6 @@ Webアプリケーションを、よりユーザーに近いEdgeへ配置する�
 <script type="module" src="../../../b089d234.js"></script>
 <script type="module" src="../../../46ae44d0.js"></script>
 <script type="module" src="../../../dd4fcd54.js" inject-service-worker=""></script>
-<script type="module" src="../../../db36032f17.js"></script>
+<script type="module" src="../../../57b518f417.js"></script>
 
 </body></html>
