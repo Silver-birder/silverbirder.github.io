@@ -1,0 +1,448 @@
+<!DOCTYPE html><html lang="ja" dir="ltr"><head>
+  
+    
+
+  
+
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reactを学ぶ前に歴史を知る: silverbirder</title>
+<meta property="og:title" content="Reactを学ぶ前に歴史を知る: silverbirder">
+
+<meta name="generator" content="rocket 0.1">
+<link rel="canonical" href="https://silver-birder.github.io/blog/contents/know_the_history_before_learning_React/">
+
+
+
+  
+
+<meta name="description" content="これは何？ Reactは、どうして生まれたのか歴史について簡単に紹介します。(ちょっと調べただけ) 背景 最近、Reactを学び始めました。その過程で、どうしてReactって学ぶべきなのか、どういう特徴があるのか気になった次第です。">
+<meta property="og:description" content="これは何？ Reactは、どうして生まれたのか歴史について簡単に紹介します。(ちょっと調べただけ) 背景 最近、Reactを学び始めました。その過程で、どうしてReactって学ぶべきなのか、どういう特徴があるのか気になった次第です。">
+
+  
+    
+<link rel="apple-touch-icon" sizes="180x180" href="../../../assets/apple-touch-icon.jpg">
+<link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../../assets/favicon-16x16.png">
+<link rel="manifest" href="../../../assets/webmanifest.json">
+
+<meta name="msapplication-TileColor" content="#1d3557">
+<meta name="theme-color" content="#1d3557">
+
+  
+    <meta property="og:site_name" content="silverbirder">
+<meta property="og:type" content="website">
+
+<meta property="og:image" content="https://silver-birder.github.io/c94b4303.png">
+<meta property="og:url" content="https://silver-birder.github.io/blog/contents/know_the_history_before_learning_React/">
+
+<meta name="twitter:card" content="summary_large_image">
+
+  
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="">
+
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&amp;display=optional" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&amp;display=optional" rel="stylesheet">
+
+  
+    <link rel="stylesheet" href="../../../3cb4adfb.css">
+<link rel="stylesheet" href="../../../0f4765a3.css">
+<link rel="stylesheet" href="../../../ac2ea3b8.css">
+<link rel="stylesheet" href="../../../2366292e.css">
+
+  
+    <noscript><link rel="stylesheet" href="/_merged_assets/_static/search/noscript.css"></noscript>
+
+  
+    <link rel="stylesheet" href="../../../f5cf94c7.css">
+  
+    
+  
+    <noscript><link rel="stylesheet" href="/_merged_assets/_static/noscript.css"/></noscript>
+
+  
+    <link rel="stylesheet" href="../../../b1403e10.css">
+  
+    <meta name="twitter:creator" content="@Silver_birder">
+
+<link rel="stylesheet" href="../../../611b393e.css" mdjs-use="">
+
+<meta name="google-site-verification" content="-8bAm041798VvU0oItcuyuShbVINfNMLfTmP7tENPDY">
+  
+
+<link rel="preload" href="../../../e931d24b.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../a2a9827a.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../5284d142.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../6dd6d5cb.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../dd4fcd54.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../bc45eb7f34.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../482532d9.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../90f0e617.js" as="script" crossorigin="anonymous">
+</head>
+
+  
+
+  
+  <body layout="layout-blog-details">
+  
+
+    
+      <header id="main-header">
+  <div class="content-area">
+    
+      <button id="mobile-menu-trigger" data-action="trigger-mobile-menu">
+	<span class="sr-only">Show Menu</span>
+	      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon">
+        <path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path>
+      </svg>
+
+</button>
+
+    
+      
+	<a class="logo-link" href="/">
+  <img src="../../../90a4fb13.svg" alt="Rocket Logo">
+  <span>silverbirder</span>
+</a>
+
+
+
+    
+      <rocket-search class="search" json-url="/_merged_assets/_static/rocket-search-index.json">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129" style="width: 25px;">
+    <path d="M51.6 96.7c11 0 21-3.9 28.8-10.5l35 35c.8.8 1.8 1.2 2.9 1.2s2.1-.4 2.9-1.2c1.6-1.6 1.6-4.2 0-5.8l-35-35c6.5-7.8 10.5-17.9 10.5-28.8 0-24.9-20.2-45.1-45.1-45.1-24.8 0-45.1 20.3-45.1 45.1 0 24.9 20.3 45.1 45.1 45.1zm0-82c20.4 0 36.9 16.6 36.9 36.9C88.5 72 72 88.5 51.6 88.5S14.7 71.9 14.7 51.6c0-20.3 16.6-36.9 36.9-36.9z"></path>
+  </svg>
+</rocket-search>
+
+
+
+    
+      
+  <a href="/blog/" class="
+          
+           active 
+        ">Blog</a>
+  <a href="/resume/" class="
+          
+          
+        ">Resume</a>
+  <a href="/misc/" class="
+          
+          
+        ">Misc</a>
+
+    
+      <launch-dark-switch class="light-dark-switch" label="Toggle darkmode">Toggle darkmode</launch-dark-switch>
+
+
+    
+      
+	<a class="social-link" href="https://github.com/Silver-birder/Silver-birder.github.io" aria-label="silverbirder on GitHub" rel="noopener noreferrer" target="_blank">
+		<span class="sr-only">GitHub</span>
+		
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 16" fill="none">
+  <title>GitHub</title>
+  <path fill="currentColor" fill-rule="evenodd" d="M8.18391.249268C3.82241.249268.253906 3.81777.253906 8.17927c0 3.46933 2.279874 6.44313 5.451874 7.53353.3965.0991.49563-.1983.49563-.3965v-1.3878c-2.18075.4956-2.67638-.9912-2.67638-.9912-.3965-.8922-.89212-1.1895-.89212-1.1895-.69388-.4957.09912-.4957.09912-.4957.793.0992 1.1895.793 1.1895.793.69388 1.2887 1.88338.8922 2.27988.6939.09912-.4956.29737-.8921.49562-1.0904-1.78425-.1982-3.5685-.8921-3.5685-3.96496 0-.89212.29738-1.586.793-2.08162-.09912-.19825-.3965-.99125.09913-2.08163 0 0 .69387-.19825 2.18075.793.59475-.19825 1.28862-.29737 1.9825-.29737.69387 0 1.38775.09912 1.98249.29737 1.4869-.99125 2.1808-.793 2.1808-.793.3965 1.09038.1982 1.88338.0991 2.08163.4956.59475.793 1.28862.793 2.08162 0 3.07286-1.8834 3.66766-3.66764 3.86586.29737.3965.59474.8921.59474 1.586v2.1808c0 .1982.0991.4956.5948.3965 3.172-1.0904 5.4518-4.0642 5.4518-7.53353-.0991-4.3615-3.6676-7.930002-8.02909-7.930002z" clip-rule="evenodd"></path>
+</svg>
+
+		
+	</a>
+	<a class="social-link" href="https://twitter.com/silver_birder" aria-label="silverbirder on Twitter" rel="noopener noreferrer" target="_blank">
+		<span class="sr-only">Twitter</span>
+		
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 274 223"><title>Twitter</title><path d="M85.98 223c-31.675 0-61.158-9.285-85.98-25.199 4.388.518 8.853.783 13.38.783 26.278 0 50.463-8.967 69.659-24.01-24.544-.453-45.258-16.669-52.395-38.953a56.014 56.014 0 0 0 10.552 1.006c5.116 0 10.071-.685 14.778-1.967-25.66-5.152-44.993-27.822-44.993-54.998 0-.236 0-.471.004-.705a55.865 55.865 0 0 0 25.406 7.015c-15.05-10.058-24.953-27.226-24.953-46.685 0-10.279 2.766-19.914 7.594-28.198 27.664 33.934 68.993 56.264 115.609 58.603a56.31 56.31 0 0 1-1.453-12.782c0-30.975 25.114-56.088 56.091-56.088 16.132 0 30.709 6.812 40.941 17.713a112.328 112.328 0 0 0 35.617-13.611c-4.188 13.097-13.081 24.089-24.662 31.031a112.148 112.148 0 0 0 32.215-8.832 114 114 0 0 1-27.988 29.035c.108 2.405.162 4.824.162 7.256C245.564 137.533 189.148 223 85.98 223" fill="currentColor"></path></svg>
+
+		
+	</a>
+
+    
+  </div>
+</header>
+
+    
+
+    
+  <div id="content-wrapper">
+    <div class="content-area">
+      
+	<rocket-drawer id="sidebar">
+  <nav slot="content" id="sidebar-nav">
+    
+      <a class="logo-link" href="/">
+  <img src="../../../90a4fb13.svg" alt="Rocket Logo">
+  <span>silverbirder</span>
+</a>
+
+
+    
+      <rocket-navigation>
+  <ul>
+    <li class="current">
+      <h3>Headings</h3>
+      <ul><li class="menu-item">
+<a href="/blog/contents/know_the_history_before_learning_React/#背景">背景</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/know_the_history_before_learning_React/#歴史">歴史</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/know_the_history_before_learning_React/#カスケード更新">カスケード更新</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/know_the_history_before_learning_React/#react-の目的">React の目的</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/know_the_history_before_learning_React/#仮想-dom-と差分検出処理reconciliation">仮想 DOM と差分検出処理(reconciliation)</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/know_the_history_before_learning_React/#react-とカスケード更新">React とカスケード更新</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/know_the_history_before_learning_React/#小話">小話</a>
+</li></ul>
+    </li>
+  </ul>
+  <div class="sidebar-tags">
+    <h3>Date</h3>
+    <div>Fri Mar 11 2022</div>
+  </div>
+  <div class="sidebar-tags">
+    <h3>Tags</h3>
+    <div class="tags">
+      
+        <span class="tag">React</span>
+      
+        <span class="tag">Learn</span>
+      
+        <span class="tag">History</span>
+      
+    </div>
+  </div>
+  <div class="sidebar-bottom">
+  <hr> <launch-dark-switch class="light-dark-switch" label="Toggle darkmode">Toggle darkmode</launch-dark-switch>
+
+  
+    <a href="https://github.com/Silver-birder/Silver-birder.github.io/issues">Help and Feedback</a>
+  
+</div>
+
+</rocket-navigation>
+
+    
+  </nav>
+</rocket-drawer>
+
+
+      
+  <main class="markdown-body">
+    <main class="markdown-body">
+  
+    
+  <h1>Reactを学ぶ前に歴史を知る</h1>
+
+
+
+  
+    <p>React は、どうして生まれたのか歴史について簡単に紹介します。(ちょっと調べただけ)</p>
+<h2 id="背景"><a class="anchor" href="#背景"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>背景</h2>
+<p>最近、React を学び始めました。その過程で、どうして React って学ぶべきなのか、どういう特徴があるのか気になった次第です。</p>
+<h2 id="歴史"><a class="anchor" href="#歴史"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>歴史</h2>
+<p>言語やフレームワーク問わず、何かしら学ぶ際には、学ぶ対象の歴史や背景を知ることは大切だと思います。</p>
+<p>対象ソフトウェアの公式ドキュメントに、<code>Background</code>や<code>Motivation</code>、<code>History</code>、<code>Under the roof</code> を読むと良いです。</p>
+<p>しかし、React の公式ドキュメントは、そのような情報を発見できませんでした。</p>
+<p>React の作成者 Jordan Walke の<a href="https://hackernoon.com/the-evolution-of-react-48409fac2efd">React についての記事</a>を発見したので、それを読みました。</p>
+<p>ざっくり要約すると、</p>
+<ol>
+<li>Facebook の広告系のプロダクト(Ads)のコードベースが大きくなった</li>
+<li>コードベースツリー(DOM ツリー?CSSOM ツリー?)の下位の変更で、全体の再描画(カスケード更新)が必要になり、メンテナンスが大変になった</li>
+<li>Reactive 特性(状態変化に基づく自動更新) を活かした FaxJS (後の React)が誕生</li>
+</ol>
+<h2 id="カスケード更新"><a class="anchor" href="#カスケード更新"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>カスケード更新</h2>
+<p>カスケードとは、<a href="https://e-words.jp/w/%E3%82%AB%E3%82%B9%E3%82%B1%E3%83%BC%E3%83%89.html">カスケード（カスケーディング）とは - IT 用語辞典 e-Words</a> より</p>
+<blockquote>
+<p>カスケードとは、何段も連なった小さな滝のこと。転じて、同じものがいくつも数珠つなぎに連結された構造や、連鎖的あるいは段階的に物事が生じる様子を表す。</p>
+</blockquote>
+<blockquote>
+<p>Web ページの見栄えを定義する CSS（Cascading Style Sheet）で、ある要素に適用されるスタイルを、大域的に定義されたものから局所的に定義されたものへと順番に引き継ぎながら適用していくことをカスケードあるいはカスケーディングという。</p>
+</blockquote>
+<p>ブラウザにおける CSS や DOM の更新が、まさにカスケードです。
+例えば、DOM の場合、親 Node から子 Node へ(API 等で取得した)データを伝搬します(prop)。
+データ変更があった場合、親 Node から子 Node を順々に、再描画されます。(レンダリングエンジンの処理に従い)</p>
+<p>CSS や DOM のツリーの縦横が大きくなるにつれて、カスケード更新が大変になるのは、想像しやすいと思います。</p>
+<h2 id="react-の目的"><a class="anchor" href="#react-の目的"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>React の目的</h2>
+<p>React は、この<strong>コードベース規模が肥大化</strong>した際における<strong>カスケード更新を簡単にできること</strong>を目的としたフレームワークだと、私は思いました。</p>
+<p>逆を言えば、</p>
+<p><strong>Not コードベース規模が肥大化</strong> OR <strong>Not カスケード更新</strong> ならば React は不要なのかなと思います。</p>
+<h2 id="仮想-dom-と差分検出処理reconciliation"><a class="anchor" href="#仮想-dom-と差分検出処理reconciliation"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>仮想 DOM と差分検出処理(reconciliation)</h2>
+<p>DOM 自体のレンダリングは、ブラウザのレンダリングエンジンに依存します。
+React は、DOM ではなく、仮想 DOM と呼ばれる概念を生み出しました。</p>
+<p><a href="https://ja.reactjs.org/docs/faq-internals.html">仮想 DOM と内部処理 - React</a> より</p>
+<blockquote>
+<p>仮想 DOM とは？
+仮想 DOM (virtual DOM; VDOM) は、インメモリに保持された想像上のまたは「仮想の」UI 表現が、ReactDOM のようなライブラリによって「実際の」DOM と同期されるというプログラミング上の概念です。このプロセスは差分検出処理 (reconciliation)と呼ばれます。
+このアプローチにより React の宣言型 API が可能になっています。あなたは UI をどのような状態にしたいのか React に伝え、React は必ず DOM をその状態と一致させます。これにより、React なしではアプリケーションを構築するために避けて通れない属性の操作やイベントハンドリング、および手動での <strong>DOM 更新が抽象化されます</strong>。</p>
+</blockquote>
+<p>カスケード更新をブラウザに任せるというより、フレームワーク(React)で仮想 DOM を管理し、(全体の再描画する必要なく)必要箇所のみ DOM を更新(再描画)するのだと思います。</p>
+<h2 id="react-とカスケード更新"><a class="anchor" href="#react-とカスケード更新"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>React とカスケード更新</h2>
+<p>React を学ぶ前には、この<strong>カスケード更新という単語を脳の片隅に置いておく</strong>のが、良いと思います。</p>
+<p>例えば、React.memo という関数が存在します。</p>
+<p><a href="https://ja.reactjs.org/docs/react-api.html#reactmemo">React の最上位 API - React</a></p>
+<blockquote>
+<p>もしあるコンポーネントが同じ props を与えられたときに同じ結果をレンダーするなら、結果を記憶してパフォーマンスを向上させるためにそれを React.memo でラップすることができます。つまり、React はコンポーネントのレンダーをスキップし、最後のレンダー結果を再利用します。</p>
+</blockquote>
+<p>この関数も、React の目的であるカスケード更新を改善するための関数だと、思います。</p>
+<h2 id="小話"><a class="anchor" href="#小話"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>小話</h2>
+<p>何かを学ぶ際に、次の 3 つの軸を考えると良いです。</p>
+<ul>
+<li>時間
+<ul>
+<li>過去、現在、未来
+<ul>
+<li>どういう経緯で現在に至るのか。未来は、どうありたいか。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>周辺
+<ul>
+<li>類似するモノ、競合他社。
+<ul>
+<li>React でいうと、Vue.js のようなコンポーネントベースのフレームワークとか。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>社会
+<ul>
+<li>チーム、グループ、会社、社会。
+<ul>
+<li>React は、チームでなぜ選ばれたか。組織的な理由(採用など)も、含まれる。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  
+    <div class="content-footer">
+  <p>
+    Caught a mistake or want to improve the blog?
+    <a href="https://github.com/Silver-birder/Silver-birder.github.io/edit/main/./docs/blog/contents/know_the_history_before_learning_React.md">Edit this blog post on GitHub!</a>
+  </p>
+</div>
+
+
+  
+</main>
+
+  </main>
+
+    </div>
+  </div>
+
+
+    
+      <footer id="main-footer">
+  
+    
+
+  
+    <div id="footer-menu">
+  <div class="content-area">
+    
+      <nav>
+        <h3>Discover</h3>
+        <ul>
+          
+            <li>
+              <a href="https://silver-birder.github.io/blog/">Blog</a>
+            </li>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/Silver-birder.github.io/issues">Help and Feedback</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>My Sales</h3>
+        <ul>
+          
+            <li>
+              <a href="https://www.amazon.co.jp/芝本雅史/e/B08FJK5C43">Amazon</a>
+            </li>
+          
+            <li>
+              <a href="https://silverbirder.booth.pm">Booth</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>Follow</h3>
+        <ul>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/Silver-birder.github.io">GitHub</a>
+            </li>
+          
+            <li>
+              <a href="https://twitter.com/silver_birder">Twitter</a>
+            </li>
+          
+            <li>
+              <a href="https://www.google.com/maps/contrib/101722346324226588907/reviews/@34.6907839,135.4537926,13z/">Google Map</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+  </div>
+</div>
+
+  
+</footer>
+
+    
+
+    
+  
+
+
+  
+
+<script>
+  window.__rocketServiceWorkerUrl = '/service-worker.js';
+</script>
+
+
+
+
+
+
+  
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-146805630-4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-146805630-4');
+  </script>
+
+
+
+
+  
+
+
+<script type="module" src="../../../e931d24b.js"></script>
+<script type="module" src="../../../6dd6d5cb.js"></script>
+<script type="module" src="../../../dd4fcd54.js" inject-service-worker=""></script>
+<script type="module" src="../../../bc45eb7f34.js"></script>
+
+</body></html>

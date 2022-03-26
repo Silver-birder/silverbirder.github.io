@@ -8,18 +8,18 @@
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TwitterにあるLinkを収集するツール Cotlin で、世界中のプレゼンテーション資料を知ろう: silverbirder</title>
-<meta property="og:title" content="TwitterにあるLinkを収集するツール Cotlin で、世界中のプレゼンテーション資料を知ろう: silverbirder">
+<title>Web Componentsの良さ: silverbirder</title>
+<meta property="og:title" content="Web Componentsの良さ: silverbirder">
 
 <meta name="generator" content="rocket 0.1">
-<link rel="canonical" href="https://silver-birder.github.io/blog/contents/twitter_cotlin/">
+<link rel="canonical" href="https://silver-birder.github.io/blog/contents/the_goodness_of_web_components./">
 
 
 
   
 
-<meta name="description" content="Twitterに投稿されているLinkを収集するツール Cotlin を作りました。Collect links in tweet から、Cotlinという名前にしました。Androidのアレに似ています。">
-<meta property="og:description" content="Twitterに投稿されているLinkを収集するツール Cotlin を作りました。Collect links in tweet から、Cotlinという名前にしました。Androidのアレに似ています。">
+<meta name="description" content="Web Components を人にお勧めしたいんです。メリット・デメリットをかんたんにまとめたいと思います。Web Components is 何https://www.webcomponents.org/specs より引用します。">
+<meta property="og:description" content="Web Components を人にお勧めしたいんです。メリット・デメリットをかんたんにまとめたいと思います。Web Components is 何https://www.webcomponents.org/specs より引用します。">
 
   
     
@@ -35,8 +35,8 @@
     <meta property="og:site_name" content="silverbirder">
 <meta property="og:type" content="website">
 
-<meta property="og:image" content="https://res.cloudinary.com/silverbirder/image/upload/v1584017984/cotlin/overview.png">
-<meta property="og:url" content="https://silver-birder.github.io/blog/contents/twitter_cotlin/">
+<meta property="og:image" content="https://silver-birder.github.io/c94b4303.png">
+<meta property="og:url" content="https://silver-birder.github.io/blog/contents/the_goodness_of_web_components./">
 
 <meta name="twitter:card" content="summary_large_image">
 
@@ -77,7 +77,7 @@
 <link rel="preload" href="../../../5284d142.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../6dd6d5cb.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../dd4fcd54.js" as="script" crossorigin="anonymous">
-<link rel="preload" href="../../../bc45eb7f77.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../bc45eb7f72.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../482532d9.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../90f0e617.js" as="script" crossorigin="anonymous">
 </head>
@@ -181,26 +181,28 @@
   <ul>
     <li class="current">
       <h3>Headings</h3>
-      
+      <ul><li class="menu-item">
+<a href="/blog/contents/the_goodness_of_web_components./#web-components-is-何">Web Components is 何</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/the_goodness_of_web_components./#メリット">メリット</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/the_goodness_of_web_components./#デメリット">デメリット</a>
+</li></ul>
     </li>
   </ul>
   <div class="sidebar-tags">
     <h3>Date</h3>
-    <div>Sun Mar 15 2020</div>
+    <div>Tue Mar 01 2022</div>
   </div>
   <div class="sidebar-tags">
     <h3>Tags</h3>
     <div class="tags">
       
-        <span class="tag">Tool</span>
+        <span class="tag">Web Components</span>
       
-        <span class="tag">Artifacts</span>
-      
-        <span class="tag">Introduce</span>
-      
-        <span class="tag">Learning</span>
-      
-        <span class="tag">Twitter</span>
+        <span class="tag">Goodness</span>
       
     </div>
   </div>
@@ -224,61 +226,73 @@
     <main class="markdown-body">
   
     
-  <h1>TwitterにあるLinkを収集するツール Cotlin で、世界中のプレゼンテーション資料を知ろう</h1>
+  <h1>Web Componentsの良さ</h1>
 
-
-  <img src="https://res.cloudinary.com/silverbirder/image/upload/v1584017984/cotlin/overview.png" alt="">
 
 
   
-    <p>Twitterに投稿されているLinkを収集するツール Cotlin を作りました。</p>
-<p><b><span style="color: #d32f2f">Co</span></b>llec<b><span style="color: #d32f2f">t lin</span></b>ks in tweet</p>
-<p>から、Cotlinという名前にしました。Androidのアレに似ています。</p>
-<p><iframely-embed card="small" url="https://github.com/Silver-birder/Cotlin"></iframely-embed></p>
-<p><iframely-embed card="small" url="https://www.npmjs.com/package/@silverbirder/cotlin"></iframely-embed></p>
-<!--  TODO: TOC -->
-<h1 id="動機"><a class="anchor" href="#動機"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>動機</h1>
-<p>私は、<a href="https://connpass.com/">connpass</a>等を使って、技術系のカンファレンスに参加することがありました。
-カンファレンスで発表された資料は、Twitterで公開されることが多々あるので、それを自動収集できるようにしたいと考えたのが、Cotlinを作った動機です。</p>
-<h1 id="技術スタック"><a class="anchor" href="#技術スタック"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>技術スタック</h1>
-<p>Google Apps Script (<a href="https://github.com/google/clasp/">Clasp</a>) + Twitter API (<a href="https://developer.twitter.com/en/docs/tweets/search/overview">tweet search API</a>) です。
-<a href="https://github.com/Silver-birder/Cotlin#use-by-google-apps-script">ライブラリを公開</a>していて、それを元に<a href="https://github.com/Silver-birder/Cotlin/blob/master/sample/api.js">API</a>と<a href="https://github.com/Silver-birder/Cotlin/blob/master/sample/client.js">Client</a>を簡単に作れるようにサンプルコードも用意しています。使い方は、全て<a href="https://github.com/Silver-birder/Cotlin/blob/master/README.md">README.md</a>にあります。</p>
-<h1 id="困ったこと"><a class="anchor" href="#困ったこと"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>困ったこと</h1>
-<p>Tweetに記述したリンクは、全て<a href="https://help.twitter.com/ja/using-twitter/url-shortener">t.co</a>に短縮されてしまいます。
-この短縮URLからオリジナルURLを手に入れるために、リダイレクトする必要があります。
-実際に作ってみると、次のような記事に書いたとおり、GASで書くと、少し困ったことがありました。</p>
-<p><iframely-embed card="small" url="https://silver-birder.github.io/blog/contents/gas_fetchall_redirect"></iframely-embed></p>
-<p>そこで、複数のリダイレクトURLへリクエストする処理を並列化するために、Golangで開発していました。</p>
-<p>しかし、そもそもTwitter API (<a href="https://developer.twitter.com/en/docs/tweets/search/overview">tweet search API</a>)のレスポンスには、オリジナルURLが含まれている(<a href="https://developer.twitter.com/en/docs/tweets/search/api-reference/get-search-tweets">expanded_url</a>)ことに気づき、結局、Google Apps Script (<a href="https://github.com/google/clasp/">Clasp</a>)で開発することになりました。</p>
-<h1 id="良かったこと"><a class="anchor" href="#良かったこと"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>良かったこと</h1>
-<p>毎日、プレゼンテーション資料を収集し、スプレットシートに記録するよう、自動化しました。<br>
-※ 都合により、URLのリンクとTweetのリンクのみ記載しています。</p>
-<p><iframely-embed card="small" url="https://docs.google.com/spreadsheets/d/1IaJOw9-GdoHhz3D0CzvJfFitrmEN8KpgIleer9rmxiw/edit?usp=sharing"></iframely-embed></p>
-<p>次のような資料を発見できるようになりました。</p>
+    <p>Web Components を人にお勧めしたいんです。メリット・デメリットをかんたんにまとめたいと思います。</p>
+<h2 id="web-components-is-何"><a class="anchor" href="#web-components-is-何"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Web Components is 何</h2>
+<p><a href="https://www.webcomponents.org/specs">https://www.webcomponents.org/specs</a> より引用します。</p>
+<blockquote>
+<p>Web components is a meta-specification made possible by four other specifications:<br>
+The Custom Elements specification<br>
+The shadow DOM specification<br>
+The HTML Template specification<br>
+The ES Module specification</p>
+</blockquote>
+<p>WebComponents は、ブラウザの 4 つの API で実現可能となるメタ仕様です。</p>
+<blockquote>
+<p>These four specifications can be used on their own but combined allow developers to define their own tags (custom element), whose styles are encapsulated and isolated (shadow dom), that can be restamped many times (template), and have a consistent way of being integrated into applications (es module).</p>
+</blockquote>
+<p>div や span といった HTML タグがブラウザ標準にありますが、WebComponents は、独自のタグを定義することができます。</p>
+<h2 id="メリット"><a class="anchor" href="#メリット"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>メリット</h2>
 <ul>
-<li><strong>世界中</strong>のプレゼンテーション資料</li>
-<li><strong>知らない技術カンファレンス</strong>の資料</li>
-<li><strong>個人や学生</strong>が公開した資料</li>
-</ul>
-<p>そこから、次のような良かったことがありました。</p>
+<li>環境適合性
 <ul>
-<li>『テストについて、同じように困っている人がいた。○○という技術で解決してるんだ！知らなかった！』</li>
-<li>『最近気になっている○○のアーキテクチャの資料だ。メリット・デメリットがよくまとまってて良い！』</li>
-<li>『リモートワークを取り組んでいる企業の話だ。これから私もリモートワークになるから、先に知見を知っておこう！』</li>
+<li>フレームワークに依存しないので、Rails など Web フレームワークへの適用が容易です。</li>
 </ul>
-<p>毎日、資料を読んでいると、1日2,3件ほど、自分の琴線に触れるものが現れます。とても刺激を受けて、作ってよかったなと思いました。</p>
-<h1 id="最後に"><a class="anchor" href="#最後に"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>最後に</h1>
-<p>動機であった技術カンファレンスの参加は、実は最近減少しています。
-理由は色々ありますが、まあ伏せておきます。</p>
-<p>こういったツールによって、アンテナを広く張り巡らせておくことができます。
-これのおかげで、様々な関心事をキャッチアップできるようになりました。</p>
-<p>上のスプレットシートは、ずっと更新し続ける予定ですので、活用下さい。</p>
+</li>
+<li>軽量
+<ul>
+<li>ブラウザ API のみ使用するので、ロードするアセットはありません。</li>
+</ul>
+</li>
+<li>シンプル
+<ul>
+<li>HTML タグを使う要領で、WebComponents を使います。</li>
+</ul>
+</li>
+<li>サンドボックス
+<ul>
+<li>Shadow DOM のおかげで、CSS のスタイルが独自のタグの外に漏れません。</li>
+</ul>
+</li>
+</ul>
+<h2 id="デメリット"><a class="anchor" href="#デメリット"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>デメリット</h2>
+<ul>
+<li>パフォーマンス
+<ul>
+<li>React のような描画最適化は、ありません。</li>
+</ul>
+</li>
+<li>機能性
+<ul>
+<li>ブラウザ API の影響を、受けます。</li>
+</ul>
+</li>
+<li>SEO
+<ul>
+<li>Web Components は Javascript 実行が必須です。そのため、SSR は実現できません。</li>
+</ul>
+</li>
+</ul>
 
   
     <div class="content-footer">
   <p>
     Caught a mistake or want to improve the blog?
-    <a href="https://github.com/Silver-birder/Silver-birder.github.io/edit/main/./docs/blog/contents/twitter_cotlin.md">Edit this blog post on GitHub!</a>
+    <a href="https://github.com/Silver-birder/Silver-birder.github.io/edit/main/./docs/blog/contents/the_goodness_of_web_components..md">Edit this blog post on GitHub!</a>
   </p>
 </div>
 
@@ -392,6 +406,6 @@
 <script type="module" src="../../../e931d24b.js"></script>
 <script type="module" src="../../../6dd6d5cb.js"></script>
 <script type="module" src="../../../dd4fcd54.js" inject-service-worker=""></script>
-<script type="module" src="../../../bc45eb7f77.js"></script>
+<script type="module" src="../../../bc45eb7f72.js"></script>
 
 </body></html>

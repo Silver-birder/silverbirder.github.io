@@ -8,18 +8,18 @@
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TwitterにあるLinkを収集するツール Cotlin で、世界中のプレゼンテーション資料を知ろう: silverbirder</title>
-<meta property="og:title" content="TwitterにあるLinkを収集するツール Cotlin で、世界中のプレゼンテーション資料を知ろう: silverbirder">
+<title>Ruby on Railsを業務で使って思ったこと: silverbirder</title>
+<meta property="og:title" content="Ruby on Railsを業務で使って思ったこと: silverbirder">
 
 <meta name="generator" content="rocket 0.1">
-<link rel="canonical" href="https://silver-birder.github.io/blog/contents/twitter_cotlin/">
+<link rel="canonical" href="https://silver-birder.github.io/blog/contents/started_using_ruby_on_rails_at_work./">
 
 
 
   
 
-<meta name="description" content="Twitterに投稿されているLinkを収集するツール Cotlin を作りました。Collect links in tweet から、Cotlinという名前にしました。Androidのアレに似ています。">
-<meta property="og:description" content="Twitterに投稿されているLinkを収集するツール Cotlin を作りました。Collect links in tweet から、Cotlinという名前にしました。Androidのアレに似ています。">
+<meta name="description" content="2022 年 1 月より新しい職場で、はじめて Ruby on Rails(以下、Rails)を使うようになりました。これまで、PHP の CakePHP、Node.js の Express、Python の Flask の経験がある私ですが、Rails に、なかなか慣れない苦労がありました。ゆるく、言語化しようと思います。ちなみに、Ruby もはじめて使いました。">
+<meta property="og:description" content="2022 年 1 月より新しい職場で、はじめて Ruby on Rails(以下、Rails)を使うようになりました。これまで、PHP の CakePHP、Node.js の Express、Python の Flask の経験がある私ですが、Rails に、なかなか慣れない苦労がありました。ゆるく、言語化しようと思います。ちなみに、Ruby もはじめて使いました。">
 
   
     
@@ -35,8 +35,8 @@
     <meta property="og:site_name" content="silverbirder">
 <meta property="og:type" content="website">
 
-<meta property="og:image" content="https://res.cloudinary.com/silverbirder/image/upload/v1584017984/cotlin/overview.png">
-<meta property="og:url" content="https://silver-birder.github.io/blog/contents/twitter_cotlin/">
+<meta property="og:image" content="https://silver-birder.github.io/c94b4303.png">
+<meta property="og:url" content="https://silver-birder.github.io/blog/contents/started_using_ruby_on_rails_at_work./">
 
 <meta name="twitter:card" content="summary_large_image">
 
@@ -77,7 +77,7 @@
 <link rel="preload" href="../../../5284d142.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../6dd6d5cb.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../dd4fcd54.js" as="script" crossorigin="anonymous">
-<link rel="preload" href="../../../bc45eb7f77.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../bc45eb7f68.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../482532d9.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../90f0e617.js" as="script" crossorigin="anonymous">
 </head>
@@ -181,26 +181,28 @@
   <ul>
     <li class="current">
       <h3>Headings</h3>
-      
+      <ul><li class="menu-item">
+<a href="/blog/contents/started_using_ruby_on_rails_at_work./#rails-doctrine">Rails Doctrine</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/started_using_ruby_on_rails_at_work./#慣れないところ">慣れないところ</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/started_using_ruby_on_rails_at_work./#最後に">最後に</a>
+</li></ul>
     </li>
   </ul>
   <div class="sidebar-tags">
     <h3>Date</h3>
-    <div>Sun Mar 15 2020</div>
+    <div>Thu Mar 24 2022</div>
   </div>
   <div class="sidebar-tags">
     <h3>Tags</h3>
     <div class="tags">
       
-        <span class="tag">Tool</span>
+        <span class="tag">Ruby on Rails</span>
       
-        <span class="tag">Artifacts</span>
-      
-        <span class="tag">Introduce</span>
-      
-        <span class="tag">Learning</span>
-      
-        <span class="tag">Twitter</span>
+        <span class="tag">Think</span>
       
     </div>
   </div>
@@ -224,61 +226,51 @@
     <main class="markdown-body">
   
     
-  <h1>TwitterにあるLinkを収集するツール Cotlin で、世界中のプレゼンテーション資料を知ろう</h1>
+  <h1>Ruby on Railsを業務で使って思ったこと</h1>
 
-
-  <img src="https://res.cloudinary.com/silverbirder/image/upload/v1584017984/cotlin/overview.png" alt="">
 
 
   
-    <p>Twitterに投稿されているLinkを収集するツール Cotlin を作りました。</p>
-<p><b><span style="color: #d32f2f">Co</span></b>llec<b><span style="color: #d32f2f">t lin</span></b>ks in tweet</p>
-<p>から、Cotlinという名前にしました。Androidのアレに似ています。</p>
-<p><iframely-embed card="small" url="https://github.com/Silver-birder/Cotlin"></iframely-embed></p>
-<p><iframely-embed card="small" url="https://www.npmjs.com/package/@silverbirder/cotlin"></iframely-embed></p>
-<!--  TODO: TOC -->
-<h1 id="動機"><a class="anchor" href="#動機"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>動機</h1>
-<p>私は、<a href="https://connpass.com/">connpass</a>等を使って、技術系のカンファレンスに参加することがありました。
-カンファレンスで発表された資料は、Twitterで公開されることが多々あるので、それを自動収集できるようにしたいと考えたのが、Cotlinを作った動機です。</p>
-<h1 id="技術スタック"><a class="anchor" href="#技術スタック"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>技術スタック</h1>
-<p>Google Apps Script (<a href="https://github.com/google/clasp/">Clasp</a>) + Twitter API (<a href="https://developer.twitter.com/en/docs/tweets/search/overview">tweet search API</a>) です。
-<a href="https://github.com/Silver-birder/Cotlin#use-by-google-apps-script">ライブラリを公開</a>していて、それを元に<a href="https://github.com/Silver-birder/Cotlin/blob/master/sample/api.js">API</a>と<a href="https://github.com/Silver-birder/Cotlin/blob/master/sample/client.js">Client</a>を簡単に作れるようにサンプルコードも用意しています。使い方は、全て<a href="https://github.com/Silver-birder/Cotlin/blob/master/README.md">README.md</a>にあります。</p>
-<h1 id="困ったこと"><a class="anchor" href="#困ったこと"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>困ったこと</h1>
-<p>Tweetに記述したリンクは、全て<a href="https://help.twitter.com/ja/using-twitter/url-shortener">t.co</a>に短縮されてしまいます。
-この短縮URLからオリジナルURLを手に入れるために、リダイレクトする必要があります。
-実際に作ってみると、次のような記事に書いたとおり、GASで書くと、少し困ったことがありました。</p>
-<p><iframely-embed card="small" url="https://silver-birder.github.io/blog/contents/gas_fetchall_redirect"></iframely-embed></p>
-<p>そこで、複数のリダイレクトURLへリクエストする処理を並列化するために、Golangで開発していました。</p>
-<p>しかし、そもそもTwitter API (<a href="https://developer.twitter.com/en/docs/tweets/search/overview">tweet search API</a>)のレスポンスには、オリジナルURLが含まれている(<a href="https://developer.twitter.com/en/docs/tweets/search/api-reference/get-search-tweets">expanded_url</a>)ことに気づき、結局、Google Apps Script (<a href="https://github.com/google/clasp/">Clasp</a>)で開発することになりました。</p>
-<h1 id="良かったこと"><a class="anchor" href="#良かったこと"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>良かったこと</h1>
-<p>毎日、プレゼンテーション資料を収集し、スプレットシートに記録するよう、自動化しました。<br>
-※ 都合により、URLのリンクとTweetのリンクのみ記載しています。</p>
-<p><iframely-embed card="small" url="https://docs.google.com/spreadsheets/d/1IaJOw9-GdoHhz3D0CzvJfFitrmEN8KpgIleer9rmxiw/edit?usp=sharing"></iframely-embed></p>
-<p>次のような資料を発見できるようになりました。</p>
+    <p>2022 年 1 月より新しい職場で、はじめて Ruby on Rails(以下、Rails)を使うようになりました。
+これまで、PHP の CakePHP、Node.js の Express、Python の Flask の経験がある私ですが、
+Rails に、なかなか慣れない苦労がありました。ゆるく、言語化しようと思います。
+ちなみに、Ruby もはじめて使いました。</p>
+<h2 id="rails-doctrine"><a class="anchor" href="#rails-doctrine"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Rails Doctrine</h2>
+<p>Rails という新しく Web フレームワークを学ぶので、どういう思想で作られたのか知りたいなと思いました。
+そこで、下記のページをざっくり読んでみました。</p>
 <ul>
-<li><strong>世界中</strong>のプレゼンテーション資料</li>
-<li><strong>知らない技術カンファレンス</strong>の資料</li>
-<li><strong>個人や学生</strong>が公開した資料</li>
+<li><a href="https://rubyonrails.org/doctrine">https://rubyonrails.org/doctrine</a></li>
 </ul>
-<p>そこから、次のような良かったことがありました。</p>
+<p>PoLS や CoC といった原則により、プログラマは余計な悩み事が減って良いな〜と思います。
+DB のテーブルのカラム名で、post_id なのか postId なのかなんてどうだって良いのは、とても同感です。
+ディレクトリ構成も、CoC で決まっているので、論争が生まれることが少ないのかなと思います。</p>
+<h2 id="慣れないところ"><a class="anchor" href="#慣れないところ"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>慣れないところ</h2>
+<p>まず、前提として、私が Ruby、Rails どちらも知らないというのがあります。</p>
 <ul>
-<li>『テストについて、同じように困っている人がいた。○○という技術で解決してるんだ！知らなかった！』</li>
-<li>『最近気になっている○○のアーキテクチャの資料だ。メリット・デメリットがよくまとまってて良い！』</li>
-<li>『リモートワークを取り組んでいる企業の話だ。これから私もリモートワークになるから、先に知見を知っておこう！』</li>
+<li>引数無し関数の括弧省略と、変数の見分けがつかない</li>
 </ul>
-<p>毎日、資料を読んでいると、1日2,3件ほど、自分の琴線に触れるものが現れます。とても刺激を受けて、作ってよかったなと思いました。</p>
-<h1 id="最後に"><a class="anchor" href="#最後に"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>最後に</h1>
-<p>動機であった技術カンファレンスの参加は、実は最近減少しています。
-理由は色々ありますが、まあ伏せておきます。</p>
-<p>こういったツールによって、アンテナを広く張り巡らせておくことができます。
-これのおかげで、様々な関心事をキャッチアップできるようになりました。</p>
-<p>上のスプレットシートは、ずっと更新し続ける予定ですので、活用下さい。</p>
+<p>Ruby の話で、よくある話と聞いています。
+これは、コード読んで、悩みました。</p>
+<ul>
+<li>Ruby の関数か、Rails の関数か、独自の関数か、分からない</li>
+</ul>
+<p>業務で Rails のコードを読んでいると、これは Ruby の関数なのか、
+Rails の関数なのか、それとも、独自の関数なのか、いつもわからなくなります。</p>
+<ul>
+<li>マイグレーションって、移行という言葉として思ってた</li>
+</ul>
+<p>Rails の文脈だと、マイグレーションって DB 管理の Ruby コードを指すみたいです。
+DB マイグレーションって言わないのね〜って、違和感がありました。</p>
+<h2 id="最後に"><a class="anchor" href="#最後に"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>最後に</h2>
+<p>rails って、色々よしなにやってくれて便利〜！と思うこともあれば、
+どう動いているんだっけ？と分からなくなることもあるなと思っています。</p>
+<p>トレードオフと思うんですが、まだまだ慣れない今日このごろでした。</p>
 
   
     <div class="content-footer">
   <p>
     Caught a mistake or want to improve the blog?
-    <a href="https://github.com/Silver-birder/Silver-birder.github.io/edit/main/./docs/blog/contents/twitter_cotlin.md">Edit this blog post on GitHub!</a>
+    <a href="https://github.com/Silver-birder/Silver-birder.github.io/edit/main/./docs/blog/contents/started_using_ruby_on_rails_at_work..md">Edit this blog post on GitHub!</a>
   </p>
 </div>
 
@@ -392,6 +384,6 @@
 <script type="module" src="../../../e931d24b.js"></script>
 <script type="module" src="../../../6dd6d5cb.js"></script>
 <script type="module" src="../../../dd4fcd54.js" inject-service-worker=""></script>
-<script type="module" src="../../../bc45eb7f77.js"></script>
+<script type="module" src="../../../bc45eb7f68.js"></script>
 
 </body></html>
