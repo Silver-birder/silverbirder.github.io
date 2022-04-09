@@ -77,8 +77,8 @@
 <link rel="preload" href="../../../5284d142.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../6dd6d5cb.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../dd4fcd54.js" as="script" crossorigin="anonymous">
-<link rel="preload" href="../../../bc45eb7f14.js" as="script" crossorigin="anonymous">
-<link rel="preload" href="../../../482532d9.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../4752aba914.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../e12801e9.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../90f0e617.js" as="script" crossorigin="anonymous">
 </head>
 
@@ -229,7 +229,7 @@
   
     <p>2021年、あけましておめでとうございます。本年も宜しくおねがいします。最近、体重が増えてしまったため、有酸素運動を頑張っています。</p>
 <p>本記事は、昨年の冬あたりから検証していた クライアントサイド統合でのMicro Frontendsについて話そうと思います。検証したソースコードは、次のリポジトリにあります。</p>
-<p><iframely-embed card="small" url="https://github.com/Silver-birder/micro-frontends-sample-code-6"></iframely-embed></p>
+<p><ogp-me src="https://github.com/Silver-birder/micro-frontends-sample-code-6"></ogp-me></p>
 <!--  TODO: TOC -->
 <h1 id="概要"><a class="anchor" href="#概要"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>概要</h1>
 <p>全体設計イメージ図は、次のとおりです。</p>
@@ -273,7 +273,7 @@
 <h1 id="javascript-router"><a class="anchor" href="#javascript-router"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Javascript Router</h1>
 <p>Routerは、アプリケーション全体のRoutingを管理します。例えば、<code>/</code> はTopページ、 <code>/s</code> は検索ページといった具合です。
 Routerには、後ほど説明するWebComponentsとの相性が良いvaadin/router を使用しました。</p>
-<p><iframely-embed card="small" url="https://vaadin.com/router"></iframely-embed></p>
+<p><ogp-me src="https://vaadin.com/router"></ogp-me></p>
 <p>vaadin/routerでは、WebComponentsを指定してRoutingするため、指定されたWebComponentsは、Importerより取得します。</p>
 <h1 id="component"><a class="anchor" href="#component"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Component</h1>
 <p>ComponentはLitElementというWebComponentsベースのライブラリを使用しています。各TeamのComponent(LitElementのライブラリ込)をImportしていると、重複したloadとなりパフォーマンスがよろしくありません。共通ライブラリを事前にload (import mapとかで)することをお勧めします。</p>
@@ -433,6 +433,6 @@ Routerには、後ほど説明するWebComponentsとの相性が良いvaadin/rou
 <script type="module" src="../../../e931d24b.js"></script>
 <script type="module" src="../../../6dd6d5cb.js"></script>
 <script type="module" src="../../../dd4fcd54.js" inject-service-worker=""></script>
-<script type="module" src="../../../bc45eb7f14.js"></script>
+<script type="module" src="../../../4752aba914.js"></script>
 
 </body></html>

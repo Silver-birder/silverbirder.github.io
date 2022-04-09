@@ -77,8 +77,8 @@
 <link rel="preload" href="../../../5284d142.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../6dd6d5cb.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../dd4fcd54.js" as="script" crossorigin="anonymous">
-<link rel="preload" href="../../../bc45eb7f36.js" as="script" crossorigin="anonymous">
-<link rel="preload" href="../../../482532d9.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../4752aba936.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../e12801e9.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../90f0e617.js" as="script" crossorigin="anonymous">
 </head>
 
@@ -258,12 +258,12 @@ GCP構築のシステム設計話と、その構築時に、ハマったこと�
 <!--  TODO: TOC -->
 <h1 id="きっかけ"><a class="anchor" href="#きっかけ"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>きっかけ</h1>
 <p>2020年、最もダウンロードされたアプリがFacebookを抜いて<strong>TikTok</strong>が一位になったそうです。</p>
-<p><iframely-embed card="small" url="https://gigazine.net/news/20210811-tiktok-overtakes-facebook/"></iframely-embed></p>
+<p><ogp-me src="https://gigazine.net/news/20210811-tiktok-overtakes-facebook/"></ogp-me></p>
 <p>私もTikTokを利用しています。</p>
 <p>ネットサーフィンをしている時に、<a href="https://www.npmjs.com/package/tiktok-scraper">tiktok-scraper</a>というライブラリを<a href="https://workers.cloudflare.com/works">cloudflareのサイト</a>で発見しました。これを使って、TikTokの情報収集できるんじゃないかなと思い始めましたのがきっかけです。</p>
 <p>※ スクレイプは私的利用であることが前提です。また、TikTokへ負荷をかけないようスクレイプ間隔に配慮しましょう。</p>
 <h1 id="tiktok-scraper"><a class="anchor" href="#tiktok-scraper"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>tiktok-scraper</h1>
-<p><iframely-embed card="small" url="https://www.npmjs.com/package/tiktok-scraper"></iframely-embed></p>
+<p><ogp-me src="https://www.npmjs.com/package/tiktok-scraper"></ogp-me></p>
 <blockquote>
 <p>Scrape and download useful information from TikTok.</p>
 </blockquote>
@@ -425,7 +425,7 @@ This is not an official API support and etc. This is just a scraper that is usin
 PubSubでワークフローを制御するよりも、Cloud Workflowsのyamlでワークフローを制御した方が分かりやすいと思ったからです。
 具体的には、Cloud RunへHTTPリクエストし、HTTPレスポンスに応じて、次のCloud Runを呼び出そうと考えていました。</p>
 <p>ただ、Cloud Workflowsには、次のページに書いてあるとおり、いくつかの制限があります。</p>
-<p><iframely-embed card="small" url="https://cloud.google.com/workflows/quotas?hl=ja"></iframely-embed></p>
+<p><ogp-me src="https://cloud.google.com/workflows/quotas?hl=ja"></ogp-me></p>
 <p>特に困ったのが、全ての変数のメモリ合計が、<strong>64kb</strong> だということです。
 HTTPレスポンスのBodyを変数保持する構成を取ると、そのサイズを考慮しなければいけません。
 いくつかやり方を見直してみたのですが、思うような形に仕上げることができず、断念しました。
@@ -438,7 +438,7 @@ Cloud Workflowsは、バッチのキック、通知などをすることとな�
 Webアプリには、バッチで収集したTikTokの動画を一覧表示するViewを用意しました。</p>
 <p>閲覧するTikTok動画が多くなると、ページネーションが欲しくなりました。
 そこで、Firestoreでページネーションの実現方法を調べてみると、次の資料を発見しました。</p>
-<p><iframely-embed card="small" url="https://firebase.google.com/docs/firestore/query-data/query-cursors?hl=ja"></iframely-embed></p>
+<p><ogp-me src="https://firebase.google.com/docs/firestore/query-data/query-cursors?hl=ja"></ogp-me></p>
 <p>これを見ると、ページネーションは、現在位置から±1ページの移動は簡単です。
 資料にあるサンプルコードのように、<code>startAfter</code>を使えばよいだけです。</p>
 <pre class="language-javascript"><code class="language-javascript"><span class="token keyword">var</span> first <span class="token operator">=</span> db<span class="token punctuation">.</span><span class="token method function property-access">collection</span><span class="token punctuation">(</span><span class="token string">"cities"</span><span class="token punctuation">)</span>
@@ -462,7 +462,7 @@ Webアプリには、バッチで収集したTikTokの動画を一覧表示す�
 上記のサンプルコードで言えば、<code>first</code>をコピペして<code>second</code>変数を生成するのでしょうか。
 それよりも、<code>offset</code>メソッドがほしいところです。
 しかし、次の資料を発見し、諦めることになります。</p>
-<p><iframely-embed card="small" url="https://firebase.google.com/docs/firestore/best-practices?hl=ja"></iframely-embed></p>
+<p><ogp-me src="https://firebase.google.com/docs/firestore/best-practices?hl=ja"></ogp-me></p>
 <blockquote>
 <p>オフセットは使用しないでください。その代わりにカーソルを使用します。オフセットを使用すると、スキップされたドキュメントがアプリケーションに返されなくなりますが、内部ではスキップされたドキュメントも引き続き取得されています。スキップされたドキュメントはクエリのレイテンシに影響し、このようなドキュメントの取得に必要な読み取りオペレーションは課金対象になります。</p>
 </blockquote>
@@ -476,20 +476,20 @@ Webアプリには、バッチで収集したTikTokの動画を一覧表示す�
           <span class="token punctuation">.</span><span class="token method function property-access">limit</span><span class="token punctuation">(</span><span class="token number">25</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
 <p>これだと、1ページ25個のデータを表示するならば、3ページ目(51~75)を取得できます。(<code>startAfter</code>は開始点を含めません)</p>
-<p><iframely-embed card="small" url="https://cloud.google.com/nodejs/docs/reference/firestore/latest/firestore/query"></iframely-embed></p>
+<p><ogp-me src="https://cloud.google.com/nodejs/docs/reference/firestore/latest/firestore/query"></ogp-me></p>
 <p>そもそも、ドキュメントベースの設計よりも、RDBの設計に慣れていた私は、
 Firestoreよりも、Cloud SQLの方が扱いやすいと思いました。
 そこで、データストレージをFirestoreからCloud SQLへ切り替えることとしました。
 改修自体、Cloud Runの役割が明確に分離されていたので、一部の処理を書き換えるだけで、簡単にできました。</p>
 <h2 id="eventacのリソース選択が物足りない"><a class="anchor" href="#eventacのリソース選択が物足りない"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Eventacのリソース選択が物足りない</h2>
 <p>Cloud RunとPubSubの連携には、Eventacを使用します。</p>
-<p><iframely-embed card="small" url="https://cloud.google.com/blog/ja/products/serverless/eventarc-unified-eventing-experience-google-cloud"></iframely-embed></p>
+<p><ogp-me src="https://cloud.google.com/blog/ja/products/serverless/eventarc-unified-eventing-experience-google-cloud"></ogp-me></p>
 <blockquote>
 <p>昨年 10 月、60 を超える Google Cloud ソースから Cloud Run にイベントを送信できる新しいイベント機能、Eventarc を発表いたしました。Eventarc は、さまざまなソースから監査ログを読み取り、それらを CloudEvents 形式のイベントとして Cloud Run サービスに送信します。また、カスタム アプリケーションの Pub/Sub トピックからイベントを読み取ることもできます。</p>
 </blockquote>
 <p>このEventarcのソースとして、Cloud StorageのObject.createをトリガーとして設計を考えていました。
 しかし、そのイベントをフィルタリングする選択肢は、2つしかありません。</p>
-<p><iframely-embed card="small" url="https://cloud.google.com/blog/ja/products/serverless/demystifying-event-filters-eventarc"></iframely-embed></p>
+<p><ogp-me src="https://cloud.google.com/blog/ja/products/serverless/demystifying-event-filters-eventarc"></ogp-me></p>
 <p>できるのは、執筆時点(2021年8月)で、次の2つです。</p>
 <ul>
 <li>All resource</li>
@@ -502,16 +502,16 @@ Specific resourceは、特定のObeject名がObject.createされた場合のみ�
 <p>今回は、PubSubのイベントのみでトリガーするようにしました。</p>
 <h2 id="pubsubをトリガーとするcloudrunでhttpレスポンス500を返却するとpubsubが再試行される"><a class="anchor" href="#pubsubをトリガーとするcloudrunでhttpレスポンス500を返却するとpubsubが再試行される"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>PubSubをトリガーとするCloudRunでHTTPレスポンス500を返却すると、PubSubが再試行される</h2>
 <p>Cloud Runで、5XX系のエラーとなった場合、PubSubの再試行されます。</p>
-<p><iframely-embed card="small" url="https://cloud.google.com/pubsub/docs/admin?hl=ja#using_retry_policies"></iframely-embed></p>
+<p><ogp-me src="https://cloud.google.com/pubsub/docs/admin?hl=ja#using_retry_policies"></ogp-me></p>
 <p>何度もPubSubが実行されると、Cloud Runのコンピューティングリソースが消費され続けます。
 そうすると、課金が発生するので、対策が必要です。</p>
 <h2 id="cloud-workflowsの処理はあまりカスタマイズできない"><a class="anchor" href="#cloud-workflowsの処理はあまりカスタマイズできない"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Cloud Workflowsの処理は、あまりカスタマイズできない</h2>
 <p>Cloud Workflowsは、あくまでワークフローの管理です。
 変数処理などは、基本的に使わず、ワークフローのタスクを連結するだけにした方が良いです。
 次の資料には、Cloud Workflowsで使える標準機能です。</p>
-<p><iframely-embed card="small" url="https://cloud.google.com/workflows/docs/reference/stdlib/overview"></iframely-embed></p>
+<p><ogp-me src="https://cloud.google.com/workflows/docs/reference/stdlib/overview"></ogp-me></p>
 <p>ワークフローのタスクを並列処理する機能は、まだ実験段階なので、本番環境は使えないようです。</p>
-<p><iframely-embed card="small" url="https://cloud.google.com/workflows/docs/reference/stdlib/experimental.executions/map"></iframely-embed></p>
+<p><ogp-me src="https://cloud.google.com/workflows/docs/reference/stdlib/experimental.executions/map"></ogp-me></p>
 <h1 id="終わりに"><a class="anchor" href="#終わりに"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>終わりに</h1>
 <p>システム設計変更が度々変更がありつつも、目的とするTikTok動画やメタ情報を収集することは達成できました。
 変更があったとしても、役割をできる限り小さく保つことで、変更に柔軟に対応することができます。
@@ -637,6 +637,6 @@ Specific resourceは、特定のObeject名がObject.createされた場合のみ�
 <script type="module" src="../../../e931d24b.js"></script>
 <script type="module" src="../../../6dd6d5cb.js"></script>
 <script type="module" src="../../../dd4fcd54.js" inject-service-worker=""></script>
-<script type="module" src="../../../bc45eb7f36.js"></script>
+<script type="module" src="../../../4752aba936.js"></script>
 
 </body></html>
