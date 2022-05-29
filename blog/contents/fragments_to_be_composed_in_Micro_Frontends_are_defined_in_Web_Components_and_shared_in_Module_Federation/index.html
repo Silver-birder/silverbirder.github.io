@@ -200,7 +200,7 @@
 <a href="/blog/contents/fragments_to_be_composed_in_Micro_Frontends_are_defined_in_Web_Components_and_shared_in_Module_Federation/#module-federation">Module Federation</a>
 </li>
 <li class="menu-item">
-<a href="/blog/contents/fragments_to_be_composed_in_Micro_Frontends_are_defined_in_Web_Components_and_shared_in_Module_Federation/#メリット">メリット</a>
+<a href="/blog/contents/fragments_to_be_composed_in_Micro_Frontends_are_defined_in_Web_Components_and_shared_in_Module_Federation/#この手法におけるメリット">この手法におけるメリット</a>
 </li>
 <li class="menu-item">
 <a href="/blog/contents/fragments_to_be_composed_in_Micro_Frontends_are_defined_in_Web_Components_and_shared_in_Module_Federation/#最後に">最後に</a>
@@ -260,6 +260,7 @@
 <li>フラグメント
 <ul>
 <li>各フロントエンドチームが提供する UI 部品(HTML,CSS,JS,etc)</li>
+<li>コンポーネントと言い換えても良いです</li>
 </ul>
 </li>
 <li>組成
@@ -279,7 +280,8 @@
 <li>購入ボタン(<code>buy for 66.00</code>)</li>
 <li>バスケット(<code>busket: 0 items(s)</code>)</li>
 </ul>
-<p>組成は、プロダクトチームが担っています。</p>
+<p>組成は、プロダクトチームが担っています。
+組成は調整の難しさがあるので、専任のチームがあっても良いかもと思います。</p>
 <h2 id="フラグメントを-web-components-で定義"><a class="anchor" href="#フラグメントを-web-components-で定義"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>フラグメントを Web Components で定義</h2>
 <p>フラグメントは、各フロントエンドチームが自由に定義できます。React で書いたり、Vue で書いたりできます。
 フラグメントを組成するチームからすると、フラグメントのインターフェースが揃っている方が使いやすいと思います。
@@ -336,24 +338,29 @@
 </code></pre>
 <p>この Web Components は、<code>&lt;search-button /&gt;</code> と書いて使います。</p>
 <p>他のフラグメントと連携する場合、カスタムイベントを使います。
-このフラグメントは、クリックボタンを押したら、<code>CustomEvent("search", { detail: &lt;object&gt; })</code> というカスタムイベントを発火します。</p>
+この Web Components は、クリックボタンを押したら、<code>CustomEvent("search", { detail: &lt;object&gt; })</code> というカスタムイベントを発火します。</p>
 <h2 id="json-を表示するフラグメント"><a class="anchor" href="#json-を表示するフラグメント"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>JSON を表示するフラグメント</h2>
 <p>次に、このイベントのデータ(<code>&lt;object&gt;</code>)を表示するフラグメント(Web Components)を書きます。
 与えられた json 文字列を表示するだけのシンプルなものです。
-Web Components へデータを与える手段は、2 つあります。(さらにあるかもです)</p>
+Web Components へデータを与える手段は 3 つあります。(さらにあるかもです)</p>
 <ul>
-<li>HTML の属性 (ex. <code>&lt;div attribute="value"&gt;</code>)
+<li>HTML 属性 (ex. <code>&lt;div attribute="value"&gt;</code>)
 <ul>
-<li>プリミティブな値(数値、文字など)に使う</li>
+<li>プリミティブな値(数値、文字など)で使う</li>
 </ul>
 </li>
 <li>イベントリスナー (<code>eventlistener</code>)
 <ul>
-<li>非プリミティブな値(配列など)に使う</li>
+<li>非プリミティブな値(配列など)で使う</li>
+</ul>
+</li>
+<li>Slot (<code>&lt;slot name="xxx"&gt;</code>)
+<ul>
+<li>HTML 要素を差し込みたいときに使う</li>
 </ul>
 </li>
 </ul>
-<p>今回は、前者を選択しました。</p>
+<p>今回は、HTML 属性を選択しました。</p>
 <pre class="language-typescript"><code class="language-typescript"><span class="token comment">// ./packages/team-content/src/components/JsonDiv/JsonDiv.tsx</span>
 <span class="token keyword">import</span> <span class="token maybe-class-name">ReactDOM</span> <span class="token keyword">from</span> <span class="token string">"react-dom/client"</span><span class="token punctuation">;</span>
 <span class="token keyword">import</span> <span class="token maybe-class-name">App</span> <span class="token keyword">from</span> <span class="token string">"./App"</span><span class="token punctuation">;</span>
@@ -400,7 +407,7 @@ Web Components へデータを与える手段は、2 つあります。(さら�
 <p>これまで紹介したフラグメントを組成します。
 組成するためには、フラグメントを提供する仕組みが必要です。
 そこで、Webpack の Module Federation を使います。</p>
-<p>※ 各フロントエンドチームのビルドシステムを Webpack で縛ってしまうデメリットがあります。</p>
+<p>※ Module Federation を採用すると、各フロントエンドチームのビルドシステムを Webpack で縛ってしまうデメリットがあります。</p>
 <p>※ 他の提供する仕組みとして、<code>importmap</code> が使えないかなと思ったんですが、未検証です。</p>
 <h2 id="module-federation"><a class="anchor" href="#module-federation"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Module Federation</h2>
 <p>Module Federation は、Webpack@5 から導入された機能です。</p>
@@ -549,14 +556,33 @@ root<span class="token punctuation">.</span><span class="token method function p
 また、<code>search-button</code>の<code>search</code>イベントハンドラをリッスンし、イベントデータを<code>json-div</code>の<code>value</code>属性に設定する処理を書きます。
 これで、組成が完了です。</p>
 <p>実際に、動きを見てみたい場合は、リポジトリの README.md を見て試してみてください。</p>
-<h2 id="メリット"><a class="anchor" href="#メリット"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>メリット</h2>
-<p>Web Components は、Shadow DOM というサンドボックス環境でコンポーネント開発できます。
-そのため、フラグメントとして完全に独立することができます。これは、Micro Frontends として重要です。</p>
-<p>Web Components は標準技術であるため、React や Vue などどのライブラリでも適用することができるはずです。
-フラグメントを組成する側も、内部のライブラリを意識せず、Web Components というカスタム HTML タグを組み立てるだけです。
-これも同様で、組成する側のライブラリも何でも適用できるはずです。</p>
+<h2 id="この手法におけるメリット"><a class="anchor" href="#この手法におけるメリット"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>この手法におけるメリット</h2>
+<p>Web Components をフラグメントとして使うメリット・デメリットは、次のとおりです。</p>
+<ul>
+<li>メリット
+<ul>
+<li>適合性
+<ul>
+<li>Web Components は、Web 標準技術なので、ライブラリとの適合は容易</li>
+<li>HTML タグを使うようにカスタム HTML タグを使えば良い</li>
+</ul>
+</li>
+<li>独立性
+<ul>
+<li>Shadow DOM というサンドボックス環境で開発可能</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>デメリット
+<ul>
+<li>Javascript が動く必要あり</li>
+</ul>
+</li>
+</ul>
 <h2 id="最後に"><a class="anchor" href="#最後に"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>最後に</h2>
-<p>Web 標準技術(Web Components,CustomEvents)に依存した設計を採用することで、MFE の Agility と Independency の向上を期待できると思っています。</p>
+<p>Micro Frontends で組成するフラグメントを Web Components で定義して Module Federation で共有する方法を紹介しました。
+実運用の経験はないですが、アイデアとして使えるかもしれないと思いました。</p>
 
   
     <div class="content-footer">
