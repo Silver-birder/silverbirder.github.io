@@ -1,0 +1,586 @@
+<!DOCTYPE html><html lang="ja" dir="ltr"><head>
+  
+    
+
+  
+
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>connect-webやってみた: silverbirder</title>
+<meta property="og:title" content="connect-webやってみた: silverbirder">
+
+<meta name="generator" content="rocket 0.1">
+<link rel="canonical" href="https://silver-birder.github.io/blog/contents/try_connect_web/">
+
+
+
+  
+
+<meta name="description" content="connect-web の記事が、はてブでトレンドになっていました。気になったので、試してみました。サンプルコードは、次のリポジトリに置いています。">
+<meta property="og:description" content="connect-web の記事が、はてブでトレンドになっていました。気になったので、試してみました。サンプルコードは、次のリポジトリに置いています。">
+
+  
+    
+<link rel="apple-touch-icon" sizes="180x180" href="../../../assets/apple-touch-icon.jpg">
+<link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../../assets/favicon-16x16.png">
+<link rel="manifest" href="../../../assets/webmanifest.json">
+
+<meta name="msapplication-TileColor" content="#1d3557">
+<meta name="theme-color" content="#1d3557">
+
+  
+    <meta property="og:site_name" content="silverbirder">
+<meta property="og:type" content="website">
+
+<meta property="og:image" content="https://silver-birder.github.io/c94b4303.png">
+<meta property="og:url" content="https://silver-birder.github.io/blog/contents/try_connect_web/">
+
+<meta name="twitter:card" content="summary_large_image">
+
+  
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="">
+
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&amp;display=optional" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&amp;display=optional" rel="stylesheet">
+
+  
+    <link rel="stylesheet" href="../../../3cb4adfb.css">
+<link rel="stylesheet" href="../../../0f4765a3.css">
+<link rel="stylesheet" href="../../../ac2ea3b8.css">
+<link rel="stylesheet" href="../../../2366292e.css">
+
+  
+    <noscript><link rel="stylesheet" href="/_merged_assets/_static/search/noscript.css"></noscript>
+
+  
+    <link rel="stylesheet" href="../../../f5cf94c7.css">
+  
+    
+  
+    <noscript><link rel="stylesheet" href="/_merged_assets/_static/noscript.css"/></noscript>
+
+  
+    <link rel="stylesheet" href="../../../b1403e10.css">
+  
+    <meta name="twitter:creator" content="@Silver_birder">
+
+<link rel="stylesheet" href="../../../611b393e.css" mdjs-use="">
+
+<meta name="google-site-verification" content="-8bAm041798VvU0oItcuyuShbVINfNMLfTmP7tENPDY">
+  
+
+<link rel="preload" href="../../../e931d24b.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../a2a9827a.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../5284d142.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../6dd6d5cb.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../dd4fcd54.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../4752aba985.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../e12801e9.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../90f0e617.js" as="script" crossorigin="anonymous">
+</head>
+
+  
+
+  
+  <body layout="layout-blog-details">
+  
+
+    
+      <header id="main-header">
+  <div class="content-area">
+    
+      <button id="mobile-menu-trigger" data-action="trigger-mobile-menu">
+	<span class="sr-only">Show Menu</span>
+	      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon">
+        <path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path>
+      </svg>
+
+</button>
+
+    
+      
+	<a class="logo-link" href="/">
+  <img src="../../../90a4fb13.svg" alt="Rocket Logo">
+  <span>silverbirder</span>
+</a>
+
+
+
+    
+      <rocket-search class="search" json-url="/_merged_assets/_static/rocket-search-index.json">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129" style="width: 25px;">
+    <path d="M51.6 96.7c11 0 21-3.9 28.8-10.5l35 35c.8.8 1.8 1.2 2.9 1.2s2.1-.4 2.9-1.2c1.6-1.6 1.6-4.2 0-5.8l-35-35c6.5-7.8 10.5-17.9 10.5-28.8 0-24.9-20.2-45.1-45.1-45.1-24.8 0-45.1 20.3-45.1 45.1 0 24.9 20.3 45.1 45.1 45.1zm0-82c20.4 0 36.9 16.6 36.9 36.9C88.5 72 72 88.5 51.6 88.5S14.7 71.9 14.7 51.6c0-20.3 16.6-36.9 36.9-36.9z"></path>
+  </svg>
+</rocket-search>
+
+
+
+    
+      
+  <a href="/blog/" class="
+          
+           active 
+        ">Blog</a>
+  <a href="/resume/" class="
+          
+          
+        ">Resume</a>
+  <a href="/misc/" class="
+          
+          
+        ">Misc</a>
+
+    
+      <launch-dark-switch class="light-dark-switch" label="Toggle darkmode">Toggle darkmode</launch-dark-switch>
+
+
+    
+      
+	<a class="social-link" href="https://github.com/Silver-birder/Silver-birder.github.io" aria-label="silverbirder on GitHub" rel="noopener noreferrer" target="_blank">
+		<span class="sr-only">GitHub</span>
+		
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 16" fill="none">
+  <title>GitHub</title>
+  <path fill="currentColor" fill-rule="evenodd" d="M8.18391.249268C3.82241.249268.253906 3.81777.253906 8.17927c0 3.46933 2.279874 6.44313 5.451874 7.53353.3965.0991.49563-.1983.49563-.3965v-1.3878c-2.18075.4956-2.67638-.9912-2.67638-.9912-.3965-.8922-.89212-1.1895-.89212-1.1895-.69388-.4957.09912-.4957.09912-.4957.793.0992 1.1895.793 1.1895.793.69388 1.2887 1.88338.8922 2.27988.6939.09912-.4956.29737-.8921.49562-1.0904-1.78425-.1982-3.5685-.8921-3.5685-3.96496 0-.89212.29738-1.586.793-2.08162-.09912-.19825-.3965-.99125.09913-2.08163 0 0 .69387-.19825 2.18075.793.59475-.19825 1.28862-.29737 1.9825-.29737.69387 0 1.38775.09912 1.98249.29737 1.4869-.99125 2.1808-.793 2.1808-.793.3965 1.09038.1982 1.88338.0991 2.08163.4956.59475.793 1.28862.793 2.08162 0 3.07286-1.8834 3.66766-3.66764 3.86586.29737.3965.59474.8921.59474 1.586v2.1808c0 .1982.0991.4956.5948.3965 3.172-1.0904 5.4518-4.0642 5.4518-7.53353-.0991-4.3615-3.6676-7.930002-8.02909-7.930002z" clip-rule="evenodd"></path>
+</svg>
+
+		
+	</a>
+	<a class="social-link" href="https://twitter.com/silver_birder" aria-label="silverbirder on Twitter" rel="noopener noreferrer" target="_blank">
+		<span class="sr-only">Twitter</span>
+		
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 274 223"><title>Twitter</title><path d="M85.98 223c-31.675 0-61.158-9.285-85.98-25.199 4.388.518 8.853.783 13.38.783 26.278 0 50.463-8.967 69.659-24.01-24.544-.453-45.258-16.669-52.395-38.953a56.014 56.014 0 0 0 10.552 1.006c5.116 0 10.071-.685 14.778-1.967-25.66-5.152-44.993-27.822-44.993-54.998 0-.236 0-.471.004-.705a55.865 55.865 0 0 0 25.406 7.015c-15.05-10.058-24.953-27.226-24.953-46.685 0-10.279 2.766-19.914 7.594-28.198 27.664 33.934 68.993 56.264 115.609 58.603a56.31 56.31 0 0 1-1.453-12.782c0-30.975 25.114-56.088 56.091-56.088 16.132 0 30.709 6.812 40.941 17.713a112.328 112.328 0 0 0 35.617-13.611c-4.188 13.097-13.081 24.089-24.662 31.031a112.148 112.148 0 0 0 32.215-8.832 114 114 0 0 1-27.988 29.035c.108 2.405.162 4.824.162 7.256C245.564 137.533 189.148 223 85.98 223" fill="currentColor"></path></svg>
+
+		
+	</a>
+
+    
+  </div>
+</header>
+
+    
+
+    
+  <div id="content-wrapper">
+    <div class="content-area">
+      
+	<rocket-drawer id="sidebar">
+  <nav slot="content" id="sidebar-nav">
+    
+      <a class="logo-link" href="/">
+  <img src="../../../90a4fb13.svg" alt="Rocket Logo">
+  <span>silverbirder</span>
+</a>
+
+
+    
+      <rocket-navigation>
+  <ul>
+    <li class="current">
+      <h3>Headings</h3>
+      <ul><li class="menu-item">
+<a href="/blog/contents/try_connect_web/#前置き-grpc-と-connect-web-の雑な理解">前置き: gRPC と connect-web の雑な理解</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/try_connect_web/#やってみた">やってみた</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/try_connect_web/#1-protocol-buffer-スキーマから-typescript-ファイルを生成">1. Protocol Buffer スキーマから TypeScript ファイルを生成</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/try_connect_web/#2-生成された-typescript-ファイルから-grpc-クライアントを実装">2. 生成された TypeScript ファイルから gRPC クライアントを実装</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/try_connect_web/#終わりに">終わりに</a>
+</li></ul>
+    </li>
+  </ul>
+  <div class="sidebar-tags">
+    <h3>Date</h3>
+    <div>Sat Aug 20 2022</div>
+  </div>
+  <div class="sidebar-tags">
+    <h3>Tags</h3>
+    <div class="tags">
+      
+        <span class="tag">gRPC</span>
+      
+        <span class="tag">Connect</span>
+      
+        <span class="tag">React</span>
+      
+    </div>
+  </div>
+  <div class="sidebar-bottom">
+  <hr> <launch-dark-switch class="light-dark-switch" label="Toggle darkmode">Toggle darkmode</launch-dark-switch>
+
+  
+    <a href="https://github.com/Silver-birder/Silver-birder.github.io/issues">Help and Feedback</a>
+  
+</div>
+
+</rocket-navigation>
+
+    
+  </nav>
+</rocket-drawer>
+
+
+      
+  <main class="markdown-body">
+    <main class="markdown-body">
+  
+    
+  <h1>connect-webやってみた</h1>
+
+
+  <img src="https://res.cloudinary.com/silverbirder/image/upload/v1660991073/silver-birder.github.io/connect-web-sample.png" alt="">
+
+
+  
+    <p><a href="https://future-architect.github.io/articles/20220819a/">connect-web の記事</a>が、はてブでトレンドになっていました。気になったので、試してみました。</p>
+<p>サンプルコードは、次のリポジトリに置いています。</p>
+<ul>
+<li><a href="https://github.com/Silver-birder/playground/tree/main/node/connect-web-example/frontend">https://github.com/Silver-birder/playground/tree/main/node/connect-web-example/frontend</a></li>
+</ul>
+<h2 id="前置き-grpc-と-connect-web-の雑な理解"><a class="anchor" href="#前置き-grpc-と-connect-web-の雑な理解"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>前置き: gRPC と connect-web の雑な理解</h2>
+<p>RPC (Remote Procedure Call) を実現するためのプロトコルとして、gRPC があります。
+このプロトコルは、ブラウザ側からは使えない(?)ため、gRPC-Web というブラウザ向けの gRPC というものを使うことになります。
+その場合、ブラウザとサーバーとの間に、プロキシを建てる必要があるようです。(たぶん)</p>
+<p>そこで、Connect という gRPC 互換の HTTP API を構築するためのライブラリ群が開発されました。
+これのおかげで、プロキシを建てる必要がなく、ブラウザ側から gRPC を使うことが可能になります。</p>
+<ul>
+<li><a href="https://connect.build/docs/introduction">https://connect.build/docs/introduction</a></li>
+</ul>
+<p>上記ページに、バックエンドは connect-go、フロントエンドは connect-web という項目があります。
+connect-web は、ブラウザから RPC を動かすための小さなライブラリです。タイプセーフなライブラリなため、
+型補完が効きます。
+connect-go は、go で Connect のサービスを作ることができます。</p>
+<p>そのため、フロントエンドの開発は、connect-web を使うことになります。
+以降は、フロントエンドの作業を、紹介します。ちなみに、React を使います。</p>
+<h2 id="やってみた"><a class="anchor" href="#やってみた"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>やってみた</h2>
+<p>フロントエンド側は、主に、次の 2 つの作業になります。</p>
+<ol>
+<li>Protocol Buffer スキーマから TypeScript ファイルを生成</li>
+<li>生成された TypeScript ファイルから gRPC クライアントを実装</li>
+</ol>
+<h2 id="1-protocol-buffer-スキーマから-typescript-ファイルを生成"><a class="anchor" href="#1-protocol-buffer-スキーマから-typescript-ファイルを生成"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>1. Protocol Buffer スキーマから TypeScript ファイルを生成</h2>
+<p>gRPC で通信するためのスキーマ、ProtocolBuffer スキーマが必要です。
+これは、すでにあるものを使います。</p>
+<ul>
+<li><a href="https://buf.build/bufbuild/eliza">https://buf.build/bufbuild/eliza</a></li>
+</ul>
+<p>具体的には、次のようなスキーマです。</p>
+<pre class="language-protobuf"><code class="language-protobuf"><span class="token keyword">syntax</span> <span class="token operator">=</span> <span class="token string">"proto3"</span><span class="token punctuation">;</span>
+
+<span class="token keyword">service</span> <span class="token class-name">ElizaService</span> <span class="token punctuation">{</span>
+  rpc <span class="token function">Say</span><span class="token punctuation">(</span>SayRequest<span class="token punctuation">)</span> <span class="token function">returns</span> <span class="token punctuation">(</span>SayResponse<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">message</span> <span class="token class-name">SayRequest</span> <span class="token punctuation">{</span>
+  <span class="token builtin">string</span> sentence <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">message</span> <span class="token class-name">SayResponse</span> <span class="token punctuation">{</span>
+  <span class="token builtin">string</span> sentence <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>TypeScript コードを生成するために、<code>buf</code> という CLI を使います。
+buf で利用する、次の定義ファイルを書きます。</p>
+<pre class="language-yaml"><code class="language-yaml"><span class="token comment"># buf.gen.yaml</span>
+
+<span class="token comment"># buf.gen.yaml defines a local generation template.</span>
+<span class="token comment"># For details, see https://docs.buf.build/configuration/v1/buf-gen-yaml</span>
+<span class="token key atrule">version</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">plugins</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> es
+    <span class="token key atrule">path</span><span class="token punctuation">:</span> node_modules/.bin/protoc<span class="token punctuation">-</span>gen<span class="token punctuation">-</span>es
+    <span class="token key atrule">out</span><span class="token punctuation">:</span> gen
+    <span class="token comment"># With target=ts, we generate TypeScript files.</span>
+    <span class="token comment"># Use target=js+dts to generate JavaScript and TypeScript declaration files</span>
+    <span class="token comment"># like remote generation does.</span>
+    <span class="token key atrule">opt</span><span class="token punctuation">:</span> target=ts
+  <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> connect<span class="token punctuation">-</span>web
+    <span class="token key atrule">path</span><span class="token punctuation">:</span> node_modules/.bin/protoc<span class="token punctuation">-</span>gen<span class="token punctuation">-</span>connect<span class="token punctuation">-</span>web
+    <span class="token key atrule">out</span><span class="token punctuation">:</span> gen
+    <span class="token comment"># With target=ts, we generate TypeScript files.</span>
+    <span class="token key atrule">opt</span><span class="token punctuation">:</span> target=ts
+</code></pre>
+<p>これは、後述する <code>buf generate</code> するときにどういう出力をするかの設定情報です。
+codegen の yaml ファイルみたいなものかなと思います。
+これを動かすために、次の module をインストールしましょう。</p>
+<pre class="language-bash"><code class="language-bash"><span class="token comment"># plugin</span>
+<span class="token function">yarn</span> <span class="token function">add</span> --dev @bufbuild/protoc-gen-connect-web @bufbuild/protoc-gen-es
+<span class="token comment"># runtime</span>
+<span class="token function">yarn</span> <span class="token function">add</span> @bufbuild/connect-web @bufbuild/protobuf
+</code></pre>
+<ul>
+<li>plugin
+<ul>
+<li>protoc-gen-es
+<ul>
+<li>リクエストやレスポンスメッセージのような基本型を生成</li>
+</ul>
+</li>
+<li>protoc-gen-connect-web
+<ul>
+<li>Protocol Buffer スキーマからサービスを生成</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>runtime
+<ul>
+<li>bufbuild/connect-web
+<ul>
+<li>Connect および gRPC-web プロトコルのクライアントを提供</li>
+</ul>
+</li>
+<li>bufbuild/protobuf
+<ul>
+<li>基本型に対するシリアライズなどを提供</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>次に、<code>buf</code>をインストールしましょう。
+私は、brew でインストールしました。</p>
+<pre class="language-bash"><code class="language-bash">brew <span class="token function">install</span> bufbuild/buf/buf
+<span class="token comment"># ref: https://github.com/bufbuild/buf#installation</span>
+</code></pre>
+<p>では、ProtocolBuffer スキーマから TypeScript ファイルを生成しましょう。</p>
+<pre class="language-bash"><code class="language-bash">buf generate --template buf.gen.yaml buf.build/bufbuild/eliza
+</code></pre>
+<p>成功すると、次の 2 つの TypeScript ファイルが生成されます。</p>
+<ul>
+<li>gen/buf/connect/demo/eliza/v1/eliza_connectweb.ts</li>
+<li>gen/buf/connect/demo/eliza/v1/eliza_pb.ts</li>
+</ul>
+<p><code>eliza_connectweb.ts</code>は、次のコードが含まれています。</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token comment">// eliza_connectweb.ts</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> <span class="token maybe-class-name">SayRequest</span><span class="token punctuation">,</span> <span class="token maybe-class-name">SayResponse</span> <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"./eliza_pb.js"</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> <span class="token maybe-class-name">MethodKind</span> <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"@bufbuild/protobuf"</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">const</span> <span class="token maybe-class-name">ElizaService</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+  typeName<span class="token punctuation">:</span> <span class="token string">"ElizaService"</span><span class="token punctuation">,</span>
+  methods<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    say<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+      name<span class="token punctuation">:</span> <span class="token string">"Say"</span><span class="token punctuation">,</span>
+      <span class="token constant">I</span><span class="token punctuation">:</span> <span class="token maybe-class-name">SayRequest</span><span class="token punctuation">,</span>
+      <span class="token constant">O</span><span class="token punctuation">:</span> <span class="token maybe-class-name">SayResponse</span><span class="token punctuation">,</span>
+      kind<span class="token punctuation">:</span> <span class="token maybe-class-name">MethodKind</span><span class="token punctuation">.</span><span class="token property-access"><span class="token maybe-class-name">Unary</span></span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span> <span class="token keyword">as</span> <span class="token keyword">const</span><span class="token punctuation">;</span>
+</code></pre>
+<p><code>eliza_pb.ts</code>は、次のコードが含まれています。</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">SayRequest</span> <span class="token keyword">extends</span> <span class="token class-name">Message</span><span class="token operator">&lt;</span><span class="token maybe-class-name">SayRequest</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+ <span class="token doc-comment comment"> /**
+   * <span class="token keyword">@generated</span> from field: string sentence = 1;
+   */</span>
+  sentence <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="token parameter">data<span class="token operator">?</span><span class="token punctuation">:</span> <span class="token maybe-class-name">PartialMessage</span><span class="token operator">&lt;</span><span class="token maybe-class-name">SayRequest</span><span class="token operator">&gt;</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">super</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    proto3<span class="token punctuation">.</span><span class="token property-access">util</span><span class="token punctuation">.</span><span class="token method function property-access">initPartial</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">static</span> <span class="token keyword">readonly</span> runtime <span class="token operator">=</span> proto3<span class="token punctuation">;</span>
+  <span class="token keyword">static</span> <span class="token keyword">readonly</span> typeName <span class="token operator">=</span> <span class="token string">"buf.connect.demo.eliza.v1.SayRequest"</span><span class="token punctuation">;</span>
+  # <span class="token spread operator">...</span> 省略 <span class="token spread operator">...</span>
+<span class="token punctuation">}</span>
+<span class="token doc-comment comment">
+/**
+ * SayResponse describes the sentence responded by the ELIZA program.
+ *
+ * <span class="token keyword">@generated</span> from message buf.connect.demo.eliza.v1.SayResponse
+ */</span>
+<span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">SayResponse</span> <span class="token keyword">extends</span> <span class="token class-name">Message</span><span class="token operator">&lt;</span><span class="token maybe-class-name">SayResponse</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+ <span class="token doc-comment comment"> /**
+   * <span class="token keyword">@generated</span> from field: string sentence = 1;
+   */</span>
+  sentence <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="token parameter">data<span class="token operator">?</span><span class="token punctuation">:</span> <span class="token maybe-class-name">PartialMessage</span><span class="token operator">&lt;</span><span class="token maybe-class-name">SayResponse</span><span class="token operator">&gt;</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">super</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    proto3<span class="token punctuation">.</span><span class="token property-access">util</span><span class="token punctuation">.</span><span class="token method function property-access">initPartial</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">static</span> <span class="token keyword">readonly</span> runtime <span class="token operator">=</span> proto3<span class="token punctuation">;</span>
+  <span class="token keyword">static</span> <span class="token keyword">readonly</span> typeName <span class="token operator">=</span> <span class="token string">"buf.connect.demo.eliza.v1.SayResponse"</span><span class="token punctuation">;</span>
+  # <span class="token spread operator">...</span> 省略 <span class="token spread operator">...</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>これで、準備はできました。</p>
+<h2 id="2-生成された-typescript-ファイルから-grpc-クライアントを実装"><a class="anchor" href="#2-生成された-typescript-ファイルから-grpc-クライアントを実装"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>2. 生成された TypeScript ファイルから gRPC クライアントを実装</h2>
+<p>では、gRPC のクライアントを実装しましょう。
+gRPC のクライント生成は、<code>createPromiseClient</code> でできます。
+生成時の引数に、サービスとトランスポート(?)というものを渡す必要があります。
+コードを見たほうがわかりやすいと思うので、次のコードを見てください。</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token comment">// client.ts</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> useMemo <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"react"</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> <span class="token maybe-class-name">ServiceType</span> <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"@bufbuild/protobuf"</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span>
+  createConnectTransport<span class="token punctuation">,</span>
+  createPromiseClient<span class="token punctuation">,</span>
+  <span class="token maybe-class-name">PromiseClient</span><span class="token punctuation">,</span>
+  <span class="token maybe-class-name">Transport</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"@bufbuild/connect-web"</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> transport <span class="token operator">=</span> <span class="token function">createConnectTransport</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  baseUrl<span class="token punctuation">:</span> <span class="token string">"https://demo.connect.build"</span><span class="token punctuation">,</span> # バックエンド側の<span class="token constant">URL</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">function</span> useClient<span class="token operator">&lt;</span><span class="token constant">T</span> <span class="token keyword">extends</span> <span class="token class-name">ServiceType</span><span class="token operator">&gt;</span><span class="token punctuation">(</span>service<span class="token punctuation">:</span> <span class="token constant">T</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token maybe-class-name">PromiseClient</span><span class="token operator">&lt;</span><span class="token constant">T</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token function">useMemo</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token arrow operator">=&gt;</span> <span class="token function">createPromiseClient</span><span class="token punctuation">(</span>service<span class="token punctuation">,</span> transport<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>service<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>このクライアントを、使ってみましょう。</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token comment">// App.tsx</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span> createConnectTransport<span class="token punctuation">,</span> <span class="token maybe-class-name">Interceptor</span> <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"@bufbuild/connect-web"</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> <span class="token maybe-class-name">ElizaService</span> <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"../gen/buf/connect/demo/eliza/v1/eliza_connectweb"</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> useClient <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"./client"</span><span class="token punctuation">;</span>
+
+<span class="token keyword">function</span> <span class="token function"><span class="token maybe-class-name">App</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> client <span class="token operator">=</span> <span class="token function">useClient</span><span class="token punctuation">(</span><span class="token maybe-class-name">ElizaService</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  client
+    <span class="token punctuation">.</span><span class="token method function property-access">say</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+      sentence<span class="token punctuation">:</span> <span class="token string">"hello"</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token method function property-access">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">{</span> sentence <span class="token punctuation">}</span></span><span class="token punctuation">)</span> <span class="token arrow operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token console class-name">console</span><span class="token punctuation">.</span><span class="token method function property-access">log</span><span class="token punctuation">(</span>sentence<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">// ...</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>このように、ProtocolBuffers の ElizaService が、型補完として使えるようになります。
+良い感じです！</p>
+<h2 id="終わりに"><a class="anchor" href="#終わりに"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>終わりに</h2>
+<p>意外とあっさり動いて、びっくりしました。</p>
+
+  
+    <div class="content-footer">
+  <p>
+    Caught a mistake or want to improve the blog?
+    <a href="https://github.com/Silver-birder/Silver-birder.github.io/edit/main/./docs/blog/contents/try_connect_web.md">Edit this blog post on GitHub!</a>
+  </p>
+</div>
+
+
+  
+</main>
+
+  </main>
+
+    </div>
+  </div>
+
+
+    
+      <footer id="main-footer">
+  
+    
+
+  
+    <div id="footer-menu">
+  <div class="content-area">
+    
+      <nav>
+        <h3>Discover</h3>
+        <ul>
+          
+            <li>
+              <a href="https://silver-birder.github.io/blog/">Blog</a>
+            </li>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/Silver-birder.github.io/issues">Help and Feedback</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>My Sales</h3>
+        <ul>
+          
+            <li>
+              <a href="https://www.amazon.co.jp/芝本雅史/e/B08FJK5C43">Amazon</a>
+            </li>
+          
+            <li>
+              <a href="https://silverbirder.booth.pm">Booth</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>Follow</h3>
+        <ul>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/Silver-birder.github.io">GitHub</a>
+            </li>
+          
+            <li>
+              <a href="https://twitter.com/silver_birder">Twitter</a>
+            </li>
+          
+            <li>
+              <a href="https://www.google.com/maps/contrib/101722346324226588907/reviews/@34.6907839,135.4537926,13z/">Google Map</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+  </div>
+</div>
+
+  
+</footer>
+
+    
+
+    
+  
+
+
+  
+
+<script>
+  window.__rocketServiceWorkerUrl = '/service-worker.js';
+</script>
+
+
+
+
+
+
+  
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-146805630-4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-146805630-4');
+  </script>
+
+
+
+
+  
+
+
+<script type="module" src="../../../e931d24b.js"></script>
+<script type="module" src="../../../6dd6d5cb.js"></script>
+<script type="module" src="../../../dd4fcd54.js" inject-service-worker=""></script>
+<script type="module" src="../../../4752aba985.js"></script>
+
+</body></html>
