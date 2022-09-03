@@ -8,18 +8,18 @@
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WebComponentsでoEmbedのコンポーネントを開発して、学んだこと: silverbirder</title>
-<meta property="og:title" content="WebComponentsでoEmbedのコンポーネントを開発して、学んだこと: silverbirder">
+<title>Stable Diffusion API 開発: silverbirder</title>
+<meta property="og:title" content="Stable Diffusion API 開発: silverbirder">
 
 <meta name="generator" content="rocket 0.1">
-<link rel="canonical" href="https://silver-birder.github.io/blog/contents/what_i_learned_from_developing_o_embed_web_components/">
+<link rel="canonical" href="https://silver-birder.github.io/blog/contents/using_stability_ai_API/">
 
 
 
   
 
-<meta name="description" content="WebComponents で、oEmbed ぼコンポーネントを開発し、公開しました。開発していく上で、学んだことを列挙しようと思います。">
-<meta property="og:description" content="WebComponents で、oEmbed ぼコンポーネントを開発し、公開しました。開発していく上で、学んだことを列挙しようと思います。">
+<meta name="description" content="Stable Diffusion は、文章を渡すと画像を生成してくれる AI で OSS です。これを自前で動かそうとすると、GPU が必要になります。">
+<meta property="og:description" content="Stable Diffusion は、文章を渡すと画像を生成してくれる AI で OSS です。これを自前で動かそうとすると、GPU が必要になります。">
 
   
     
@@ -36,7 +36,7 @@
 <meta property="og:type" content="website">
 
 <meta property="og:image" content="https://silver-birder.github.io/c94b4303.png">
-<meta property="og:url" content="https://silver-birder.github.io/blog/contents/what_i_learned_from_developing_o_embed_web_components/">
+<meta property="og:url" content="https://silver-birder.github.io/blog/contents/using_stability_ai_API/">
 
 <meta name="twitter:card" content="summary_large_image">
 
@@ -77,7 +77,7 @@
 <link rel="preload" href="../../../5284d142.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../6dd6d5cb.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../dd4fcd54.js" as="script" crossorigin="anonymous">
-<link rel="preload" href="../../../4752aba991.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../4752aba990.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../e12801e9.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../90f0e617.js" as="script" crossorigin="anonymous">
 </head>
@@ -182,40 +182,30 @@
     <li class="current">
       <h3>Headings</h3>
       <ul><li class="menu-item">
-<a href="/blog/contents/what_i_learned_from_developing_o_embed_web_components/#スターターキット">スターターキット</a>
+<a href="/blog/contents/using_stability_ai_API/#結論">結論</a>
 </li>
 <li class="menu-item">
-<a href="/blog/contents/what_i_learned_from_developing_o_embed_web_components/#キャッチアップ">キャッチアップ</a>
+<a href="/blog/contents/using_stability_ai_API/#gpu-と設計">GPU と設計</a>
 </li>
 <li class="menu-item">
-<a href="/blog/contents/what_i_learned_from_developing_o_embed_web_components/#ベストプラクティス">ベストプラクティス</a>
+<a href="/blog/contents/using_stability_ai_API/#stability-sdk">stability-sdk</a>
 </li>
 <li class="menu-item">
-<a href="/blog/contents/what_i_learned_from_developing_o_embed_web_components/#テスト">テスト</a>
-</li>
-<li class="menu-item">
-<a href="/blog/contents/what_i_learned_from_developing_o_embed_web_components/#publish">Publish</a>
-</li>
-<li class="menu-item">
-<a href="/blog/contents/what_i_learned_from_developing_o_embed_web_components/#終わりに">終わりに</a>
+<a href="/blog/contents/using_stability_ai_API/#終わりに">終わりに</a>
 </li></ul>
     </li>
   </ul>
   <div class="sidebar-tags">
     <h3>Date</h3>
-    <div>Fri Mar 25 2022</div>
+    <div>Sat Sep 03 2022</div>
   </div>
   <div class="sidebar-tags">
     <h3>Tags</h3>
     <div class="tags">
       
-        <span class="tag">Web Components</span>
+        <span class="tag">Stable Diffusion</span>
       
-        <span class="tag">oEmbed</span>
-      
-        <span class="tag">Publish</span>
-      
-        <span class="tag">Learn</span>
+        <span class="tag">API</span>
       
     </div>
   </div>
@@ -239,82 +229,74 @@
     <main class="markdown-body">
   
     
-  <h1>WebComponentsでoEmbedのコンポーネントを開発して、学んだこと</h1>
+  <h1>Stable Diffusion API 開発</h1>
 
+
+  <img src="https://res.cloudinary.com/silverbirder/image/upload/v1662177842/silver-birder.github.io/blog/stable-diffusion-api-on-slack.jpg" alt="">
 
 
   
-    <p>WebComponents で、oEmbed コンポーネントを開発し、公開しました。</p>
+    <p>Stable Diffusion は、文章を渡すと画像を生成してくれる AI で OSS です。
+これを自分の PC で動かそうとすると、GPU が必要になります。
+(CPU で動かせる<a href="https://github.com/bes-dev/stable_diffusion.openvino">stable_diffusion.openvino</a> というのもあります)</p>
+<p>できれば、どの PC でも使えるように、かつ、Slack などサービスと連携できるよう API がほしいなと思いました。
+そこで、Stable Diffusion の API を開発しました。</p>
+<h2 id="結論"><a class="anchor" href="#結論"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>結論</h2>
+<p><a href="https://beta.dreamstudio.ai/dream">beta.dreamstudio.ai</a>の SDK、 <a href="https://github.com/Stability-AI/stability-sdk">stability-sdk</a>を使いました。</p>
+<p>成果物は、次のリポジトリに置いています。</p>
 <ul>
-<li><a href="https://www.webcomponents.org/element/Silver-birder/o-embed">https://www.webcomponents.org/element/Silver-birder/o-embed</a></li>
-<li><a href="https://www.npmjs.com/package/@silverbirder/o-embed">https://www.npmjs.com/package/@silverbirder/o-embed</a></li>
+<li><a href="https://github.com/Silver-birder/stable-diffusion-API">https://github.com/Silver-birder/stable-diffusion-API</a></li>
 </ul>
-<p>開発していく上で、学んだことを列挙しようと思います。</p>
-<h2 id="スターターキット"><a class="anchor" href="#スターターキット"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>スターターキット</h2>
-<p>Web Components を開発する場合、次のどちらかのスターターキットを使うのが良さそうです。</p>
+<p>ローカル環境でも、Docker コンテナでも、動きます。</p>
+<p>動かすには、<a href="https://beta.dreamstudio.ai/dream">beta.dreamstudio.ai</a>の API Key が必要になります。
+Docker で動くので、Docker をデプロイできるサービスなら、どこでも動きます。(GPU は不要です)</p>
+<p>私は、GCP が好きなので、CloudRun というサービスにデプロイしました。
+API は、とりあえず、<code>&lt;url&gt;/?prompt=&lt;text&gt;</code> というパラメータを受け取り、画像を返却します。</p>
+<p>Slack で使ってみると、こんな感じになりました。</p>
+<p><img src="https://res.cloudinary.com/silverbirder/image/upload/v1662177842/silver-birder.github.io/blog/stable-diffusion-api-on-slack.jpg" alt="stable-diffusion-api-on-slack" rocket-image="responsive"></p>
+<p>ひとまず、API で Stable Diffusion を動かせました。</p>
+<h2 id="gpu-と設計"><a class="anchor" href="#gpu-と設計"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>GPU と設計</h2>
+<p><a href="https://github.com/Stability-AI/stability-sdk">stability-sdk</a>を使う前までは、自前で Stable Diffusion を動かす環境を用意しようと設計を考えました。設計の調査メモは、次のリンクにメモを残しています。</p>
 <ul>
-<li><a href="https://webcomponents.dev/">webcomponents.dev</a></li>
-<li><a href="https://open-wc.org/">open-wc</a></li>
+<li><a href="https://zenn.dev/silverbirder/scraps/3842c715662551">https://zenn.dev/silverbirder/scraps/3842c715662551</a></li>
 </ul>
-<p>これらを使わずとも、Web Components を開発できるのですが、Typescript で書いたり、テストをしたりするには、
-それなりに準備が必要です。そのため、開発の初速を高めたいなら、スターターキットを使いましょう。</p>
-<p>もしくは、先にスターターキットを使わず素の Javascript だけで Web Components を作ってみて、その後にスターターキットを使うと良さを実感できるかもしれません。</p>
-<p>個人的に、open-wc をお勧めします。なぜなら、以下のツールが揃っているからです。</p>
+<p>具体的に、次のようなパターンを考えました。</p>
+<ol>
+<li>Google Colaboratory の GPU を使って Stable Diffusion を動かし、簡易な API で公開する</li>
+<li>サーバー(GCE や CloudRun など) で GPU を使って Stable Diffusion を動かし、簡易な API で公開する</li>
+<li>バッチ(Cloud Batch)で GPU を使って Stable Diffusion を動かし、必要なときに動かす。(API からバッチ処理をキックする)</li>
+</ol>
+<p>1 番目は、Google Colaboratory の利用は 12 時間制限というのがあり、そこを回避する何かが必要なります。ただし、本来の用途と外れていると思うので、却下しました。</p>
+<p>2 番目は、金銭的に数万~数十万円以上のランニングコストが発生するので却下です。</p>
+<p>3 番目は、一番最初の構想したものです。2 番目のような GPU のサーバを常時起動しているとめちゃくちゃもったいないので、
+バッチ処理として 3 番目の案を考えていました。3 番目で実際に構築してみると、(何が原因か深く調べていないですが) 起動に 30 分以上かかってしまい、使い物にならなさそうでした。</p>
+<p>で、悩んだ結果、<a href="https://github.com/Stability-AI/stability-sdk">stability-sdk</a> がメンテナンスやランニングコストも不要で、シュッとできそうだったことに気づきました。</p>
+<p>もちろん、デメリットはあります。</p>
 <ul>
-<li>Testing</li>
-<li>Demoing</li>
-<li>Building</li>
-<li>Linting</li>
+<li>SDK に依存するので、自身がコントロールできない(img2img できない)</li>
+<li>課金制</li>
 </ul>
-<p>もちろん、Typescript もサポートしています。</p>
-<h2 id="キャッチアップ"><a class="anchor" href="#キャッチアップ"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>キャッチアップ</h2>
-<p>Web Components ってどういうものなのか、キャッチアップするには MDN のサイトが参考になります。</p>
+<p>しかし、個人レベルで利用するという前提でしたので、デメリットよりもメリットの方が大きいと判断しました。</p>
+<h2 id="stability-sdk"><a class="anchor" href="#stability-sdk"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>stability-sdk</h2>
+<p><a href="https://beta.dreamstudio.ai/dream">beta.dreamstudio.ai</a> は、Stable Diffusion を使っています。
+API として、<a href="https://github.com/Stability-AI/stability-sdk">stability-sdk</a> を公開しています。
+使うには、Python で書く必要があります。
+ソースコードを読むと、gRPC を使っているため、別言語で SDK を書くのは比較的簡単だと思います。
+私は、Python でシュッと書けるので、flask と stability-sdk を使いました。</p>
 <ul>
-<li><a href="https://developer.mozilla.org/ja/docs/Web/Web_Components">ウェブコンポーネント | MDN</a></li>
+<li><a href="https://github.com/Silver-birder/stable-diffusion-API">https://github.com/Silver-birder/stable-diffusion-API</a></li>
 </ul>
-<p>また、日本語で WebComponents(Custom Elements)の仕様書もあります。</p>
-<ul>
-<li><a href="https://triple-underscore.github.io/HTML-custom-ja.html">HTML Standard — Custom elements（日本語訳）</a></li>
-</ul>
-<p>Chrome の中にある Chromium におけるレンダリングエンジン blink の実装コードも、公開されています。</p>
-<ul>
-<li><a href="https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/core/html/custom/README.md">chromium/third_party/blink/renderer/core/html/custom/README.md</a></li>
-</ul>
-<h2 id="ベストプラクティス"><a class="anchor" href="#ベストプラクティス"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>ベストプラクティス</h2>
-<p>Google より、Custom Elements のベストプラクティスが公開されています。</p>
-<p><a href="https://developers.google.com/web/fundamentals/web-components/best-practices">Custom Element Best Practices &nbsp;|&nbsp; Web Fundamentals &nbsp;|&nbsp; Google Developers</a></p>
-<p>例えば</p>
-<blockquote>
-<p>Always accept primitive data (strings, numbers, booleans) as either attributes or properties.</p>
-</blockquote>
-<p>にあるように、プリミティブなデータのみ HTML の属性に渡すようにしましょう。
-オブジェクトや配列のようなリッチなデータは、シリアル化する必要がありオブジェクト参照がなくなってしまう欠点があります。</p>
-<h2 id="テスト"><a class="anchor" href="#テスト"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>テスト</h2>
-<p>Web Components のテストを書くには、Shadow DOM に対応する必要があります。
-JSDOM のように、ブラウザ API をラップするライブラリを使っても良いのですが、ヘッドレスブラウザを使ったほうが妥当です。
-そこで、<a href="https://www.npmjs.com/package/@web/test-runner">@web/test-runner</a>が便利です。
-このテストライブラリは、open-wc と同じ Modern Web というモノの 1 つです。
-@web/test-runner には、Puppeteer、Playwright、Selenium の 3 つをサポートしています。</p>
-<h2 id="publish"><a class="anchor" href="#publish"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Publish</h2>
-<p>作成した Web Components を Publish したい場合、次の記事を読むと良いです。</p>
-<p><a href="https://open-wc.org/guides/developing-components/publishing/">Developing Components: Publishing: Open Web Components</a></p>
-<p>特に、してはいけないことを読むと、なるほどな〜ってなります。</p>
-<blockquote>
-<p>❌ Do not optimize<br>
-❌ Do not bundle<br>
-❌ Do not minify<br>
-❌ Do not use .mjs file extensions<br>
-❌ Do not import polyfills</p>
-</blockquote>
-<p>詳しくは、上記の記事を読んでください。</p>
+<p>ひとまず、Prompt だけを受け付ける超絶シンプルな API を書きました。
+<a href="https://github.com/Stability-AI/stability-sdk">stability-sdk</a>は、様々パラメータがあるので、それも受け付けられるようにしようかなと思ったり、Midjourney の discord のボットのようなモノを書いても面白そうだなと思いました。</p>
 <h2 id="終わりに"><a class="anchor" href="#終わりに"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>終わりに</h2>
-<p>Web Components をプロダクションレベルで使えるようになりたいなと思います。</p>
+<p>マークダウンで、画像を読み込むときに、今回開発した API を指定すると、マークダウンを開いたタイミングで画像が毎回変わります。
+prompt と seed を指定すれば固定できるんですけど、こういうのも面白いなと思っています。</p>
 
   
     <div class="content-footer">
   <p>
     Caught a mistake or want to improve the blog?
-    <a href="https://github.com/Silver-birder/Silver-birder.github.io/edit/main/./docs/blog/contents/what_i_learned_from_developing_o_embed_web_components.md">Edit this blog post on GitHub!</a>
+    <a href="https://github.com/Silver-birder/Silver-birder.github.io/edit/main/./docs/blog/contents/using_stability_ai_API.md">Edit this blog post on GitHub!</a>
   </p>
 </div>
 
@@ -428,6 +410,6 @@ JSDOM のように、ブラウザ API をラップするライブラリを使っ
 <script type="module" src="../../../e931d24b.js"></script>
 <script type="module" src="../../../6dd6d5cb.js"></script>
 <script type="module" src="../../../dd4fcd54.js" inject-service-worker=""></script>
-<script type="module" src="../../../4752aba991.js"></script>
+<script type="module" src="../../../4752aba990.js"></script>
 
 </body></html>
