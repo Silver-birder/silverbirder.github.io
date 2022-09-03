@@ -8,18 +8,18 @@
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Web Componentsの良さ: silverbirder</title>
-<meta property="og:title" content="Web Componentsの良さ: silverbirder">
+<title>ERNIE-ViLG を Google Colaboratory で動かしてみた: silverbirder</title>
+<meta property="og:title" content="ERNIE-ViLG を Google Colaboratory で動かしてみた: silverbirder">
 
 <meta name="generator" content="rocket 0.1">
-<link rel="canonical" href="https://silver-birder.github.io/blog/contents/the_goodness_of_web_components./">
+<link rel="canonical" href="https://silver-birder.github.io/blog/contents/ernie_vilg_demo/">
 
 
 
   
 
-<meta name="description" content="Web Components を人にお勧めしたいんです。メリット・デメリットをかんたんにまとめたいと思います。Web Components is 何https://www.webcomponents.org/specs より引用します。">
-<meta property="og:description" content="Web Components を人にお勧めしたいんです。メリット・デメリットをかんたんにまとめたいと思います。Web Components is 何https://www.webcomponents.org/specs より引用します。">
+<meta name="description" content="ERNIE-ViLG というのが、&quot;二次元キャラ&quot; に強いという記事を目にしました。実際に使ってみようと、次のページで試したんですが、レスポンスがイマイチでした。そこで、次の記事を参考にして、ERNIE-ViLG を Google Colaboratory で動かすようにしました。">
+<meta property="og:description" content="ERNIE-ViLG というのが、&quot;二次元キャラ&quot; に強いという記事を目にしました。実際に使ってみようと、次のページで試したんですが、レスポンスがイマイチでした。そこで、次の記事を参考にして、ERNIE-ViLG を Google Colaboratory で動かすようにしました。">
 
   
     
@@ -36,7 +36,7 @@
 <meta property="og:type" content="website">
 
 <meta property="og:image" content="https://silver-birder.github.io/c94b4303.png">
-<meta property="og:url" content="https://silver-birder.github.io/blog/contents/the_goodness_of_web_components./">
+<meta property="og:url" content="https://silver-birder.github.io/blog/contents/ernie_vilg_demo/">
 
 <meta name="twitter:card" content="summary_large_image">
 
@@ -77,7 +77,7 @@
 <link rel="preload" href="../../../5284d142.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../6dd6d5cb.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../dd4fcd54.js" as="script" crossorigin="anonymous">
-<link rel="preload" href="../../../4752aba981.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../4752aba922.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../e12801e9.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../90f0e617.js" as="script" crossorigin="anonymous">
 </head>
@@ -182,27 +182,28 @@
     <li class="current">
       <h3>Headings</h3>
       <ul><li class="menu-item">
-<a href="/blog/contents/the_goodness_of_web_components./#web-components-is-何">Web Components is 何</a>
+<a href="/blog/contents/ernie_vilg_demo/#google-colaboratory-で動かす">Google Colaboratory で動かす</a>
 </li>
 <li class="menu-item">
-<a href="/blog/contents/the_goodness_of_web_components./#メリット">メリット</a>
+<a href="/blog/contents/ernie_vilg_demo/#準備">準備</a>
 </li>
 <li class="menu-item">
-<a href="/blog/contents/the_goodness_of_web_components./#デメリット">デメリット</a>
+<a href="/blog/contents/ernie_vilg_demo/#ernie-vilg-を使う">ERNIE-ViLG を使う</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/ernie_vilg_demo/#google-colaboratory-で-画像を簡単に見たい">Google Colaboratory で 画像を簡単に見たい</a>
 </li></ul>
     </li>
   </ul>
   <div class="sidebar-tags">
     <h3>Date</h3>
-    <div>Tue Mar 01 2022</div>
+    <div>Sat Sep 03 2022</div>
   </div>
   <div class="sidebar-tags">
     <h3>Tags</h3>
     <div class="tags">
       
-        <span class="tag">Web Components</span>
-      
-        <span class="tag">Goodness</span>
+        <span class="tag">ERNIE-ViLG</span>
       
     </div>
   </div>
@@ -226,73 +227,101 @@
     <main class="markdown-body">
   
     
-  <h1>Web Componentsの良さ</h1>
+  <h1>ERNIE-ViLG を Google Colaboratory で動かしてみた</h1>
 
+
+  <img src="https://res.cloudinary.com/silverbirder/image/upload/v1662181776/silver-birder.github.io/blog/ERNIE-ViLG-DEMO.png" alt="">
 
 
   
-    <p>Web Components を人にお勧めしたいんです。メリット・デメリットをかんたんにまとめたいと思います。</p>
-<h2 id="web-components-is-何"><a class="anchor" href="#web-components-is-何"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Web Components is 何</h2>
-<p><a href="https://www.webcomponents.org/specs">https://www.webcomponents.org/specs</a> より引用します。</p>
-<blockquote>
-<p>Web components is a meta-specification made possible by four other specifications:<br>
-The Custom Elements specification<br>
-The shadow DOM specification<br>
-The HTML Template specification<br>
-The ES Module specification</p>
-</blockquote>
-<p>WebComponents は、ブラウザの 4 つの API で実現可能となるメタ仕様です。</p>
-<blockquote>
-<p>These four specifications can be used on their own but combined allow developers to define their own tags (custom element), whose styles are encapsulated and isolated (shadow dom), that can be restamped many times (template), and have a consistent way of being integrated into applications (es module).</p>
-</blockquote>
-<p>div や span といった HTML タグがブラウザ標準にありますが、WebComponents は、独自のタグを定義することができます。</p>
-<h2 id="メリット"><a class="anchor" href="#メリット"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>メリット</h2>
+    <p>ERNIE-ViLG というのが、"二次元キャラ" に強いという記事を目にしました。</p>
+<p><ogp-me src="https://news.yahoo.co.jp/articles/fc688762207216b29ba33e64ca8e831e3181e9c0"></ogp-me></p>
+<p>実際に使ってみようと、次のページで試したんですが、レスポンスがイマイチでした。</p>
 <ul>
-<li>環境適合性
+<li><a href="https://huggingface.co/spaces/PaddlePaddle/ERNIE-ViLG">https://huggingface.co/spaces/PaddlePaddle/ERNIE-ViLG</a></li>
+</ul>
+<p>そこで、<a href="https://github.com/PaddlePaddle/PaddleHub/tree/develop/modules/image/text_to_image/ernie_vilg">公式ページ</a>を参考にして、ERNIE-ViLG を Google Colaboratory を書こうと思いました。</p>
+<h2 id="google-colaboratory-で動かす"><a class="anchor" href="#google-colaboratory-で動かす"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Google Colaboratory で動かす</h2>
+<p>実際に作ったものは、次のモノです。</p>
 <ul>
-<li>フレームワークに依存しないので、Rails など Web フレームワークへの適用が容易です。</li>
+<li><a href="https://colab.research.google.com/github/Silver-birder/DEMO-PaddlePaddle-PaddleHub-ERNIE-ViLG/blob/main/src/DEMO_PaddlePaddle_PaddleHub_ERNIE_ViLG.ipynb">DEMO_PaddlePaddle_PaddleHub_ERNIE_ViLG</a></li>
+</ul>
+<p>中身については、正直良くわかっていないですが(<a href="https://github.com/PaddlePaddle/PaddleHub/tree/develop/modules/image/text_to_image/ernie_vilg">公式ページ</a> 通りに試しただけ)、簡単に紹介しようと思います。</p>
+<h2 id="準備"><a class="anchor" href="#準備"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>準備</h2>
+<p>次のコマンドを叩いて、ERNIE-ViLG の準備をします。(GPU 環境でないと動作しません)</p>
+<pre class="language-bash"><code class="language-bash">$ pip <span class="token function">install</span> paddlepaddle-gpu -U
+$ pip <span class="token function">install</span> <span class="token assign-left variable">paddlehub</span><span class="token operator">==</span><span class="token number">2.1</span>.0
+</code></pre>
+<pre class="language-python"><code class="language-python"><span class="token keyword">import</span> paddlehub
+paddlehub<span class="token punctuation">.</span>server_check<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+<pre class="language-bash"><code class="language-bash">$ hub <span class="token function">install</span> ernie_vilg
+</code></pre>
+<h2 id="ernie-vilg-を使う"><a class="anchor" href="#ernie-vilg-を使う"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>ERNIE-ViLG を使う</h2>
+<p>使うのは、2 つのパターンがあります。</p>
+<ol>
+<li>CLI で実行する(hub コマンド)</li>
+<li>Python で実行する(hub ライブラリ)</li>
+</ol>
+<p>CLI の場合は、次のとおりです。</p>
+<pre class="language-bash"><code class="language-bash">$ hub run ernie_vilg --text_prompts <span class="token string">"宁静的小镇"</span> --style <span class="token string">"油画"</span> --output_dir ernie_vilg_out
+</code></pre>
+<p>Python の場合は、次のとおりです。</p>
+<pre class="language-python"><code class="language-python"><span class="token keyword">import</span> paddlehub <span class="token keyword">as</span> hub
+
+module <span class="token operator">=</span> hub<span class="token punctuation">.</span>Module<span class="token punctuation">(</span>name<span class="token operator">=</span><span class="token string">"ernie_vilg"</span><span class="token punctuation">)</span>
+text_prompts <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">"宁静的小镇"</span><span class="token punctuation">]</span>
+images <span class="token operator">=</span> module<span class="token punctuation">.</span>generate_image<span class="token punctuation">(</span>text_prompts<span class="token operator">=</span>text_prompts<span class="token punctuation">,</span> style<span class="token operator">=</span><span class="token string">'油画'</span><span class="token punctuation">,</span> output_dir<span class="token operator">=</span><span class="token string">'./ernie_vilg_out/'</span><span class="token punctuation">)</span>
+</code></pre>
+<p>オプションは、次の説明の通りです。</p>
+<ul>
+<li>text_prompts
+<ul>
+<li>生成したい画像の内容を記述した入力文</li>
 </ul>
 </li>
-<li>軽量
+<li>style
 <ul>
-<li>ブラウザ API のみ使用するので、ロードするアセットはありません。</li>
-</ul>
-</li>
-<li>シンプル
+<li>スタイルで画像を生成することが可能
 <ul>
-<li>HTML タグを使う要領で、WebComponents を使います。</li>
-</ul>
-</li>
-<li>サンドボックス
-<ul>
-<li>Shadow DOM のおかげで、CSS のスタイルが独自のタグの外に漏れません。</li>
+<li>油画 (油絵)</li>
+<li>水彩 (水彩画)</li>
+<li>粉笔画 (パステル)</li>
+<li>卡通 (漫画, カートゥーン)</li>
+<li>儿童画 (子供向け)</li>
+<li>蜡笔画 (クレヨン)</li>
+<li>探索无限 (無限大を探る)</li>
 </ul>
 </li>
 </ul>
-<h2 id="デメリット"><a class="anchor" href="#デメリット"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>デメリット</h2>
+</li>
+<li>topk
 <ul>
-<li>パフォーマンス
-<ul>
-<li>React のような描画最適化は、ありません。</li>
+<li>生成する画像数（最大 6 枚）</li>
 </ul>
 </li>
-<li>機能性
+<li>output_dir
 <ul>
-<li>ブラウザ API の影響を、受けます。</li>
-</ul>
-</li>
-<li>SEO
-<ul>
-<li>Web Components は Javascript 実行が必須です。そのため、SSR は実現できません。</li>
+<li>保存先のディレクトリ (デフォルト:ernievilg_output)</li>
 </ul>
 </li>
 </ul>
+<p>※ <a href="https://github.com/PaddlePaddle/PaddleHub/tree/develop/modules/image/text_to_image/ernie_vilg#3api">ERNIE-ViLG#API</a></p>
+<p>text_prompts や style は、中国語で書く必要があります。</p>
+<h2 id="google-colaboratory-で-画像を簡単に見たい"><a class="anchor" href="#google-colaboratory-で-画像を簡単に見たい"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Google Colaboratory で 画像を簡単に見たい</h2>
+<p>ERNIE-ViLG を動かすと、出力ファイルが Google Colaboratory のフォルダに入ります。
+画像を見るためには、画像をダウンロードして、開くという手間があります。</p>
+<p><img src="https://res.cloudinary.com/silverbirder/image/upload/v1662183656/silver-birder.github.io/blog/download_image_on_browser.png" alt="download_image_on_browser" rocket-image="responsive"></p>
+<p>そこで、フォルダを Google Drive と同期するという機能があります。
+これを使えば、保存先を Google Drive にしておけば、Google Drive の UI 上から画像を見ることができます。</p>
+<p><img src="https://res.cloudinary.com/silverbirder/image/upload/v1662183656/silver-birder.github.io/blog/mount_google_drive.png" alt="mount_google_drive" rocket-image="responsive"></p>
+<p>めちゃくちゃ便利なので、ぜひ使ってみてください。</p>
 
   
     <div class="content-footer">
   <p>
     Caught a mistake or want to improve the blog?
-    <a href="https://github.com/Silver-birder/Silver-birder.github.io/edit/main/./docs/blog/contents/the_goodness_of_web_components..md">Edit this blog post on GitHub!</a>
+    <a href="https://github.com/Silver-birder/Silver-birder.github.io/edit/main/./docs/blog/contents/ernie_vilg_demo.md">Edit this blog post on GitHub!</a>
   </p>
 </div>
 
@@ -406,6 +435,6 @@ The ES Module specification</p>
 <script type="module" src="../../../e931d24b.js"></script>
 <script type="module" src="../../../6dd6d5cb.js"></script>
 <script type="module" src="../../../dd4fcd54.js" inject-service-worker=""></script>
-<script type="module" src="../../../4752aba981.js"></script>
+<script type="module" src="../../../4752aba922.js"></script>
 
 </body></html>
