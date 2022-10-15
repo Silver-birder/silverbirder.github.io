@@ -1,0 +1,454 @@
+<!DOCTYPE html><html lang="ja" dir="ltr"><head>
+  
+    
+
+  
+
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GraphQL Guildのエコシステムって便利だね: silverbirder</title>
+<meta property="og:title" content="GraphQL Guildのエコシステムって便利だね: silverbirder">
+
+<meta name="generator" content="rocket 0.1">
+<link rel="canonical" href="https://silver-birder.github.io/blog/contents/graphql_guild_ecosystem_is_useful/">
+
+
+
+  
+
+<meta name="description" content="GraphQL Guild ってご存知ですか？GraphQL 界隈だと、Code Generator が有名と思いますが">
+<meta property="og:description" content="GraphQL Guild ってご存知ですか？GraphQL 界隈だと、Code Generator が有名と思いますが">
+
+  
+    
+<link rel="apple-touch-icon" sizes="180x180" href="../../../assets/apple-touch-icon.jpg">
+<link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../../assets/favicon-16x16.png">
+<link rel="manifest" href="../../../assets/webmanifest.json">
+
+<meta name="msapplication-TileColor" content="#1d3557">
+<meta name="theme-color" content="#1d3557">
+
+  
+    <meta property="og:site_name" content="silverbirder">
+<meta property="og:type" content="website">
+
+<meta property="og:image" content="https://silver-birder.github.io/c94b4303.png">
+<meta property="og:url" content="https://silver-birder.github.io/blog/contents/graphql_guild_ecosystem_is_useful/">
+
+<meta name="twitter:card" content="summary_large_image">
+
+  
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="">
+
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&amp;display=optional" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&amp;display=optional" rel="stylesheet">
+
+  
+    <link rel="stylesheet" href="../../../3cb4adfb.css">
+<link rel="stylesheet" href="../../../0f4765a3.css">
+<link rel="stylesheet" href="../../../ac2ea3b8.css">
+<link rel="stylesheet" href="../../../2366292e.css">
+
+  
+    <noscript><link rel="stylesheet" href="/_merged_assets/_static/search/noscript.css"></noscript>
+
+  
+    <link rel="stylesheet" href="../../../f5cf94c7.css">
+  
+    
+  
+    <noscript><link rel="stylesheet" href="/_merged_assets/_static/noscript.css"/></noscript>
+
+  
+    <link rel="stylesheet" href="../../../b1403e10.css">
+  
+    <meta name="twitter:creator" content="@Silver_birder">
+
+<link rel="stylesheet" href="../../../611b393e.css" mdjs-use="">
+
+<meta name="google-site-verification" content="-8bAm041798VvU0oItcuyuShbVINfNMLfTmP7tENPDY">
+  
+
+<link rel="preload" href="../../../e931d24b.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../a2a9827a.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../5284d142.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../6dd6d5cb.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../dd4fcd54.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../4752aba933.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../e12801e9.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../90f0e617.js" as="script" crossorigin="anonymous">
+</head>
+
+  
+
+  
+  <body layout="layout-blog-details">
+  
+
+    
+      <header id="main-header">
+  <div class="content-area">
+    
+      <button id="mobile-menu-trigger" data-action="trigger-mobile-menu">
+	<span class="sr-only">Show Menu</span>
+	      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon">
+        <path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path>
+      </svg>
+
+</button>
+
+    
+      
+	<a class="logo-link" href="/">
+  <img src="../../../90a4fb13.svg" alt="Rocket Logo">
+  <span>silverbirder</span>
+</a>
+
+
+
+    
+      <rocket-search class="search" json-url="/_merged_assets/_static/rocket-search-index.json">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129" style="width: 25px;">
+    <path d="M51.6 96.7c11 0 21-3.9 28.8-10.5l35 35c.8.8 1.8 1.2 2.9 1.2s2.1-.4 2.9-1.2c1.6-1.6 1.6-4.2 0-5.8l-35-35c6.5-7.8 10.5-17.9 10.5-28.8 0-24.9-20.2-45.1-45.1-45.1-24.8 0-45.1 20.3-45.1 45.1 0 24.9 20.3 45.1 45.1 45.1zm0-82c20.4 0 36.9 16.6 36.9 36.9C88.5 72 72 88.5 51.6 88.5S14.7 71.9 14.7 51.6c0-20.3 16.6-36.9 36.9-36.9z"></path>
+  </svg>
+</rocket-search>
+
+
+
+    
+      
+  <a href="/blog/" class="
+          
+           active 
+        ">Blog</a>
+  <a href="/resume/" class="
+          
+          
+        ">Resume</a>
+  <a href="/misc/" class="
+          
+          
+        ">Misc</a>
+
+    
+      <launch-dark-switch class="light-dark-switch" label="Toggle darkmode">Toggle darkmode</launch-dark-switch>
+
+
+    
+      
+	<a class="social-link" href="https://github.com/Silver-birder/Silver-birder.github.io" aria-label="silverbirder on GitHub" rel="noopener noreferrer" target="_blank">
+		<span class="sr-only">GitHub</span>
+		
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 16" fill="none">
+  <title>GitHub</title>
+  <path fill="currentColor" fill-rule="evenodd" d="M8.18391.249268C3.82241.249268.253906 3.81777.253906 8.17927c0 3.46933 2.279874 6.44313 5.451874 7.53353.3965.0991.49563-.1983.49563-.3965v-1.3878c-2.18075.4956-2.67638-.9912-2.67638-.9912-.3965-.8922-.89212-1.1895-.89212-1.1895-.69388-.4957.09912-.4957.09912-.4957.793.0992 1.1895.793 1.1895.793.69388 1.2887 1.88338.8922 2.27988.6939.09912-.4956.29737-.8921.49562-1.0904-1.78425-.1982-3.5685-.8921-3.5685-3.96496 0-.89212.29738-1.586.793-2.08162-.09912-.19825-.3965-.99125.09913-2.08163 0 0 .69387-.19825 2.18075.793.59475-.19825 1.28862-.29737 1.9825-.29737.69387 0 1.38775.09912 1.98249.29737 1.4869-.99125 2.1808-.793 2.1808-.793.3965 1.09038.1982 1.88338.0991 2.08163.4956.59475.793 1.28862.793 2.08162 0 3.07286-1.8834 3.66766-3.66764 3.86586.29737.3965.59474.8921.59474 1.586v2.1808c0 .1982.0991.4956.5948.3965 3.172-1.0904 5.4518-4.0642 5.4518-7.53353-.0991-4.3615-3.6676-7.930002-8.02909-7.930002z" clip-rule="evenodd"></path>
+</svg>
+
+		
+	</a>
+	<a class="social-link" href="https://twitter.com/silver_birder" aria-label="silverbirder on Twitter" rel="noopener noreferrer" target="_blank">
+		<span class="sr-only">Twitter</span>
+		
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 274 223"><title>Twitter</title><path d="M85.98 223c-31.675 0-61.158-9.285-85.98-25.199 4.388.518 8.853.783 13.38.783 26.278 0 50.463-8.967 69.659-24.01-24.544-.453-45.258-16.669-52.395-38.953a56.014 56.014 0 0 0 10.552 1.006c5.116 0 10.071-.685 14.778-1.967-25.66-5.152-44.993-27.822-44.993-54.998 0-.236 0-.471.004-.705a55.865 55.865 0 0 0 25.406 7.015c-15.05-10.058-24.953-27.226-24.953-46.685 0-10.279 2.766-19.914 7.594-28.198 27.664 33.934 68.993 56.264 115.609 58.603a56.31 56.31 0 0 1-1.453-12.782c0-30.975 25.114-56.088 56.091-56.088 16.132 0 30.709 6.812 40.941 17.713a112.328 112.328 0 0 0 35.617-13.611c-4.188 13.097-13.081 24.089-24.662 31.031a112.148 112.148 0 0 0 32.215-8.832 114 114 0 0 1-27.988 29.035c.108 2.405.162 4.824.162 7.256C245.564 137.533 189.148 223 85.98 223" fill="currentColor"></path></svg>
+
+		
+	</a>
+
+    
+  </div>
+</header>
+
+    
+
+    
+  <div id="content-wrapper">
+    <div class="content-area">
+      
+	<rocket-drawer id="sidebar">
+  <nav slot="content" id="sidebar-nav">
+    
+      <a class="logo-link" href="/">
+  <img src="../../../90a4fb13.svg" alt="Rocket Logo">
+  <span>silverbirder</span>
+</a>
+
+
+    
+      <rocket-navigation>
+  <ul>
+    <li class="current">
+      <h3>Headings</h3>
+      <ul><li class="menu-item">
+<a href="/blog/contents/graphql_guild_ecosystem_is_useful/#graphql-schema-をダウンロードできる">GraphQL Schema をダウンロードできる</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/graphql_guild_ecosystem_is_useful/#graphiql-が-config-だけで動く">GraphiQL が Config だけで動く</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/graphql_guild_ecosystem_is_useful/#graphql-cli-には色々便利な機能がある">GraphQL CLI には色々便利な機能がある</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/graphql_guild_ecosystem_is_useful/#終わりに">終わりに</a>
+</li></ul>
+    </li>
+  </ul>
+  <div class="sidebar-tags">
+    <h3>Date</h3>
+    <div>Sat Oct 15 2022</div>
+  </div>
+  <div class="sidebar-tags">
+    <h3>Tags</h3>
+    <div class="tags">
+      
+        <span class="tag">GraphQL</span>
+      
+        <span class="tag">GraphQL Config</span>
+      
+        <span class="tag">GraphQL Schema</span>
+      
+    </div>
+  </div>
+  <div class="sidebar-bottom">
+  <hr> <launch-dark-switch class="light-dark-switch" label="Toggle darkmode">Toggle darkmode</launch-dark-switch>
+
+  
+    <a href="https://github.com/Silver-birder/Silver-birder.github.io/issues">Help and Feedback</a>
+  
+</div>
+
+</rocket-navigation>
+
+    
+  </nav>
+</rocket-drawer>
+
+
+      
+  <main class="markdown-body">
+    <main class="markdown-body">
+  
+    
+  <h1>GraphQL Guildのエコシステムって便利だね</h1>
+
+
+  <img src="https://res.cloudinary.com/silverbirder/image/upload/v1665838875/silver-birder.github.io/blog/sangga-rima-roman-selia-LjbjWeXRbs0-unsplash.jpg" alt="">
+
+
+  
+    <p>GraphQL Guild ってご存知ですか？
+GraphQL 界隈だと、Code Generator が有名と思いますが、GraphQL Guild は、それら GraphQL 関連の OSS を開発しているグループです。(<a href="https://the-guild.dev/about-us">詳しくは、こちら</a>)</p>
+<p>GraphQL Guild のエコシステムって便利だな〜って感じたことがあったので、紹介します。
+試したソースコードは、こちらにあります。</p>
+<ul>
+<li><a href="https://github.com/Silver-birder/playground/tree/main/node/supabase-graphql-guild-app">https://github.com/Silver-birder/playground/tree/main/node/supabase-graphql-guild-app</a></li>
+</ul>
+<h2 id="graphql-schema-をダウンロードできる"><a class="anchor" href="#graphql-schema-をダウンロードできる"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>GraphQL Schema をダウンロードできる</h2>
+<p>スキーマ駆動開発をすると、GraphQL のクライアントとサーバーのリポジトリ(GraphQL Schema が置いてある)が分かれることがあります。そうすると、クライアントのリポジトリに、サーバーのリポジトリにある GraphQL の Schema が欲しくなると思います。その状況では、次の解決手段が想像できると思います。</p>
+<ul>
+<li>git submodule で、サーバーリポジトリをクライアントリポジトリに入れる</li>
+<li>git clone で、GraphQL Schema ファイルをダウンロードするスクリプトを書く</li>
+</ul>
+<p>git を扱うと、CI/CD のプロセスやいくつかの場面で、面倒なことがあります。
+そこで、GraphQL の SchemaURL を指定するだけで、Schema をダウンロードする機能が、<code>GraphQL CLI</code> にあります。</p>
+<ul>
+<li><a href="https://www.graphql-cli.com/introduction">https://www.graphql-cli.com/introduction</a></li>
+</ul>
+<p>具体的には、<code>GraphQL Config</code> を作成し、<code>graphql codegen</code> と実行します。</p>
+<ul>
+<li><a href="https://the-guild.dev/graphql/config/docs">https://the-guild.dev/graphql/config/docs</a></li>
+</ul>
+<p>Schema をダウンロードするために、GraphQL のエンドポイント URL を指定します。</p>
+<p>Config ファイルの形式は、yml、json、js、ts のどれかを選べます。
+私の場合、(supabase を使っている関係で)GraphQL のエンドポイントへアクセスする認証情報を環境変数から読み込みたかったため、Typescript(ts)を選びました。</p>
+<p>具体的には、次の Config ファイルを生成します。</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token comment">// graphql.config.ts</span>
+<span class="token keyword">import</span> <span class="token keyword">type</span> <span class="token punctuation">{</span> <span class="token maybe-class-name">IGraphQLConfig</span> <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"graphql-config"</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> config <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"dotenv"</span><span class="token punctuation">;</span>
+
+<span class="token function">config</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token doc-comment comment">
+/** <span class="token keyword">@type</span> <span class="token class-name"><span class="token punctuation">{</span>import<span class="token punctuation">(</span>'graphql-config'<span class="token punctuation">)</span><span class="token punctuation">.</span>IGraphQLConfig<span class="token punctuation">}</span></span> */</span>
+<span class="token keyword">const</span> graphqlConfig<span class="token punctuation">:</span> <span class="token maybe-class-name">IGraphQLConfig</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+  schema<span class="token punctuation">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      <span class="token punctuation">[</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>process<span class="token punctuation">.</span><span class="token property-access">env</span><span class="token punctuation">.</span><span class="token constant">SUPABASE_URL</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">/graphql/v1</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">]</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+        headers<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+          apikey<span class="token punctuation">:</span> process<span class="token punctuation">.</span><span class="token property-access">env</span><span class="token punctuation">.</span><span class="token constant">SUPABASE_ANON_KEY</span> <span class="token operator">||</span> <span class="token string">""</span><span class="token punctuation">,</span>
+          authorization<span class="token punctuation">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">Bearer </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>process<span class="token punctuation">.</span><span class="token property-access">env</span><span class="token punctuation">.</span><span class="token constant">SUPABASE_ANON_KEY</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  extensions<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    codegen<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+      generates<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+        <span class="token string">"generated/schema.graphql"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+          plugins<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"schema-ast"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> graphqlConfig<span class="token punctuation">;</span>
+</code></pre>
+<p>必要なパッケージをインストールした状態で、<code>graphql codegen</code> と実行すると <code>generated/schema.graphql</code> が生成されます！</p>
+<h2 id="graphiql-が-config-だけで動く"><a class="anchor" href="#graphiql-が-config-だけで動く"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>GraphiQL が Config だけで動く</h2>
+<p>GraphQL を利用する側としては、どのようなクエリが書けるか試せす場所が欲しくなります。
+サーバー側から GraphiQL を用意頂くでも全然良いのですが、<code>GraphQL Yoga</code> というものを使えば簡単にできます。</p>
+<ul>
+<li><a href="https://the-guild.dev/graphql/yoga-server">https://the-guild.dev/graphql/yoga-server</a></li>
+</ul>
+<p><code>yarn add graphql-yoga</code> したあとに、先程の <code>graphql.config.ts</code> が存在すれば、<code>yarn yoga</code> するだけで GraphiQL が手に入ります！一切、サーブするコードを書いていません。最高でした。</p>
+<h2 id="graphql-cli-には色々便利な機能がある"><a class="anchor" href="#graphql-cli-には色々便利な機能がある"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>GraphQL CLI には色々便利な機能がある</h2>
+<p><code>GraphQL CLI</code> には、GraphQL 関連で便利な機能があります。</p>
+<ul>
+<li><a href="https://github.com/Urigo/graphql-cli">https://github.com/Urigo/graphql-cli</a></li>
+</ul>
+<p>具体的には、次の 3 つです。</p>
+<ul>
+<li><code>@graphql-cli/coverage</code>
+<ul>
+<li>Document のオペレーションを元に、Schema がどれくらい使われているかわかる</li>
+</ul>
+</li>
+<li><code>@graphql-cli/diff</code>
+<ul>
+<li>ローカルとリモートの GraphQL Schema の違いを教えてくれる</li>
+</ul>
+</li>
+<li><code>@graphql-cli/validate</code>
+<ul>
+<li>Document のオペレーション が、GraphQL Schema 定義に反していないかチェックしてくれる</li>
+</ul>
+</li>
+</ul>
+<h2 id="終わりに"><a class="anchor" href="#終わりに"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>終わりに</h2>
+<p>GraphQL Guild は、GraphQL Config が中心になっている印象を受けました。
+Config があれば、他のエコシステムはそれを見て機能が動くため、準備するものが少なくて済みます。</p>
+<p>関係ないですが、supabase で GraphQL を使うのもすごく簡単で、ありがたいです。</p>
+
+  
+    <div class="content-footer">
+  <p>
+    Caught a mistake or want to improve the blog?
+    <a href="https://github.com/Silver-birder/Silver-birder.github.io/edit/main/./docs/blog/contents/graphql_guild_ecosystem_is_useful.md">Edit this blog post on GitHub!</a>
+  </p>
+</div>
+
+
+  
+</main>
+
+  </main>
+
+    </div>
+  </div>
+
+
+    
+      <footer id="main-footer">
+  
+    
+
+  
+    <div id="footer-menu">
+  <div class="content-area">
+    
+      <nav>
+        <h3>Discover</h3>
+        <ul>
+          
+            <li>
+              <a href="https://silver-birder.github.io/blog/">Blog</a>
+            </li>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/Silver-birder.github.io/issues">Help and Feedback</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>My Sales</h3>
+        <ul>
+          
+            <li>
+              <a href="https://www.amazon.co.jp/芝本雅史/e/B08FJK5C43">Amazon</a>
+            </li>
+          
+            <li>
+              <a href="https://silverbirder.booth.pm">Booth</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>Follow</h3>
+        <ul>
+          
+            <li>
+              <a href="https://github.com/Silver-birder/Silver-birder.github.io">GitHub</a>
+            </li>
+          
+            <li>
+              <a href="https://twitter.com/silver_birder">Twitter</a>
+            </li>
+          
+            <li>
+              <a href="https://www.google.com/maps/contrib/101722346324226588907/reviews/@34.6907839,135.4537926,13z/">Google Map</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+  </div>
+</div>
+
+  
+</footer>
+
+    
+
+    
+  
+
+
+  
+
+<script>
+  window.__rocketServiceWorkerUrl = '/service-worker.js';
+</script>
+
+
+
+
+
+
+  
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-146805630-4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-146805630-4');
+  </script>
+
+
+
+
+  
+
+
+<script type="module" src="../../../e931d24b.js"></script>
+<script type="module" src="../../../6dd6d5cb.js"></script>
+<script type="module" src="../../../dd4fcd54.js" inject-service-worker=""></script>
+<script type="module" src="../../../4752aba933.js"></script>
+
+</body></html>
