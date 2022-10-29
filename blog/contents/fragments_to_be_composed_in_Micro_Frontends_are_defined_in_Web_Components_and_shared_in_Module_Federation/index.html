@@ -427,7 +427,7 @@ Web Components へデータを与える手段は 3 つあります。(さらに�
 </code></pre>
 <p>何をコンテナとして提供するか export します。
 次に、webpack の plugins コードを定義します。</p>
-<pre class="language-js"><code class="language-js"><span class="token comment">// .packages/team-search/webpack.config.js</span>
+<pre class="language-javascript"><code class="language-javascript"><span class="token comment">// .packages/team-search/webpack.config.js</span>
 <span class="token spread operator">...</span>
 <span class="token keyword">const</span> config <span class="token operator">=</span> <span class="token punctuation">{</span>
   entry<span class="token punctuation">:</span> <span class="token string">"./src/index"</span><span class="token punctuation">,</span>
@@ -462,7 +462,7 @@ Web Components へデータを与える手段は 3 つあります。(さらに�
 これで、SearchButton をコンテナ化し提供できるようになりました。</p>
 <h3 id="組成-1"><a class="anchor" href="#組成-1"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>組成</h3>
 <p>では、コンテナをロードする組成側のビルド(webpack)を見てみます。</p>
-<pre class="language-js"><code class="language-js"><span class="token comment">// ./webpack.config.js</span>
+<pre class="language-javascript"><code class="language-javascript"><span class="token comment">// ./webpack.config.js</span>
 <span class="token keyword">const</span> <span class="token constant">URL_MAP</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
   content<span class="token punctuation">:</span> process<span class="token punctuation">.</span><span class="token property-access">env</span><span class="token punctuation">.</span><span class="token constant">CONTENT_URL</span> <span class="token operator">||</span> <span class="token string">"http://localhost:3001"</span><span class="token punctuation">,</span>
   search<span class="token punctuation">:</span> process<span class="token punctuation">.</span><span class="token property-access">env</span><span class="token punctuation">.</span><span class="token constant">SEARCH_URL</span> <span class="token operator">||</span> <span class="token string">"http://localhost:4001"</span><span class="token punctuation">,</span>

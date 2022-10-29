@@ -291,19 +291,14 @@ HTMLとCSSとくれば、次はJSだと思い、JSを実行するエンジンを
 主に、高級言語(ex. javascript)から低級言語(ex. アセンブリ言語)への変換という意味でコンパイラが使われます。</p>
 <hr>
 <p>プログラムをコンパイルするというのは、主に次の順番で処理されます。</p>
-<p>@startuml
-rectangle ソースコード
-rectangle 字句解析
-rectangle 構文解析
-rectangle 構文木
-rectangle 中間言語
-rectangle コード生成</p>
-<p>ソースコード -&gt; 字句解析
-字句解析 -&gt; 構文解析
-構文解析 -&gt; 構文木
-構文木 -&gt; 中間言語
-中間言語 -&gt; コード生成
-@enduml</p>
+<ol>
+<li>ソースコード</li>
+<li>字句解析</li>
+<li>構文解析</li>
+<li>構文木</li>
+<li>中間言語</li>
+<li>コード生成</li>
+</ol>
 <hr>
 <p>字句解析 ~ 構文木は、lexやyaccというソフトウェアが有名だと思います。
 今回は、swc_ecma_parserというものを使います。swc_ecma_parserは、<a href="https://github.com/swc-project/swc">swc</a>で使われるパーサです。</p>

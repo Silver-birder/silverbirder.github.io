@@ -322,7 +322,7 @@ Chromeは、Chromiumを元に開発されています。
 HTMLはDTD（Document Type Definition）で文脈自由文法なため、機械的に解析できます。
 ただ、HTMLは寛大な仕様で、次のようなパターンも許容するようになっています。</p>
 <ul>
-<li>&lt;br&gt;の代わりの&lt;/br&gt;</li>
+<li><code>&lt;br&gt;</code>の代わりの<code>&lt;/br&gt;</code></li>
 <li>迷子のテーブル</li>
 <li>入れ子のフォーム要素</li>
 <li>深すぎるタグ階層</li>
@@ -372,7 +372,7 @@ DOMとレンダーオブジェクトは、1対1という訳ではなく、例え
 <p>※ <a href="https://www.html5rocks.com/ja/tutorials/internals/howbrowserswork/#The_layout_process">レイアウト処理</a> 参考</p>
 <p>CSSボックスモデルの図を参考までに共有しておきます。</p>
 <figure title="CSS 基本ボックスモデル">
-<img src="https://mdn.mozillademos.org/files/8685/boxmodel-(3).png" alt="CSS 基本ボックスモデル">
+<img src="https://developer.mozilla.org/ja/docs/Web/CSS/CSS_Box_Model/Introduction_to_the_CSS_box_model/boxmodel-(3).png" alt="CSS 基本ボックスモデル">
 <figcaption><span><a href="https://developer.mozilla.org/ja/docs/Web/CSS/CSS_Box_Model/Introduction_to_the_CSS_box_model">CSS 基本ボックスモデル - developer.mozilla.org</a></span></figcaption>
 </figure>
 <hr>
@@ -444,66 +444,66 @@ DOMとレンダーオブジェクトは、1対1という訳ではなく、例え
 </figure>
 <p>Style treeは、これまでの話でいうとRender treeだと思います。
 Toyブラウザエンジン(mbrubeck)に、次のHTMLとCSSを読み込ませると、下記の画像のようなアウトプットになります。</p>
-<pre><code>&lt;!-- https://github.com/mbrubeck/robinson/blob/master/examples/test.html --&gt;
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;title&gt;Test&lt;/title&gt;
-  &lt;/head&gt;
-  &lt;div class="outer"&gt;
-    &lt;p class="inner"&gt;
-      Hello, &lt;span id="name"&gt;world!&lt;/span&gt;
-    &lt;/p&gt;
-    &lt;p class="inner" id="bye"&gt;
+<pre class="language-html"><code class="language-html"><span class="token comment">&lt;!-- https://github.com/mbrubeck/robinson/blob/master/examples/test.html --&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">&gt;</span></span>Test<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>outer<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>inner<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+      Hello, <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>world!<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>inner<span class="token punctuation">"</span></span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>bye<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
       Goodbye!
-    &lt;/p&gt;
-  &lt;/div&gt;
-&lt;/html&gt;
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">&gt;</span></span>
 </code></pre>
-<pre><code>/* https://github.com/mbrubeck/robinson/blob/master/examples/test.css */
-* {
-  display: block;
-}
+<pre class="language-css"><code class="language-css"><span class="token comment">/* https://github.com/mbrubeck/robinson/blob/master/examples/test.css */</span>
+<span class="token selector">*</span> <span class="token punctuation">{</span>
+  <span class="token property">display</span><span class="token punctuation">:</span> block<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-span {
-  display: inline;
-}
+<span class="token selector">span</span> <span class="token punctuation">{</span>
+  <span class="token property">display</span><span class="token punctuation">:</span> inline<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-html {
-  width: 600px;
-  padding: 10px;
-  border-width: 1px;
-  margin: auto;
-  background: #ffffff;
-}
+<span class="token selector">html</span> <span class="token punctuation">{</span>
+  <span class="token property">width</span><span class="token punctuation">:</span> <span class="token number">600</span><span class="token unit">px</span><span class="token punctuation">;</span>
+  <span class="token property">padding</span><span class="token punctuation">:</span> <span class="token number">10</span><span class="token unit">px</span><span class="token punctuation">;</span>
+  <span class="token property">border-width</span><span class="token punctuation">:</span> <span class="token number">1</span><span class="token unit">px</span><span class="token punctuation">;</span>
+  <span class="token property">margin</span><span class="token punctuation">:</span> auto<span class="token punctuation">;</span>
+  <span class="token property">background</span><span class="token punctuation">:</span> <span class="token hexcode">#ffffff</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-head {
-  display: none;
-}
+<span class="token selector">head</span> <span class="token punctuation">{</span>
+  <span class="token property">display</span><span class="token punctuation">:</span> none<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-.outer {
-  background: #00ccff;
-  border-color: #666666;
-  border-width: 2px;
-  margin: 50px;
-  padding: 50px;
-}
+<span class="token selector"><span class="token class">.outer</span></span> <span class="token punctuation">{</span>
+  <span class="token property">background</span><span class="token punctuation">:</span> <span class="token hexcode">#00ccff</span><span class="token punctuation">;</span>
+  <span class="token property">border-color</span><span class="token punctuation">:</span> <span class="token hexcode">#666666</span><span class="token punctuation">;</span>
+  <span class="token property">border-width</span><span class="token punctuation">:</span> <span class="token number">2</span><span class="token unit">px</span><span class="token punctuation">;</span>
+  <span class="token property">margin</span><span class="token punctuation">:</span> <span class="token number">50</span><span class="token unit">px</span><span class="token punctuation">;</span>
+  <span class="token property">padding</span><span class="token punctuation">:</span> <span class="token number">50</span><span class="token unit">px</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-.inner {
-  border-color: #cc0000;
-  border-width: 4px;
-  height: 100px;
-  margin-bottom: 20px;
-  width: 500px;
-}
+<span class="token selector"><span class="token class">.inner</span></span> <span class="token punctuation">{</span>
+  <span class="token property">border-color</span><span class="token punctuation">:</span> <span class="token hexcode">#cc0000</span><span class="token punctuation">;</span>
+  <span class="token property">border-width</span><span class="token punctuation">:</span> <span class="token number">4</span><span class="token unit">px</span><span class="token punctuation">;</span>
+  <span class="token property">height</span><span class="token punctuation">:</span> <span class="token number">100</span><span class="token unit">px</span><span class="token punctuation">;</span>
+  <span class="token property">margin-bottom</span><span class="token punctuation">:</span> <span class="token number">20</span><span class="token unit">px</span><span class="token punctuation">;</span>
+  <span class="token property">width</span><span class="token punctuation">:</span> <span class="token number">500</span><span class="token unit">px</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-.inner#bye {
-  background: #ffff00;
-}
+<span class="token selector"><span class="token class">.inner</span><span class="token id">#bye</span></span> <span class="token punctuation">{</span>
+  <span class="token property">background</span><span class="token punctuation">:</span> <span class="token hexcode">#ffff00</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-span#name {
-  background: red;
-  color: white;
-}
+<span class="token selector">span<span class="token id">#name</span></span> <span class="token punctuation">{</span>
+  <span class="token property">background</span><span class="token punctuation">:</span> red<span class="token punctuation">;</span>
+  <span class="token property">color</span><span class="token punctuation">:</span> white<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <figure title="Toyブラウザエンジン(mbrubeck)のアウトプット">
 <img src="https://res.cloudinary.com/silverbirder/image/upload/v1622034247/silver-birder.github.io/blog/mbrubeck_robinson_output.png" alt="Toyブラウザエンジン(mbrubeck)のアウトプット">
@@ -520,134 +520,134 @@ span#name {
 </ul>
 <p>Toyブラウザエンジン(askerry)に、次のHTMLとCSSを読み込ませると、下記の画像のようなアウトプットになります。
 見たら分かると思いますが、とても高機能です。</p>
-<pre><code>&lt;!-- https://github.com/askerry/toy-browser/blob/master/examples/demo.html --&gt;
-&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
-    &lt;head&gt;
-        &lt;title&gt;Browser Test&lt;/title&gt;
-        &lt;meta http-equiv="Content-Type" content="text/html; charset=utf-8" /&gt;
-        &lt;link rel="stylesheet" href="demo.css"/&gt;
-    &lt;/head&gt;
+<pre class="language-html"><code class="language-html"><span class="token comment">&lt;!-- https://github.com/askerry/toy-browser/blob/master/examples/demo.html --&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">xmlns</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://www.w3.org/1999/xhtml<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">&gt;</span></span>Browser Test<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">http-equiv</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Content-Type<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text/html; charset=utf-8<span class="token punctuation">"</span></span> <span class="token punctuation">/&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>demo.css<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">&gt;</span></span>
 
-    &lt;body&gt;
-        &lt;div id="page"&gt;
-            &lt;header class="header"&gt;
-                &lt;h1&gt;Toy Browser Engine&lt;/h1&gt;
-            &lt;/header&gt;
-            &lt;div id="main"&gt;
-                &lt;div id="navbar"&gt;
-                    &lt;a href="#" class="navitem"&gt;
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>page<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>header</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>header<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">&gt;</span></span>Toy Browser Engine<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>header</span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>main<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>navbar<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>#<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>navitem<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
                         Home
-                    &lt;/a&gt;
-                    &lt;a href="#" class="navitem"&gt;
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">&gt;</span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>#<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>navitem<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
                         About
-                    &lt;/a&gt;
-                    &lt;a href="#" class="navitem"&gt;
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">&gt;</span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>#<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>navitem<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
                         Some random stuff
-                    &lt;/a&gt;
-                    &lt;a href="#" class="navitem"&gt;
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">&gt;</span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>#<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>navitem<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
                         Conclusion
-                    &lt;/a&gt;
-                    &lt;img class="img" src="images/otters.jpg"/&gt;
-                &lt;/div&gt;
-                &lt;div id="content"&gt;
-                    &lt;h2&gt;What is this?&lt;/h2&gt;
-                    This is a &lt;b&gt;toy&lt;/b&gt; browser engine, implemented for
-                    &lt;span&gt;fun &lt;/span&gt; &lt;img class="icon" src="images/fun.png"/&gt;
-                    and &lt;span&gt;glory &lt;img class="icon" src="images/glory.png"/&gt;&lt;/span&gt;.
-                    &lt;h2&gt;Why would anyone do this?&lt;/h2&gt;
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">&gt;</span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>img<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>images/otters.jpg<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>content<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h2</span><span class="token punctuation">&gt;</span></span>What is this?<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h2</span><span class="token punctuation">&gt;</span></span>
+                    This is a <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>b</span><span class="token punctuation">&gt;</span></span>toy<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>b</span><span class="token punctuation">&gt;</span></span> browser engine, implemented for
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span><span class="token punctuation">&gt;</span></span>fun <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">&gt;</span></span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>icon<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>images/fun.png<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
+                    and <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span><span class="token punctuation">&gt;</span></span>glory <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>icon<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>images/glory.png<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">&gt;</span></span>.
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h2</span><span class="token punctuation">&gt;</span></span>Why would anyone do this?<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h2</span><span class="token punctuation">&gt;</span></span>
                     This seems pretty pointless! But I had a few goals:
-                    &lt;ul&gt;
-                        &lt;li&gt;Something to build to learn C++&lt;/li&gt;
-                        &lt;li&gt;Learn more about how browsers work&lt;/li&gt;
-                        &lt;li&gt;Make something I've never made before&lt;/li&gt;
-                    &lt;/ul&gt;
-                    &lt;h2&gt;What can it do?&lt;/h2&gt;
-                    &lt;p&gt;
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span><span class="token punctuation">&gt;</span></span>
+                        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">&gt;</span></span>Something to build to learn C++<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">&gt;</span></span>
+                        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">&gt;</span></span>Learn more about how browsers work<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">&gt;</span></span>
+                        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">&gt;</span></span>Make something I've never made before<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">&gt;</span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">&gt;</span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h2</span><span class="token punctuation">&gt;</span></span>What can it do?<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h2</span><span class="token punctuation">&gt;</span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>
                         Currently, the engine can parse a subset of HTML
                         and build a DOM tree. It can also parse a small subset of
                         CSS (sometimes incorrectly) and use simple selector matching
                         to apply styles to elements.
-                    &lt;/p&gt;
-                    &lt;p&gt;
-                        It supports &lt;em&gt;very basic&lt;/em&gt; rendering of boxes, images, and
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>
+                        It supports <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>em</span><span class="token punctuation">&gt;</span></span>very basic<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>em</span><span class="token punctuation">&gt;</span></span> rendering of boxes, images, and
                         text with simple block and inline layouts.
-                    &lt;/p&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/body&gt;
-&lt;/html&gt;
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">&gt;</span></span>
 </code></pre>
-<pre><code>/* https://github.com/askerry/toy-browser/blob/master/examples/demo.css */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #BFC0C0;
-    color: #253237;
-    font-size: 16px;
-}
-#page {
-    padding: 20;
-    /* width: 800px; */
-    margin: auto;
-}
+<pre class="language-css"><code class="language-css"><span class="token comment">/* https://github.com/askerry/toy-browser/blob/master/examples/demo.css */</span>
+<span class="token selector">body</span> <span class="token punctuation">{</span>
+    <span class="token property">font-family</span><span class="token punctuation">:</span> Arial<span class="token punctuation">,</span> sans-serif<span class="token punctuation">;</span>
+    <span class="token property">background-color</span><span class="token punctuation">:</span> <span class="token hexcode">#BFC0C0</span><span class="token punctuation">;</span>
+    <span class="token property">color</span><span class="token punctuation">:</span> <span class="token hexcode">#253237</span><span class="token punctuation">;</span>
+    <span class="token property">font-size</span><span class="token punctuation">:</span> <span class="token number">16</span><span class="token unit">px</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token selector"><span class="token id">#page</span></span> <span class="token punctuation">{</span>
+    <span class="token property">padding</span><span class="token punctuation">:</span> <span class="token number">20</span><span class="token punctuation">;</span>
+    <span class="token comment">/* width: 800px; */</span>
+    <span class="token property">margin</span><span class="token punctuation">:</span> auto<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-header {
-    padding: 10px;
-    padding-left: 20px;
-    background-color: #434371;
-    color: #4acebd;
-}
+<span class="token selector">header</span> <span class="token punctuation">{</span>
+    <span class="token property">padding</span><span class="token punctuation">:</span> <span class="token number">10</span><span class="token unit">px</span><span class="token punctuation">;</span>
+    <span class="token property">padding-left</span><span class="token punctuation">:</span> <span class="token number">20</span><span class="token unit">px</span><span class="token punctuation">;</span>
+    <span class="token property">background-color</span><span class="token punctuation">:</span> <span class="token hexcode">#434371</span><span class="token punctuation">;</span>
+    <span class="token property">color</span><span class="token punctuation">:</span> <span class="token hexcode">#4acebd</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-span {
-    color: #4acebd;
-}
+<span class="token selector">span</span> <span class="token punctuation">{</span>
+    <span class="token property">color</span><span class="token punctuation">:</span> <span class="token hexcode">#4acebd</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-#main {
-    background-color: white;
-    display: flex;
-}
+<span class="token selector"><span class="token id">#main</span></span> <span class="token punctuation">{</span>
+    <span class="token property">background-color</span><span class="token punctuation">:</span> white<span class="token punctuation">;</span>
+    <span class="token property">display</span><span class="token punctuation">:</span> flex<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-#navbar {
-    width: 180px;
-    padding: 30px;
-    background-color: #4acebd;
-    height: 500px;
-}
+<span class="token selector"><span class="token id">#navbar</span></span> <span class="token punctuation">{</span>
+    <span class="token property">width</span><span class="token punctuation">:</span> <span class="token number">180</span><span class="token unit">px</span><span class="token punctuation">;</span>
+    <span class="token property">padding</span><span class="token punctuation">:</span> <span class="token number">30</span><span class="token unit">px</span><span class="token punctuation">;</span>
+    <span class="token property">background-color</span><span class="token punctuation">:</span> <span class="token hexcode">#4acebd</span><span class="token punctuation">;</span>
+    <span class="token property">height</span><span class="token punctuation">:</span> <span class="token number">500</span><span class="token unit">px</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-.navitem {
-    display: block;
-    text-align: center;
-    background-color: #434371;
-    color: #4acebd;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    padding: 10px;
-    border-radius: 4px;
-    border-style: solid;
-    border-width: 2px;
-    border-color: #253237;
-}
+<span class="token selector"><span class="token class">.navitem</span></span> <span class="token punctuation">{</span>
+    <span class="token property">display</span><span class="token punctuation">:</span> block<span class="token punctuation">;</span>
+    <span class="token property">text-align</span><span class="token punctuation">:</span> center<span class="token punctuation">;</span>
+    <span class="token property">background-color</span><span class="token punctuation">:</span> <span class="token hexcode">#434371</span><span class="token punctuation">;</span>
+    <span class="token property">color</span><span class="token punctuation">:</span> <span class="token hexcode">#4acebd</span><span class="token punctuation">;</span>
+    <span class="token property">margin-top</span><span class="token punctuation">:</span> <span class="token number">5</span><span class="token unit">px</span><span class="token punctuation">;</span>
+    <span class="token property">margin-bottom</span><span class="token punctuation">:</span> <span class="token number">5</span><span class="token unit">px</span><span class="token punctuation">;</span>
+    <span class="token property">padding</span><span class="token punctuation">:</span> <span class="token number">10</span><span class="token unit">px</span><span class="token punctuation">;</span>
+    <span class="token property">border-radius</span><span class="token punctuation">:</span> <span class="token number">4</span><span class="token unit">px</span><span class="token punctuation">;</span>
+    <span class="token property">border-style</span><span class="token punctuation">:</span> solid<span class="token punctuation">;</span>
+    <span class="token property">border-width</span><span class="token punctuation">:</span> <span class="token number">2</span><span class="token unit">px</span><span class="token punctuation">;</span>
+    <span class="token property">border-color</span><span class="token punctuation">:</span> <span class="token hexcode">#253237</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-#content {
-    padding: 20px;
-    width: 500;
-}
+<span class="token selector"><span class="token id">#content</span></span> <span class="token punctuation">{</span>
+    <span class="token property">padding</span><span class="token punctuation">:</span> <span class="token number">20</span><span class="token unit">px</span><span class="token punctuation">;</span>
+    <span class="token property">width</span><span class="token punctuation">:</span> <span class="token number">500</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-.img {
-    width: 180px;
-}
+<span class="token selector"><span class="token class">.img</span></span> <span class="token punctuation">{</span>
+    <span class="token property">width</span><span class="token punctuation">:</span> <span class="token number">180</span><span class="token unit">px</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-.icon {
-    width: 2em;
-}
+<span class="token selector"><span class="token class">.icon</span></span> <span class="token punctuation">{</span>
+    <span class="token property">width</span><span class="token punctuation">:</span> <span class="token number">2</span><span class="token unit">em</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-h2 {
-    color: #434371;
-}
+<span class="token selector">h2</span> <span class="token punctuation">{</span>
+    <span class="token property">color</span><span class="token punctuation">:</span> <span class="token hexcode">#434371</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-li {
-    margin-bottom: 5px;
-}
+<span class="token selector">li</span> <span class="token punctuation">{</span>
+    <span class="token property">margin-bottom</span><span class="token punctuation">:</span> <span class="token number">5</span><span class="token unit">px</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <figure title="Toyブラウザエンジン(askerry)のアウトプット">
 <img src="https://github.com/askerry/toy-browser/raw/master/examples/demo.png" alt="Toyブラウザエンジン(askerry)のアウトプット">
@@ -663,121 +663,121 @@ li {
 </ul>
 <h1 id="自作ブラウザのソースコード"><a class="anchor" href="#自作ブラウザのソースコード"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>自作ブラウザのソースコード</h1>
 <p><a href="https://github.com/askerry/toy-browser">askerry/toy-browser</a>のメインコード(main.cc)を載せます。</p>
-<pre><code>/* https://github.com/askerry/toy-browser/blob/master/src/main.cc */
-namespace {
+<pre class="language-c"><code class="language-c"><span class="token comment">/* https://github.com/askerry/toy-browser/blob/master/src/main.cc */</span>
+namespace <span class="token punctuation">{</span>
 
-void renderWindow(int width, int height, const style::StyledNode &amp;sn,
-                  sf::RenderWindow *window) {
-  layout::Dimensions viewport;
-  viewport.content.width = width;
-  viewport.content.height = height;
-  // Create layout tree for the specified viewport dimensions.
-  std::unique_ptr&lt;layout::LayoutElement&gt; layout_root =
-      layout::layout_tree(sn, viewport);
-  // Paint to window.
-  paint(*layout_root, viewport.content, window);
-}
+<span class="token keyword">void</span> <span class="token function">renderWindow</span><span class="token punctuation">(</span><span class="token keyword">int</span> width<span class="token punctuation">,</span> <span class="token keyword">int</span> height<span class="token punctuation">,</span> <span class="token keyword">const</span> style<span class="token operator">::</span>StyledNode <span class="token operator">&amp;</span>sn<span class="token punctuation">,</span>
+                  sf<span class="token operator">::</span>RenderWindow <span class="token operator">*</span>window<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  layout<span class="token operator">::</span>Dimensions viewport<span class="token punctuation">;</span>
+  viewport<span class="token punctuation">.</span>content<span class="token punctuation">.</span>width <span class="token operator">=</span> width<span class="token punctuation">;</span>
+  viewport<span class="token punctuation">.</span>content<span class="token punctuation">.</span>height <span class="token operator">=</span> height<span class="token punctuation">;</span>
+  <span class="token comment">// Create layout tree for the specified viewport dimensions.</span>
+  std<span class="token operator">::</span>unique_ptr<span class="token operator">&lt;</span>layout<span class="token operator">::</span>LayoutElement<span class="token operator">&gt;</span> layout_root <span class="token operator">=</span>
+      layout<span class="token operator">::</span><span class="token function">layout_tree</span><span class="token punctuation">(</span>sn<span class="token punctuation">,</span> viewport<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">// Paint to window.</span>
+  <span class="token function">paint</span><span class="token punctuation">(</span><span class="token operator">*</span>layout_root<span class="token punctuation">,</span> viewport<span class="token punctuation">.</span>content<span class="token punctuation">,</span> window<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-int windowLoop(const style::StyledNode &amp;sn) {
-  // Create browser window.
-  std::unique_ptr&lt;sf::RenderWindow&gt; window(new sf::RenderWindow());
-  window-&gt;create(sf::VideoMode(FLAGS_window_width, FLAGS_window_height),
-                 "Toy Browser", sf::Style::Close | sf::Style::Resize);
-  window-&gt;setPosition(sf::Vector2i(0, 0));
-  window-&gt;clear(sf::Color::Black);
-  // Render initial window contents.
-  renderWindow(FLAGS_window_width, FLAGS_window_height, sn, window.get());
-  // Run the main event loop as long as the window is open.
-  while (window-&gt;isOpen()) {
-    sf::Event event;
-    while (window-&gt;pollEvent(event)) {
-      switch (event.type) {
-        case sf::Event::Closed:
-          window-&gt;close();
-          break;
+<span class="token keyword">int</span> <span class="token function">windowLoop</span><span class="token punctuation">(</span><span class="token keyword">const</span> style<span class="token operator">::</span>StyledNode <span class="token operator">&amp;</span>sn<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// Create browser window.</span>
+  std<span class="token operator">::</span>unique_ptr<span class="token operator">&lt;</span>sf<span class="token operator">::</span>RenderWindow<span class="token operator">&gt;</span> <span class="token function">window</span><span class="token punctuation">(</span>new sf<span class="token operator">::</span><span class="token function">RenderWindow</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  window<span class="token operator">-&gt;</span><span class="token function">create</span><span class="token punctuation">(</span>sf<span class="token operator">::</span><span class="token function">VideoMode</span><span class="token punctuation">(</span>FLAGS_window_width<span class="token punctuation">,</span> FLAGS_window_height<span class="token punctuation">)</span><span class="token punctuation">,</span>
+                 <span class="token string">"Toy Browser"</span><span class="token punctuation">,</span> sf<span class="token operator">::</span>Style<span class="token operator">::</span>Close <span class="token operator">|</span> sf<span class="token operator">::</span>Style<span class="token operator">::</span>Resize<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  window<span class="token operator">-&gt;</span><span class="token function">setPosition</span><span class="token punctuation">(</span>sf<span class="token operator">::</span><span class="token function">Vector2i</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  window<span class="token operator">-&gt;</span><span class="token function">clear</span><span class="token punctuation">(</span>sf<span class="token operator">::</span>Color<span class="token operator">::</span>Black<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">// Render initial window contents.</span>
+  <span class="token function">renderWindow</span><span class="token punctuation">(</span>FLAGS_window_width<span class="token punctuation">,</span> FLAGS_window_height<span class="token punctuation">,</span> sn<span class="token punctuation">,</span> window<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">// Run the main event loop as long as the window is open.</span>
+  <span class="token keyword">while</span> <span class="token punctuation">(</span>window<span class="token operator">-&gt;</span><span class="token function">isOpen</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    sf<span class="token operator">::</span>Event event<span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>window<span class="token operator">-&gt;</span><span class="token function">pollEvent</span><span class="token punctuation">(</span>event<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">switch</span> <span class="token punctuation">(</span>event<span class="token punctuation">.</span>type<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">case</span> sf<span class="token operator">::</span>Event<span class="token operator">::</span>Closed<span class="token operator">:</span>
+          window<span class="token operator">-&gt;</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token keyword">break</span><span class="token punctuation">;</span>
 
-        case sf::Event::KeyPressed:
-          logger::debug("keypress: " + std::to_string(event.key.code));
-          break;
+        <span class="token keyword">case</span> sf<span class="token operator">::</span>Event<span class="token operator">::</span>KeyPressed<span class="token operator">:</span>
+          logger<span class="token operator">::</span><span class="token function">debug</span><span class="token punctuation">(</span><span class="token string">"keypress: "</span> <span class="token operator">+</span> std<span class="token operator">::</span><span class="token function">to_string</span><span class="token punctuation">(</span>event<span class="token punctuation">.</span>key<span class="token punctuation">.</span>code<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token keyword">break</span><span class="token punctuation">;</span>
 
-        case sf::Event::Resized:
-          logger::debug("new width: " + std::to_string(event.size.width));
-          logger::debug("new height: " + std::to_string(event.size.height));
-          window-&gt;clear(sf::Color::Black);
-          renderWindow(event.size.width, event.size.height, sn, window.get());
-          break;
+        <span class="token keyword">case</span> sf<span class="token operator">::</span>Event<span class="token operator">::</span>Resized<span class="token operator">:</span>
+          logger<span class="token operator">::</span><span class="token function">debug</span><span class="token punctuation">(</span><span class="token string">"new width: "</span> <span class="token operator">+</span> std<span class="token operator">::</span><span class="token function">to_string</span><span class="token punctuation">(</span>event<span class="token punctuation">.</span>size<span class="token punctuation">.</span>width<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          logger<span class="token operator">::</span><span class="token function">debug</span><span class="token punctuation">(</span><span class="token string">"new height: "</span> <span class="token operator">+</span> std<span class="token operator">::</span><span class="token function">to_string</span><span class="token punctuation">(</span>event<span class="token punctuation">.</span>size<span class="token punctuation">.</span>height<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          window<span class="token operator">-&gt;</span><span class="token function">clear</span><span class="token punctuation">(</span>sf<span class="token operator">::</span>Color<span class="token operator">::</span>Black<span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token function">renderWindow</span><span class="token punctuation">(</span>event<span class="token punctuation">.</span>size<span class="token punctuation">.</span>width<span class="token punctuation">,</span> event<span class="token punctuation">.</span>size<span class="token punctuation">.</span>height<span class="token punctuation">,</span> sn<span class="token punctuation">,</span> window<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token keyword">break</span><span class="token punctuation">;</span>
 
-        case sf::Event::TextEntered:
-          if (event.text.unicode &lt; 128) {
-            logger::debug(
-                "ASCII character typed: " +
-                std::to_string(static_cast&lt;char&gt;(event.text.unicode)));
-          }
-          break;
+        <span class="token keyword">case</span> sf<span class="token operator">::</span>Event<span class="token operator">::</span>TextEntered<span class="token operator">:</span>
+          <span class="token keyword">if</span> <span class="token punctuation">(</span>event<span class="token punctuation">.</span>text<span class="token punctuation">.</span>unicode <span class="token operator">&lt;</span> <span class="token number">128</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            logger<span class="token operator">::</span><span class="token function">debug</span><span class="token punctuation">(</span>
+                <span class="token string">"ASCII character typed: "</span> <span class="token operator">+</span>
+                std<span class="token operator">::</span><span class="token function">to_string</span><span class="token punctuation">(</span>static_cast<span class="token operator">&lt;</span><span class="token keyword">char</span><span class="token operator">&gt;</span><span class="token punctuation">(</span>event<span class="token punctuation">.</span>text<span class="token punctuation">.</span>unicode<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token punctuation">}</span>
+          <span class="token keyword">break</span><span class="token punctuation">;</span>
 
-        default:
-          break;
-      }
-    }
-  }
-  return 0;
-}
-}  // namespace
-int main(int argc, char **argv) {
-  gflags::ParseCommandLineFlags(&amp;argc, &amp;argv, true);
+        <span class="token keyword">default</span><span class="token operator">:</span>
+          <span class="token keyword">break</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>  <span class="token comment">// namespace</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  gflags<span class="token operator">::</span><span class="token function">ParseCommandLineFlags</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>argc<span class="token punctuation">,</span> <span class="token operator">&amp;</span>argv<span class="token punctuation">,</span> true<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  // Parse HTML and CSS files.
-  const std::string source = io::readFile(FLAGS_html_file);
-  std::unique_ptr&lt;dom::Node&gt; root = html_parser::parseHtml(source);
-  const std::string css = io::readFile(FLAGS_css_file);
-  const std::unique_ptr&lt;css::StyleSheet const&gt; stylesheet = css::parseCss(css);
+  <span class="token comment">// Parse HTML and CSS files.</span>
+  <span class="token keyword">const</span> std<span class="token operator">::</span>string source <span class="token operator">=</span> io<span class="token operator">::</span><span class="token function">readFile</span><span class="token punctuation">(</span>FLAGS_html_file<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  std<span class="token operator">::</span>unique_ptr<span class="token operator">&lt;</span>dom<span class="token operator">::</span>Node<span class="token operator">&gt;</span> root <span class="token operator">=</span> html_parser<span class="token operator">::</span><span class="token function">parseHtml</span><span class="token punctuation">(</span>source<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> std<span class="token operator">::</span>string css <span class="token operator">=</span> io<span class="token operator">::</span><span class="token function">readFile</span><span class="token punctuation">(</span>FLAGS_css_file<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> std<span class="token operator">::</span>unique_ptr<span class="token operator">&lt;</span>css<span class="token operator">::</span>StyleSheet <span class="token keyword">const</span><span class="token operator">&gt;</span> stylesheet <span class="token operator">=</span> css<span class="token operator">::</span><span class="token function">parseCss</span><span class="token punctuation">(</span>css<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  // Initialize font registry singleton.
-  text_render::FontRegistry *registry =
-      text_render::FontRegistry::getInstance();
+  <span class="token comment">// Initialize font registry singleton.</span>
+  text_render<span class="token operator">::</span>FontRegistry <span class="token operator">*</span>registry <span class="token operator">=</span>
+      text_render<span class="token operator">::</span>FontRegistry<span class="token operator">::</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  // Align styles with DOM nodes.
-  std::unique_ptr&lt;style::StyledNode&gt; styled_node =
-      style::styleTree(*root, stylesheet, style::PropertyMap());
+  <span class="token comment">// Align styles with DOM nodes.</span>
+  std<span class="token operator">::</span>unique_ptr<span class="token operator">&lt;</span>style<span class="token operator">::</span>StyledNode<span class="token operator">&gt;</span> styled_node <span class="token operator">=</span>
+      style<span class="token operator">::</span><span class="token function">styleTree</span><span class="token punctuation">(</span><span class="token operator">*</span>root<span class="token punctuation">,</span> stylesheet<span class="token punctuation">,</span> style<span class="token operator">::</span><span class="token function">PropertyMap</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  // Run main browser window loop.
-  windowLoop(*styled_node);
+  <span class="token comment">// Run main browser window loop.</span>
+  <span class="token function">windowLoop</span><span class="token punctuation">(</span><span class="token operator">*</span>styled_node<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  // Delete styled node and clear font registry.
-  styled_node.reset();
-  registry-&gt;clear();
-  return 0;
-}
+  <span class="token comment">// Delete styled node and clear font registry.</span>
+  styled_node<span class="token punctuation">.</span><span class="token function">reset</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  registry<span class="token operator">-&gt;</span><span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 </code></pre>
 <p>次のとおり、これまで学んできたメインフローと、C++がとても似ていることが分かります。</p>
 <ol>
 <li>HTMLとCSSをパース</li>
 </ol>
-<pre><code>// Parse HTML and CSS files.
-const std::string source = io::readFile(FLAGS_html_file);
-std::unique_ptr&lt;dom::Node&gt; root = html_parser::parseHtml(source);
-const std::string css = io::readFile(FLAGS_css_file);
-const std::unique_ptr&lt;css::StyleSheet const&gt; stylesheet = css::parseCss(css);
+<pre class="language-c"><code class="language-c"><span class="token comment">// Parse HTML and CSS files.</span>
+<span class="token keyword">const</span> std<span class="token operator">::</span>string source <span class="token operator">=</span> io<span class="token operator">::</span><span class="token function">readFile</span><span class="token punctuation">(</span>FLAGS_html_file<span class="token punctuation">)</span><span class="token punctuation">;</span>
+std<span class="token operator">::</span>unique_ptr<span class="token operator">&lt;</span>dom<span class="token operator">::</span>Node<span class="token operator">&gt;</span> root <span class="token operator">=</span> html_parser<span class="token operator">::</span><span class="token function">parseHtml</span><span class="token punctuation">(</span>source<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> std<span class="token operator">::</span>string css <span class="token operator">=</span> io<span class="token operator">::</span><span class="token function">readFile</span><span class="token punctuation">(</span>FLAGS_css_file<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> std<span class="token operator">::</span>unique_ptr<span class="token operator">&lt;</span>css<span class="token operator">::</span>StyleSheet <span class="token keyword">const</span><span class="token operator">&gt;</span> stylesheet <span class="token operator">=</span> css<span class="token operator">::</span><span class="token function">parseCss</span><span class="token punctuation">(</span>css<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
 <ol start="2">
 <li>1の結果からStyle tree(Render tree)を構築</li>
 </ol>
-<pre><code>// Align styles with DOM nodes.
-std::unique_ptr&lt;style::StyledNode&gt; styled_node =
-    style::styleTree(*root, stylesheet, style::PropertyMap());
+<pre class="language-c"><code class="language-c"><span class="token comment">// Align styles with DOM nodes.</span>
+std<span class="token operator">::</span>unique_ptr<span class="token operator">&lt;</span>style<span class="token operator">::</span>StyledNode<span class="token operator">&gt;</span> styled_node <span class="token operator">=</span>
+    style<span class="token operator">::</span><span class="token function">styleTree</span><span class="token punctuation">(</span><span class="token operator">*</span>root<span class="token punctuation">,</span> stylesheet<span class="token punctuation">,</span> style<span class="token operator">::</span><span class="token function">PropertyMap</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
 <ol start="3">
 <li>2の結果からLayout treeを構築</li>
 </ol>
-<pre><code>// Create layout tree for the specified viewport dimensions.
-std::unique_ptr&lt;layout::LayoutElement&gt; layout_root =
-    layout::layout_tree(sn, viewport);
+<pre class="language-c"><code class="language-c"><span class="token comment">// Create layout tree for the specified viewport dimensions.</span>
+std<span class="token operator">::</span>unique_ptr<span class="token operator">&lt;</span>layout<span class="token operator">::</span>LayoutElement<span class="token operator">&gt;</span> layout_root <span class="token operator">=</span>
+    layout<span class="token operator">::</span><span class="token function">layout_tree</span><span class="token punctuation">(</span>sn<span class="token punctuation">,</span> viewport<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
 <ol start="4">
 <li>3をpaintという描画</li>
 </ol>
-<pre><code>// Paint to window.
-paint(*layout_root, viewport.content, window);
+<pre class="language-c"><code class="language-c"><span class="token comment">// Paint to window.</span>
+<span class="token function">paint</span><span class="token punctuation">(</span><span class="token operator">*</span>layout_root<span class="token punctuation">,</span> viewport<span class="token punctuation">.</span>content<span class="token punctuation">,</span> window<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
 <h1 id="re-ブラウザの仕組み資料を読む"><a class="anchor" href="#re-ブラウザの仕組み資料を読む"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Re: ブラウザの仕組み資料を読む</h1>
 <p>もう一度、<a href="https://www.html5rocks.com/ja/tutorials/internals/howbrowserswork/">ブラウザの仕組み: 最新ウェブブラウザの内部構造</a> を読むと、初めて読んだときに比べて、深く理解できるんじゃないかなと思います。</p>
