@@ -77,7 +77,7 @@
 <link rel="preload" href="../../../5284d142.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../6dd6d5cb.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../dd4fcd54.js" as="script" crossorigin="anonymous">
-<link rel="preload" href="../../../4752aba961.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../69952ce061.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../e12801e9.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../90f0e617.js" as="script" crossorigin="anonymous">
 </head>
@@ -139,7 +139,7 @@
 
     
       
-	<a class="social-link" href="https://github.com/Silver-birder/Silver-birder.github.io" aria-label="silverbirder on GitHub" rel="noopener noreferrer" target="_blank">
+	<a class="social-link" href="https://github.com/silverbirder/silverbirder.github.io" aria-label="silverbirder on GitHub" rel="noopener noreferrer" target="_blank">
 		<span class="sr-only">GitHub</span>
 		
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 16" fill="none">
@@ -206,7 +206,7 @@
   <hr> <launch-dark-switch class="light-dark-switch" label="Toggle darkmode">Toggle darkmode</launch-dark-switch>
 
   
-    <a href="https://github.com/Silver-birder/Silver-birder.github.io/issues">Help and Feedback</a>
+    <a href="https://github.com/silverbirder/silverbirder.github.io/issues">Help and Feedback</a>
   
 </div>
 
@@ -250,7 +250,7 @@ Googleは気を利かせて、次のような予定を勝手に登録してく�
 <p>この気を利かせるかどうかは、Googleの判断によるため未知数です。
 先程あげた例のメールも、同様のことが勝手にしてくれたら良いな〜と思っていました。
 そこで、rMincというツールを作りました。</p>
-<p>※ 昔、<a href="https://github.com/Silver-birder/gas-for-amazon-calendar">gas-for-amazon-calendar</a>という、アマゾンからのお届け予定日が記載しているメールをGCalendarに登録するツールを作りましたが、
+<p>※ 昔、<a href="https://github.com/silverbirder/gas-for-amazon-calendar">gas-for-amazon-calendar</a>という、アマゾンからのお届け予定日が記載しているメールをGCalendarに登録するツールを作りましたが、
 アマゾンのメールに特化しすぎてしまい、汎用性がないものとなりました。</p>
 <h1 id="rminc-is-何"><a class="anchor" href="#rminc-is-何"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>rMinc is 何？</h1>
 <p><ogp-me src="https://www.npmjs.com/package/@silverbirder/rminc"></ogp-me></p>
@@ -276,13 +276,13 @@ Googleは気を利かせて、次のような予定を勝手に登録してく�
 </li>
 </ul>
 <p>また、これ以外にも対応したいサービスがあると思うので、カスタマイズして使えるようにしました。
-詳しくは、<a href="https://github.com/Silver-birder/rMinc/blob/master/README.md">README.md</a>をご確認下さい。</p>
+詳しくは、<a href="https://github.com/silverbirder/rMinc/blob/master/README.md">README.md</a>をご確認下さい。</p>
 <p>概要はこんな感じです。
 <img src="https://res.cloudinary.com/silverbirder/image/upload/v1581769421/rMinc/rMinc_overview.png" alt="overview" rocket-image="responsive"></p>
 <ol>
 <li>特定キーワードでメールを抽出
 <ol>
-<li>アマゾンなら、<a href="https://github.com/Silver-birder/rMinc/blob/master/src/user/mailRule/amazonMailRule.ts#L61">from:(shipment-tracking@amazon.co.jp) 発送</a></li>
+<li>アマゾンなら、<a href="https://github.com/silverbirder/rMinc/blob/master/src/user/mailRule/amazonMailRule.ts#L61">from:(shipment-tracking@amazon.co.jp) 発送</a></li>
 </ol>
 </li>
 <li>メールの下記を抽出
@@ -302,8 +302,8 @@ Googleは気を利かせて、次のような予定を勝手に登録してく�
 <p>実際に使ってみるとこんな感じになります。
 <img src="https://res.cloudinary.com/silverbirder/image/upload/v1581760683/rMinc/rMinc_sample.png" alt="example" rocket-image="responsive"></p>
 <p>小さくて見えないと思いますが、お届け予定日、タイトル、配達先、メールリンクが登録されています。</p>
-<p>このツール(<a href="https://github.com/Silver-birder/rMinc/blob/master/sample/sample.js">sample.js</a>)をGAS上で<b><span style="color: #d32f2f">定期的に動かしておくだけ</span></b>で、自動的にGCalendarへ予定登録されます。当たり前ですが、無料です。</p>
-<p>※ RMincは、<a href="https://github.com/Silver-birder/rMinc/blob/master/README.md">README.md</a>にあるAPP IDを登録する必要あり</p>
+<p>このツール(<a href="https://github.com/silverbirder/rMinc/blob/master/sample/sample.js">sample.js</a>)をGAS上で<b><span style="color: #d32f2f">定期的に動かしておくだけ</span></b>で、自動的にGCalendarへ予定登録されます。当たり前ですが、無料です。</p>
+<p>※ RMincは、<a href="https://github.com/silverbirder/rMinc/blob/master/README.md">README.md</a>にあるAPP IDを登録する必要あり</p>
 <h1 id="最後に"><a class="anchor" href="#最後に"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>最後に</h1>
 <p>Google Apps Scriptは、エンジニアにとって、とても強力な武器です。特に、G Suiteを積極的に使っている人にとっては、欠かせないものです。</p>
 <p>こういった <b><span style="color: #d32f2f">かゆいところに手が届く</span></b> ことができるのは、Google Apps Scriptの魅力的なところです。
@@ -313,7 +313,7 @@ Googleは気を利かせて、次のような予定を勝手に登録してく�
     <div class="content-footer">
   <p>
     Caught a mistake or want to improve the blog?
-    <a href="https://github.com/Silver-birder/Silver-birder.github.io/edit/main/./docs/blog/contents/rminc.md">Edit this blog post on GitHub!</a>
+    <a href="https://github.com/silverbirder/silverbirder.github.io/edit/main/./docs/blog/contents/rminc.md">Edit this blog post on GitHub!</a>
   </p>
 </div>
 
@@ -341,11 +341,11 @@ Googleは気を利かせて、次のような予定を勝手に登録してく�
         <ul>
           
             <li>
-              <a href="https://silver-birder.github.io/blog/">Blog</a>
+              <a href="https://silverbirder.github.io/blog/">Blog</a>
             </li>
           
             <li>
-              <a href="https://github.com/Silver-birder/Silver-birder.github.io/issues">Help and Feedback</a>
+              <a href="https://github.com/silverbirder/silverbirder.github.io/issues">Help and Feedback</a>
             </li>
           
         </ul>
@@ -371,7 +371,7 @@ Googleは気を利かせて、次のような予定を勝手に登録してく�
         <ul>
           
             <li>
-              <a href="https://github.com/Silver-birder/Silver-birder.github.io">GitHub</a>
+              <a href="https://github.com/silverbirder/silverbirder.github.io">GitHub</a>
             </li>
           
             <li>
@@ -427,6 +427,6 @@ Googleは気を利かせて、次のような予定を勝手に登録してく�
 <script type="module" src="../../../e931d24b.js"></script>
 <script type="module" src="../../../6dd6d5cb.js"></script>
 <script type="module" src="../../../dd4fcd54.js" inject-service-worker=""></script>
-<script type="module" src="../../../4752aba961.js"></script>
+<script type="module" src="../../../69952ce061.js"></script>
 
 </body></html>
