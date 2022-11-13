@@ -8,18 +8,18 @@
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WebComponentsでoEmbedのコンポーネントを開発して、学んだこと: silverbirder</title>
-<meta property="og:title" content="WebComponentsでoEmbedのコンポーネントを開発して、学んだこと: silverbirder">
+<title>「マイクロフロントエンド」を読みました: silverbirder</title>
+<meta property="og:title" content="「マイクロフロントエンド」を読みました: silverbirder">
 
 <meta name="generator" content="rocket 0.1">
-<link rel="canonical" href="https://silver-birder.github.io/blog/contents/what_i_learned_from_developing_o_embed_web_components/">
+<link rel="canonical" href="https://silver-birder.github.io/blog/contents/review_of_micro-frontends_book/">
 
 
 
   
 
-<meta name="description" content="WebComponents で、oEmbed ぼコンポーネントを開発し、公開しました。開発していく上で、学んだことを列挙しようと思います。">
-<meta property="og:description" content="WebComponents で、oEmbed ぼコンポーネントを開発し、公開しました。開発していく上で、学んだことを列挙しようと思います。">
+<meta name="description" content="DAZN の Luca Mezzalira さんが書かれたマイクロフロントエンドを読みました。簡単な書籍レビューを残しておこうかなと思います。">
+<meta property="og:description" content="DAZN の Luca Mezzalira さんが書かれたマイクロフロントエンドを読みました。簡単な書籍レビューを残しておこうかなと思います。">
 
   
     
@@ -36,7 +36,7 @@
 <meta property="og:type" content="website">
 
 <meta property="og:image" content="https://silver-birder.github.io/c94b4303.png">
-<meta property="og:url" content="https://silver-birder.github.io/blog/contents/what_i_learned_from_developing_o_embed_web_components/">
+<meta property="og:url" content="https://silver-birder.github.io/blog/contents/review_of_micro-frontends_book/">
 
 <meta name="twitter:card" content="summary_large_image">
 
@@ -77,7 +77,7 @@
 <link rel="preload" href="../../../5284d142.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../6dd6d5cb.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../dd4fcd54.js" as="script" crossorigin="anonymous">
-<link rel="preload" href="../../../69952ce097.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../69952ce061.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../e12801e9.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../90f0e617.js" as="script" crossorigin="anonymous">
 </head>
@@ -182,40 +182,30 @@
     <li class="current">
       <h3>Headings</h3>
       <ul><li class="menu-item">
-<a href="/blog/contents/what_i_learned_from_developing_o_embed_web_components/#スターターキット">スターターキット</a>
+<a href="/blog/contents/review_of_micro-frontends_book/#なぜマイクロフロントエンドを使うのか">なぜマイクロフロントエンドを使うのか</a>
 </li>
 <li class="menu-item">
-<a href="/blog/contents/what_i_learned_from_developing_o_embed_web_components/#キャッチアップ">キャッチアップ</a>
+<a href="/blog/contents/review_of_micro-frontends_book/#マイクロフロントエンドの導入方法">マイクロフロントエンドの導入方法</a>
 </li>
 <li class="menu-item">
-<a href="/blog/contents/what_i_learned_from_developing_o_embed_web_components/#ベストプラクティス">ベストプラクティス</a>
+<a href="/blog/contents/review_of_micro-frontends_book/#書籍にあった好きな言葉">書籍にあった好きな言葉</a>
 </li>
 <li class="menu-item">
-<a href="/blog/contents/what_i_learned_from_developing_o_embed_web_components/#テスト">テスト</a>
-</li>
-<li class="menu-item">
-<a href="/blog/contents/what_i_learned_from_developing_o_embed_web_components/#publish">Publish</a>
-</li>
-<li class="menu-item">
-<a href="/blog/contents/what_i_learned_from_developing_o_embed_web_components/#終わりに">終わりに</a>
+<a href="/blog/contents/review_of_micro-frontends_book/#終わりに">終わりに</a>
 </li></ul>
     </li>
   </ul>
   <div class="sidebar-tags">
     <h3>Date</h3>
-    <div>Fri Mar 25 2022</div>
+    <div>Sun Nov 13 2022</div>
   </div>
   <div class="sidebar-tags">
     <h3>Tags</h3>
     <div class="tags">
       
-        <span class="tag">Web Components</span>
+        <span class="tag">Micro Frontends</span>
       
-        <span class="tag">oEmbed</span>
-      
-        <span class="tag">Publish</span>
-      
-        <span class="tag">Learn</span>
+        <span class="tag">Review</span>
       
     </div>
   </div>
@@ -239,82 +229,93 @@
     <main class="markdown-body">
   
     
-  <h1>WebComponentsでoEmbedのコンポーネントを開発して、学んだこと</h1>
+  <h1>「マイクロフロントエンド」を読みました</h1>
 
 
 
   
-    <p>WebComponents で、oEmbed コンポーネントを開発し、公開しました。</p>
+    <p>DAZN の Luca Mezzalira さんが書かれた<a href="https://www.oreilly.co.jp/books/9784814400027/">マイクロフロントエンド</a> を読みました。簡単な書籍レビューを残しておこうかなと思います。</p>
+<h2 id="なぜマイクロフロントエンドを使うのか"><a class="anchor" href="#なぜマイクロフロントエンドを使うのか"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>なぜマイクロフロントエンドを使うのか</h2>
+<p>従来のモノリスなフロントエンドから、マイクロフロントエンドに置き換えることで、どういう価値があるのでしょうか。
+書籍に書いてある内容と、自身の意見を混ぜて以下に列挙します。</p>
 <ul>
-<li><a href="https://www.webcomponents.org/element/Silver-birder/o-embed">https://www.webcomponents.org/element/Silver-birder/o-embed</a></li>
-<li><a href="https://www.npmjs.com/package/@silverbirder/o-embed">https://www.npmjs.com/package/@silverbirder/o-embed</a></li>
-</ul>
-<p>開発していく上で、学んだことを列挙しようと思います。</p>
-<h2 id="スターターキット"><a class="anchor" href="#スターターキット"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>スターターキット</h2>
-<p>Web Components を開発する場合、次のどちらかのスターターキットを使うのが良さそうです。</p>
+<li>機能開発のイテレーションが短くなる
 <ul>
-<li><a href="https://webcomponents.dev/">webcomponents.dev</a></li>
-<li><a href="https://open-wc.org/">open-wc</a></li>
+<li>1 チームに 1 サブドメインという小さなスコープのため</li>
 </ul>
-<p>これらを使わずとも、Web Components を開発できるのですが、Typescript で書いたり、テストをしたりするには、
-それなりに準備が必要です。そのため、開発の初速を高めたいなら、スターターキットを使いましょう。</p>
-<p>もしくは、先にスターターキットを使わず素の Javascript だけで Web Components を作ってみて、その後にスターターキットを使うと良さを実感できるかもしれません。</p>
-<p>個人的に、open-wc をお勧めします。なぜなら、以下のツールが揃っているからです。</p>
+</li>
+<li>チーム内の意思決定がしやすい
 <ul>
-<li>Testing</li>
-<li>Demoing</li>
-<li>Building</li>
-<li>Linting</li>
+<li>コードベースが小さいため</li>
 </ul>
-<p>もちろん、Typescript もサポートしています。</p>
-<h2 id="キャッチアップ"><a class="anchor" href="#キャッチアップ"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>キャッチアップ</h2>
-<p>Web Components ってどういうものなのか、キャッチアップするには MDN のサイトが参考になります。</p>
+</li>
+<li>リリース速度が早い
 <ul>
-<li><a href="https://developer.mozilla.org/ja/docs/Web/Web_Components">ウェブコンポーネント | MDN</a></li>
+<li>各チームが独立しているため</li>
 </ul>
-<p>また、日本語で WebComponents(Custom Elements)の仕様書もあります。</p>
+</li>
+</ul>
+<p>1 チームが小さなサブドメインで独立することで、開発やコミュニケーション、リリースなどのコスト低減ができます。
+これは、最終的には顧客への価値提供するサイクルを短くすることに繋がります。</p>
+<h2 id="マイクロフロントエンドの導入方法"><a class="anchor" href="#マイクロフロントエンドの導入方法"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>マイクロフロントエンドの導入方法</h2>
+<p>書籍には、実例として既存アプリケーションをマイクロフロントエンドへマイグレーションする話があります。
+マイクロフロントエンドは、その設計の性質上、基本的に(既存アプリケーションからの)マイグレーションとセットです。
+そのため、マイグレーションをどのように進めるかというのは、とても重要です。</p>
+<p>その中で、マイクロフロントエンドへの最初の一歩として、次のパターンがあります。</p>
 <ul>
-<li><a href="https://triple-underscore.github.io/HTML-custom-ja.html">HTML Standard — Custom elements（日本語訳）</a></li>
+<li>共有コンポーネントをマイクロフロントエンドとしてリリース</li>
+<li>新機能をマイクロフロントエンドとしてリリース</li>
+<li>既存アプリケーションの一部をマイクロフロントエンドとしてリリース</li>
 </ul>
-<p>Chrome の中にある Chromium におけるレンダリングエンジン blink の実装コードも、公開されています。</p>
+<p>要は、段階的に導入しましょうという話です。
+また、マイクロフロントエンドには、従来の SPA 開発に似ている垂直分割という方法が最初の一歩としてお勧めのようです。</p>
 <ul>
-<li><a href="https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/core/html/custom/README.md">chromium/third_party/blink/renderer/core/html/custom/README.md</a></li>
+<li>垂直分割
+<ul>
+<li>1 つの画面に 1 つのマイクロフロントエンド</li>
 </ul>
-<h2 id="ベストプラクティス"><a class="anchor" href="#ベストプラクティス"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>ベストプラクティス</h2>
-<p>Google より、Custom Elements のベストプラクティスが公開されています。</p>
-<p><a href="https://developers.google.com/web/fundamentals/web-components/best-practices">Custom Element Best Practices &nbsp;|&nbsp; Web Fundamentals &nbsp;|&nbsp; Google Developers</a></p>
-<p>例えば</p>
-<blockquote>
-<p>Always accept primitive data (strings, numbers, booleans) as either attributes or properties.</p>
-</blockquote>
-<p>にあるように、プリミティブなデータのみ HTML の属性に渡すようにしましょう。
-オブジェクトや配列のようなリッチなデータは、シリアル化する必要がありオブジェクト参照がなくなってしまう欠点があります。</p>
-<h2 id="テスト"><a class="anchor" href="#テスト"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>テスト</h2>
-<p>Web Components のテストを書くには、Shadow DOM に対応する必要があります。
-JSDOM のように、ブラウザ API をラップするライブラリを使っても良いのですが、ヘッドレスブラウザを使ったほうが妥当です。
-そこで、<a href="https://www.npmjs.com/package/@web/test-runner">@web/test-runner</a>が便利です。
-このテストライブラリは、open-wc と同じ Modern Web というモノの 1 つです。
-@web/test-runner には、Puppeteer、Playwright、Selenium の 3 つをサポートしています。</p>
-<h2 id="publish"><a class="anchor" href="#publish"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Publish</h2>
-<p>作成した Web Components を Publish したい場合、次の記事を読むと良いです。</p>
-<p><a href="https://open-wc.org/guides/developing-components/publishing/">Developing Components: Publishing: Open Web Components</a></p>
-<p>特に、してはいけないことを読むと、なるほどな〜ってなります。</p>
-<blockquote>
-<p>❌ Do not optimize<br>
-❌ Do not bundle<br>
-❌ Do not minify<br>
-❌ Do not use .mjs file extensions<br>
-❌ Do not import polyfills</p>
-</blockquote>
-<p>詳しくは、上記の記事を読んでください。</p>
+</li>
+<li>水平分割
+<ul>
+<li>1 つの画面に複数のマイクロフロンエンド</li>
+</ul>
+</li>
+</ul>
+<p>ちなみに、マイクロフロントエンドとコンポーネントは、次のように区別します。</p>
+<ul>
+<li>マイクロフロントエンド
+<ul>
+<li>サブドメインのビジネス表現</li>
+<li>ロジックをカプセル化し、イベント通信</li>
+</ul>
+</li>
+<li>コンポーネント
+<ul>
+<li>再利用性の目的で使用される技術的ソリューション</li>
+<li>拡張しやすく複数のプロパティを公開</li>
+</ul>
+</li>
+</ul>
+<h2 id="書籍にあった好きな言葉"><a class="anchor" href="#書籍にあった好きな言葉"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>書籍にあった好きな言葉</h2>
+<p>付録にある、New Relic で働かれている Erik Grijzen さんのインタビュー記事にて、</p>
+<ul>
+<li>Q. マイクロフロントエンドを 3 語で表現すると</li>
+<li>A. Scaling UI Development</li>
+</ul>
+<p>という回答がありました。
+<code>Scaling UI Development</code> という言葉、めちゃくちゃ好きになりました。</p>
+<p>マイクロフロントエンドは、フロントエンドをサブドメインで分割し、小さく独立した開発が可能となります。
+大規模な 1 つのアプリケーション開発や、1 つのブランド内の様々なプロダクトを提供するアプリケーション開発に対しては、マイクロフロントエンドは効果的だと思っています。</p>
 <h2 id="終わりに"><a class="anchor" href="#終わりに"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>終わりに</h2>
-<p>Web Components をプロダクションレベルで使えるようになりたいなと思います。</p>
+<p>余談ですが、ブログを書く時間が、徐々に減っています。
+1 年前とかは、1 日とか使っていたんですが、今日は 30 分とかです。
+効率化できている訳じゃなく、単純に時間がなくなってきたなと思います。</p>
 
   
     <div class="content-footer">
   <p>
     Caught a mistake or want to improve the blog?
-    <a href="https://github.com/silverbirder/silverbirder.github.io/edit/main/./docs/blog/contents/what_i_learned_from_developing_o_embed_web_components.md">Edit this blog post on GitHub!</a>
+    <a href="https://github.com/silverbirder/silverbirder.github.io/edit/main/./docs/blog/contents/review_of_micro-frontends_book.md">Edit this blog post on GitHub!</a>
   </p>
 </div>
 
@@ -428,6 +429,6 @@ JSDOM のように、ブラウザ API をラップするライブラリを使っ
 <script type="module" src="../../../e931d24b.js"></script>
 <script type="module" src="../../../6dd6d5cb.js"></script>
 <script type="module" src="../../../dd4fcd54.js" inject-service-worker=""></script>
-<script type="module" src="../../../69952ce097.js"></script>
+<script type="module" src="../../../69952ce061.js"></script>
 
 </body></html>
