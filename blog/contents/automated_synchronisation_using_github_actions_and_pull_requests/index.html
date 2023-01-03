@@ -1,0 +1,545 @@
+<!DOCTYPE html><html lang="ja" dir="ltr"><head>
+  
+    
+
+  
+
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub ActionsとPull Requestを活用した、同期の自動化: silverbirder</title>
+<meta property="og:title" content="GitHub ActionsとPull Requestを活用した、同期の自動化: silverbirder">
+
+<meta name="generator" content="rocket 0.1">
+<link rel="canonical" href="https://silver-birder.github.io/blog/contents/automated_synchronisation_using_github_actions_and_pull_requests/">
+
+
+
+  
+
+<meta name="description" content="あけまして、おめでとうございます。神社のおみくじで、人生はじめて大吉を引きました、silverbirder です。普段の業務で、FigmaのデザイントークンやAPIのスキーマファイル、i18nのメッセージファイルなどを、フロントエンドへ同期するコミュニケーションが不毛に感じています。そこで、GitHub ActionsとPull Requestを活用して、同期コミュニケーションを削減する仕組みを紹介します。">
+<meta property="og:description" content="あけまして、おめでとうございます。神社のおみくじで、人生はじめて大吉を引きました、silverbirder です。普段の業務で、FigmaのデザイントークンやAPIのスキーマファイル、i18nのメッセージファイルなどを、フロントエンドへ同期するコミュニケーションが不毛に感じています。そこで、GitHub ActionsとPull Requestを活用して、同期コミュニケーションを削減する仕組みを紹介します。">
+
+  
+    
+<link rel="apple-touch-icon" sizes="180x180" href="../../../assets/apple-touch-icon.jpg">
+<link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../../assets/favicon-16x16.png">
+<link rel="manifest" href="../../../assets/webmanifest.json">
+
+<meta name="msapplication-TileColor" content="#1d3557">
+<meta name="theme-color" content="#1d3557">
+
+  
+    <meta property="og:site_name" content="silverbirder">
+<meta property="og:type" content="website">
+
+<meta property="og:image" content="https://silver-birder.github.io/c94b4303.png">
+<meta property="og:url" content="https://silver-birder.github.io/blog/contents/automated_synchronisation_using_github_actions_and_pull_requests/">
+
+<meta name="twitter:card" content="summary_large_image">
+
+  
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="">
+
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&amp;display=optional" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&amp;display=optional" rel="stylesheet">
+
+  
+    <link rel="stylesheet" href="../../../3cb4adfb.css">
+<link rel="stylesheet" href="../../../0f4765a3.css">
+<link rel="stylesheet" href="../../../ac2ea3b8.css">
+<link rel="stylesheet" href="../../../2366292e.css">
+
+  
+    <noscript><link rel="stylesheet" href="/_merged_assets/_static/search/noscript.css"></noscript>
+
+  
+    <link rel="stylesheet" href="../../../f5cf94c7.css">
+  
+    
+  
+    <noscript><link rel="stylesheet" href="/_merged_assets/_static/noscript.css"/></noscript>
+
+  
+    <link rel="stylesheet" href="../../../b1403e10.css">
+  
+    <meta name="twitter:creator" content="@silverbirder">
+
+<link rel="stylesheet" href="../../../611b393e.css" mdjs-use="">
+
+<meta name="google-site-verification" content="-8bAm041798VvU0oItcuyuShbVINfNMLfTmP7tENPDY">
+  
+
+<link rel="preload" href="../../../e931d24b.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../a2a9827a.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../5284d142.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../6dd6d5cb.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../dd4fcd54.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../580566d512.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../e12801e9.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../90f0e617.js" as="script" crossorigin="anonymous">
+</head>
+
+  
+
+  
+  <body layout="layout-blog-details">
+  
+
+    
+      <header id="main-header">
+  <div class="content-area">
+    
+      <button id="mobile-menu-trigger" data-action="trigger-mobile-menu">
+	<span class="sr-only">Show Menu</span>
+	      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon">
+        <path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path>
+      </svg>
+
+</button>
+
+    
+      
+	<a class="logo-link" href="/">
+  <img src="../../../90a4fb13.svg" alt="Rocket Logo">
+  <span>silverbirder</span>
+</a>
+
+
+
+    
+      <rocket-search class="search" json-url="/_merged_assets/_static/rocket-search-index.json">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129" style="width: 25px;">
+    <path d="M51.6 96.7c11 0 21-3.9 28.8-10.5l35 35c.8.8 1.8 1.2 2.9 1.2s2.1-.4 2.9-1.2c1.6-1.6 1.6-4.2 0-5.8l-35-35c6.5-7.8 10.5-17.9 10.5-28.8 0-24.9-20.2-45.1-45.1-45.1-24.8 0-45.1 20.3-45.1 45.1 0 24.9 20.3 45.1 45.1 45.1zm0-82c20.4 0 36.9 16.6 36.9 36.9C88.5 72 72 88.5 51.6 88.5S14.7 71.9 14.7 51.6c0-20.3 16.6-36.9 36.9-36.9z"></path>
+  </svg>
+</rocket-search>
+
+
+
+    
+      
+  <a href="/blog/" class="
+          
+           active 
+        ">Blog</a>
+  <a href="/resume/" class="
+          
+          
+        ">Resume</a>
+  <a href="/misc/" class="
+          
+          
+        ">Misc</a>
+
+    
+      <launch-dark-switch class="light-dark-switch" label="Toggle darkmode">Toggle darkmode</launch-dark-switch>
+
+
+    
+      
+	<a class="social-link" href="https://github.com/silverbirder/silverbirder.github.io" aria-label="silverbirder on GitHub" rel="noopener noreferrer" target="_blank">
+		<span class="sr-only">GitHub</span>
+		
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 16" fill="none">
+  <title>GitHub</title>
+  <path fill="currentColor" fill-rule="evenodd" d="M8.18391.249268C3.82241.249268.253906 3.81777.253906 8.17927c0 3.46933 2.279874 6.44313 5.451874 7.53353.3965.0991.49563-.1983.49563-.3965v-1.3878c-2.18075.4956-2.67638-.9912-2.67638-.9912-.3965-.8922-.89212-1.1895-.89212-1.1895-.69388-.4957.09912-.4957.09912-.4957.793.0992 1.1895.793 1.1895.793.69388 1.2887 1.88338.8922 2.27988.6939.09912-.4956.29737-.8921.49562-1.0904-1.78425-.1982-3.5685-.8921-3.5685-3.96496 0-.89212.29738-1.586.793-2.08162-.09912-.19825-.3965-.99125.09913-2.08163 0 0 .69387-.19825 2.18075.793.59475-.19825 1.28862-.29737 1.9825-.29737.69387 0 1.38775.09912 1.98249.29737 1.4869-.99125 2.1808-.793 2.1808-.793.3965 1.09038.1982 1.88338.0991 2.08163.4956.59475.793 1.28862.793 2.08162 0 3.07286-1.8834 3.66766-3.66764 3.86586.29737.3965.59474.8921.59474 1.586v2.1808c0 .1982.0991.4956.5948.3965 3.172-1.0904 5.4518-4.0642 5.4518-7.53353-.0991-4.3615-3.6676-7.930002-8.02909-7.930002z" clip-rule="evenodd"></path>
+</svg>
+
+		
+	</a>
+	<a class="social-link" href="https://twitter.com/silverbirder" aria-label="silverbirder on Twitter" rel="noopener noreferrer" target="_blank">
+		<span class="sr-only">Twitter</span>
+		
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 274 223"><title>Twitter</title><path d="M85.98 223c-31.675 0-61.158-9.285-85.98-25.199 4.388.518 8.853.783 13.38.783 26.278 0 50.463-8.967 69.659-24.01-24.544-.453-45.258-16.669-52.395-38.953a56.014 56.014 0 0 0 10.552 1.006c5.116 0 10.071-.685 14.778-1.967-25.66-5.152-44.993-27.822-44.993-54.998 0-.236 0-.471.004-.705a55.865 55.865 0 0 0 25.406 7.015c-15.05-10.058-24.953-27.226-24.953-46.685 0-10.279 2.766-19.914 7.594-28.198 27.664 33.934 68.993 56.264 115.609 58.603a56.31 56.31 0 0 1-1.453-12.782c0-30.975 25.114-56.088 56.091-56.088 16.132 0 30.709 6.812 40.941 17.713a112.328 112.328 0 0 0 35.617-13.611c-4.188 13.097-13.081 24.089-24.662 31.031a112.148 112.148 0 0 0 32.215-8.832 114 114 0 0 1-27.988 29.035c.108 2.405.162 4.824.162 7.256C245.564 137.533 189.148 223 85.98 223" fill="currentColor"></path></svg>
+
+		
+	</a>
+
+    
+  </div>
+</header>
+
+    
+
+    
+  <div id="content-wrapper">
+    <div class="content-area">
+      
+	<rocket-drawer id="sidebar">
+  <nav slot="content" id="sidebar-nav">
+    
+      <a class="logo-link" href="/">
+  <img src="../../../90a4fb13.svg" alt="Rocket Logo">
+  <span>silverbirder</span>
+</a>
+
+
+    
+      <rocket-navigation>
+  <ul>
+    <li class="current">
+      <h3>Headings</h3>
+      <ul><li class="menu-item">
+<a href="/blog/contents/automated_synchronisation_using_github_actions_and_pull_requests/#github-actionsで使用するもの">GitHub Actionsで使用するもの</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/automated_synchronisation_using_github_actions_and_pull_requests/#githubリポジトリ以外からのトリガー">GitHubリポジトリ以外からのトリガー</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/automated_synchronisation_using_github_actions_and_pull_requests/#自動commit">自動commit</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/automated_synchronisation_using_github_actions_and_pull_requests/#preview">Preview</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/automated_synchronisation_using_github_actions_and_pull_requests/#サンプルコード">サンプルコード</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/automated_synchronisation_using_github_actions_and_pull_requests/#受け入れテストをマークダウンで管理">受け入れテストをマークダウンで管理</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/automated_synchronisation_using_github_actions_and_pull_requests/#ハマったこと">ハマったこと</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/automated_synchronisation_using_github_actions_and_pull_requests/#終わりに">終わりに</a>
+</li></ul>
+    </li>
+  </ul>
+  <div class="sidebar-tags">
+    <h3>Date</h3>
+    <div>Tue Jan 03 2023</div>
+  </div>
+  <div class="sidebar-tags">
+    <h3>Tags</h3>
+    <div class="tags">
+      
+        <span class="tag">GitHub Actions</span>
+      
+    </div>
+  </div>
+  <div class="sidebar-bottom">
+  <hr> <launch-dark-switch class="light-dark-switch" label="Toggle darkmode">Toggle darkmode</launch-dark-switch>
+
+  
+    <a href="https://github.com/silverbirder/silverbirder.github.io/issues">Help and Feedback</a>
+  
+</div>
+
+</rocket-navigation>
+
+    
+  </nav>
+</rocket-drawer>
+
+
+      
+  <main class="markdown-body">
+    <main class="markdown-body">
+  
+    
+  <h1>GitHub ActionsとPull Requestを活用した、同期の自動化</h1>
+
+
+
+  
+    <p>あけまして、おめでとうございます。神社のおみくじで、人生はじめて大吉を引きました、silverbirder です。</p>
+<p>普段の業務で、FigmaのデザイントークンやAPIのスキーマファイル、i18nのメッセージファイルなどを、フロントエンドへ同期するコミュニケーションが不毛に感じています。そこで、GitHub ActionsとPull Requestを活用して、同期コミュニケーションを削減する仕組みを紹介します。</p>
+<p>目新しい情報はないかもしれませんが、同じお困りごとを持つ人へ助けになれば、幸いです。</p>
+<h2 id="github-actionsで使用するもの"><a class="anchor" href="#github-actionsで使用するもの"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>GitHub Actionsで使用するもの</h2>
+<p>今回紹介する仕組みの核となるのが GitHub Actionsのrepository-dispatch トリガーです。</p>
+<p><a href="https://docs.github.com/ja/rest/repos/repos?apiVersion=2022-11-28#create-a-repository-dispatch-event">https://docs.github.com/ja/rest/repos/repos?apiVersion=2022-11-28#create-a-repository-dispatch-event</a></p>
+<p>このトリガーは、GitHub APIを経由して、GitHub Actionsのワークフローを起動することができます。そのため、次のように 異なるリポジトリでのGitHub Actionsワークフローを連携できます。</p>
+<p><a href="https://mermaid.live/edit#pako:eNp9kD1rwzAQhv-KuDmmuymeSrbSoaugXKRzLLA-erqDhJD_XslO6RCoBiGO59UrPTdw2ROMUOlbKTl6C3hmjDaZtlAlJ40nYpv2SUGW4ELBJOZDFmKD1ZyDLHr6Yiq5Bsl8fdVKnDDSS-7M9Jw9cm77_9m5M5T89Fu-FQ7TtIVHQxdyKmT-soMPtaC4Zec37pl3TCg0FF3Xgfu3q8ABInHE4JuKW09baGWRLIzt6GlGXcWCTfeGdi2f1-RgFFY6gBbfLnyYg3HGtbYp-f6m913vZvn-A1JSg1Q"><img src="https://mermaid.ink/img/pako:eNp9kD1rwzAQhv-KuDmmuymeSrbSoaugXKRzLLA-erqDhJD_XslO6RCoBiGO59UrPTdw2ROMUOlbKTl6C3hmjDaZtlAlJ40nYpv2SUGW4ELBJOZDFmKD1ZyDLHr6Yiq5Bsl8fdVKnDDSS-7M9Jw9cm77_9m5M5T89Fu-FQ7TtIVHQxdyKmT-soMPtaC4Zec37pl3TCg0FF3Xgfu3q8ABInHE4JuKW09baGWRLIzt6GlGXcWCTfeGdi2f1-RgFFY6gBbfLnyYg3HGtbYp-f6m913vZvn-A1JSg1Q?type=png" alt="" rocket-image="responsive"></a></p>
+<p>repository-dispatchとcreate-pull-requestは、次のGitHub Actionsです。</p>
+<p><a href="https://github.com/peter-evans/repository-dispatch">https://github.com/peter-evans/repository-dispatch</a>
+<a href="https://github.com/peter-evans/create-pull-request">https://github.com/peter-evans/create-pull-request</a></p>
+<ul>
+<li>respository-dispatch
+<ul>
+<li>repository-dispatch-eventをdispatchするAction</li>
+</ul>
+</li>
+<li>create-pull-request
+<ul>
+<li>Pull Requestを作成するAction</li>
+</ul>
+</li>
+</ul>
+<p>これらのGitHub Actionsを使わずに <code>gh</code> などを使って代替できますが、便利なモノを使って楽をします。</p>
+<h2 id="githubリポジトリ以外からのトリガー"><a class="anchor" href="#githubリポジトリ以外からのトリガー"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>GitHubリポジトリ以外からのトリガー</h2>
+<p>GitHubのリポジトリ(username/other)からトリガーだけでなく、他のサービスからでもトリガーできます。例えば、Google Sheets からだと、Google Apps ScriptからGitHub APIを呼べばよいです。</p>
+<p><a href="https://mermaid.live/edit#pako:eNplkMtqwzAQRX9l0DqmexMMgdK0i0IhW0OYSDexQK9Ko9IQ8u-V7ZYsqpU03Dm6nJvS0UD1quCzImg8W75k9mOgdrhKDNWfkMewThJnsdomDkKHCRDiQpcYLw7HMr_L_9xLjmHNWZnq6ZiRYrES83VbC3Jgj6fznEEww99HC7wbhmW5J83OkUygvZXXeqLdx9v2wemMLYlFTx2-EGSghvO0X2rRLqVCB51tkhW9IB9ofENXAekMFnSpOtfl2UYRtVEe2bM1zdBt3h5VK-Exqr5dDc5cnYxqDPcWnW0drkGrXnLFRtVkGvBXqOrP7EqbwsyV31fri_z7DxDMiec"><img src="https://mermaid.ink/img/pako:eNplkMtqwzAQRX9l0DqmexMMgdK0i0IhW0OYSDexQK9Ko9IQ8u-V7ZYsqpU03Dm6nJvS0UD1quCzImg8W75k9mOgdrhKDNWfkMewThJnsdomDkKHCRDiQpcYLw7HMr_L_9xLjmHNWZnq6ZiRYrES83VbC3Jgj6fznEEww99HC7wbhmW5J83OkUygvZXXeqLdx9v2wemMLYlFTx2-EGSghvO0X2rRLqVCB51tkhW9IB9ofENXAekMFnSpOtfl2UYRtVEe2bM1zdBt3h5VK-Exqr5dDc5cnYxqDPcWnW0drkGrXnLFRtVkGvBXqOrP7EqbwsyV31fri_z7DxDMiec?type=png" alt="" rocket-image="responsive"></a></p>
+<p>他にも、Kibelaのoutgoing webhookを、Serverが受けて、ServerがGitHub APIを呼び出す方法があります。</p>
+<p><a href="https://mermaid.live/edit#pako:eNplkVtrwzAMhf-K8XPD3k0JDMYujMFgr4ah2Gpi6ttsOVsp_e9z4oxC5wcjDudIH9KZq6CRC57xq6BX-GBgTOCkZ_VBoeCLGzBJ35QIiYwyETyxoxnQwn89Y5qXxK3-mEL9IbPR0FSGz4QxZEMhnfalZjw4vDssHvS6_xvYhnR93wrBStRAuOlMrXbKN-aGIDYUllChmTGz15YKhVRwzviRfeMwhXBs-Wav-RVVMAXWMpqQPRl6LgO7f3_ZX6k7bXIEUlOHc2XoW481em2BP6hK5VUJK3YXi7VdWnadie-4w-TA6Lr_85KWvA5zKLmopcYDFEuSS3-p1uUWHyevuKBUcMfbHrZzcXEAm6uKekF7azddT3v5BVs-q2Y"><img src="https://mermaid.ink/img/pako:eNplkVtrwzAMhf-K8XPD3k0JDMYujMFgr4ah2Gpi6ttsOVsp_e9z4oxC5wcjDudIH9KZq6CRC57xq6BX-GBgTOCkZ_VBoeCLGzBJ35QIiYwyETyxoxnQwn89Y5qXxK3-mEL9IbPR0FSGz4QxZEMhnfalZjw4vDssHvS6_xvYhnR93wrBStRAuOlMrXbKN-aGIDYUllChmTGz15YKhVRwzviRfeMwhXBs-Wav-RVVMAXWMpqQPRl6LgO7f3_ZX6k7bXIEUlOHc2XoW481em2BP6hK5VUJK3YXi7VdWnadie-4w-TA6Lr_85KWvA5zKLmopcYDFEuSS3-p1uUWHyevuKBUcMfbHrZzcXEAm6uKekF7azddT3v5BVs-q2Y?type=png" alt="" rocket-image="responsive"></a></p>
+<p>Serverは、IFTTTやZapierのようなサービスでも良いですし、自前のサーバーでも良いでしょう。</p>
+<h2 id="自動commit"><a class="anchor" href="#自動commit"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>自動commit</h2>
+<p>schemaファイルから、型を生成したい(yarn codegen)こともあると思います。そういうときは、次のフローを追加します。</p>
+<p><a href="https://mermaid.live/edit#pako:eNp9kU9rwzAMxb-K8WmDhNGOHhZGTmO3scOuhqHYSmqI_0yWYaH0u89OOnboqA_CiN-TeHonqYNB2cmEXxm9xhcLE4FTXpQHmYPPbkBSfutEILbaRvAs3vmIJCCJyfIxD5-EMSTLgZbnnJA8OHwIlemvta8USr2tHSuD3vS_y9eFbd-v4k7gN-rMKP60rbEpAuvjxq_cNa8JgbGNeZ5bqrYTbzyhZkHTcLd72jViv38s5XC4_3fYAuRFvd2E_ua2YrCtd2x1cK7-NdtwkRRzspEOyYE1JYRTbStZbDpUsitfgyPkmZVU_lzQOuhj8Vp2TBkbmaMpVi6ZyW6EOZUumnqNty3YNd_zD41uqeo"><img src="https://mermaid.ink/img/pako:eNp9kU9rwzAMxb-K8WmDhNGOHhZGTmO3scOuhqHYSmqI_0yWYaH0u89OOnboqA_CiN-TeHonqYNB2cmEXxm9xhcLE4FTXpQHmYPPbkBSfutEILbaRvAs3vmIJCCJyfIxD5-EMSTLgZbnnJA8OHwIlemvta8USr2tHSuD3vS_y9eFbd-v4k7gN-rMKP60rbEpAuvjxq_cNa8JgbGNeZ5bqrYTbzyhZkHTcLd72jViv38s5XC4_3fYAuRFvd2E_ua2YrCtd2x1cK7-NdtwkRRzspEOyYE1JYRTbStZbDpUsitfgyPkmZVU_lzQOuhj8Vp2TBkbmaMpVi6ZyW6EOZUumnqNty3YNd_zD41uqeo?type=png" alt="" rocket-image="responsive"></a></p>
+<p>git-auto-commit-actionは、変更したファイルをgit commitするだけのActionです。</p>
+<p><a href="https://github.com/stefanzweifel/git-auto-commit-action">https://github.com/stefanzweifel/git-auto-commit-action</a></p>
+<p>create-pull-requestだけでも、自動commitすることができます。私は、次のケースで使用しました。</p>
+<ul>
+<li>Figmaの<a href="https://github.com/lukasoppermann/design-tokens">Design Tokens</a>で、Figma上からPull Requestを作成する。
+<ul>
+<li>GitHub Actionsで、style dictionaryのbuildしたものをcommitしたい</li>
+</ul>
+</li>
+</ul>
+<pre class="language-yml"><code class="language-yml"><span class="token key atrule">on</span><span class="token punctuation">:</span>
+  <span class="token key atrule">pull_request</span><span class="token punctuation">:</span>
+    <span class="token key atrule">types</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>opened<span class="token punctuation">]</span>
+<span class="token key atrule">jobs</span><span class="token punctuation">:</span>
+  <span class="token key atrule">update</span><span class="token punctuation">:</span>
+    <span class="token key atrule">if</span><span class="token punctuation">:</span> startsWith(github.head_ref<span class="token punctuation">,</span> 'figma/')
+    <span class="token key atrule">runs-on</span><span class="token punctuation">:</span> ubuntu<span class="token punctuation">-</span>latest
+    <span class="token key atrule">steps</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">uses</span><span class="token punctuation">:</span> actions/checkout@v3
+      <span class="token punctuation">-</span> <span class="token key atrule">uses</span><span class="token punctuation">:</span> actions/setup<span class="token punctuation">-</span>node@v3
+      <span class="token punctuation">-</span> <span class="token key atrule">run</span><span class="token punctuation">:</span> npm ci
+      <span class="token punctuation">-</span> <span class="token key atrule">run</span><span class="token punctuation">:</span> npx style<span class="token punctuation">-</span>dictionary build
+      <span class="token punctuation">-</span> <span class="token key atrule">uses</span><span class="token punctuation">:</span> stefanzweifel/git<span class="token punctuation">-</span>auto<span class="token punctuation">-</span>commit<span class="token punctuation">-</span>action@v4
+</code></pre>
+<h2 id="preview"><a class="anchor" href="#preview"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Preview</h2>
+<p>Figmaのデザイントークンや、i18nのメッセージファイルを更新したとき、Previewできる仕組みがあると、画面の確認ができて、良いです。</p>
+<p><a href="https://mermaid.live/edit#pako:eNp9kUtLAzEUhf9KyEqhg7TShYPMqnQnLtwOSJqczgQmD29u1FL6301mFBcVs7iEw3fu8yx1MJCtTHjL8Bo7qwZSrveiPJU5-OwOoN4vSlTEVtuoPItnHkFCJTFYHvPhlRBDshzo9JgTyCuHu1CZ7tq7p1Di_95jZeBN91N8Lth03WxuBT6hM0P8ehtjU1Ssx4WfuWteExSjiXmaGqpjJ154gmZBw-Fm_bBeic3mvoTt9vbPZJHwbvEhdohTODl4TgtXGpYr6UBOWVMWe65yL0vrDr1sy9fgqPLEvez9paB1yS8nr2XLlLGSOZrS3vcdZHtUUyoqTJ3waTnWfLPLF6JHmvQ"><img src="https://mermaid.ink/img/pako:eNp9kUtLAzEUhf9KyEqhg7TShYPMqnQnLtwOSJqczgQmD29u1FL6301mFBcVs7iEw3fu8yx1MJCtTHjL8Bo7qwZSrveiPJU5-OwOoN4vSlTEVtuoPItnHkFCJTFYHvPhlRBDshzo9JgTyCuHu1CZ7tq7p1Di_95jZeBN91N8Lth03WxuBT6hM0P8ehtjU1Ssx4WfuWteExSjiXmaGqpjJ154gmZBw-Fm_bBeic3mvoTt9vbPZJHwbvEhdohTODl4TgtXGpYr6UBOWVMWe65yL0vrDr1sy9fgqPLEvez9paB1yS8nr2XLlLGSOZrS3vcdZHtUUyoqTJ3waTnWfLPLF6JHmvQ?type=png" alt="" rocket-image="responsive"></a></p>
+<p>例えば、vercelやchromaticのpreviewです。</p>
+<p><a href="https://vercel.com/docs/concepts/deployments/preview-deployments">https://vercel.com/docs/concepts/deployments/preview-deployments</a>
+<a href="https://www.chromatic.com/docs/review">https://www.chromatic.com/docs/review</a></p>
+<h2 id="サンプルコード"><a class="anchor" href="#サンプルコード"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>サンプルコード</h2>
+<p>i18nのメッセージファイルをフロントエンドへ同期するGitHub Actionsを、紹介します。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>repository</th><th>やること</th></tr></thead><tbody><tr><td>username/frontend</td><td>i18nのメッセージファイルを利用</td></tr><tr><td>username/message</td><td>i18nのメッセージファイルを管理</td></tr></tbody></table>
+<p><a href="https://mermaid.live/edit#pako:eNp9kk9LxDAQxb9KyGFR2CrepEgviuChJ68FmU1m22gziZNELct-d9M_6yKum0MIk_fLPCZvJ5XTKEsZ8D0hKXww0DLYhkRekKKjZDfIDS0VFR2LGkOAFmugvPN844GjUcYDRVELCKI1sUubF0bvgsnUcJcCMoHFazvz1V_ykV3ez9PbUYOkq4Op33aKqqrLkRfKWWviRfIaIgpzc0uHzlevwdGlWK0mnU-hW17K8GShFPiFKmXs6KDQJniIatFOuqN-ACbRIiHnZuXS56Ty8LJizNLCp74veBx_iCf1HkIQ90-n7xg_DH4Kjb53g0WK4Z-ZLIDqUL0JRz9kyDaQzkMWuUUxGhWLUbmWuWjB6Jyd3Ug3MnZosZFlPmrcQupjIxvaZ-mYo-eBlCwjJ1zL-UeWqMlyC33IVdTjmOs5j1Ms9987Oeuw"><img src="https://mermaid.ink/img/pako:eNp9kk9LxDAQxb9KyGFR2CrepEgviuChJ68FmU1m22gziZNELct-d9M_6yKum0MIk_fLPCZvJ5XTKEsZ8D0hKXww0DLYhkRekKKjZDfIDS0VFR2LGkOAFmugvPN844GjUcYDRVELCKI1sUubF0bvgsnUcJcCMoHFazvz1V_ykV3ez9PbUYOkq4Op33aKqqrLkRfKWWviRfIaIgpzc0uHzlevwdGlWK0mnU-hW17K8GShFPiFKmXs6KDQJniIatFOuqN-ACbRIiHnZuXS56Ty8LJizNLCp74veBx_iCf1HkIQ90-n7xg_DH4Kjb53g0WK4Z-ZLIDqUL0JRz9kyDaQzkMWuUUxGhWLUbmWuWjB6Jyd3Ug3MnZosZFlPmrcQupjIxvaZ-mYo-eBlCwjJ1zL-UeWqMlyC33IVdTjmOs5j1Ms9987Oeuw?type=png" alt="" rocket-image="responsive"></a></p>
+<pre class="language-yml"><code class="language-yml"><span class="token comment"># &lt;username/message&gt;/.github/workflows/main.yml</span>
+<span class="token key atrule">on</span><span class="token punctuation">:</span>
+  <span class="token key atrule">push</span><span class="token punctuation">:</span>
+    <span class="token key atrule">branches</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> main
+    <span class="token key atrule">paths</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token string">'i18n/**'</span>
+<span class="token key atrule">jobs</span><span class="token punctuation">:</span>
+  <span class="token key atrule">dispath</span><span class="token punctuation">:</span>
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> Setup
+    <span class="token key atrule">runs-on</span><span class="token punctuation">:</span> ubuntu<span class="token punctuation">-</span>latest
+    <span class="token key atrule">steps</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">uses</span><span class="token punctuation">:</span> actions/checkout@v3
+      <span class="token punctuation">-</span> <span class="token key atrule">uses</span><span class="token punctuation">:</span> peter<span class="token punctuation">-</span>evans/repository<span class="token punctuation">-</span>dispatch@v1
+        <span class="token key atrule">with</span><span class="token punctuation">:</span>
+          <span class="token key atrule">repository</span><span class="token punctuation">:</span> username/frontend
+          <span class="token key atrule">token</span><span class="token punctuation">:</span> $
+          <span class="token key atrule">event-type</span><span class="token punctuation">:</span> create<span class="token punctuation">-</span>pull<span class="token punctuation">-</span>request<span class="token punctuation">-</span>message
+          <span class="token key atrule">client-payload</span><span class="token punctuation">:</span> <span class="token string">'{"ref": "$"}'</span>
+</code></pre>
+<pre class="language-yml"><code class="language-yml"><span class="token comment"># &lt;username/frontend&gt;/.github/workflows/main.yml</span>
+<span class="token key atrule">on</span><span class="token punctuation">:</span>
+  <span class="token key atrule">repository_dispatch</span><span class="token punctuation">:</span>
+    <span class="token key atrule">types</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>create<span class="token punctuation">-</span>pull<span class="token punctuation">-</span>request<span class="token punctuation">-</span>message<span class="token punctuation">]</span>
+<span class="token key atrule">jobs</span><span class="token punctuation">:</span>
+  <span class="token key atrule">createPullRequest</span><span class="token punctuation">:</span>
+    <span class="token key atrule">runs-on</span><span class="token punctuation">:</span> ubuntu<span class="token punctuation">-</span>latest
+    <span class="token key atrule">steps</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">uses</span><span class="token punctuation">:</span> actions/checkout@v3
+      <span class="token punctuation">-</span> <span class="token key atrule">uses</span><span class="token punctuation">:</span> actions/checkout@v3
+        <span class="token key atrule">with</span><span class="token punctuation">:</span>
+          <span class="token key atrule">repository</span><span class="token punctuation">:</span> username/message
+          <span class="token key atrule">ref</span><span class="token punctuation">:</span> $
+          <span class="token key atrule">path</span><span class="token punctuation">:</span> <span class="token string">"tmp/"</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">run</span><span class="token punctuation">:</span> <span class="token punctuation">|</span><span class="token scalar string">
+          mv tmp/message.json src/message.json
+          rm -rf tmp</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">uses</span><span class="token punctuation">:</span> actions/setup<span class="token punctuation">-</span>node@v3
+      <span class="token punctuation">-</span> <span class="token key atrule">run</span><span class="token punctuation">:</span> npm ci
+      <span class="token punctuation">-</span> <span class="token key atrule">run</span><span class="token punctuation">:</span> yarn generate<span class="token punctuation">:</span>message
+      <span class="token punctuation">-</span> <span class="token key atrule">uses</span><span class="token punctuation">:</span> peter<span class="token punctuation">-</span>evans/create<span class="token punctuation">-</span>pull<span class="token punctuation">-</span>request@v4
+</code></pre>
+<h2 id="受け入れテストをマークダウンで管理"><a class="anchor" href="#受け入れテストをマークダウンで管理"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>受け入れテストをマークダウンで管理</h2>
+<p>安心してマージできるように、受け入れテストを整備しておきましょう。</p>
+<p>具体的には、<a href="https://cucumber.io/">cucumber</a>で仕様書を<a href="https://github.com/cucumber/gherkin/blob/main/MARKDOWN_WITH_GHERKIN.md">Markdown(MARKDOWN_WITH_GHERKIN)</a>で管理します。</p>
+<p>例えば、次のような仕様書です。</p>
+<pre class="language-markdown"><code class="language-markdown"><span class="token title important"><span class="token punctuation">#</span> Feature: Staying alive</span>
+
+This is about actually staying alive,
+not the <span class="token url">[<span class="token content">Bee Gees song</span>](https://www.youtube.com/watch?v=I_izvAbhExY)</span>.
+
+<span class="token title important"><span class="token punctuation">##</span> Rule: If you don't eat you die</span>
+
+<span class="token url">![<span class="token content">xkcd</span>](https://imgs.xkcd.com/comics/lunch_2x.png)</span>
+
+<span class="token code keyword">`@important`</span> <span class="token code keyword">`@essential`</span>
+<span class="token title important"><span class="token punctuation">###</span> Scenario Outline: eating</span>
+
+<span class="token list punctuation">*</span> Given there are <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>start</span><span class="token punctuation">&gt;</span></span> cucumbers
+<span class="token list punctuation">*</span> When I eat <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>eat</span><span class="token punctuation">&gt;</span></span> cucumbers
+<span class="token list punctuation">*</span> Then I should have <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>left</span><span class="token punctuation">&gt;</span></span> cucumbers
+
+<span class="token title important"><span class="token punctuation">####</span> Examples:</span>
+
+  | start | eat | left |
+  | ----- | --- | ---- |
+  |    12 |   5 |    7 |
+  |    20 |   5 |   15 |
+</code></pre>
+<p>このMarkdownも、GitHub ActionsでPull Requestするフローに載せましょう。新しいシナリオが追加された場合、(cucumberのライブラリ上) テストコードが存在しないとエラーとなります。</p>
+<p>機能で担保したいシナリオをMarkdownで管理していくことで、次のメリットがあります。</p>
+<ul>
+<li>仕様が明確になる</li>
+<li>CIで受け入れテスト(cucumber)を動かし成功すると、仕様を満たす状態 となる</li>
+</ul>
+<h2 id="ハマったこと"><a class="anchor" href="#ハマったこと"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>ハマったこと</h2>
+<h3 id="github-actions-botのcommitで他のワークフローをトリガーできない"><a class="anchor" href="#github-actions-botのcommitで他のワークフローをトリガーできない"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>GitHub Actions Botのcommitで、他のワークフローをトリガーできない</h3>
+<p><a href="https://github.com/orgs/community/discussions/27028">https://github.com/orgs/community/discussions/27028</a></p>
+<p>tokenに、PATを渡すように変更すれば解決します。</p>
+<p>他の解決策としては、workflow_run のトリガーを使えます。</p>
+<p><a href="https://docs.github.com/ja/actions/using-workflows/events-that-trigger-workflows#workflow_run">https://docs.github.com/ja/actions/using-workflows/events-that-trigger-workflows#workflow_run</a></p>
+<p>ただし、デフォルトブランチでのみ動作します。</p>
+<h3 id="repository-dispatchのpostはjsonで制限がある"><a class="anchor" href="#repository-dispatchのpostはjsonで制限がある"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>repository-dispatchのPOSTは、JSONで制限がある</h3>
+<p><a href="https://github.com/peter-evans/repository-dispatch#client-payload">https://github.com/peter-evans/repository-dispatch#client-payload</a></p>
+<p>同期したいファイルをjsonに変換して、dispatchするeventペイロードに含めようと、当初考えていました。ただ、次の懸念があったため、却下しました。</p>
+<ul>
+<li>jsonにしてしまうとコメントが消える</li>
+<li>JSONのバイトサイズに上限がある</li>
+</ul>
+<p>そこで、同期したいリポジトリのgithub.refをeventペイロードに含めて、eventを受けた側がソースコードをチェックアウトして使う方針に切り替えました。</p>
+<h2 id="終わりに"><a class="anchor" href="#終わりに"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>終わりに</h2>
+<p>GitHub ActionsとPull Requestを活用することで、自動的にアプリケーションのソースコードを更新する仕組みを簡単に組み立てられます。
+このようなOpsがあれば、Slackでのメッセージラリーをする回数が減らせられます。ぜひ、ご活用ください。</p>
+
+  
+    <div class="content-footer">
+  <p>
+    Caught a mistake or want to improve the blog?
+    <a href="https://github.com/silverbirder/silverbirder.github.io/edit/main/./docs/blog/contents/automated_synchronisation_using_github_actions_and_pull_requests.md">Edit this blog post on GitHub!</a>
+  </p>
+</div>
+
+
+  
+</main>
+
+  </main>
+
+    </div>
+  </div>
+
+
+    
+      <footer id="main-footer">
+  
+    
+
+  
+    <div id="footer-menu">
+  <div class="content-area">
+    
+      <nav>
+        <h3>Discover</h3>
+        <ul>
+          
+            <li>
+              <a href="https://silverbirder.github.io/blog/">Blog</a>
+            </li>
+          
+            <li>
+              <a href="https://github.com/silverbirder/silverbirder.github.io/issues">Help and Feedback</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>My Sales</h3>
+        <ul>
+          
+            <li>
+              <a href="https://www.amazon.co.jp/芝本雅史/e/B08FJK5C43">Amazon</a>
+            </li>
+          
+            <li>
+              <a href="https://silverbirder.booth.pm">Booth</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>Follow</h3>
+        <ul>
+          
+            <li>
+              <a href="https://github.com/silverbirder/silverbirder.github.io">GitHub</a>
+            </li>
+          
+            <li>
+              <a href="https://twitter.com/silverbirder">Twitter</a>
+            </li>
+          
+            <li>
+              <a href="https://www.google.com/maps/contrib/101722346324226588907/reviews/@34.6907839,135.4537926,13z/">Google Map</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+  </div>
+</div>
+
+  
+</footer>
+
+    
+
+    
+  
+
+
+  
+
+<script>
+  window.__rocketServiceWorkerUrl = '/service-worker.js';
+</script>
+
+
+
+
+
+
+  
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-146805630-4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-146805630-4');
+  </script>
+
+
+
+
+  
+
+
+<script type="module" src="../../../e931d24b.js"></script>
+<script type="module" src="../../../6dd6d5cb.js"></script>
+<script type="module" src="../../../dd4fcd54.js" inject-service-worker=""></script>
+<script type="module" src="../../../580566d512.js"></script>
+
+</body></html>
