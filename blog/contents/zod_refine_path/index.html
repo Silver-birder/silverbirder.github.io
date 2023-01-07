@@ -8,18 +8,18 @@
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZoomのMeetingを自動生成するGASライブラリ zoom-meeting-creator を作った: silverbirder</title>
-<meta property="og:title" content="ZoomのMeetingを自動生成するGASライブラリ zoom-meeting-creator を作った: silverbirder">
+<title>zodのrefineにあるpathにハマった: silverbirder</title>
+<meta property="og:title" content="zodのrefineにあるpathにハマった: silverbirder">
 
 <meta name="generator" content="rocket 0.1">
-<link rel="canonical" href="https://silver-birder.github.io/blog/contents/zoom-meeting-creator/">
+<link rel="canonical" href="https://silver-birder.github.io/blog/contents/zod_refine_path/">
 
 
 
   
 
-<meta name="description" content="みなさん、Zoom使っていますか？ ZoomのMeetingを自動生成するGASライブラリを公開しましたので、そのきっかけと使い方について紹介しようと思います。">
-<meta property="og:description" content="みなさん、Zoom使っていますか？ ZoomのMeetingを自動生成するGASライブラリを公開しましたので、そのきっかけと使い方について紹介しようと思います。">
+<meta name="description" content="zodのrefineを使っていたのですが、pathの使い方を全く理解できておらず、小一時間ほどハマってしまったことがあったので、備忘録として残しておきます。">
+<meta property="og:description" content="zodのrefineを使っていたのですが、pathの使い方を全く理解できておらず、小一時間ほどハマってしまったことがあったので、備忘録として残しておきます。">
 
   
     
@@ -35,8 +35,8 @@
     <meta property="og:site_name" content="silverbirder">
 <meta property="og:type" content="website">
 
-<meta property="og:image" content="https://res.cloudinary.com/silverbirder/image/upload/v1611128736/silver-birder.github.io/assets/logo.png">
-<meta property="og:url" content="https://silver-birder.github.io/blog/contents/zoom-meeting-creator/">
+<meta property="og:image" content="https://silver-birder.github.io/c94b4303.png">
+<meta property="og:url" content="https://silver-birder.github.io/blog/contents/zod_refine_path/">
 
 <meta name="twitter:card" content="summary_large_image">
 
@@ -77,7 +77,7 @@
 <link rel="preload" href="../../../5284d142.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../6dd6d5cb.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../dd4fcd54.js" as="script" crossorigin="anonymous">
-<link rel="preload" href="../../../580566d5103.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../580566d5102.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../e12801e9.js" as="script" crossorigin="anonymous">
 <link rel="preload" href="../../../90f0e617.js" as="script" crossorigin="anonymous">
 </head>
@@ -181,28 +181,23 @@
   <ul>
     <li class="current">
       <h3>Headings</h3>
-      
+      <ul><li class="menu-item">
+<a href="/blog/contents/zod_refine_path/#背景">背景</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/zod_refine_path/#path">path</a>
+</li></ul>
     </li>
   </ul>
   <div class="sidebar-tags">
     <h3>Date</h3>
-    <div>Sat Jun 06 2020</div>
+    <div>Sat Jan 07 2023</div>
   </div>
   <div class="sidebar-tags">
     <h3>Tags</h3>
     <div class="tags">
       
-        <span class="tag">Tool</span>
-      
-        <span class="tag">Artifacts</span>
-      
-        <span class="tag">Introduce</span>
-      
-        <span class="tag">Learning</span>
-      
-        <span class="tag">Zoom</span>
-      
-        <span class="tag">Google Apps Script</span>
+        <span class="tag">zod</span>
       
     </div>
   </div>
@@ -226,39 +221,57 @@
     <main class="markdown-body">
   
     
-  <h1>ZoomのMeetingを自動生成するGASライブラリ zoom-meeting-creator を作った</h1>
+  <h1>zodのrefineにあるpathにハマった</h1>
 
-
-  <img src="https://res.cloudinary.com/silverbirder/image/upload/v1611128736/silver-birder.github.io/assets/logo.png" alt="">
 
 
   
-    <p>みなさん、Zoom使っていますか？
-ZoomのMeetingを自動生成するGASライブラリを公開しましたので、
-そのきっかけと使い方について紹介しようと思います。</p>
-<!--  TODO: TOC -->
-<h1 id="きっかけ"><a class="anchor" href="#きっかけ"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>きっかけ</h1>
-<p>社のSlackで次のqiitaの記事を知りました。</p>
-<p><ogp-me src="https://qiita.com/kudota/items/b480610cc3f575a8ec6f"></ogp-me></p>
-<p>GASからZoomのMeetingを作れるのって、簡単なんだな〜と思いつつ、
-"cronのように使いたい"というSlackのコメントがあったので、サクッと一日で作ってみました。</p>
-<p>定期的にZoomのMeeting(IDやパスワード)を更新する会社はあるはずです。
-そういう会社にとっては、このツールは、便利かもしれません。</p>
-<h1 id="作ったもの"><a class="anchor" href="#作ったもの"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>作ったもの</h1>
-<p><ogp-me src="https://github.com/silverbirder/zoom-meeting-creator"></ogp-me></p>
-<p>これをGAS側でライブラリ追加すると使えます。
-このGASでは、</p>
-<ul>
-<li>ZoomのMeetingを作成</li>
-<li>Slackとの連携</li>
-</ul>
-<p>ができます。この機能を、GASの定期実行を組み合わせれば、"ZoomのMeeting作成をcronのように"使えるようになります。</p>
+    <p>zod の refine を使っていたのですが、path の使い方を全く理解できておらず、小一時間ほどハマってしまったことがあったので、備忘録として残しておきます。</p>
+<h2 id="背景"><a class="anchor" href="#背景"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>背景</h2>
+<p>zod を使って、バリデーションロジックを書いていました。
+バリデーションで複数フィールドを参照する必要があったため、refine を使っていました。</p>
+<p><a href="https://github.com/colinhacks/zod#refine">https://github.com/colinhacks/zod#refine</a></p>
+<h2 id="path"><a class="anchor" href="#path"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>path</h2>
+<p>サンプルコードを以下に示します。</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword module">import</span> <span class="token punctuation">{</span> z <span class="token punctuation">}</span> <span class="token keyword module">from</span> <span class="token string">"zod"</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> schema <span class="token operator">=</span> z<span class="token punctuation">.</span><span class="token method function property-access">object</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  a<span class="token punctuation">:</span> z
+    <span class="token punctuation">.</span><span class="token method function property-access">object</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+      first<span class="token punctuation">:</span> z<span class="token punctuation">.</span><span class="token method function property-access">string</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token method function property-access">refine</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">{</span> first <span class="token punctuation">}</span></span><span class="token punctuation">)</span> <span class="token arrow operator">=&gt;</span> first <span class="token operator">===</span> <span class="token string">"first"</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+      path<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"b"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>a というオブジェクトに refine を定義しました。refine の第 2 引数の path に <code>['b']</code> を定義しました。</p>
+<p>schema のテストをしてみます。</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword module">import</span> test <span class="token keyword module">from</span> <span class="token string">"tape"</span><span class="token punctuation">;</span>
+
+<span class="token function">test</span><span class="token punctuation">(</span><span class="token string">"invalid"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">t</span><span class="token punctuation">)</span> <span class="token arrow operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token comment">// Act</span>
+  <span class="token keyword">const</span> data <span class="token operator">=</span> schema<span class="token punctuation">.</span><span class="token method function property-access">safeParse</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    a<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+      first<span class="token punctuation">:</span> <span class="token string">"BUG"</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// Assert</span>
+  t<span class="token punctuation">.</span><span class="token method function property-access">deepEqual</span><span class="token punctuation">(</span>data<span class="token punctuation">.</span><span class="token property-access">error</span><span class="token punctuation">.</span><span class="token property-access">issues</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token property-access">path</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">"a"</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  t<span class="token punctuation">.</span><span class="token method function property-access">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>エラー(issue)の path は、<code>['a', 'b']</code> になります。めちゃくちゃ当たり前なんですが、以上です。(笑)</p>
+<p>stackblitz にも残しておきました。</p>
+<p><a href="https://stackblitz.com/edit/nodemon-fkzaw5?file=index.js">https://stackblitz.com/edit/nodemon-fkzaw5?file=index.js</a></p>
+<p>zod の github にある path の説明は、<code>appended to error path</code> と書いています。</p>
 
   
     <div class="content-footer">
   <p>
     Caught a mistake or want to improve the blog?
-    <a href="https://github.com/silverbirder/silverbirder.github.io/edit/main/./docs/blog/contents/zoom-meeting-creator.md">Edit this blog post on GitHub!</a>
+    <a href="https://github.com/silverbirder/silverbirder.github.io/edit/main/./docs/blog/contents/zod_refine_path.md">Edit this blog post on GitHub!</a>
   </p>
 </div>
 
@@ -372,6 +385,6 @@ ZoomのMeetingを自動生成するGASライブラリを公開しましたので
 <script type="module" src="../../../e931d24b.js"></script>
 <script type="module" src="../../../6dd6d5cb.js"></script>
 <script type="module" src="../../../dd4fcd54.js" inject-service-worker=""></script>
-<script type="module" src="../../../580566d5103.js"></script>
+<script type="module" src="../../../580566d5102.js"></script>
 
 </body></html>
