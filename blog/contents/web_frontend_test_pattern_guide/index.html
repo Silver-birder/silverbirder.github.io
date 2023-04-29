@@ -1,0 +1,956 @@
+<!DOCTYPE html><html lang="ja" dir="ltr"><head>
+  
+    
+
+  
+
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Webフロントエンドにおける網羅的テストパターンガイド: silverbirder</title>
+<meta property="og:title" content="Webフロントエンドにおける網羅的テストパターンガイド: silverbirder">
+
+<meta name="generator" content="rocket 0.1">
+<link rel="canonical" href="https://silver-birder.github.io/blog/contents/web_frontend_test_pattern_guide/">
+
+
+
+  
+
+<meta name="description" content="こんにちは、テストが好きなsilverbirderと申します。Webフロントエンドのテストは実施していますか？ユニットテストやビジュアルリグレッションテストは広く知られていると思います。しかし、パフォーマンステストのためのテストコードはありますか？また、カオスエンジニアリングテストやアクセシビリティテストはありますか？">
+<meta property="og:description" content="こんにちは、テストが好きなsilverbirderと申します。Webフロントエンドのテストは実施していますか？ユニットテストやビジュアルリグレッションテストは広く知られていると思います。しかし、パフォーマンステストのためのテストコードはありますか？また、カオスエンジニアリングテストやアクセシビリティテストはありますか？">
+
+  
+    
+<link rel="apple-touch-icon" sizes="180x180" href="../../../assets/apple-touch-icon.jpg">
+<link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../../assets/favicon-16x16.png">
+<link rel="manifest" href="../../../assets/webmanifest.json">
+
+<meta name="msapplication-TileColor" content="#1d3557">
+<meta name="theme-color" content="#1d3557">
+
+  
+    <meta property="og:site_name" content="silverbirder">
+<meta property="og:type" content="website">
+
+<meta property="og:image" content="https://silver-birder.github.io/c94b4303.png">
+<meta property="og:url" content="https://silver-birder.github.io/blog/contents/web_frontend_test_pattern_guide/">
+
+<meta name="twitter:card" content="summary_large_image">
+
+  
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="">
+
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&amp;display=optional" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&amp;display=optional" rel="stylesheet">
+
+  
+    <link rel="stylesheet" href="../../../3cb4adfb.css">
+<link rel="stylesheet" href="../../../0f4765a3.css">
+<link rel="stylesheet" href="../../../ac2ea3b8.css">
+<link rel="stylesheet" href="../../../2366292e.css">
+
+  
+    <noscript><link rel="stylesheet" href="/_merged_assets/_static/search/noscript.css"></noscript>
+
+  
+    <link rel="stylesheet" href="../../../f5cf94c7.css">
+  
+    
+  
+    <noscript><link rel="stylesheet" href="/_merged_assets/_static/noscript.css"/></noscript>
+
+  
+    <link rel="stylesheet" href="../../../b1403e10.css">
+  
+    <meta name="twitter:creator" content="@silverbirder">
+
+<link rel="stylesheet" href="../../../611b393e.css" mdjs-use="">
+
+<meta name="google-site-verification" content="-8bAm041798VvU0oItcuyuShbVINfNMLfTmP7tENPDY">
+  
+
+<link rel="preload" href="../../../e931d24b.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../a2a9827a.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../5284d142.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../6dd6d5cb.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../dd4fcd54.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../580566d5100.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../e12801e9.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../90f0e617.js" as="script" crossorigin="anonymous">
+</head>
+
+  
+
+  
+  <body layout="layout-blog-details">
+  
+
+    
+      <header id="main-header">
+  <div class="content-area">
+    
+      <button id="mobile-menu-trigger" data-action="trigger-mobile-menu">
+	<span class="sr-only">Show Menu</span>
+	      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon">
+        <path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path>
+      </svg>
+
+</button>
+
+    
+      
+	<a class="logo-link" href="/">
+  <img src="../../../90a4fb13.svg" alt="Rocket Logo">
+  <span>silverbirder</span>
+</a>
+
+
+
+    
+      <rocket-search class="search" json-url="/_merged_assets/_static/rocket-search-index.json">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129" style="width: 25px;">
+    <path d="M51.6 96.7c11 0 21-3.9 28.8-10.5l35 35c.8.8 1.8 1.2 2.9 1.2s2.1-.4 2.9-1.2c1.6-1.6 1.6-4.2 0-5.8l-35-35c6.5-7.8 10.5-17.9 10.5-28.8 0-24.9-20.2-45.1-45.1-45.1-24.8 0-45.1 20.3-45.1 45.1 0 24.9 20.3 45.1 45.1 45.1zm0-82c20.4 0 36.9 16.6 36.9 36.9C88.5 72 72 88.5 51.6 88.5S14.7 71.9 14.7 51.6c0-20.3 16.6-36.9 36.9-36.9z"></path>
+  </svg>
+</rocket-search>
+
+
+
+    
+      
+  <a href="/blog/" class="
+          
+           active 
+        ">Blog</a>
+  <a href="/resume/" class="
+          
+          
+        ">Resume</a>
+  <a href="/misc/" class="
+          
+          
+        ">Misc</a>
+
+    
+      <launch-dark-switch class="light-dark-switch" label="Toggle darkmode">Toggle darkmode</launch-dark-switch>
+
+
+    
+      
+	<a class="social-link" href="https://github.com/silverbirder/silverbirder.github.io" aria-label="silverbirder on GitHub" rel="noopener noreferrer" target="_blank">
+		<span class="sr-only">GitHub</span>
+		
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 16" fill="none">
+  <title>GitHub</title>
+  <path fill="currentColor" fill-rule="evenodd" d="M8.18391.249268C3.82241.249268.253906 3.81777.253906 8.17927c0 3.46933 2.279874 6.44313 5.451874 7.53353.3965.0991.49563-.1983.49563-.3965v-1.3878c-2.18075.4956-2.67638-.9912-2.67638-.9912-.3965-.8922-.89212-1.1895-.89212-1.1895-.69388-.4957.09912-.4957.09912-.4957.793.0992 1.1895.793 1.1895.793.69388 1.2887 1.88338.8922 2.27988.6939.09912-.4956.29737-.8921.49562-1.0904-1.78425-.1982-3.5685-.8921-3.5685-3.96496 0-.89212.29738-1.586.793-2.08162-.09912-.19825-.3965-.99125.09913-2.08163 0 0 .69387-.19825 2.18075.793.59475-.19825 1.28862-.29737 1.9825-.29737.69387 0 1.38775.09912 1.98249.29737 1.4869-.99125 2.1808-.793 2.1808-.793.3965 1.09038.1982 1.88338.0991 2.08163.4956.59475.793 1.28862.793 2.08162 0 3.07286-1.8834 3.66766-3.66764 3.86586.29737.3965.59474.8921.59474 1.586v2.1808c0 .1982.0991.4956.5948.3965 3.172-1.0904 5.4518-4.0642 5.4518-7.53353-.0991-4.3615-3.6676-7.930002-8.02909-7.930002z" clip-rule="evenodd"></path>
+</svg>
+
+		
+	</a>
+	<a class="social-link" href="https://twitter.com/silverbirder" aria-label="silverbirder on Twitter" rel="noopener noreferrer" target="_blank">
+		<span class="sr-only">Twitter</span>
+		
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 274 223"><title>Twitter</title><path d="M85.98 223c-31.675 0-61.158-9.285-85.98-25.199 4.388.518 8.853.783 13.38.783 26.278 0 50.463-8.967 69.659-24.01-24.544-.453-45.258-16.669-52.395-38.953a56.014 56.014 0 0 0 10.552 1.006c5.116 0 10.071-.685 14.778-1.967-25.66-5.152-44.993-27.822-44.993-54.998 0-.236 0-.471.004-.705a55.865 55.865 0 0 0 25.406 7.015c-15.05-10.058-24.953-27.226-24.953-46.685 0-10.279 2.766-19.914 7.594-28.198 27.664 33.934 68.993 56.264 115.609 58.603a56.31 56.31 0 0 1-1.453-12.782c0-30.975 25.114-56.088 56.091-56.088 16.132 0 30.709 6.812 40.941 17.713a112.328 112.328 0 0 0 35.617-13.611c-4.188 13.097-13.081 24.089-24.662 31.031a112.148 112.148 0 0 0 32.215-8.832 114 114 0 0 1-27.988 29.035c.108 2.405.162 4.824.162 7.256C245.564 137.533 189.148 223 85.98 223" fill="currentColor"></path></svg>
+
+		
+	</a>
+
+    
+  </div>
+</header>
+
+    
+
+    
+  <div id="content-wrapper">
+    <div class="content-area">
+      
+	<rocket-drawer id="sidebar">
+  <nav slot="content" id="sidebar-nav">
+    
+      <a class="logo-link" href="/">
+  <img src="../../../90a4fb13.svg" alt="Rocket Logo">
+  <span>silverbirder</span>
+</a>
+
+
+    
+      <rocket-navigation>
+  <ul>
+    <li class="current">
+      <h3>Headings</h3>
+      <ul><li class="menu-item">
+<a href="/blog/contents/web_frontend_test_pattern_guide/#前提">前提</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/web_frontend_test_pattern_guide/#概要">概要</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/web_frontend_test_pattern_guide/#テストパターン">テストパターン</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/web_frontend_test_pattern_guide/#その他">その他</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/web_frontend_test_pattern_guide/#終わりに">終わりに</a>
+</li></ul>
+    </li>
+  </ul>
+  <div class="sidebar-tags">
+    <h3>Date</h3>
+    <div>Fri Apr 28 2023</div>
+  </div>
+  <div class="sidebar-tags">
+    <h3>Tags</h3>
+    <div class="tags">
+      
+        <span class="tag">Frontend</span>
+      
+        <span class="tag">Test</span>
+      
+    </div>
+  </div>
+  <div class="sidebar-bottom">
+  <hr> <launch-dark-switch class="light-dark-switch" label="Toggle darkmode">Toggle darkmode</launch-dark-switch>
+
+  
+    <a href="https://github.com/silverbirder/silverbirder.github.io/issues">Help and Feedback</a>
+  
+</div>
+
+</rocket-navigation>
+
+    
+  </nav>
+</rocket-drawer>
+
+
+      
+  <main class="markdown-body">
+    <main class="markdown-body">
+  
+    
+  <h1>Webフロントエンドにおける網羅的テストパターンガイド</h1>
+
+
+
+  
+    <p>こんにちは、テストが好きなsilverbirderと申します。Webフロントエンドのテストは実施していますか？ユニットテストやビジュアルリグレッションテストは広く知られていると思います。しかし、パフォーマンステストのためのテストコードはありますか？また、カオスエンジニアリングテストやアクセシビリティテストはありますか？</p>
+<p>今回、私はWebフロントエンドにおける網羅的なテストパターンを調査し、その結果をここで紹介したいと思います。これらを理解することで、読者の皆さんが適切なテスト戦略を策定する際の参考になれば幸いです。</p>
+<h2 id="前提"><a class="anchor" href="#前提"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>前提</h2>
+<p>今回、テスト対象として取り上げる題材は、<a href="https://todomvc.com/">TodoMVC</a>というTODOアプリです。フレームワークとしてReactを使用しますが、紹介するテストパターンはフレームワークに依存しないものです。ただし、使用するライブラリはReactに関連しているため、その点についてはご了承ください。また、テストライブラリとして、Jestを使用します。</p>
+<p>参考となるコードは次のリポジトリに用意していますので、ぜひご参照ください。</p>
+<p><a href="https://github.com/silverbirder/react-todoMVC/">https://github.com/silverbirder/react-todoMVC/</a></p>
+<p>また、動作するアプリケーションをVercelで公開しています。こちらも参考にしてください。</p>
+<p><a href="https://silverbirder-react-todo-mvc.vercel.app">https://silverbirder-react-todo-mvc.vercel.app</a></p>
+<p>コンポーネントの構造は以下の通りです。</p>
+<p><img src="https://storage.googleapis.com/zenn-user-upload/8fcf377eaa36-20230423.png" alt="component_structure" rocket-image="responsive"></p>
+<ul>
+<li>App.tsx
+<ul>
+<li>TodoInput.tsx</li>
+<li>TodoList.tsx
+<ul>
+<li>TodoItem.tsx</li>
+</ul>
+</li>
+<li>TodoContext.ts</li>
+</ul>
+</li>
+</ul>
+<h2 id="概要"><a class="anchor" href="#概要"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>概要</h2>
+<p>まず、これから紹介するテストパターンの全体図を紹介します。</p>
+<p><img src="https://storage.googleapis.com/zenn-user-upload/5182e7bd04a5-20230425.png" alt="overview" rocket-image="responsive"></p>
+<p>テストパターンは、大きく以下の3つに分類されます。</p>
+<ul>
+<li>機能テスト</li>
+<li>非機能テスト</li>
+<li>UI/UXテスト</li>
+</ul>
+<p>それぞれの内容について、これから説明していきます。</p>
+<h2 id="テストパターン"><a class="anchor" href="#テストパターン"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>テストパターン</h2>
+<h3 id="機能テストfunctional"><a class="anchor" href="#機能テストfunctional"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>機能テスト(Functional)</h3>
+<p>機能とは、システムやソフトウェア、製品、またはサービスが提供する特定の目的を達成するために実行されるタスクや操作を指します。Webフロントエンドにおける機能は、Webアプリケーションのユーザーインターフェース（UI）部分で実現されるタスクや操作を指します。これには画面表示や操作、ページ遷移や更新などが含まれます。</p>
+<p>機能テストには、テストトロフィーやテストピラミッドが有名です。一般的に次の3つのカテゴリがあります。</p>
+<ul>
+<li>ユニットテスト
+<ul>
+<li>関数やコンポーネントなど、単体レベルのテスト</li>
+</ul>
+</li>
+<li>インテグレーションテスト
+<ul>
+<li>複数の関数やコンポーネントが正しく連携するかのテスト</li>
+</ul>
+</li>
+<li>E2E(システム)テスト
+<ul>
+<li>フロントエンドからバックエンドまで一気通貫したテスト</li>
+</ul>
+</li>
+</ul>
+<p>ユニットテストとインテグレーションテストは、フロントエンドだけで完結し速度重視のテストです。一方、E2Eテストはバックエンドと連携し、速度は遅く重たいものの、より本番環境に近い状態でテストを行います。</p>
+<p>ユニットテストは一つの機能やコンポーネントに対して行うのに対し、インテグレーションテストではユーザーにとって意味のある単位で結合したコンポーネントに対してテストを行うことがお勧めです。画面を構成するページレベルのコンポーネントが適切でしょう。</p>
+<h4 id="ユニットテスト"><a class="anchor" href="#ユニットテスト"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>ユニットテスト</h4>
+<p>まず、よく知られているユニットテストから始めましょう。TodoItemコンポーネントのテストを行ってみましょう。</p>
+<p>TodoItemコンポーネントは以下の通りです。</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token comment">// src/components/TodoItem/TodoItem.tsx</span>
+
+<span class="token keyword">import</span> <span class="token maybe-class-name">React</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> useContext <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"react"</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token keyword">type</span> <span class="token punctuation">{</span> <span class="token maybe-class-name">Todo</span> <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"../../types"</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> <span class="token maybe-class-name">TodoContext</span> <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"../context"</span><span class="token punctuation">;</span>
+
+<span class="token keyword">type</span> <span class="token maybe-class-name">Props</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+  todo<span class="token punctuation">:</span> <span class="token maybe-class-name">Todo</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">const</span> <span class="token maybe-class-name">TodoItem</span><span class="token punctuation">:</span> <span class="token maybe-class-name">React</span><span class="token punctuation">.</span><span class="token constant">FC</span><span class="token operator">&lt;</span><span class="token maybe-class-name">Props</span><span class="token operator">&gt;</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">{</span> todo <span class="token punctuation">}</span></span><span class="token punctuation">)</span> <span class="token arrow operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> <span class="token punctuation">{</span> toggle<span class="token punctuation">,</span> deleteTodo <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">useContext</span><span class="token punctuation">(</span><span class="token maybe-class-name">TodoContext</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>
+    <span class="token operator">&lt;</span>li className<span class="token operator">=</span><span class="token punctuation">{</span>todo<span class="token punctuation">.</span><span class="token property-access">completed</span> <span class="token operator">?</span> <span class="token string">"completed"</span> <span class="token punctuation">:</span> <span class="token string">""</span><span class="token punctuation">}</span><span class="token operator">&gt;</span>
+      <span class="token operator">&lt;</span>div className<span class="token operator">=</span><span class="token string">"view"</span><span class="token operator">&gt;</span>
+        <span class="token operator">&lt;</span>input
+          className<span class="token operator">=</span><span class="token string">"toggle"</span>
+          <span class="token keyword">type</span><span class="token operator">=</span><span class="token string">"checkbox"</span>
+          checked<span class="token operator">=</span><span class="token punctuation">{</span>todo<span class="token punctuation">.</span><span class="token property-access">completed</span><span class="token punctuation">}</span>
+          onChange<span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token arrow operator">=&gt;</span> <span class="token function">toggle</span><span class="token punctuation">(</span>todo<span class="token punctuation">.</span><span class="token property-access">id</span><span class="token punctuation">)</span><span class="token punctuation">}</span>
+        <span class="token operator">/</span><span class="token operator">&gt;</span>
+        <span class="token operator">&lt;</span>label data<span class="token operator">-</span>testid<span class="token operator">=</span><span class="token string">"todo-title"</span><span class="token operator">&gt;</span><span class="token punctuation">{</span>todo<span class="token punctuation">.</span><span class="token property-access">title</span><span class="token punctuation">}</span><span class="token operator">&lt;</span><span class="token operator">/</span>label<span class="token operator">&gt;</span>
+        <span class="token operator">&lt;</span>button className<span class="token operator">=</span><span class="token string">"destroy"</span> onClick<span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token arrow operator">=&gt;</span> <span class="token function">deleteTodo</span><span class="token punctuation">(</span>todo<span class="token punctuation">.</span><span class="token property-access">id</span><span class="token punctuation">)</span><span class="token punctuation">}</span> <span class="token operator">/</span><span class="token operator">&gt;</span>
+      <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>li<span class="token operator">&gt;</span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p>このコンポーネントに対するテストコードは、以下のようになります。</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token comment">// src/components/TodoItem/TodoItem.test.tsx</span>
+
+<span class="token keyword">import</span> <span class="token maybe-class-name">React</span> <span class="token keyword">from</span> <span class="token string">"react"</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span>render<span class="token punctuation">,</span> screen<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"@testing-library/react"</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span><span class="token maybe-class-name">TodoItem</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"./TodoItem"</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span><span class="token maybe-class-name">TodoContext</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"../context"</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> userEvent <span class="token keyword">from</span> <span class="token string">"@testing-library/user-event"</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> mockToggle <span class="token operator">=</span> jest<span class="token punctuation">.</span><span class="token method function property-access">fn</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> mockDeleteTodo <span class="token operator">=</span> jest<span class="token punctuation">.</span><span class="token method function property-access">fn</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> mockAdd <span class="token operator">=</span> jest<span class="token punctuation">.</span><span class="token method function property-access">fn</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token function">describe</span><span class="token punctuation">(</span><span class="token string">"TodoItem"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token arrow operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token comment">// Arrange</span>
+    <span class="token keyword">const</span> mockTodo <span class="token operator">=</span> <span class="token punctuation">{</span>
+      id<span class="token punctuation">:</span> <span class="token string">"1"</span><span class="token punctuation">,</span>
+      title<span class="token punctuation">:</span> <span class="token string">"Test Todo"</span><span class="token punctuation">,</span>
+      completed<span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">"renders todo title"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token arrow operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token comment">// Act</span>
+        <span class="token function">render</span><span class="token punctuation">(</span>
+            <span class="token operator">&lt;</span><span class="token maybe-class-name">TodoContext</span><span class="token punctuation">.</span><span class="token property-access"><span class="token maybe-class-name">Provider</span></span> <span class="token parameter">value</span><span class="token arrow operator">=&gt;</span>
+                <span class="token operator">&lt;</span><span class="token maybe-class-name">TodoItem</span> todo<span class="token operator">=</span><span class="token punctuation">{</span>mockTodo<span class="token punctuation">}</span><span class="token operator">/</span><span class="token operator">&gt;</span>
+            <span class="token operator">&lt;</span><span class="token operator">/</span><span class="token maybe-class-name">TodoContext</span><span class="token punctuation">.</span><span class="token property-access"><span class="token maybe-class-name">Provider</span></span><span class="token operator">&gt;</span>
+        <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// Assert</span>
+        <span class="token function">expect</span><span class="token punctuation">(</span>screen<span class="token punctuation">.</span><span class="token method function property-access">getByText</span><span class="token punctuation">(</span>mockTodo<span class="token punctuation">.</span><span class="token property-access">title</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token method function property-access">toBeInTheDocument</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">"toggles todo completion"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token arrow operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token comment">// Arrange</span>
+        <span class="token function">render</span><span class="token punctuation">(</span>
+            <span class="token operator">&lt;</span><span class="token maybe-class-name">TodoContext</span><span class="token punctuation">.</span><span class="token property-access"><span class="token maybe-class-name">Provider</span></span> <span class="token parameter">value</span><span class="token arrow operator">=&gt;</span>
+                <span class="token operator">&lt;</span><span class="token maybe-class-name">TodoItem</span> todo<span class="token operator">=</span><span class="token punctuation">{</span>mockTodo<span class="token punctuation">}</span><span class="token operator">/</span><span class="token operator">&gt;</span>
+            <span class="token operator">&lt;</span><span class="token operator">/</span><span class="token maybe-class-name">TodoContext</span><span class="token punctuation">.</span><span class="token property-access"><span class="token maybe-class-name">Provider</span></span><span class="token operator">&gt;</span>
+        <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// Act</span>
+        userEvent<span class="token punctuation">.</span><span class="token method function property-access">click</span><span class="token punctuation">(</span>screen<span class="token punctuation">.</span><span class="token method function property-access">getByRole</span><span class="token punctuation">(</span><span class="token string">"checkbox"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// Assert</span>
+        <span class="token function">expect</span><span class="token punctuation">(</span>mockToggle<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token method function property-access">toHaveBeenCalledWith</span><span class="token punctuation">(</span>mockTodo<span class="token punctuation">.</span><span class="token property-access">id</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">"deletes a todo"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token arrow operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token comment">// Arrange</span>
+        <span class="token function">render</span><span class="token punctuation">(</span>
+            <span class="token operator">&lt;</span><span class="token maybe-class-name">TodoContext</span><span class="token punctuation">.</span><span class="token property-access"><span class="token maybe-class-name">Provider</span></span> <span class="token parameter">value</span><span class="token arrow operator">=&gt;</span>
+                <span class="token operator">&lt;</span><span class="token maybe-class-name">TodoItem</span> todo<span class="token operator">=</span><span class="token punctuation">{</span>mockTodo<span class="token punctuation">}</span><span class="token operator">/</span><span class="token operator">&gt;</span>
+            <span class="token operator">&lt;</span><span class="token operator">/</span><span class="token maybe-class-name">TodoContext</span><span class="token punctuation">.</span><span class="token property-access"><span class="token maybe-class-name">Provider</span></span><span class="token operator">&gt;</span>
+        <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// Act</span>
+        userEvent<span class="token punctuation">.</span><span class="token method function property-access">click</span><span class="token punctuation">(</span>screen<span class="token punctuation">.</span><span class="token method function property-access">getByRole</span><span class="token punctuation">(</span><span class="token string">"button"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// Assert</span>
+        <span class="token function">expect</span><span class="token punctuation">(</span>mockDeleteTodo<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token method function property-access">toHaveBeenCalledWith</span><span class="token punctuation">(</span>mockTodo<span class="token punctuation">.</span><span class="token property-access">id</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>特に目新しいテストコードはないでしょう。今回はコンポーネントに対するテストコードでしたが、コンポーネントから切り離されたロジックファイル（例えば、Reactのhooks）ももちろん対象です。</p>
+<p>ユニットテストを作成する際には、以下の3つのポイントに注意しています。</p>
+<ul>
+<li>Arange-Act-Assert（AAA）パターンを使用する
+<ul>
+<li>上から下に読みやすい構造にする
+<ul>
+<li>下から上を読み返さない</li>
+</ul>
+</li>
+<li>自然言語を意識して記述する
+<ul>
+<li>テスト実行後の出力メッセージが読みやすくなる</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>DRY原則や、制御文（if/whileなど）を避け、愚直に書く
+<ul>
+<li>シンプルで直感的なテストコードを好む
+<ul>
+<li>ハードコードした変数も良い</li>
+</ul>
+</li>
+<li>1つのテストファイルで内容を確認できるようにする
+<ul>
+<li>例えば、データファイルを別ファイルに分割しない</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>1つのテストケースには1つの検証を行う
+<ul>
+<li>異なる目的の検証は、テストケースを分ける</li>
+</ul>
+</li>
+</ul>
+<h5 id="脱線-なんでテストコードを書くのか"><a class="anchor" href="#脱線-なんでテストコードを書くのか"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>脱線) なんでテストコードを書くのか</h5>
+<p>テストコードは、プロダクトを利用するユーザーではなく、開発するエンジニアのために存在すると、私は考えています。そのため、私が考えるテストコードの目的は以下の3つです。</p>
+<ul>
+<li>開発効率の向上（キーストロークの削減）</li>
+<li>機能品質の維持</li>
+<li>仕様の明確化</li>
+</ul>
+<p>開発効率の向上では、例えば多くの組み合わせパターンがあるスキーマバリデーションの場合、手動での確認は大変です。そこで、パラメタライズドテストやプロパティベースドテストを実施することで効率的に開発できます。</p>
+<p>機能品質の維持では、CI/CDプロセスでテストを実行し、テストが成功した場合にのみデプロイするリリースフローを構築します。そうすると、デプロイされたプロダクトは、テストで記述された内容の品質を担保できます。</p>
+<p>仕様の明確化では、テストコードを自然言語として分かりやすく書くことで、どのような機能があるのかが理解できます。仕様書をプロダクトコードから読み取るのは不親切ですが、テストコードが分かりやすい場合、機能の現状の動作がある程度把握できるようになります。</p>
+<h4 id="インテグレーションテスト"><a class="anchor" href="#インテグレーションテスト"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>インテグレーションテスト</h4>
+<p>ユニットテストでは、個々のコンポーネントや関数が対象となります。一方、インテグレーションテストでは、1画面に構成されるコンポーネントなど、ユーザーに価値を提供できる状態のものが対象です。今回の場合、TodoList.tsxやTodoInput.tsxを使用しているApp.tsxが該当します。</p>
+<p>インテグレーションテストにおいては、バックエンドとの通信は模擬されますが、それ以外の要素はすべて実際のものです。ユニットテストではコンポーネント単体のみのテストでしたが、インテグレーションテストでは画面に表示される必要なコンポーネントが全て揃っています。そのため、コンポーネント間の連携を確認する目的で、ユーザー操作、すなわちインタラクションテストを行うことが効果的です。</p>
+<p>インタラクションテストには、Storybookを利用すると便利です。</p>
+<p><a href="https://storybook.js.org/docs/react/writing-tests/interaction-testing">https://storybook.js.org/docs/react/writing-tests/interaction-testing</a></p>
+<p>従来はターミナルでインタラクション（クリックなど）のテストを行っていたと思いますが、Storybookを用いることで視覚的に確認しながらテストが作成できるため、非常に開発しやすくなります。</p>
+<p>それでは、1つの機能として提供されているApp.tsxを対象に、インタラクションテストを作成してみましょう。
+まず、Storybookを作成すると、次のようなものができます。</p>
+<p>:::message
+今回紹介するStorybookのバージョンは6.5です。
+:::</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token comment">// src/components/App/App.stories.tsx</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span><span class="token maybe-class-name">ComponentStoryObj</span><span class="token punctuation">,</span> <span class="token maybe-class-name">ComponentMeta</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"@storybook/react"</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span><span class="token maybe-class-name">App</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"."</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span>userEvent<span class="token punctuation">,</span> within<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"@storybook/testing-library"</span><span class="token punctuation">;</span>
+
+<span class="token keyword">type</span> <span class="token maybe-class-name">Component</span> <span class="token operator">=</span> <span class="token keyword">typeof</span> <span class="token maybe-class-name">App</span><span class="token punctuation">;</span>
+<span class="token keyword">type</span> <span class="token maybe-class-name">Meta</span> <span class="token operator">=</span> <span class="token maybe-class-name">ComponentMeta</span><span class="token operator">&lt;</span><span class="token maybe-class-name">Component</span><span class="token operator">&gt;</span><span class="token punctuation">;</span>
+<span class="token keyword">type</span> <span class="token maybe-class-name">Story</span> <span class="token operator">=</span> <span class="token maybe-class-name">ComponentStoryObj</span><span class="token operator">&lt;</span><span class="token maybe-class-name">Component</span><span class="token operator">&gt;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> meta<span class="token punctuation">:</span> <span class="token maybe-class-name">Meta</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+    component<span class="token punctuation">:</span> <span class="token maybe-class-name">App</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> meta<span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">const</span> <span class="token maybe-class-name">AddTwoTodosAndCheckOneScenario</span><span class="token punctuation">:</span> <span class="token maybe-class-name">Story</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token function-variable function">play</span><span class="token punctuation">:</span> <span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">{</span>canvasElement<span class="token punctuation">}</span></span><span class="token punctuation">)</span> <span class="token arrow operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">const</span> canvas <span class="token operator">=</span> <span class="token function">within</span><span class="token punctuation">(</span>canvasElement<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">await</span> userEvent<span class="token punctuation">.</span><span class="token keyword">type</span><span class="token punctuation">(</span>canvas<span class="token punctuation">.</span><span class="token method function property-access">getByRole</span><span class="token punctuation">(</span><span class="token string">'textbox'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">'Write a blog post'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>delay<span class="token punctuation">:</span> <span class="token number">100</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">await</span> userEvent<span class="token punctuation">.</span><span class="token method function property-access">keyboard</span><span class="token punctuation">(</span><span class="token string">"{enter}"</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>delay<span class="token punctuation">:</span> <span class="token number">100</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">await</span> userEvent<span class="token punctuation">.</span><span class="token keyword">type</span><span class="token punctuation">(</span>canvas<span class="token punctuation">.</span><span class="token method function property-access">getByRole</span><span class="token punctuation">(</span><span class="token string">'textbox'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">'Develop sample app'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>delay<span class="token punctuation">:</span> <span class="token number">100</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">await</span> userEvent<span class="token punctuation">.</span><span class="token method function property-access">keyboard</span><span class="token punctuation">(</span><span class="token string">"{enter}"</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>delay<span class="token punctuation">:</span> <span class="token number">100</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">await</span> userEvent<span class="token punctuation">.</span><span class="token method function property-access">click</span><span class="token punctuation">(</span>canvas<span class="token punctuation">.</span><span class="token method function property-access">getAllByRole</span><span class="token punctuation">(</span><span class="token string">'checkbox'</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>このように、Storybookでは、Storyにplayを記述することでインタラクションを表現できます。Storybook上でインタラクションを確認することができます。</p>
+<p><img src="https://storage.googleapis.com/zenn-user-upload/97cc9410915a-20230423.gif" alt="storybook_interaction" rocket-image="responsive"></p>
+<p>それでは、これをテストに活用しましょう。</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token comment">// src/components/App/App.test.tsx</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span>render<span class="token punctuation">,</span> screen<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"@testing-library/react"</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span>composeStories<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'@storybook/testing-react'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token operator">*</span> <span class="token keyword">as</span> stories <span class="token keyword">from</span> <span class="token string">'./App.stories'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> <span class="token punctuation">{</span><span class="token maybe-class-name">AddTwoTodosAndCheckOneScenario</span><span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">composeStories</span><span class="token punctuation">(</span>stories<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token function">describe</span><span class="token punctuation">(</span><span class="token string">'play AddTwoTodosAndCheckOneScenario'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token arrow operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">"renders two todos"</span><span class="token punctuation">,</span> <span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token arrow operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token comment">// Arrange</span>
+        <span class="token keyword">const</span> <span class="token punctuation">{</span>container<span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">render</span><span class="token punctuation">(</span><span class="token operator">&lt;</span><span class="token maybe-class-name">AddTwoTodosAndCheckOneScenario</span><span class="token operator">/</span><span class="token operator">&gt;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// Act</span>
+        <span class="token keyword">await</span> <span class="token maybe-class-name">AddTwoTodosAndCheckOneScenario</span><span class="token punctuation">.</span><span class="token method function property-access">play</span><span class="token punctuation">(</span><span class="token punctuation">{</span>canvasElement<span class="token punctuation">:</span> container<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// Assert</span>
+        <span class="token keyword">const</span> todos <span class="token operator">=</span> screen<span class="token punctuation">.</span><span class="token method function property-access">getAllByTestId</span><span class="token punctuation">(</span><span class="token string">"todo-title"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">expect</span><span class="token punctuation">(</span>todos<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token method function property-access">toHaveLength</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">"checks one todo"</span><span class="token punctuation">,</span> <span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token arrow operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token comment">// Arrange</span>
+        <span class="token keyword">const</span> <span class="token punctuation">{</span>container<span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">render</span><span class="token punctuation">(</span><span class="token operator">&lt;</span><span class="token maybe-class-name">AddTwoTodosAndCheckOneScenario</span><span class="token operator">/</span><span class="token operator">&gt;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// Act</span>
+        <span class="token keyword">await</span> <span class="token maybe-class-name">AddTwoTodosAndCheckOneScenario</span><span class="token punctuation">.</span><span class="token method function property-access">play</span><span class="token punctuation">(</span><span class="token punctuation">{</span>canvasElement<span class="token punctuation">:</span> container<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// Assert</span>
+        <span class="token keyword">const</span> todoCheckboxes <span class="token operator">=</span> screen<span class="token punctuation">.</span><span class="token method function property-access">getAllByRole</span><span class="token punctuation">(</span><span class="token string">"checkbox"</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>checked<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">expect</span><span class="token punctuation">(</span>todoCheckboxes<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token method function property-access">toHaveLength</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>このように、StorybookのStoryオブジェクトをテストコードに読み込み、play関数を実行できます。したがって、Storybookで確認したインタラクションがそのままテストコードで動きます。後は、expectを書くだけです。</p>
+<p>インテグレーションテストは、ユニットテストよりも非常に価値があるテストを多く実施できます。その理由は、ユーザー目線のテストが可能となるからです。ユニットテストでは、関数やコンポーネントの詳細なテストは可能ですが、それは基本的にエンジニア目線のテストになります。</p>
+<p>ユニットテストよりもインテグレーションテストが多くなっても問題ありません。ユニットテストとインテグレーションテストのテストが重なるコードがあるかもしれませんが、完璧な必要最小限な網羅的なテストメンテンナンスは現実的ではないため、また、重なっていても困ることもそう多くない場合、許容して良いと思っています。</p>
+<h5 id="api通信のモック"><a class="anchor" href="#api通信のモック"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>API通信のモック</h5>
+<p>フロントエンドは、バックエンドとの通信を発生させることは多々あります。インテグレーションテストやユニットテストでは、API通信をモックすることがよくあります。通信をインターセプトして、固定データを返却するmswjs/mswが有名です。また、固定データではなく、動的にデータを返却できるmswjs/dataというものも便利なので紹介です。</p>
+<p><a href="https://github.com/mswjs/msw">https://github.com/mswjs/msw</a>
+<a href="https://github.com/mswjs/data">https://github.com/mswjs/data</a></p>
+<h4 id="e2eテストシステム"><a class="anchor" href="#e2eテストシステム"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>E2Eテスト(システム)</h4>
+<p>ここでは、フロントエンドからAPIまでを含んだ一気通貫のテストを作成します。E2Eテストでは、一般的にヘッドレスブラウザを使用したテストが行われます。私は、Playwrightを好んで使います。</p>
+<p>E2Eテストの作成方法としては、エンジニア目線で細かいテストを行うよりも、ビジネス目線で要件を満たすかどうかを確認する受け入れテストを書くことが望ましいでしょう。そこで、ATDDとして有名な<a href="https://github.com/cucumber/cucumber-js">cucumber</a>を用いたサンプルを紹介します。</p>
+<p>cucumberでは、受け入れのためのシナリオをBDD形式のgherkinで記述します。また、<a href="https://github.com/cucumber/gherkin/blob/main/MARKDOWN_WITH_GHERKIN.md">gherkinはmarkdownで作成すること</a>ができます。</p>
+<p>それでは、簡単な受け入れテストのシナリオを作成してみましょう。以下のようなシナリオになります。</p>
+<pre class="language-markdown"><code class="language-markdown"><span class="token title important"><span class="token punctuation">#</span> Feature: Todo App</span>
+
+<span class="token title important"><span class="token punctuation">##</span> Background: The Todo App is opened</span>
+
+<span class="token list punctuation">-</span> Given the Todo App is opened
+
+<span class="token title important"><span class="token punctuation">##</span> Rule: Adding new Todos</span>
+
+<span class="token title important"><span class="token punctuation">###</span> Scenario: Add a new Todo</span>
+
+<span class="token list punctuation">-</span> When the user enters a "new Todo" and enter key
+<span class="token list punctuation">-</span> Then the "new Todo" is added to the list
+
+<span class="token title important"><span class="token punctuation">###</span> Scenario: Attempt to add an empty Todo</span>
+
+<span class="token list punctuation">-</span> When the user enters an empty Todo and clicks the Add button
+<span class="token list punctuation">-</span> Then the Todo is not added to the list and "Not entered" message is displayed
+</code></pre>
+<p>このシナリオを参考にして、テストコードを作成してみましょう。次のようなテストコードを記述します。<code>World</code> は、Playwright を使用してヘッドレスブラウザを起動しているだけです。</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token comment">// features/step_definitions/steps.ts</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span><span class="token maybe-class-name">Given</span><span class="token punctuation">,</span> <span class="token maybe-class-name">When</span><span class="token punctuation">,</span> <span class="token maybe-class-name">Then</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'@cucumber/cucumber'</span>
+<span class="token keyword">import</span> <span class="token maybe-class-name">World</span> <span class="token keyword">from</span> <span class="token string">'../support/World'</span>
+<span class="token keyword">import</span> assert <span class="token keyword">from</span> <span class="token string">"assert"</span><span class="token punctuation">;</span>
+
+<span class="token function"><span class="token maybe-class-name">Given</span></span><span class="token punctuation">(</span><span class="token string">'the Todo App is opened'</span><span class="token punctuation">,</span> <span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token keyword">this</span><span class="token punctuation">:</span> <span class="token maybe-class-name">World</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">await</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token property-access">page</span><span class="token punctuation">.</span><span class="token method function property-access">goto</span><span class="token punctuation">(</span><span class="token string">'https://silverbirder-react-todo-mvc.vercel.app'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token function"><span class="token maybe-class-name">When</span></span><span class="token punctuation">(</span><span class="token string">'the user enters a {string} and enter key'</span><span class="token punctuation">,</span> <span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token keyword">this</span><span class="token punctuation">:</span> <span class="token maybe-class-name">World</span><span class="token punctuation">,</span> todo<span class="token punctuation">:</span> <span class="token builtin">string</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> todoInput <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token property-access">page</span><span class="token punctuation">.</span><span class="token method function property-access">getByPlaceholder</span><span class="token punctuation">(</span><span class="token string">'what you need to do?'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">await</span> todoInput<span class="token punctuation">.</span><span class="token keyword">type</span><span class="token punctuation">(</span>todo<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">await</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token property-access">page</span><span class="token punctuation">.</span><span class="token property-access">keyboard</span><span class="token punctuation">.</span><span class="token method function property-access">down</span><span class="token punctuation">(</span><span class="token string">'Enter'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token function"><span class="token maybe-class-name">Then</span></span><span class="token punctuation">(</span><span class="token string">'the {string} is added to the list'</span><span class="token punctuation">,</span> <span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token keyword">this</span><span class="token punctuation">:</span> <span class="token maybe-class-name">World</span><span class="token punctuation">,</span> todo<span class="token punctuation">:</span> <span class="token builtin">string</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> todos <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token property-access">page</span><span class="token punctuation">.</span><span class="token method function property-access">getByText</span><span class="token punctuation">(</span>todo<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">assert</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">await</span> todos<span class="token punctuation">.</span><span class="token method function property-access">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token function"><span class="token maybe-class-name">When</span></span><span class="token punctuation">(</span><span class="token string">'the user enters an empty Todo and clicks the Add button'</span><span class="token punctuation">,</span> <span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token keyword">this</span><span class="token punctuation">:</span> <span class="token maybe-class-name">World</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> todoInput <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token property-access">page</span><span class="token punctuation">.</span><span class="token method function property-access">getByPlaceholder</span><span class="token punctuation">(</span><span class="token string">'what you need to do?'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">await</span> todoInput<span class="token punctuation">.</span><span class="token method function property-access">focus</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">await</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token property-access">page</span><span class="token punctuation">.</span><span class="token property-access">keyboard</span><span class="token punctuation">.</span><span class="token method function property-access">down</span><span class="token punctuation">(</span><span class="token string">'Enter'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token function"><span class="token maybe-class-name">Then</span></span><span class="token punctuation">(</span><span class="token string">'the Todo is not added to the list and {string} message is displayed'</span><span class="token punctuation">,</span> <span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token keyword">this</span><span class="token punctuation">:</span> <span class="token maybe-class-name">World</span><span class="token punctuation">,</span> message<span class="token punctuation">:</span> <span class="token builtin">string</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> todos <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token property-access">page</span><span class="token punctuation">.</span><span class="token method function property-access">getByTestId</span><span class="token punctuation">(</span><span class="token string">'todo-title'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">assert</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">await</span> todos<span class="token punctuation">.</span><span class="token method function property-access">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> messages <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token property-access">page</span><span class="token punctuation">.</span><span class="token method function property-access">getByText</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">assert</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">await</span> messages<span class="token punctuation">.</span><span class="token method function property-access">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
+<p><code>cucumber-js</code> を実行すると、シナリオをもとにテストが実行されます。</p>
+<pre class="language-bash"><code class="language-bash">$ npx cucumber-js
+<span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span>
+<span class="token number">2</span> scenarios <span class="token punctuation">(</span><span class="token number">2</span> passed<span class="token punctuation">)</span>
+<span class="token number">6</span> steps <span class="token punctuation">(</span><span class="token number">6</span> passed<span class="token punctuation">)</span>
+0m02.504s <span class="token punctuation">(</span>executing steps: 0m02.476s<span class="token punctuation">)</span>
+</code></pre>
+<p>このテストをリリース前に実施することで、シナリオで記述された内容が保証されます。ぜひ、リリース前の受け入れテストの実施をご検討ください。</p>
+<p>※ Screenplay パターンと呼ばれる、Actor、Task、World についてもお話ししたいのですが、情報量が多くなるため、今回は割愛させていただきます。</p>
+<h3 id="非機能テストnon-functional"><a class="anchor" href="#非機能テストnon-functional"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>非機能テスト(Non-Functional)</h3>
+<p>バックエンドではマシンリソースに対するパフォーマンステストが行われるように、フロントエンドでもブラウザに対するパフォーマンステストが実施されます。パフォーマンスは非機能要件の1つです。これから紹介する非機能要件は以下の通りです。</p>
+<ul>
+<li>パフォーマンス</li>
+<li>レジリエンス</li>
+<li>ミューテーション</li>
+<li>互換性</li>
+<li><del>Security</del></li>
+</ul>
+<h4 id="パフォーマンス"><a class="anchor" href="#パフォーマンス"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>パフォーマンス</h4>
+<p>フロントエンド開発では、パフォーマンス問題に直面することは避けられません。パフォーマンス問題が発生した際には、パフォーマンスチューニングが一般的に行われます。DevTool やプロファイラーを活用して問題を特定し、解決を図ります。</p>
+<p>しかし、問題解決だけで終わらせてしまうのは非常に勿体ないことです。同じような問題が再発しないように、パフォーマンスに関するテストコードが存在するとさらに良いでしょう。</p>
+<h5 id="profiler"><a class="anchor" href="#profiler"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Profiler</h5>
+<p>React では、Profiler というツールが提供されており、これを Jest と組み合わせることで効果的にテストが可能です。</p>
+<p><a href="https://ja.reactjs.org/docs/profiler.html">https://ja.reactjs.org/docs/profiler.html</a></p>
+<p>例えば、TodoList の Todo が100個レンダリングされる場合の描画時間を、200ms 未満であることを確認するテストが作成できます。</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token comment">// src/components/TodoList/TodoList.perf.test.tsx</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span>render<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"@testing-library/react"</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span><span class="token maybe-class-name">TodoList</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"."</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span><span class="token maybe-class-name">Todo</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"../../types"</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span><span class="token maybe-class-name">Profiler</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"react"</span><span class="token punctuation">;</span>
+
+<span class="token function">describe</span><span class="token punctuation">(</span><span class="token string">"TodoList"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token arrow operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">"renders with acceptable performance"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token arrow operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token comment">// Arrange</span>
+        <span class="token keyword">const</span> onRender <span class="token operator">=</span> jest<span class="token punctuation">.</span><span class="token method function property-access">fn</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">const</span> todos<span class="token punctuation">:</span> <span class="token maybe-class-name">Todo</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token spread operator">...</span><span class="token known-class-name class-name">Array</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token method function property-access">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">value<span class="token punctuation">,</span> index</span><span class="token punctuation">)</span> <span class="token arrow operator">=&gt;</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token punctuation">{</span>
+                id<span class="token punctuation">:</span> index<span class="token punctuation">.</span><span class="token method function property-access">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                title<span class="token punctuation">:</span> <span class="token string">"title"</span><span class="token punctuation">,</span>
+                completed<span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+            <span class="token punctuation">}</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// Act</span>
+        <span class="token function">render</span><span class="token punctuation">(</span>
+            <span class="token operator">&lt;</span><span class="token maybe-class-name">Profiler</span> id<span class="token operator">=</span><span class="token string">"PerformanceTestComponent"</span> onRender<span class="token operator">=</span><span class="token punctuation">{</span>onRender<span class="token punctuation">}</span><span class="token operator">&gt;</span>
+                <span class="token operator">&lt;</span><span class="token maybe-class-name">TodoList</span> todos<span class="token operator">=</span><span class="token punctuation">{</span>todos<span class="token punctuation">}</span><span class="token operator">/</span><span class="token operator">&gt;</span>
+            <span class="token operator">&lt;</span><span class="token operator">/</span><span class="token maybe-class-name">Profiler</span><span class="token operator">&gt;</span>
+        <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// Assert</span>
+        <span class="token keyword">const</span> <span class="token punctuation">[</span><span class="token punctuation">,</span> <span class="token punctuation">,</span> actualDuration<span class="token punctuation">,</span> <span class="token punctuation">,</span> <span class="token punctuation">,</span> <span class="token punctuation">,</span> <span class="token punctuation">,</span><span class="token punctuation">]</span> <span class="token operator">=</span> onRender<span class="token punctuation">.</span><span class="token property-access">mock</span><span class="token punctuation">.</span><span class="token property-access">calls</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token function">expect</span><span class="token punctuation">(</span>actualDuration<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token method function property-access">toBeLessThan</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>これは単純な例ですが、実際にはもっと複雑な操作が求められることがあります。パフォーマンスチューニング後に、描画時間などの要件が保証されるようにしましょう。</p>
+<h5 id="performanceobserver"><a class="anchor" href="#performanceobserver"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>PerformanceObserver</h5>
+<p>レイアウトの再計算（reflow）が強制的に実行される場合、ブラウザのメインスレッドでのJS実行時間が長く続く可能性があります。これにより、描画速度が遅れ、フレームレート（fps）が低下することがあります。</p>
+<p>この問題に対処するために、Performance APIの中にある、まだ実験段階の機能であるPerformanceLongTaskTimingという指標を用いたテストコードを作成することができます。</p>
+<p>以下のリンクでPerformance APIおよびPerformanceLongTaskTimingに関する詳細情報を参照できます。</p>
+<ul>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/API/Performance_API">https://developer.mozilla.org/ja/docs/Web/API/Performance_API</a></li>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/API/PerformanceLongTaskTiming">https://developer.mozilla.org/ja/docs/Web/API/PerformanceLongTaskTiming</a></li>
+</ul>
+<p>具体的にテストコードを作成してみましょう。@playwright/testを利用してみます。</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token keyword">import</span> <span class="token punctuation">{</span>test<span class="token punctuation">,</span> expect<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'@playwright/test'</span><span class="token punctuation">;</span>
+
+<span class="token function">test</span><span class="token punctuation">(</span><span class="token string">'no long tasks after button click'</span><span class="token punctuation">,</span> <span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">{</span>page<span class="token punctuation">}</span></span><span class="token punctuation">)</span> <span class="token arrow operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token comment">// Navigate to the specified URL</span>
+    <span class="token keyword">await</span> page<span class="token punctuation">.</span><span class="token method function property-access">goto</span><span class="token punctuation">(</span><span class="token string">'https://googlesamples.github.io/web-fundamentals/tools/chrome-devtools/rendering-tools/forcedsync.html'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// Define a function to observe long tasks</span>
+    <span class="token keyword">const</span> observeLongTasks <span class="token operator">=</span> <span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token known-class-name class-name">Promise</span><span class="token operator">&lt;</span><span class="token builtin">number</span><span class="token operator">&gt;</span> <span class="token arrow operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">await</span> page<span class="token punctuation">.</span><span class="token method function property-access">evaluate</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token arrow operator">=&gt;</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token operator">&lt;</span><span class="token builtin">number</span><span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">resolve</span><span class="token punctuation">)</span> <span class="token arrow operator">=&gt;</span> <span class="token punctuation">{</span>
+                <span class="token keyword">let</span> longTaskCount <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+                <span class="token comment">// Create a PerformanceObserver to observe long tasks</span>
+                <span class="token keyword">const</span> observer <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">PerformanceObserver</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">entryList</span><span class="token punctuation">)</span> <span class="token arrow operator">=&gt;</span> <span class="token punctuation">{</span>
+                    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> entry <span class="token keyword">of</span> entryList<span class="token punctuation">.</span><span class="token method function property-access">getEntries</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                        <span class="token keyword">if</span> <span class="token punctuation">(</span>entry<span class="token punctuation">.</span><span class="token property-access">entryType</span> <span class="token operator">===</span> <span class="token string">'longtask'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                            longTaskCount<span class="token operator">++</span><span class="token punctuation">;</span>
+                        <span class="token punctuation">}</span>
+                    <span class="token punctuation">}</span>
+                <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                <span class="token comment">// Start observing long tasks</span>
+                observer<span class="token punctuation">.</span><span class="token method function property-access">observe</span><span class="token punctuation">(</span><span class="token punctuation">{</span>entryTypes<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'longtask'</span><span class="token punctuation">]</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                <span class="token comment">// Click the button</span>
+                <span class="token keyword">const</span> button <span class="token operator">=</span> <span class="token dom variable">document</span><span class="token punctuation">.</span><span class="token method function property-access">querySelector</span><span class="token punctuation">(</span><span class="token string">'button'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                button<span class="token punctuation">.</span><span class="token method function property-access">click</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                <span class="token comment">// Wait for a short time to allow long tasks to be recorded</span>
+                <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token arrow operator">=&gt;</span> <span class="token punctuation">{</span>
+                    <span class="token comment">// Stop observing and resolve the promise with the count of long tasks</span>
+                    observer<span class="token punctuation">.</span><span class="token method function property-access">disconnect</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token function">resolve</span><span class="token punctuation">(</span>longTaskCount<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">3000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// Observe long tasks after clicking the button</span>
+    <span class="token keyword">const</span> longTaskCount <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">observeLongTasks</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// Expect no long tasks to occur</span>
+    <span class="token function">expect</span><span class="token punctuation">(</span>longTaskCount<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token method function property-access">toBe</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>以下のコマンドを使用してテストを実行することができます。</p>
+<pre><code>$ npx playwright test
+</code></pre>
+<p>このテストコードによって、longTasksが発生しないことが保証されます。</p>
+<p>longTasksは、50msを超えるタスクが対象となります（<a href="https://w3c.github.io/longtasks/">参照</a>）。その他の指標には、<code>paint</code>や<code>layout-shift</code>などが含まれます。指標の一覧は、<a href="https://w3c.github.io/timing-entrytypes-registry/#registry">こちらのリンク</a>で確認できます。</p>
+<h5 id="メモリリーク"><a class="anchor" href="#メモリリーク"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>メモリリーク</h5>
+<p>SPAのようなフロントエンドの場合、メモリリークが懸念されることがあります。この問題に対処するために、Meta社が開発した Memlab というツールが便利です。Memlab は、Puppeteer を起動し、画面操作を行い、<a href="https://github.com/facebook/memlab/blob/d93d724a95696ab013631bb86c42283303b7dcd1/packages/core/src/lib/NodeHeap.ts#L93">V8 におけるヒープメモリのスナップショットを取得しています</a>。</p>
+<p>ここでは、簡単な Memlab を利用したテストコードを紹介します。</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token comment">// .memlab/scenario.js</span>
+
+<span class="token comment">// initial page load's url</span>
+<span class="token keyword">function</span> <span class="token function">url</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token string">"https://silverbirder-react-todo-mvc.vercel.app"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// action where you suspect the memory leak might be happening</span>
+<span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">action</span><span class="token punctuation">(</span><span class="token parameter">page</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">await</span> page<span class="token punctuation">.</span><span class="token method function property-access">type</span><span class="token punctuation">(</span><span class="token string">'.new-todo'</span><span class="token punctuation">,</span> <span class="token string">'Hello World'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">await</span> page<span class="token punctuation">.</span><span class="token property-access">keyboard</span><span class="token punctuation">.</span><span class="token method function property-access">press</span><span class="token punctuation">(</span><span class="token string">'Enter'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// how to go back to the state before action</span>
+<span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">back</span><span class="token punctuation">(</span><span class="token parameter">page</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">await</span> page<span class="token punctuation">.</span><span class="token method function property-access">hover</span><span class="token punctuation">(</span><span class="token string">'.view'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">await</span> page<span class="token punctuation">.</span><span class="token method function property-access">click</span><span class="token punctuation">(</span><span class="token string">'.destroy'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+module<span class="token punctuation">.</span><span class="token property-access">exports</span> <span class="token operator">=</span> <span class="token punctuation">{</span>action<span class="token punctuation">,</span> back<span class="token punctuation">,</span> url<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p><code>url</code> は、ベースとなる URL へのアクセスであり、メモリの使用量を監視します。<code>action</code> でメモリリークが発生しそうな操作を記述し、<code>back</code> で元の状態に戻す操作を行います。</p>
+<p>Memlab の実行は、以下のコマンドです。</p>
+<pre class="language-bash"><code class="language-bash">$ memlab run --scenario .memlab/scenario.js
+page-load<span class="token punctuation">[</span><span class="token number">1</span>.4MB<span class="token punctuation">]</span><span class="token punctuation">(</span>baseline<span class="token punctuation">)</span><span class="token punctuation">[</span>s1<span class="token punctuation">]</span> <span class="token operator">&gt;</span> action-on-page<span class="token punctuation">[</span><span class="token number">1</span>.6MB<span class="token punctuation">]</span><span class="token punctuation">(</span>target<span class="token punctuation">)</span><span class="token punctuation">[</span>s2<span class="token punctuation">]</span> <span class="token operator">&gt;</span> revert<span class="token punctuation">[</span><span class="token number">1</span>.8MB<span class="token punctuation">]</span><span class="token punctuation">(</span>final<span class="token punctuation">)</span><span class="token punctuation">[</span>s3<span class="token punctuation">]</span>  
+
+total time: <span class="token number">49</span>.2s
+Memory usage across all steps:
+<span class="token number">2.1</span> _________
+<span class="token number">1.9</span> _________
+<span class="token number">1.8</span> _________
+<span class="token number">1.7</span> ______▄▄_
+<span class="token number">1.5</span> ___▄▄_▄▄_
+<span class="token number">1.4</span> ___▄▄_▄▄_
+<span class="token number">1.3</span> ▄▄_▄▄_▄▄_
+<span class="token number">1.1</span> ▄▄_▄▄_▄▄_
+<span class="token number">1.0</span> ▄▄_▄▄_▄▄_
+    <span class="token number">1</span>  <span class="token number">2</span>  <span class="token number">3</span>  
+
+No leaks found
+MemLab found <span class="token number">0</span> leak<span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+✨  Done <span class="token keyword">in</span> <span class="token number">51</span>.69s.
+</code></pre>
+<h4 id="レジリエンス"><a class="anchor" href="#レジリエンス"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>レジリエンス</h4>
+<p>フロントエンドでもカオスエンジニアリングテストが実施可能です。</p>
+<p><a href="https://www.npmjs.com/package/chaos-frontend-toolkit">https://www.npmjs.com/package/chaos-frontend-toolkit</a></p>
+<p>ブラウザの操作はユーザーによって多様です。例えば、以下のようなブラウザ操作が存在します。</p>
+<ul>
+<li>自由なブラウザバックやマウス、キーボード操作</li>
+<li>シングルクリックではなくダブルクリック</li>
+</ul>
+<p>さらに、ブラウザが外部と通信することはよくあります。ネットワークに関しても、次のような状況が起こり得ます。</p>
+<ul>
+<li>リクエストの失敗や遅延</li>
+<li>プロキシ環境下でよくあるリクエストの遮断</li>
+</ul>
+<p>このようなカオスを注入してもアプリケーションがクラッシュしないようにテストを書くことは有益であるかもしれません。</p>
+<p>例えば、Storybook 上でランダムなクリックを発生させるためのコードは、次のようになります。</p>
+<pre class="language-typescript"><code class="language-typescript"><span class="token comment">// src/components/App/App.stories.tsx</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span><span class="token maybe-class-name">ComponentStoryObj</span><span class="token punctuation">,</span> <span class="token maybe-class-name">ComponentMeta</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"@storybook/react"</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span><span class="token maybe-class-name">App</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"."</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> chaosFrontendToolkit <span class="token keyword">from</span> <span class="token string">"chaos-frontend-toolkit"</span><span class="token punctuation">;</span>
+
+<span class="token keyword">type</span> <span class="token maybe-class-name">Component</span> <span class="token operator">=</span> <span class="token keyword">typeof</span> <span class="token maybe-class-name">App</span><span class="token punctuation">;</span>
+<span class="token keyword">type</span> <span class="token maybe-class-name">Meta</span> <span class="token operator">=</span> <span class="token maybe-class-name">ComponentMeta</span><span class="token operator">&lt;</span><span class="token maybe-class-name">Component</span><span class="token operator">&gt;</span><span class="token punctuation">;</span>
+<span class="token keyword">type</span> <span class="token maybe-class-name">Story</span> <span class="token operator">=</span> <span class="token maybe-class-name">ComponentStoryObj</span><span class="token operator">&lt;</span><span class="token maybe-class-name">Component</span><span class="token operator">&gt;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> meta<span class="token punctuation">:</span> <span class="token maybe-class-name">Meta</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+    component<span class="token punctuation">:</span> <span class="token maybe-class-name">App</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> meta<span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">const</span> <span class="token maybe-class-name">Monkey</span><span class="token punctuation">:</span> <span class="token maybe-class-name">Story</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+    decorators<span class="token punctuation">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">(</span><span class="token parameter"><span class="token maybe-class-name">Story</span></span><span class="token punctuation">)</span> <span class="token arrow operator">=&gt;</span> <span class="token punctuation">{</span>
+            chaosFrontendToolkit<span class="token punctuation">.</span><span class="token property-access">gremlins</span><span class="token punctuation">.</span><span class="token method function property-access">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token operator">&lt;</span><span class="token maybe-class-name">Story</span><span class="token operator">/</span><span class="token operator">&gt;</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre>
+<p>その後、console.error を監視し、発生しないことを確認するテストコードを書くと良いでしょう。ただし、もしエラーが検出されたとしても、再現できなければ問題解決が難しいため、何らかの方法で追跡しやすいログを残すか、セッションリプレイのように記録するなどの工夫が必要です（シード値があればさらに良いですが）。</p>
+<h4 id="ミューテーション"><a class="anchor" href="#ミューテーション"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>ミューテーション</h4>
+<p>突然変異テストという手法が存在します。</p>
+<p><a href="https://stryker-mutator.io/">https://stryker-mutator.io/</a></p>
+<p>これは、フロントエンドという文脈ではありませんが、面白かったので紹介します。(笑)</p>
+<p>Strykerは、プロダクションコードを書き換え（突然変異）する際に、テストコードも失敗することを期待するものです。つまり、テストコードのテストを行うイメージです。これにより、偽のテストカバレッジを見抜くことができます。Stryker の設定は、公式ページに従ってセットアップし、<code>stryker run</code> を実行するだけです。実際に動かしてみます。</p>
+<pre class="language-bash"><code class="language-bash">$ stryker run
+INFO ProjectReader Found <span class="token number">4</span> of <span class="token number">63</span> file<span class="token punctuation">(</span>s<span class="token punctuation">)</span> to be mutated.
+INFO Instrumenter Instrumented <span class="token number">4</span> <span class="token builtin class-name">source</span> file<span class="token punctuation">(</span>s<span class="token punctuation">)</span> with <span class="token number">47</span> mutant<span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+INFO ConcurrencyTokenProvider Creating <span class="token number">2</span> checker process<span class="token punctuation">(</span>es<span class="token punctuation">)</span> and <span class="token number">2</span> <span class="token builtin class-name">test</span> runner process<span class="token punctuation">(</span>es<span class="token punctuation">)</span>.
+INFO DryRunExecutor Starting initial <span class="token builtin class-name">test</span> run <span class="token punctuation">(</span>jest <span class="token builtin class-name">test</span> runner with <span class="token string">"off"</span> coverage analysis<span class="token punctuation">)</span>. This may take a while.
+INFO DryRunExecutor Initial <span class="token builtin class-name">test</span> run succeeded. Ran <span class="token number">8</span> tests <span class="token keyword">in</span> <span class="token number">20</span> seconds <span class="token punctuation">(</span>net <span class="token number">8004</span> ms, overhead <span class="token number">12326</span> ms<span class="token punctuation">)</span>.
+Mutation testing  <span class="token punctuation">[</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span><span class="token punctuation">]</span> <span class="token number">100</span>% <span class="token punctuation">(</span>elapsed: ~2m, remaining: n/a<span class="token punctuation">)</span> <span class="token number">47</span>/47 Mutants tested <span class="token punctuation">(</span><span class="token number">21</span> survived, <span class="token number">0</span> timed out<span class="token punctuation">)</span>
+
+All tests
+  <span class="token punctuation">..</span>.
+  TodoItem/TodoItem.test.tsx
+    ✘ TodoItem renders todo title <span class="token punctuation">[</span>line <span class="token number">18</span><span class="token punctuation">]</span> <span class="token punctuation">(</span>covered <span class="token number">0</span><span class="token punctuation">)</span>
+    ✘ TodoItem toggles todo completion <span class="token punctuation">[</span>line <span class="token number">30</span><span class="token punctuation">]</span> <span class="token punctuation">(</span>covered <span class="token number">0</span><span class="token punctuation">)</span>
+    ✓ TodoItem deletes a todo <span class="token punctuation">[</span>line <span class="token number">45</span><span class="token punctuation">]</span> <span class="token punctuation">(</span>killed <span class="token number">1</span><span class="token punctuation">)</span>
+</code></pre>
+<p>TodoItem の中で、プロダクトコードを破壊したミュータント（👽）を検出し、対応するテストが失敗した（Killed）ものは、次の画像の通りです。</p>
+<p><img src="https://storage.googleapis.com/zenn-user-upload/ec63905e2231-20230423.png" alt="mutant_todo_item_1" rocket-image="responsive"></p>
+<p>一方、ミュータントが生き残って（Survived）しまった例として、例えば、className の箇所が挙げられます。</p>
+<p><img src="https://storage.googleapis.com/zenn-user-upload/81915c789ace-20230423.png" alt="mutant_todo_item_2" rocket-image="responsive"></p>
+<p>className は見た目に関わるため、後述するビジュアルリグレッションテストで検出したいところですね。</p>
+<p>このように、ミュータントを見つけてテストの品質を向上させることは、効果的な手段の1つだと考えられます。</p>
+<h4 id="互換性"><a class="anchor" href="#互換性"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>互換性</h4>
+<p>フロントエンド開発では、サポート対象のブラウザで動作確認を行う必要があります。ブラウザごとに異なるJavaScriptエンジンやレンダリングエンジンがあるため、各ブラウザにおけるJavaScriptの動作や見た目を確認することが必要です。</p>
+<p>クロスブラウザテストには、実機の購入、仮想サーバーの利用、BrowserStackのようなSaaSを活用する、Playwrightでのマルチブラウザ利用など、さまざまな方法が存在します。費用対効果に見合った選択を行うことが重要です。</p>
+<h3 id="uiux"><a class="anchor" href="#uiux"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>UI/UX</h3>
+<p>UI/UXは、フロントエンド開発において、切っても切り離せない重要なテーマです。今回は、テスト自動化が可能な非常に小さな部分だけを紹介します。UI/UXの範囲は、人の判断が多く求められる領域であるため、書く内容はあまり多くありません。</p>
+<h4 id="ビジュアル"><a class="anchor" href="#ビジュアル"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>ビジュアル</h4>
+<p>見た目は、フロントエンド特有の非常に重要な要素です。レスポンシブデザイン、デスクトップ・モバイルのデバイス、Windows/MacなどのOS、ブラウザの外観に関する機能（ダークモード）など、見た目の変化をテストすることも重要です。
+ビジュアルリグレッションテストという手法を開発サイクルに取り入れましょう。Lost PixelやChromaticなど、様々な手段があるので試してみてください。</p>
+<p><a href="https://storybook.js.org/docs/react/writing-tests/visual-testing">https://storybook.js.org/docs/react/writing-tests/visual-testing</a></p>
+<h4 id="アクセシビリティ"><a class="anchor" href="#アクセシビリティ"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>アクセシビリティ</h4>
+<p>アクセシビリティについては、人の判断が必要なケースもありますが、機械的にチェックできる要素も存在します。キーボード操作のみで機能が正常に動作するか確認するためには、インタラクションテストが必要です。VoiceOverの対応状況はいかがでしょうか？さらに、画像のalt属性は適切に設定されていますか？文章の表現については人の目で判断が必要ですが、少なくとも入力されているかどうかはチェックできます。</p>
+<p><a href="https://storybook.js.org/docs/react/writing-tests/accessibility-testing">https://storybook.js.org/docs/react/writing-tests/accessibility-testing</a></p>
+<h2 id="その他"><a class="anchor" href="#その他"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>その他</h2>
+<p>テストの観点として、網羅的に知りたいと思いませんか？私は、自前で<a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vSpbSeaOPVSKyi36bwbBXQ56DbXNzLEp-anI4PHfXps4pa7gWUMDGHjNmVy1gl945o4aNGCszPWxcKm/pubhtml">point of view</a>というものを作成しました。これは、様々な観点の一覧表です。この一覧表から、何かインスパイアされるものを見つけるのが、楽しいですね。</p>
+<p>例えば、以下のようなことが考えられます。</p>
+<ul>
+<li>精度(precision)
+<ul>
+<li>バックエンド側の数値は、フロントエンド側の数値の範囲に収まりますか？</li>
+<li>JavaScriptのIntegerの最大値は、9,007,199,254,740,991です。</li>
+</ul>
+</li>
+<li>耐障害性(fault tolerance)
+<ul>
+<li>フロントエンドから、コアなデータ参照と、補助のデータ参照は分けていますか？</li>
+<li>補助のデータ参照が失敗したとしても、アプリケーションが動作できる状態になっているのが良いでしょう。</li>
+</ul>
+</li>
+</ul>
+<h2 id="終わりに"><a class="anchor" href="#終わりに"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>終わりに</h2>
+<p>いかがでしたでしょうか。フロントエンドにおけるテストパターンは、まだまだ存在すると思います。もし他にもご存知のものがあれば、ぜひ教えてください。</p>
+
+  
+    <div class="content-footer">
+  <p>
+    Caught a mistake or want to improve the blog?
+    <a href="https://github.com/silverbirder/silverbirder.github.io/edit/main/./docs/blog/contents/web_frontend_test_pattern_guide.md">Edit this blog post on GitHub!</a>
+  </p>
+</div>
+
+
+  
+</main>
+
+  </main>
+
+    </div>
+  </div>
+
+
+    
+      <footer id="main-footer">
+  
+    
+
+  
+    <div id="footer-menu">
+  <div class="content-area">
+    
+      <nav>
+        <h3>Discover</h3>
+        <ul>
+          
+            <li>
+              <a href="https://silverbirder.github.io/blog/">Blog</a>
+            </li>
+          
+            <li>
+              <a href="https://github.com/silverbirder/silverbirder.github.io/issues">Help and Feedback</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>My Sales</h3>
+        <ul>
+          
+            <li>
+              <a href="https://www.amazon.co.jp/芝本雅史/e/B08FJK5C43">Amazon</a>
+            </li>
+          
+            <li>
+              <a href="https://silverbirder.booth.pm">Booth</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>Follow</h3>
+        <ul>
+          
+            <li>
+              <a href="https://github.com/silverbirder/silverbirder.github.io">GitHub</a>
+            </li>
+          
+            <li>
+              <a href="https://twitter.com/silverbirder">Twitter</a>
+            </li>
+          
+            <li>
+              <a href="https://www.google.com/maps/contrib/101722346324226588907/reviews/@34.6907839,135.4537926,13z/">Google Map</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+  </div>
+</div>
+
+  
+</footer>
+
+    
+
+    
+  
+
+
+  
+
+<script>
+  window.__rocketServiceWorkerUrl = '/service-worker.js';
+</script>
+
+
+
+
+
+
+  
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-146805630-4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-146805630-4');
+  </script>
+
+
+
+
+  
+
+
+<script type="module" src="../../../e931d24b.js"></script>
+<script type="module" src="../../../6dd6d5cb.js"></script>
+<script type="module" src="../../../dd4fcd54.js" inject-service-worker=""></script>
+<script type="module" src="../../../580566d5100.js"></script>
+
+</body></html>
