@@ -1,0 +1,550 @@
+<!DOCTYPE html><html lang="ja" dir="ltr"><head>
+  
+    
+
+  
+
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unleashで始めるフィーチャーフラグ: silverbirder</title>
+<meta property="og:title" content="Unleashで始めるフィーチャーフラグ: silverbirder">
+
+<meta name="generator" content="rocket 0.1">
+<link rel="canonical" href="https://silver-birder.github.io/blog/contents/unleash_feature_flag/">
+
+
+
+  
+
+<meta name="description" content="フィーチャーフラグ（Feature Flag）をご存知でしょうか？これは新機能のリリース制御やABテストを容易にする強力なツールです。しかし、適切な管理ツールなければ、フィーチャーフラグの管理は容易なことではありません。今回は、そんなフィーチャーフラグの管理を効率化するツール、**Unleash**について解説します。">
+<meta property="og:description" content="フィーチャーフラグ（Feature Flag）をご存知でしょうか？これは新機能のリリース制御やABテストを容易にする強力なツールです。しかし、適切な管理ツールなければ、フィーチャーフラグの管理は容易なことではありません。今回は、そんなフィーチャーフラグの管理を効率化するツール、**Unleash**について解説します。">
+
+  
+    
+<link rel="apple-touch-icon" sizes="180x180" href="../../../assets/apple-touch-icon.jpg">
+<link rel="icon" type="image/png" sizes="32x32" href="../../../assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../../assets/favicon-16x16.png">
+<link rel="manifest" href="../../../assets/webmanifest.json">
+
+<meta name="msapplication-TileColor" content="#1d3557">
+<meta name="theme-color" content="#1d3557">
+
+  
+    <meta property="og:site_name" content="silverbirder">
+<meta property="og:type" content="website">
+
+<meta property="og:image" content="https://silver-birder.github.io/c94b4303.png">
+<meta property="og:url" content="https://silver-birder.github.io/blog/contents/unleash_feature_flag/">
+
+<meta name="twitter:card" content="summary_large_image">
+
+  
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="">
+
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&amp;display=optional" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&amp;display=optional" rel="stylesheet">
+
+  
+    <link rel="stylesheet" href="../../../3cb4adfb.css">
+<link rel="stylesheet" href="../../../0f4765a3.css">
+<link rel="stylesheet" href="../../../ac2ea3b8.css">
+<link rel="stylesheet" href="../../../2366292e.css">
+
+  
+    <noscript><link rel="stylesheet" href="/_merged_assets/_static/search/noscript.css"></noscript>
+
+  
+    <link rel="stylesheet" href="../../../f5cf94c7.css">
+  
+    
+  
+    <noscript><link rel="stylesheet" href="/_merged_assets/_static/noscript.css"/></noscript>
+
+  
+    <link rel="stylesheet" href="../../../b1403e10.css">
+  
+    <meta name="twitter:creator" content="@silverbirder">
+
+<link rel="stylesheet" href="../../../611b393e.css" mdjs-use="">
+
+<meta name="google-site-verification" content="-8bAm041798VvU0oItcuyuShbVINfNMLfTmP7tENPDY">
+  
+
+<link rel="preload" href="../../../e931d24b.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../a2a9827a.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../5284d142.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../6dd6d5cb.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../dd4fcd54.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../580566d598.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../e12801e9.js" as="script" crossorigin="anonymous">
+<link rel="preload" href="../../../90f0e617.js" as="script" crossorigin="anonymous">
+</head>
+
+  
+
+  
+  <body layout="layout-blog-details">
+  
+
+    
+      <header id="main-header">
+  <div class="content-area">
+    
+      <button id="mobile-menu-trigger" data-action="trigger-mobile-menu">
+	<span class="sr-only">Show Menu</span>
+	      <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon">
+        <path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path>
+      </svg>
+
+</button>
+
+    
+      
+	<a class="logo-link" href="/">
+  <img src="../../../90a4fb13.svg" alt="Rocket Logo">
+  <span>silverbirder</span>
+</a>
+
+
+
+    
+      <rocket-search class="search" json-url="/_merged_assets/_static/rocket-search-index.json">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129" style="width: 25px;">
+    <path d="M51.6 96.7c11 0 21-3.9 28.8-10.5l35 35c.8.8 1.8 1.2 2.9 1.2s2.1-.4 2.9-1.2c1.6-1.6 1.6-4.2 0-5.8l-35-35c6.5-7.8 10.5-17.9 10.5-28.8 0-24.9-20.2-45.1-45.1-45.1-24.8 0-45.1 20.3-45.1 45.1 0 24.9 20.3 45.1 45.1 45.1zm0-82c20.4 0 36.9 16.6 36.9 36.9C88.5 72 72 88.5 51.6 88.5S14.7 71.9 14.7 51.6c0-20.3 16.6-36.9 36.9-36.9z"></path>
+  </svg>
+</rocket-search>
+
+
+
+    
+      
+  <a href="/blog/" class="
+          
+           active 
+        ">Blog</a>
+  <a href="/resume/" class="
+          
+          
+        ">Resume</a>
+  <a href="/misc/" class="
+          
+          
+        ">Misc</a>
+
+    
+      <launch-dark-switch class="light-dark-switch" label="Toggle darkmode">Toggle darkmode</launch-dark-switch>
+
+
+    
+      
+	<a class="social-link" href="https://github.com/silverbirder/silverbirder.github.io" aria-label="silverbirder on GitHub" rel="noopener noreferrer" target="_blank">
+		<span class="sr-only">GitHub</span>
+		
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 16" fill="none">
+  <title>GitHub</title>
+  <path fill="currentColor" fill-rule="evenodd" d="M8.18391.249268C3.82241.249268.253906 3.81777.253906 8.17927c0 3.46933 2.279874 6.44313 5.451874 7.53353.3965.0991.49563-.1983.49563-.3965v-1.3878c-2.18075.4956-2.67638-.9912-2.67638-.9912-.3965-.8922-.89212-1.1895-.89212-1.1895-.69388-.4957.09912-.4957.09912-.4957.793.0992 1.1895.793 1.1895.793.69388 1.2887 1.88338.8922 2.27988.6939.09912-.4956.29737-.8921.49562-1.0904-1.78425-.1982-3.5685-.8921-3.5685-3.96496 0-.89212.29738-1.586.793-2.08162-.09912-.19825-.3965-.99125.09913-2.08163 0 0 .69387-.19825 2.18075.793.59475-.19825 1.28862-.29737 1.9825-.29737.69387 0 1.38775.09912 1.98249.29737 1.4869-.99125 2.1808-.793 2.1808-.793.3965 1.09038.1982 1.88338.0991 2.08163.4956.59475.793 1.28862.793 2.08162 0 3.07286-1.8834 3.66766-3.66764 3.86586.29737.3965.59474.8921.59474 1.586v2.1808c0 .1982.0991.4956.5948.3965 3.172-1.0904 5.4518-4.0642 5.4518-7.53353-.0991-4.3615-3.6676-7.930002-8.02909-7.930002z" clip-rule="evenodd"></path>
+</svg>
+
+		
+	</a>
+	<a class="social-link" href="https://twitter.com/silverbirder" aria-label="silverbirder on Twitter" rel="noopener noreferrer" target="_blank">
+		<span class="sr-only">Twitter</span>
+		
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 274 223"><title>Twitter</title><path d="M85.98 223c-31.675 0-61.158-9.285-85.98-25.199 4.388.518 8.853.783 13.38.783 26.278 0 50.463-8.967 69.659-24.01-24.544-.453-45.258-16.669-52.395-38.953a56.014 56.014 0 0 0 10.552 1.006c5.116 0 10.071-.685 14.778-1.967-25.66-5.152-44.993-27.822-44.993-54.998 0-.236 0-.471.004-.705a55.865 55.865 0 0 0 25.406 7.015c-15.05-10.058-24.953-27.226-24.953-46.685 0-10.279 2.766-19.914 7.594-28.198 27.664 33.934 68.993 56.264 115.609 58.603a56.31 56.31 0 0 1-1.453-12.782c0-30.975 25.114-56.088 56.091-56.088 16.132 0 30.709 6.812 40.941 17.713a112.328 112.328 0 0 0 35.617-13.611c-4.188 13.097-13.081 24.089-24.662 31.031a112.148 112.148 0 0 0 32.215-8.832 114 114 0 0 1-27.988 29.035c.108 2.405.162 4.824.162 7.256C245.564 137.533 189.148 223 85.98 223" fill="currentColor"></path></svg>
+
+		
+	</a>
+
+    
+  </div>
+</header>
+
+    
+
+    
+  <div id="content-wrapper">
+    <div class="content-area">
+      
+	<rocket-drawer id="sidebar">
+  <nav slot="content" id="sidebar-nav">
+    
+      <a class="logo-link" href="/">
+  <img src="../../../90a4fb13.svg" alt="Rocket Logo">
+  <span>silverbirder</span>
+</a>
+
+
+    
+      <rocket-navigation>
+  <ul>
+    <li class="current">
+      <h3>Headings</h3>
+      <ul><li class="menu-item">
+<a href="/blog/contents/unleash_feature_flag/#フィーチャーフラグの課題と解決策">フィーチャーフラグの課題と解決策</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/unleash_feature_flag/#なぜunleashなのか">なぜUnleashなのか？</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/unleash_feature_flag/#unleashのセットアップとフィーチャーフラグの使用方法">Unleashのセットアップとフィーチャーフラグの使用方法</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/unleash_feature_flag/#unleash機能-activation-strategies">Unleash機能: Activation Strategies</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/unleash_feature_flag/#unleash機能-variant">Unleash機能: Variant</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/unleash_feature_flag/#unleash機能-toggle-type">Unleash機能: Toggle type</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/unleash_feature_flag/#unleash-機能-その他">Unleash 機能: その他</a>
+</li>
+<li class="menu-item">
+<a href="/blog/contents/unleash_feature_flag/#まとめ">まとめ</a>
+</li></ul>
+    </li>
+  </ul>
+  <div class="sidebar-tags">
+    <h3>Date</h3>
+    <div>Thu Jun 29 2023</div>
+  </div>
+  <div class="sidebar-tags">
+    <h3>Tags</h3>
+    <div class="tags">
+      
+        <span class="tag">unleash</span>
+      
+    </div>
+  </div>
+  <div class="sidebar-bottom">
+  <hr> <launch-dark-switch class="light-dark-switch" label="Toggle darkmode">Toggle darkmode</launch-dark-switch>
+
+  
+    <a href="https://github.com/silverbirder/silverbirder.github.io/issues">Help and Feedback</a>
+  
+</div>
+
+</rocket-navigation>
+
+    
+  </nav>
+</rocket-drawer>
+
+
+      
+  <main class="markdown-body">
+    <main class="markdown-body">
+  
+    
+  <h1>Unleashで始めるフィーチャーフラグ</h1>
+
+
+
+  
+    <p>フィーチャーフラグ（Feature Flag）をご存知でしょうか？これは新機能のリリース制御やABテストを容易にする強力なツールです。しかし、適切な管理ツールなければ、フィーチャーフラグの管理は容易なことではありません。今回は、そんなフィーチャーフラグの管理を効率化するツール、<strong>Unleash</strong>について解説します。</p>
+<p><img src="https://storage.googleapis.com/zenn-user-upload/353d890469ef-20230628.png" alt="Unleash" rocket-image="responsive">
+<em>Unleash</em></p>
+<p>Unleashのリポジトリはこちら👉<a href="https://github.com/Unleash/unleash">GitHub - Unleash</a></p>
+<h2 id="フィーチャーフラグの課題と解決策"><a class="anchor" href="#フィーチャーフラグの課題と解決策"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>フィーチャーフラグの課題と解決策</h2>
+<p>フィーチャーフラグとは、新機能の活性化・非活性化を制御するためのブール値のスイッチをコードに組み込む手法です。カナリアリリースやABテストのように、特定のユーザーにだけ新機能を表示したり、新機能のパフォーマンスをテストしたりするために用いられます。</p>
+<p>フィーチャーフラグの管理方法はいくつかありますが、それらは環境変数、定義ファイル（CSV、YML、JSON）、データベースなどが一般的です。しかし、これらの管理方法にはフラグの切り替えに時間がかかる、不要なフラグの削除を忘れがちなどの問題点があります。ここで紹介したいのが、フィーチャーフラグ管理ツール<strong>Unleash</strong>です。</p>
+<h2 id="なぜunleashなのか"><a class="anchor" href="#なぜunleashなのか"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>なぜUnleashなのか？</h2>
+<p>Unleashは、フィーチャーフラグの管理を容易にするオープンソースツールです。様々な言語やフレームワークで利用でき、新機能の制御、テストの効率化、機能の並行作業などを可能にします。</p>
+<p>Unleashの主な特長は以下の通りです。</p>
+<ul>
+<li><strong>GUIベースの操作</strong>：フラグのON/OFF切り替えが簡単で、フラグの管理が非エンジニアでも可能です。(データアナリストとか)</li>
+<li><strong>柔軟なテスト機能</strong>：ABテストだけでなく、多変量テストも可能です。</li>
+<li><strong>豊富な連携</strong>：SlackやDatadogなどと連携してフラグの状態を共有できます。</li>
+<li><strong>API first</strong>：他のアプリケーションやシステムとの連携が容易です。</li>
+<li><strong>セルフホスティングとクラウドサービス</strong>：自分でホスティングすることも、クラウドサービスを利用することも可能です。</li>
+</ul>
+<p>これらの特性により、Unleashはフィーチャーフラグの管理を効率化し、開発フローを加速します。</p>
+<h2 id="unleashのセットアップとフィーチャーフラグの使用方法"><a class="anchor" href="#unleashのセットアップとフィーチャーフラグの使用方法"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Unleashのセットアップとフィーチャーフラグの使用方法</h2>
+<p>それでは、Unleashを実際に使用する流れを紹介していきます。今回はUnleashでフィーチャーフラグを一つ作成し、それをReactから参照するというシナリオとします。</p>
+<p>Unleashのセットアップについては、公式ドキュメンテーションの<a href="https://github.com/Unleash/unleash#get-started-in-2-steps">Unleash - Get started in 2 steps</a>を参考に、まずはローカル環境で試してみましょう。クラウド環境での構築を希望する場合は、PostgreSQLが無料で利用可能な<a href="https://fly.io">fly.io</a>を推奨します。</p>
+<p>構築が完了すると、Unleashの画面が表示されます。</p>
+<p><img src="https://storage.googleapis.com/zenn-user-upload/353d890469ef-20230628.png" alt="Unleash" rocket-image="responsive">
+<em>Unleash</em></p>
+<p>フィーチャーフラグを作成してみましょう。<code>New feature toggle</code>をクリックし、名前には<code>new_feature</code>を入力します。</p>
+<p><img src="https://storage.googleapis.com/zenn-user-upload/b06e11b8f38a-20230628.png" alt="New feature toggle" rocket-image="responsive">
+<em>New feature toggle</em></p>
+<p>続いて、ReactからUnleashへの接続に必要なAPI tokenを生成します。Unleashの画面上部から <code>Configure &gt; API access</code> を選択します。</p>
+<p><img src="https://storage.googleapis.com/zenn-user-upload/4fea3cd45d9c-20230628.png" alt="API access" rocket-image="responsive">
+<em>API access</em></p>
+<p><code>New API token</code> をクリックし、API tokenを作成します。</p>
+<p><img src="https://storage.googleapis.com/zenn-user-upload/1ac3a5595c02-20230628.png" alt="New API token" rocket-image="responsive">
+<em>New API token</em></p>
+<p>今回、クライアントサイド(React)でUnleashを利用するため、<code>Client-side SDK</code> を選択してAPI tokenを生成します。もちろん、サーバーサイドからUnleashを利用することも可能です。
+ここで、environmentを<code>development</code>に設定します。これにより環境ごとにAPI tokenを設定できます。production向けのAPI tokenが必要な場合は、別途生成します。</p>
+<p>次に生成したAPI tokenを <code>REACT_APP_UNLEASH_API_TOKEN</code> に設定し、以下のReactのコードで使用します。</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword module">import</span> <span class="token maybe-class-name">React</span> <span class="token keyword module">from</span> <span class="token string">"react"</span><span class="token punctuation">;</span>
+<span class="token keyword module">import</span> <span class="token maybe-class-name">ReactDOM</span> <span class="token keyword module">from</span> <span class="token string">"react-dom/client"</span><span class="token punctuation">;</span>
+<span class="token keyword module">import</span> <span class="token maybe-class-name">App</span> <span class="token keyword module">from</span> <span class="token string">"./App"</span><span class="token punctuation">;</span>
+<span class="token keyword module">import</span> <span class="token punctuation">{</span> <span class="token maybe-class-name">FlagProvider</span> <span class="token punctuation">}</span> <span class="token keyword module">from</span> <span class="token string">"@unleash/proxy-client-react"</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> config <span class="token operator">=</span> <span class="token punctuation">{</span>
+  url<span class="token punctuation">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>process<span class="token punctuation">.</span><span class="token property-access">env</span><span class="token punctuation">.</span><span class="token constant">REACT_APP_UNLEASH_URL</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">/api/frontend</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span>
+  clientKey<span class="token punctuation">:</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>process<span class="token punctuation">.</span><span class="token property-access">env</span><span class="token punctuation">.</span><span class="token constant">REACT_APP_UNLEASH_API_TOKEN</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span>
+  refreshInterval<span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+  appName<span class="token punctuation">:</span> <span class="token string">"default"</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> root <span class="token operator">=</span> <span class="token maybe-class-name">ReactDOM</span><span class="token punctuation">.</span><span class="token method function property-access">createRoot</span><span class="token punctuation">(</span>
+  <span class="token dom variable">document</span><span class="token punctuation">.</span><span class="token method function property-access">getElementById</span><span class="token punctuation">(</span><span class="token string">"root"</span><span class="token punctuation">)</span> <span class="token keyword module">as</span> <span class="token maybe-class-name">HTMLElement</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+root<span class="token punctuation">.</span><span class="token method function property-access">render</span><span class="token punctuation">(</span>
+  <span class="token operator">&lt;</span><span class="token maybe-class-name">React</span><span class="token punctuation">.</span><span class="token property-access"><span class="token maybe-class-name">StrictMode</span></span><span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span><span class="token maybe-class-name">FlagProvider</span> config<span class="token operator">=</span><span class="token punctuation">{</span>config<span class="token punctuation">}</span><span class="token operator">&gt;</span>
+      <span class="token operator">&lt;</span><span class="token maybe-class-name">App</span> <span class="token operator">/</span><span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span><span class="token maybe-class-name">FlagProvider</span><span class="token operator">&gt;</span>
+  <span class="token operator">&lt;</span><span class="token operator">/</span><span class="token maybe-class-name">React</span><span class="token punctuation">.</span><span class="token property-access"><span class="token maybe-class-name">StrictMode</span></span><span class="token operator">&gt;</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>ここでは、フィーチャーフラグ<code>new_feature</code>を使用する例を示します。</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword module">import</span> <span class="token maybe-class-name">React</span> <span class="token keyword module">from</span> <span class="token string">"react"</span><span class="token punctuation">;</span>
+<span class="token keyword module">import</span> <span class="token punctuation">{</span> useFlag <span class="token punctuation">}</span> <span class="token keyword module">from</span> <span class="token string">"@unleash/proxy-client-react"</span><span class="token punctuation">;</span>
+
+<span class="token keyword">function</span> <span class="token function"><span class="token maybe-class-name">App</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> flag <span class="token operator">=</span> <span class="token function">useFlag</span><span class="token punctuation">(</span><span class="token string">"new_feature"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>
+    <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span><span class="token punctuation">{</span>flag <span class="token operator">&amp;&amp;</span> <span class="token string">"new_feature"</span><span class="token punctuation">}</span><span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword module">export</span> <span class="token keyword module">default</span> <span class="token maybe-class-name">App</span><span class="token punctuation">;</span>
+</code></pre>
+<p>この設定により、UnleashのGUIからフィーチャーフラグをリアルタイムでON/OFFすることが可能になります。変更結果はUnleash経由でフロントエンドにリアルタイムで反映されます。</p>
+<p>以下にフィーチャーフラグのデモを示します。都合上、<code>production</code>のenvironmentを使用しています。以下の画像をクリックすると動画を閲覧できます。</p>
+<p><a href="https://res.cloudinary.com/silverbirder/video/upload/v1687921192/silver-birder.github.io/blog/feature-flag-demo.gif"><img src="https://res.cloudinary.com/silverbirder/video/upload/c_scale,w_640/v1687921192/silver-birder.github.io/blog/feature-flag-demo.gif" alt="Feature flag demo" rocket-image="responsive"></a></p>
+<p>以上がUnleashの基本的な使用方法です。</p>
+<h2 id="unleash機能-activation-strategies"><a class="anchor" href="#unleash機能-activation-strategies"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Unleash機能: Activation Strategies</h2>
+<p>Unleashでは、フィーチャーフラグの活性化を制御するためのActivation Strategiesを設定することができます。</p>
+<p><a href="https://docs.getunleash.io/reference/activation-strategies">Unleash - Activation Strategies</a></p>
+<p>Activation Strategiesは以下の4つがあります。</p>
+<ul>
+<li>Gradual rollout
+<ul>
+<li>ユーザーの一部に対して段階的に展開します。また、各ユーザーが訪問するたびに同じ経験が提供されることを保証します。</li>
+</ul>
+</li>
+<li>Standard
+<ul>
+<li>このストラテジーは全てのユーザーに対してフィーチャーをオン/オフします。</li>
+<li>ただし、Gradual rolloutストラテジーを使用することを推奨します。</li>
+</ul>
+</li>
+<li>IPs
+<ul>
+<li>特定のIPアドレスのセットに対してフィーチャーを有効にします。</li>
+</ul>
+</li>
+<li>Hosts
+<ul>
+<li>特定のホスト名のセットに対してフィーチャーを有効にします。</li>
+</ul>
+</li>
+</ul>
+<p>以下の画像は、Gradual rolloutの設定画面です。</p>
+<p><img src="https://storage.googleapis.com/zenn-user-upload/aa326c9fcba8-20230628.png" alt="Gradual rollout" rocket-image="responsive">
+<em>Gradual rollout</em></p>
+<p>特に、Gradual RolloutストラテジーはABテストとしても利用可能です。</p>
+<h2 id="unleash機能-variant"><a class="anchor" href="#unleash機能-variant"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Unleash機能: Variant</h2>
+<p>Unleashでは、全てのフィーチャーフラグにVariantという機能が用意されています。これにより、ユーザーをより詳細なセグメントに分けることが可能となります。</p>
+<p><a href="https://docs.getunleash.io/reference/feature-toggle-variants">Unleash - Feature toggle variants</a></p>
+<p>例として、先ほど作成したnew_featureのフィーチャーフラグに対して、以下の画像の通り、4つのVariantを設定しました。それぞれのVariantは設定した <code>Weight</code> に基づいて選択されます。</p>
+<p><img src="https://storage.googleapis.com/zenn-user-upload/d0869460f07b-20230628.png" alt="Feature toggle variants" rocket-image="responsive">
+<em>Feature toggle variants</em></p>
+<p>以下に、new_featureのVariantを使用する例を示します。<code>variant.name</code> には、先ほど設定したVariantのnameが入力されます。そのため、この<code>variant.name</code>を基に処理を分岐させることが可能です。</p>
+<pre class="language-javascript"><code class="language-javascript"><span class="token keyword module">import</span> <span class="token maybe-class-name">React</span> <span class="token keyword module">from</span> <span class="token string">"react"</span><span class="token punctuation">;</span>
+<span class="token keyword module">import</span> <span class="token punctuation">{</span> useVariant <span class="token punctuation">}</span> <span class="token keyword module">from</span> <span class="token string">"@unleash/proxy-client-react"</span><span class="token punctuation">;</span>
+
+<span class="token keyword">function</span> <span class="token function"><span class="token maybe-class-name">App</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> variant <span class="token operator">=</span> <span class="token function">useVariant</span><span class="token punctuation">(</span><span class="token string">"new_feature"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>variant<span class="token punctuation">.</span><span class="token property-access">enabled</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token operator">&lt;</span><span class="token operator">&gt;</span><span class="token maybe-class-name">Default</span><span class="token operator">&lt;</span><span class="token operator">/</span><span class="token operator">&gt;</span><span class="token punctuation">;</span>
+  <span class="token keyword">switch</span> <span class="token punctuation">(</span>variant<span class="token punctuation">.</span><span class="token property-access">name</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">case</span> <span class="token string">"BlueButton"</span><span class="token punctuation">:</span>
+      <span class="token keyword">return</span> <span class="token operator">&lt;</span><span class="token operator">&gt;</span><span class="token maybe-class-name">BlueButton</span><span class="token operator">&lt;</span><span class="token operator">/</span><span class="token operator">&gt;</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> <span class="token string">"GreenButton"</span><span class="token punctuation">:</span>
+      <span class="token keyword">return</span> <span class="token operator">&lt;</span><span class="token operator">&gt;</span><span class="token maybe-class-name">GreenButton</span><span class="token operator">&lt;</span><span class="token operator">/</span><span class="token operator">&gt;</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> <span class="token string">"RedButton"</span><span class="token punctuation">:</span>
+      <span class="token keyword">return</span> <span class="token operator">&lt;</span><span class="token operator">&gt;</span><span class="token maybe-class-name">RedButton</span><span class="token operator">&lt;</span><span class="token operator">/</span><span class="token operator">&gt;</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> <span class="token string">"YellowButton"</span><span class="token punctuation">:</span>
+      <span class="token keyword">return</span> <span class="token operator">&lt;</span><span class="token operator">&gt;</span><span class="token maybe-class-name">YellowButton</span><span class="token operator">&lt;</span><span class="token operator">/</span><span class="token operator">&gt;</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword module">export</span> <span class="token keyword module">default</span> <span class="token maybe-class-name">App</span><span class="token punctuation">;</span>
+</code></pre>
+<p>このようにして、ABテストだけではなく、多変量テストを行うことが可能となります。</p>
+<h2 id="unleash機能-toggle-type"><a class="anchor" href="#unleash機能-toggle-type"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Unleash機能: Toggle type</h2>
+<p>Unleashでは、フィーチャーフラグに様々なタイプが設定できます。各タイプは寿命(ライフタイム)が異なり、寿命が尽きたフィーチャーフラグはマークされます。マークされたフィーチャーフラグは、アーカイブすることを推奨します。</p>
+<p><a href="https://docs.getunleash.io/reference/feature-toggle-types">Unleash - Feature toggle types</a></p>
+<p>フィーチャートグルのタイプは以下のように分類されます。</p>
+<ul>
+<li><strong>Release</strong> : 継続的デリバリーを実践するチームのトランクベース開発を有効にします。予想される寿命は40日です。</li>
+<li><strong>Experiment</strong> : 多変量テストまたはABテストを実施します。予想される寿命は40日です。</li>
+<li><strong>Operational</strong> : システムの動作に関する運用面を制御します。予想される寿命は7日です。</li>
+<li><strong>Kill switch</strong> : システム機能のグレースフルな劣化を可能にします。(永続的)</li>
+<li><strong>Permission</strong> : 特定のユーザーが受け取るフィーチャーや製品体験を変更します。(永続的)</li>
+</ul>
+<p>寿命が尽きたフィーチャーフラグは、技術的負債となります。フィーチャーフラグに関する技術的負債についての詳細な記事が以下のリンクで紹介されています。是非ご覧ください。</p>
+<p><a href="https://docs.getunleash.io/reference/technical-debt">Unleash - technical-dept</a></p>
+<p>Unleashでは、Healthと呼ばれる指標が表示されます。この値が低いと、技術的負債が蓄積されているということを示します。フィーチャーフラグを適切にアーカイブする運用を心掛けましょう。</p>
+<p><img src="https://storage.googleapis.com/zenn-user-upload/1a4ba5569cf8-20230628.png" alt="Unleash health" rocket-image="responsive">
+<em>Unleash health</em></p>
+<h2 id="unleash-機能-その他"><a class="anchor" href="#unleash-機能-その他"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Unleash 機能: その他</h2>
+<p>Unleashには、他にも以下に述べるような様々な機能が備わっています。</p>
+<ul>
+<li>環境の追加
+<ul>
+<li><code>development</code>や<code>production</code>以外にも、テストやステージング環境など、自由に環境を作成することができます。</li>
+<li>詳細：<a href="https://docs.getunleash.io/how-to/how-to-clone-environments">https://docs.getunleash.io/how-to/how-to-clone-environments</a></li>
+</ul>
+</li>
+<li>Playgroundの利用
+<ul>
+<li>フィーチャーフラグの挙動を確認するためのPlaygroundが利用可能です。</li>
+<li>アクセスURL：<code>https://&lt;UNLEASH_URL&gt;/playground</code></li>
+</ul>
+</li>
+<li>CORS originsの設定
+<ul>
+<li>フロントエンドからUnleashサーバーへのアクセスを許可するためのCORS設定ができます。</li>
+</ul>
+</li>
+<li>フィーチャーフラグの承認フローの設定
+<ul>
+<li>フィーチャーフラグを有効化するための承認フローを設定することができます。</li>
+<li>詳細：<a href="https://docs.getunleash.io/reference/change-requests">https://docs.getunleash.io/reference/change-requests</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="まとめ"><a class="anchor" href="#まとめ"><svg class="octicon octicon-link" viewBox="0 0 16 16" aria-hidden="true" width="16" height="16"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>まとめ</h2>
+<p>フィーチャーフラグの管理に最適なツールとしてUnleashが一押しです。Unleashを使用することで、フラグの切り替えが容易になり、デプロイフローを通さずに高速にフィーチャーフラグを管理することが可能となります。多様なテストを行い、その結果を元に製品の改善が行えます。製品開発のスピードと品質が大幅に向上しますので、ぜひ一度試してみてください。
+最後までお読み頂き、ありがとうございました。バッジを贈ってね！</p>
+<p><strong>supported by ChatGPT</strong></p>
+
+  
+    <div class="content-footer">
+  <p>
+    Caught a mistake or want to improve the blog?
+    <a href="https://github.com/silverbirder/silverbirder.github.io/edit/main/./docs/blog/contents/unleash_feature_flag.md">Edit this blog post on GitHub!</a>
+  </p>
+</div>
+
+
+  
+</main>
+
+  </main>
+
+    </div>
+  </div>
+
+
+    
+      <footer id="main-footer">
+  
+    
+
+  
+    <div id="footer-menu">
+  <div class="content-area">
+    
+      <nav>
+        <h3>Discover</h3>
+        <ul>
+          
+            <li>
+              <a href="https://silverbirder.github.io/blog/">Blog</a>
+            </li>
+          
+            <li>
+              <a href="https://github.com/silverbirder/silverbirder.github.io/issues">Help and Feedback</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>My Sales</h3>
+        <ul>
+          
+            <li>
+              <a href="https://www.amazon.co.jp/芝本雅史/e/B08FJK5C43">Amazon</a>
+            </li>
+          
+            <li>
+              <a href="https://silverbirder.booth.pm">Booth</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+      <nav>
+        <h3>Follow</h3>
+        <ul>
+          
+            <li>
+              <a href="https://github.com/silverbirder/silverbirder.github.io">GitHub</a>
+            </li>
+          
+            <li>
+              <a href="https://twitter.com/silverbirder">Twitter</a>
+            </li>
+          
+            <li>
+              <a href="https://www.google.com/maps/contrib/101722346324226588907/reviews/@34.6907839,135.4537926,13z/">Google Map</a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+  </div>
+</div>
+
+  
+</footer>
+
+    
+
+    
+  
+
+
+  
+
+<script>
+  window.__rocketServiceWorkerUrl = '/service-worker.js';
+</script>
+
+
+
+
+
+
+  
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-146805630-4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-146805630-4');
+  </script>
+
+
+
+
+  
+
+
+<script type="module" src="../../../e931d24b.js"></script>
+<script type="module" src="../../../6dd6d5cb.js"></script>
+<script type="module" src="../../../dd4fcd54.js" inject-service-worker=""></script>
+<script type="module" src="../../../580566d598.js"></script>
+
+</body></html>
